@@ -2641,10 +2641,10 @@ Following chart specific attributes are supported:
 Docbuilder definition of chart begins with stl:ccd. In future user would
 use different chart definitions
 
-1.  scd:scd
+####  scd:scd
 
-    -   `style` ... default chart style
-    -   `class` ... style class (limited when used for svg charts)
+-   `style` ... default chart style
+-   `class` ... style class (limited when used for svg charts)
 
 ### Chart parts
 
@@ -2663,142 +2663,120 @@ Users can specify the chart parts elements:
 
 #### scd:title
 
-    Users can specify following attributes
+Users can specify following attributes
 
-    -   `text` ... text of title
-    -   `position` ... title position (top/bottom)
-    -   `style` ... style of title
-    -   `class` ... style class (limited when used for svg charts)
+-   `text` ... text of title
+-   `position` ... title position (top/bottom)
+-   `style` ... style of title
+-   `class` ... style class (limited when used for svg charts)
 
 ####  scd:legend
 
-    Users can specify following attributes
+Users can specify following attributes
 
-    -   `alignment_v` ... legend vertical alignment (top/center/bottom)
-    -   `alignment_h` ... legend horizontal alignment
-        (left/center/right)
-    -   `style` ... style of legend text and border line
-    -   `class` ... style class (limited when used for svg charts)
+-   `alignment_v` ... legend vertical alignment (top/center/bottom)
+-   `alignment_h` ... legend horizontal alignment (left/center/right)
+-   `style` ... style of legend text and border line
+-   `class` ... style class (limited when used for svg charts)
 
 ####  scd:plot
 
-    Users can specify following attributes
+Users can specify following attributes
 
-    -   `style` ... accepts
-        margin-left/margin-right/margin-top/margin-bottom to define
-        offsets of chart drawing from the chart border (in points)
-
-    -   `logical_x_low` ... logical low x value
-    -   `logical_x_heigh` ... logical high x value
-    -   `logical_y_low` ... logical low y value
-    -   `logical_y_high` ... logical high y value
+-   `style` ... accepts margin-left/margin-right/margin-top/margin-bottom to define offsets of chart drawing from the chart border (in points)
+-   `logical_x_low` ... logical low x value
+-   `logical_x_heigh` ... logical high x value
+-   `logical_y_low` ... logical low y value
+-   `logical_y_high` ... logical high y value
 
 ####  scd:axis~x~, scd:axis~y~
 
-    Users can specify following attributes
+Users can specify following attributes
 
-    -   `style` ... style of legend text and border line
-    -   `class` ... style class (limited when used for svg charts)
+-   `style` ... style of legend text and border line
+-   `class` ... style class (limited when used for svg charts)
 
-    -   `label` ... axis label
-    -   `label_alignment` ... label alignment (left/center/right)
-    -   `label_position_v` ... label vertical position
-        (top/center/bottom)
-    -   `label_placement` ... label placement (start/end)
+-   `label` ... axis label
+-   `label_alignment` ... label alignment (left/center/right)
+-   `label_position_v` ... label vertical position (top/center/bottom)
+-   `label_placement` ... label placement (start/end)
 
-    -   `logical_position_x` ... logical x value, where the axis is
-        positioned to
-    -   `logical_position_y` ... logical y value, where the axis is
-        positioned to
-    -   `logical_y_low` ... logical low y value
-    -   `logical_y_high` ... logical high y value
+-   `logical_position_x` ... logical x value, where the axis is positioned to
+-   `logical_position_y` ... logical y value, where the axis is positioned to
+-   `logical_y_low` ... logical low y value
+-   `logical_y_high` ... logical high y value
 
-    -   `draw_behind` ... axis should be drawn behind the chart
+-   `draw_behind` ... axis should be drawn behind the chart
 
 ####  scd:support~lines~
 
-    Users can specify following attributes
+Users can specify following attributes
 
-    -   `label_alignment` ... label alignment (left/center/right)
-    -   `label_v_position` ... label vertical position
-        (top/center/bottom)
-    -   `label_placement` ... label placement (start/end)
+-   `label_alignment` ... label alignment (left/center/right)
+-   `label_v_position` ... label vertical position (top/center/bottom)
+-   `label_placement` ... label placement (start/end)
 
-    -   `logical_x_position` ... logical x value, where the lines start
-        is positioned to
-    -   `logical_y_position` ... logical y value, where the lines start
-        is positioned to
-    -   `logical_width` ... logical width value defines width of lines
-    -   `logical_step` ... logical coordinates value defines step
-        between lines
+-   `logical_x_position` ... logical x value, where the lines start is positioned to
+-   `logical_y_position` ... logical y value, where the lines start is positioned to
+-   `logical_width` ... logical width value defines width of lines
+-   `logical_step` ... logical coordinates value defines step between lines
 
-    -   `logical_x_low` ... logical low x value
-    -   `logical_x_heigh` ... logical high x value
-    -   `logical_y_low` ... logical low y value
-    -   `logical_y_high` ... logical high y value
+-   `logical_x_low` ... logical low x value
+-   `logical_x_high` ... logical high x value
+-   `logical_y_low` ... logical low y value
+-   `logical_y_high` ... logical high y value
 
-    -   `draw_behind` ... axis should be drawn behind the chart
-    -   `mask` ... format mask of values
-    -   `style` ... style of labels and lines
+-   `draw_behind` ... axis should be drawn behind the chart
+-   `mask` ... format mask of values
+-   `style` ... style of labels and lines
 
 ####  scd:layer
 
-    Users can specify following attributes
+Users can specify following attributes
 
-    -   `type` ... type of chart (line/bar/pie)
-    -   `xpath` ... xpath to data for chart
-    -   `labels_offset` ... offset of labels from axis in points
-    -   `label_line` ... style of lines connection to labels
+-   `type` ... type of chart (line/bar/pie)
+-   `xpath` ... xpath to data for chart
+-   `labels_offset` ... offset of labels from axis in points
+-   `label_line` ... style of lines connection to labels
 
-    Attributes for a pie chart
+Attributes for a pie chart
 
-    -   `line` ... style of lines in a pie chart
-    -   `radius` ... radius of a pie chart in logical coord.
-    -   `center_x` ... logical coord. x of center
-    -   `center_y` ... logical coord. y of center
-    -   `start_angle` ... start angle in degrees
-    -   `clockwise` ... logical coord. x of center
-    -   `height3d` ... height of 3D chart in logical coord.
-    -   `xyratio` ... inclination of of chart &lt;0,1&gt;
-    -   `line` ... style of lines in a pie chart
-    -   `labels_connection` ... type of connection between labels and a
-        pie chart (none/normal/level/radial/underlined/aligned)
+-   `line` ... style of lines in a pie chart
+-   `radius` ... radius of a pie chart in logical coord.
+-   `center_x` ... logical coord. x of center
+-   `center_y` ... logical coord. y of center
+-   `start_angle` ... start angle in degrees
+-   `clockwise` ... logical coord. x of center
+-   `height3d` ... height of 3D chart in logical coord.
+-   `xyratio` ... inclination of of chart (0..1)
+-   `line` ... style of lines in a pie chart
+-   `labels_connection` ... type of connection between labels and a pie chart (none/normal/level/radial/underlined/aligned)
 
-    Attributes for a line chart
+Attributes for a line chart
 
-    -   `node_type` ... type of data values nodes (none/dot/square)
-    -   `node_size` ... data values nodes size
-    -   `connected_axis_x` ... index (from 0) of axis x used for showing
-        labels and getting logical coordinates
-    -   `connected_axis_y` ... index (from 0) of axis y used for showing
-        labels and getting logical coordinates
-    -   `area` ... color of area under line
+-   `node_type` ... type of data values nodes (none/dot/square)
+-   `node_size` ... data values nodes size
+-   `connected_axis_x` ... index (from 0) of axis x used for showing labels and getting logical coordinates
+-   `connected_axis_y` ... index (from 0) of axis y used for showing labels and getting logical coordinates
+-   `area` ... color of area under line
 
-    Attributes for a bar chart
+Attributes for a bar chart
 
-    -   `offset_left` ... left offset of the first bar (in logical
-        coordinates)
-    -   `offset_right` ... right offset of the first bar (in logical
-        coordinates)
-    -   `bar_width` ... width of bars (in logical coordinates)
-    -   `gap` ... gap between bars (in logical coordinates)
-    -   `connected_axis_x` ... index (from 0) of axis x used for showing
-        labels and getting logical coordinates
-    -   `connected_axis_y` ... index (from 0) of axis y used for showing
-        labels and getting logical coordinates
+-   `offset_left` ... left offset of the first bar (in logical coordinates)
+-   `offset_right` ... right offset of the first bar (in logical coordinates)
+-   `bar_width` ... width of bars (in logical coordinates)
+-   `gap` ... gap between bars (in logical coordinates)
+-   `connected_axis_x` ... index (from 0) of axis x used for showing labels and getting logical coordinates
+-   `connected_axis_y` ... index (from 0) of axis y used for showing labels and getting logical coordinates
 
-    Subelement `scd:series` for data definition
+Subelement `scd:series` for data definition
 
-    Attributes:
+Attributes:
 
-    -   `col_x` - index of column (started from 0) in data table for x
-        values
-    -   `col_y` - index of column (started from 0) in data table for y
-        values
-    -   `col_label` - index of column (started from 0) in data table for
-        labels
-    -   `col_legend` - index of column (started from 0) in data table
-        for legend
+-   `col_x` - index of column (started from 0) in data table for x values
+-   `col_y` - index of column (started from 0) in data table for y values
+-   `col_label` - index of column (started from 0) in data table for labels
+-   `col_legend` - index of column (started from 0) in data table for legend
 
 ### Chart data
 
@@ -2826,33 +2804,28 @@ Elements:
 
 ####  ddi:header
 
-    Users defines column headers for data columns.
+Users defines column headers for data columns.
 
 #####  ddi:cell
 
-        Attributes:
+Attributes:
 
-        -   `data_type` ... type of data (e.t. number) in the column. If
-            not defined, string type is taken as default
-        -   `data_style` ... style for the whole series
+-   `data_type` ... type of data (e.t. number) in the column. If not defined, string type is taken as default
+-   `data_style` ... style for the whole series
 
 ####  ddi:row
 
-    Users defines rows of data
+Users defines rows of data
 
 #####  ddi:cell
 
-        Attributes:
+Attributes:
 
-        -   `data_style` ... style used for the chart elements and their
-            labels
-        -   `exploded` ... part of pie chart that should be exploded
-            (burst) (true/false)
-        -   `label_rotation` ... rotation of label in degrees
-        -   `label_h_position` ... horizontal position of label
-            (left/center/right), default is center
-        -   `label_v_position` ... vertical position of label
-            (top/center/bottom), default is bottom
+-   `data_style` ... style used for the chart elements and their labels
+-   `exploded` ... part of pie chart that should be exploded (burst) (true/false)
+-   `label_rotation` ... rotation of label in degrees
+-   `label_h_position` ... horizontal position of label (left/center/right), default is center
+-   `label_v_position` ... vertical position of label (top/center/bottom), default is bottom
 
 # Runtime Behavior
 
