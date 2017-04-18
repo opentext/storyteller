@@ -1,3 +1,17 @@
+Table of Contents
+=================
+
+   * [STL definition syntax](#stl-definition-syntax)
+   * [STL Root](#stl-root)
+   * [Whitespace handling](#whitespace-handling)
+   * [Styling](#styling)
+   * [Document Design](#document-design)
+   * [Content Entities](#content-entities)
+   * [Content Items](#content-items)
+   * [Layout Items](#layout-items)
+   * [Runtime Behavior](#runtime-behavior)
+   * [Load-time vs. Runtime](#load-time-vs-runtime) 
+
 # STL definition syntax
 
 This document describes an XML syntax of *STL definition file*. The syntax can be validated programmatically 
