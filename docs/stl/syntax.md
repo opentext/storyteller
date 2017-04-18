@@ -1,21 +1,17 @@
 # STL definition syntax
 
-This document describes an XML syntax of *STL definition file*. The
-syntax can be validated programmatically against the following [XSD
-schema](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/docbuilder/xmlschema/stl.xsd).
+This document describes an XML syntax of *STL definition file*. The syntax can be validated programmatically 
+against the following [XSD schema](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/docbuilder/xmlschema/stl.xsd).
 
-Top level structure consists of a root `<stl:stl>` element and four
-optional sub-elements defining *fixtures*, *data*, *styling* and a
-*document*.
+Top level structure consists of a root `<stl:stl>` element and four optional sub-elements defining *fixtures*, *data*, *styling* 
+and a *document*.
 
 # STL Root
 
-One of the *DocBuilder++* design goals was to unify its XML structure
-with the output format of the *Page Layout Driver*. While *Page Layout
-Driver.* output represents a *paginated rendered form of a document* and
-on the other hand the *DocBuilder++* format represents a *document
-design structure* we still believe that it is possible to unify both
-formats to a single logical structure.
+One of the *DocBuilder++* design goals was to unify its XML structure with the output format 
+of the *Page Layout Driver*. While *Page Layout Driver.* output represents a *paginated rendered 
+form of a document* and on the other hand the *DocBuilder++* format represents a *document
+design structure* we still believe that it is possible to unify both formats to a single logical structure.
 
 It means that the root of the XML structure looks as follows:
 
@@ -96,10 +92,8 @@ All three entities - `stl:source`, `stl:template` and
 `stl:transformation` are directly included in the definition file.
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/data-xml.xml)
--   [XML Data
-    Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-xml-xml-m.data.xml)
--   [HTML Data
-    Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-xml-xml-m.data.html)
+-   [XML Data Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-xml-xml-m.data.xml)
+-   [HTML Data Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-xml-xml-m.data.html)
 
 ### Dual Transformation
 
@@ -440,9 +434,9 @@ in multiple documents all at once.
 
 CSS can be added to HTML elements in 3 ways:
 
--   Inline ... by using the style attribute in HTML elements
--   Internal ... by using a `stl:style` element before `stl:document`
--   External ... by using an external CSS file
+-   *Inline* ... by using the style attribute in HTML elements
+-   *Internal* ... by using a `stl:style` element before `stl:document`
+-   *External* ... by using an external CSS file
 
 The most common way to add CSS, is to keep the styles in separate CSS
 files. However, here we will start with inline and internal styling,
@@ -510,10 +504,8 @@ While CSS is very rich and powerful language, only a very limited subset
 is supported by DocBuilder++.
 
 It is possible that we'll extend the support in future, but right now
-from the whole variety of [CSS
-selectors](http://www.w3schools.com/cssref/css_selectors.asp) only
-[.class selectors](http://www.w3schools.com/cssref/sel_class.asp) are
-supported.
+from the whole variety of [CSS selectors](http://www.w3schools.com/cssref/css_selectors.asp) only
+[.class selectors](http://www.w3schools.com/cssref/sel_class.asp) are supported.
 
 This way we can find out how far we get with such a limited
 functionality without closing some doors for future.
@@ -654,9 +646,9 @@ Content elements defining a `style` attribute (`stl:p`, `stl:list`, `stl:li` and
 -   `margin-left` (length) ... maps to the *LeftIndent* property
 -   `margin-right` (length) ... maps to the *RightIndent* property
 -   `text-indent` (length) ... maps to the *FirstIndent* property
--   `line-height` (length) ... maps to *LineSpacing* property with *LineSpacingMode* set to LS~RELATIVE~
--   `page-break-before` (`always` or `auto`) ... `always` sets *StartPosition* property to *SP~PAGE~* 
-     (`auto` leaves it as *SP~ANYWHERE~*)
+-   `line-height` (length) ... maps to *LineSpacing* property with *LineSpacingMode* set to LS_RELATIVE
+-   `page-break-before` (`always` or `auto`) ... `always` sets *StartPosition* property to *SP_PAGE* 
+     (`auto` leaves it as *SP_ANYWHERE*)
 -   `page-break-after` (`avoid` or `auto`) `avoid` sets *KeepWithNext* property to 1 (`auto` leaves it 0)
 -   `orphans` (integral) ... maps to the *KeepTogetherFirst* property
 -   `widows` (integral) ... maps to the *KeepTogetherLast* property
@@ -939,19 +931,19 @@ application to a story:
 
 ## Paragraph
 
-   Users can use ~stl:p~ element to create a paragraph.
+Users can use `stl:p` element to create a paragraph.
 
-   Any ~stl:p~ element can optionally re-define any /paragraph style/ attribute.
+Any `stl:p` element can optionally re-define any /paragraph style/ attribute.
 
-   /Paragraph style/ properties are specified for every single paragraph and do not get propagated 
-   to potentially nested paragraphs (e.g. paragraphs inside a nested switch).
+/Paragraph style/ properties are specified for every single paragraph and do not get propagated 
+to potentially nested paragraphs (e.g. paragraphs inside a nested switch).
 
 #### Example
 
-    This example demonstrates a variety of ~stl:p~ attributes:
+This example demonstrates a variety of `stl:p` attributes:
 
-    - [[https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/paragraph.xml][STL]]
-    - [[https://rawgit.com/opentext/storyteller/master/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png][Resulting Document]]
+- [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/paragraph.xml)
+- [Resulting Document](https://rawgit.com/opentext/storyteller/master/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png)
 
 ![Paragraph example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png)
 
@@ -2687,7 +2679,7 @@ Users can specify following attributes
 -   `logical_y_low` ... logical low y value
 -   `logical_y_high` ... logical high y value
 
-####  scd:axis~x~, scd:axis~y~
+####  scd:axis_x, scd:axis_y
 
 Users can specify following attributes
 
@@ -2706,7 +2698,7 @@ Users can specify following attributes
 
 -   `draw_behind` ... axis should be drawn behind the chart
 
-####  scd:support~lines~
+####  scd:support_lines
 
 Users can specify following attributes
 
