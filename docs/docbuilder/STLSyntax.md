@@ -226,37 +226,36 @@ XPath `normalize-space` algorithm does basically the following:
 This is relatively simple c++ implementation:
 
 ```cpp
-    void normalize_data( std::string& data, bool trim_left = true, bool trim_right = true, bool collapse = true )
-    {
-        // replace all whitespaces with spaces in-place
-        std::transform( 
-          std::begin(data), 
-          std::end(data), 
-          std::begin(data), 
-          []( char ch ) { return std::isspace(ch) ? ' ' : ch; } );
-        // trim all leading and trailing space characters
-        if ( trim_right )
-        {
-          data.erase( 
-            std::find_if( std::rbegin(data), std::rend(data), []( char ch ) { return ch != ' '; } ).base(),
-            std::end(data) );
-        }
-        if ( trim_left )
-        {
-          data.erase( 
-            std::begin(data), 
-            std::find_if( std::begin(data), std::end(data), []( char ch ) { return ch != ' '; } ) );
-        }
-        // collapse each space sequences to a single space
-        if ( collapse )
-        {
-          data.erase( std::unique( 
-            std::begin(data),
-            std::end(data),
-            []( char c1, char c2 ){ return (c1==' ' && c2==' '); }),
-            std::end(data) );
-        }
+void normalize_data( 
+    std::string& data, bool trim_left = true, bool trim_right = true, bool collapse = true )
+{
+    auto const not_a_space = [](char ch) { return ch != ' '; };
+    // replace all whitespaces with spaces in-place
+    std::transform( 
+      std::begin(data), 
+      std::end(data), 
+      std::begin(data), 
+      []( char ch ) { return std::isspace(ch) ? ' ' : ch; } );
+    // trim all leading and trailing space characters
+    if ( trim_right ) {
+      data.erase( 
+        std::find_if(std::rbegin(data), std::rend(data), not_a_space).base(),
+        std::end(data) );
     }
+    if ( trim_left ) {
+      data.erase( 
+        std::begin(data), 
+        std::find_if(std::begin(data), std::end(data), not_a_space));
+    }
+    // collapse each space sequences to a single space
+    if ( collapse ) {
+      data.erase( std::unique( 
+        std::begin(data),
+        std::end(data),
+        []( char c1, char c2 ){ return (c1==' ' && c2==' '); }),
+        std::end(data) );
+    }
+}
 ```
 
 The advantage is that the algorithm and easy to understand and well
@@ -280,59 +279,53 @@ We call the algorithm `split-trim-join` and it works as follows:
 This is a c++ implementation:
 
 ``` c++
-    void normalize_data( std::string& data )
-    {
-        auto const not_a_space = []( auto c ) { return c != ' '; };
-        auto const replace_with_space = []( auto chars ) 
-        { 
-            return [chars]( auto ch ) { return contains_char( chars, ch ) ? ' ' : ch; };
-        };
+void normalize_data( std::string& data )
+{
+    auto const not_a_space = [](auto c) { return c != ' '; };
+    auto const replace_with_space = [](auto chars) { 
+        return [chars](auto ch) { 
+          return contains_char(chars, ch) ? ' ' : ch; };
+    };
 
-        auto const trim_left = [not_a_space]( auto begin, auto end )
-        {
-            return std::find_if( ++begin, end, not_a_space );
-        };
+    auto const trim_left = [not_a_space](auto begin, auto end) {
+        return std::find_if(++begin, end, not_a_space);
+    };
 
-        auto const trim_right = [not_a_space]( auto begin, auto end )
-        {
-            return std::find_if( 
-                std::reverse_iterator<APIString::iterator>(begin), 
-                std::reverse_iterator<APIString::iterator>(end), 
-                not_a_space ).base();
-        };
+    auto const trim_right = [not_a_space](auto begin, auto end) {
+        return std::find_if( 
+            std::reverse_iterator<APIString::iterator>(begin), 
+            std::reverse_iterator<APIString::iterator>(end), 
+            not_a_space).base();
+    };
 
-        auto const next_split = []( auto begin, auto end )
-        {
-            return std::find( begin, end, '\n' );
-        };
+    auto const next_split = [](auto begin, auto end) {
+        return std::find(begin, end, '\n');
+    };
 
-        auto const limit = std::end( data );
-        auto left = std::begin(data);
-        std::transform( left, limit, left, replace_with_space("\t\r\f\v") );
+    auto const limit = std::end(data);
+    auto left = std::begin(data);
+    std::transform(left, limit, left, replace_with_space("\t\r\f\v"));
 
-        auto split = next_split( left, limit );
-        // no trimming if there is just a single string
-        if ( split != limit )
-        {
-            // first token is not left-trimmed
-            auto cursor = trim_right( split, left );
-            auto right = cursor;
-            while( true )
-            {
-                left = trim_left( split, limit );
-                split = next_split( left, limit );
-                if ( split == limit )
-                {
-                    // last token is not right-trimmed
-                    cursor = std::copy( left, limit, cursor );
-                    break;
-                }
-                right = trim_right( split, left );
-                cursor = std::copy( left, right, cursor );
+    auto split = next_split(left, limit);
+    // no trimming if there is just a single string
+    if (split != limit) {
+        // first token is not left-trimmed
+        auto cursor = trim_right( split, left );
+        auto right = cursor;
+        while(true) {
+            left = trim_left(split, limit);
+            split = next_split(left, limit);
+            if (split == limit) {
+                // last token is not right-trimmed
+                cursor = std::copy(left, limit, cursor);
+                break;
             }
-            data.erase( cursor, limit );
+            right = trim_right(split, left);
+            cursor = std::copy(left, right, cursor);
         }
+        data.erase(cursor, limit);
     }
+}
 ```
 
 ## normalize-space-auto-trim
