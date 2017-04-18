@@ -22,8 +22,7 @@ It means that the root of the XML structure looks as follows:
 
 This is a full example of an empty document definition:
 
--   [Empty STL
-    Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empty.xml)
+-   [Empty STL Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empty.xml)
 
 There are three optional sub-elements under the `stl:stl` element, we
 will :
@@ -444,7 +443,7 @@ because this is easier to demonstrate.
 
 ### Inline CSS
 
-Setting the style of a particular document element (line `stl:elipse`, `stl:p` or `stl:span`), can be done with the `style` attribute. 
+Setting the style of a particular document element (line `stl:ellipse`, `stl:p` or `stl:span`), can be done with the `style` attribute. 
 
 The `style` attribute has the following syntax:
 
@@ -646,7 +645,7 @@ Content elements defining a `style` attribute (`stl:p`, `stl:list`, `stl:li` and
 -   `margin-left` (length) ... maps to the *LeftIndent* property
 -   `margin-right` (length) ... maps to the *RightIndent* property
 -   `text-indent` (length) ... maps to the *FirstIndent* property
--   `line-height` (length) ... maps to *LineSpacing* property with *LineSpacingMode* set to LS_RELATIVE
+-   `line-height` (length) ... maps to *LineSpacing* property with *LineSpacingMode* set to *LS_RELATIVE*
 -   `page-break-before` (`always` or `auto`) ... `always` sets *StartPosition* property to *SP_PAGE* 
      (`auto` leaves it as *SP_ANYWHERE*)
 -   `page-break-after` (`avoid` or `auto`) `avoid` sets *KeepWithNext* property to 1 (`auto` leaves it 0)
@@ -943,7 +942,7 @@ to potentially nested paragraphs (e.g. paragraphs inside a nested switch).
 This example demonstrates a variety of `stl:p` attributes:
 
 - [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/paragraph.xml)
-- [Resulting Document](https://rawgit.com/opentext/storyteller/master/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png)
+- [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png)
 
 ![Paragraph example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png)
 
