@@ -1845,8 +1845,9 @@ Any *Layout Item* can have following optional properties:
 -   `name`
 -   `description`
 -   `x`, `y`, `w`, `h`
--   `fill`
--   `stroke`
+-   `class`
+-   `style`
+-   `transform`
 -   `hyperlink`
 -   `screentip`
 -   ...
@@ -2129,7 +2130,7 @@ For demonstration of SVG-like path variants we can look at the following
 example. It also demonstrates how easy it is to migrate an SVG vector
 image to DocBuilder++ (either manually or programmatically):
 
--   ![](http://alistapart.com/d/using-svg-for-flexible-scalable-and-fun-backgrounds-part-ii/sample5.svg)
+-   [SVG](http://alistapart.com/d/using-svg-for-flexible-scalable-and-fun-backgrounds-part-ii/sample5.svg)
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/paths.xml)
 -   [Resulting
     Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png)
@@ -2544,7 +2545,7 @@ collapsable and named *groups*.
 
 Following example demonstrates the grouping in action:
 
--   ![](https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg)
+-   [SVG](https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg)
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/group.xml)
 -   [Resulting
     Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png)
@@ -2635,22 +2636,19 @@ use different chart definitions
 -   `style` ... default chart style
 -   `class` ... style class (limited when used for svg charts)
 
-### Chart parts
+#### Chart parts
 
 Users can specify the chart parts elements:
 
 -   `scd:title` ... title of chart
 -   `scd:legend` ... legend of chart
--   `scd:plot` ... position, size and low/high logical coordinates for
-    chart drawing
+-   `scd:plot` ... position, size and low/high logical coordinates for chart drawing
 -   `scd:axis_x` ... x axis, more than one x axis can be defined
 -   `scd:axis_y` ... y axis, more than one x axis can be defined
--   `scd:support_lines` ... support lines to allow better view of chart
-    values
--   `scd:layer` ... layer definition, more than one layer can be
-    defined, order of defintion defines z-order
+-   `scd:support_lines` ... support lines to allow better view of chart values
+-   `scd:layer` ... layer definition, more than one layer can be defined, order of defintion defines z-order
 
-#### scd:title
+##### scd:title
 
 Users can specify following attributes
 
@@ -2659,7 +2657,7 @@ Users can specify following attributes
 -   `style` ... style of title
 -   `class` ... style class (limited when used for svg charts)
 
-####  scd:legend
+#####  scd:legend
 
 Users can specify following attributes
 
@@ -2668,7 +2666,7 @@ Users can specify following attributes
 -   `style` ... style of legend text and border line
 -   `class` ... style class (limited when used for svg charts)
 
-####  scd:plot
+#####  scd:plot
 
 Users can specify following attributes
 
@@ -2678,7 +2676,7 @@ Users can specify following attributes
 -   `logical_y_low` ... logical low y value
 -   `logical_y_high` ... logical high y value
 
-####  scd:axis_x, scd:axis_y
+#####  scd:axis_x, scd:axis_y
 
 Users can specify following attributes
 
@@ -2697,7 +2695,7 @@ Users can specify following attributes
 
 -   `draw_behind` ... axis should be drawn behind the chart
 
-####  scd:support_lines
+#####  scd:support_lines
 
 Users can specify following attributes
 
@@ -2719,7 +2717,7 @@ Users can specify following attributes
 -   `mask` ... format mask of values
 -   `style` ... style of labels and lines
 
-####  scd:layer
+#####  scd:layer
 
 Users can specify following attributes
 
