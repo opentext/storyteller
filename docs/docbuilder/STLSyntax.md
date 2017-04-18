@@ -194,7 +194,7 @@ On the other hand in the following case:
 
 ```xml
 <stl:story>
-  <stl:p>Author: <stl:datasource xpath="/data/author/name"/></stl:p>
+  <stl:p>Author: <stl:field xpath="/data/author/name"/></stl:p>
 </stl:story>
 ```
 
@@ -1053,7 +1053,7 @@ nested stories:
       </stl:repeater>
     </stl:p>
     <stl:p>
-      <stl:datasource texttype="rich" xpath="'&lt;html&gt;&lt;body&gt;c) &lt;b&gt;rich&lt;/b&gt; substitution&lt;/body&gt;&lt;/html&gt;'"/>
+      <stl:content xpath="'&lt;html&gt;&lt;body&gt;c) &lt;b&gt;rich&lt;/b&gt; substitution&lt;/body&gt;&lt;/html&gt;'"/>
     </stl:p>
   </stl:span>
 </stl:story>
@@ -1383,23 +1383,19 @@ perspective. Instead of presenting all kinds of substitutions as a
 single `stl:substitution` element, we expose individual kinds of
 substitutions as separate elements:
 
--   `<stl:datasource .../>`
 -   `<stl:field .../>`
--   `<stl:calculation .../>`
 -   `<stl:content .../>`
--   `<stl:lookup .../>`
+-   `<stl:translation .../>`
 
-### DataSource
+### Data Source
 
-*Data Substitution* exaluates a given
-[XPath](https://en.wikipedia.org/wiki/XPath) and retrieves a string
-value from *Data Instance*:
+*Data Substitution* evaluates a given [XPath](https://en.wikipedia.org/wiki/XPath) and retrieves a string value from *Data Instance*:
 
 ```xml
 ...
 <stl:story>
   <stl:p>
-    <stl:datasouce xpath="concat( 'Mr. ', /data/page[@number=2]/heading )"/>
+    <stl:field xpath="concat( 'Mr. ', /data/page[@number=2]/heading )"/>
   </stl:p>
 </stl:story>
 ...
@@ -1407,8 +1403,7 @@ value from *Data Instance*:
 
 ### Field
 
-*Field Substitution* evaluates a special value like current page number
-or number of pages in current document.
+*Field Substitution* evaluates a special value like current page number or number of pages in current document.
 
 ```xml
 ...
@@ -1420,27 +1415,9 @@ or number of pages in current document.
 </stl:story>
 ...
 ```
-
-### Calculation
-
-*Calculation Substitution* is used for computing totals and sub-totals
-of transactional data.
-
-```xml
-...
-<stl:story>
-  <stl:p>
-    <stl:calculation expression="/data/page/@number"/>
-  </stl:p>
-</stl:story>
-...
-```
-
 ### External Content & Repository
 
-*External Content Substitution* loads an external document (e.g. *SSD*,
-*DocBuilder++* or *RTF*) into a cache and evaluates a specific story
-based on a specified `src` attrivute content a *Moniker* selector:
+*External Content Substitution* loads an external document (e.g. *SSD*, *DocBuilder++* or *RTF*) into a cache and evaluates a specific story based on a specified `src` attribute content a *Moniker* selector:
 
 ```xml
 ...
@@ -1479,21 +1456,15 @@ external document (e.g. HTML) with no caching:
 ...
 ```
 
-### Lookup
+### Translation
 
-*Lookup Substitution* realizes special `key -> value` lookup.
-
-There are several kinds of lookup substitutions:
-
--   `metadata`
--   `language`
--   `table`
+*Translation Substitution* realizes special `phrase -> value` lookup.
 
 ```xml
 ...
 <stl:story>
   <stl:p>
-    <stl:lookup type="language" key="Label1"/>
+    <stl:translation phrase="Label1"/>
   </stl:p>
 </stl:story>
 ...
@@ -1657,7 +1628,7 @@ There are two kinds of a repeater:
     Paragraph Repeater:
     <stl:repeater xpath="/data/character">
       <stl:story>
-        <stl:p>Character Name: <stl:datasource xpath="name"/></stl:p>
+        <stl:p>Character Name: <stl:field xpath="name"/></stl:p>
       </stl:story>
     </stl:repeater>
   </stl:p>
@@ -1673,7 +1644,7 @@ There are two kinds of a repeater:
   <stl:p>
     Inline Repeater:
     <stl:repeater xpath="/data/character">
-      <stl:story><stl:datasource xpath="substring(name, 0, 2)"/>, </stl:story>
+      <stl:story><stl:field xpath="substring(name, 0, 2)"/>, </stl:story>
     </stl:repeater>
   </stl:p>
 </stl:story>
@@ -1715,7 +1686,7 @@ query. There can be a single `stl:case` element with no `key` attribute
         <stl:story>was one character</stl:story>
       </stl:case>
       <stl:case>
-        <stl:story>were <stl:datasource xpath="count(/data/character)"/> characters</stl:story>
+        <stl:story>were <stl:field xpath="count(/data/character)"/> characters</stl:story>
       </stl:case>
     </stl:switch>
     at the party.
@@ -1746,7 +1717,7 @@ shared several times as in the following example:
       <stl:case key="3" story="Shared #1"/>
       <stl:case key="4" story="Shared #1"/>
       <stl:case>
-        <stl:story>were <stl:datasource xpath="count(/data/character)"/> characters</stl:story>
+        <stl:story>were <stl:field xpath="count(/data/character)"/> characters</stl:story>
       </stl:case>
     </stl:switch>
     at the party.
@@ -2322,9 +2293,9 @@ Following example demonstrates a *paragraph table* containing *header*,
       <stl:story>
         <stl:repeater xpath="/data/row">
           <stl:row>
-            <stl:cell><stl:p><stl:datasource xpath="position()" />. left</stl:p></stl:cell>
-            <stl:cell><stl:p><stl:datasource xpath="position()" />. middle</stl:p></stl:cell>
-            <stl:cell><stl:p><stl:datasource xpath="position()" />. right</stl:p></stl:cell>
+            <stl:cell><stl:p><stl:field xpath="position()" />. left</stl:p></stl:cell>
+            <stl:cell><stl:p><stl:field xpath="position()" />. middle</stl:p></stl:cell>
+            <stl:cell><stl:p><stl:field xpath="position()" />. right</stl:p></stl:cell>
           </stl:row>
         </stl:repeater>         
       </stl:story>
@@ -2512,7 +2483,7 @@ and submit button:
                   <stl:story>
                     <stl:p>
                       <stl:input w="12pt" h="12pt" type="radio" xpath="."/>
-                      <stl:datasource xpath='string(ddi:label)'/>
+                      <stl:field xpath='string(ddi:label)'/>
                     </stl:p>
                   </stl:story>
                 </stl:repeater>
