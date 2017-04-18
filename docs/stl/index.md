@@ -1,34 +1,34 @@
 # StoryTeller STL Framework
 
 This document describes design goals as well as implementation details of the new DocPlatform components called 
-*Document Builder* and *Document Exporter* and a new XML-based serialization format called *STL*.
+*Document Builder* and *Document Writer* and a new XML-based layout definition format called *STL*.
 
 Users can interactively and/or programmatically create and modify an instance of *StoryTeller Document* 
-and they can serialize it in a form of *SSD storage file* for later use or modification. 
+and they can possibly serialize it in a form of an *SSD storage file* for later use or modification. 
 
-Such approach works wery well for users working completely in OpenText/StreamServe ecosystem. Users create 
-and maintain StoryTeller designs exclusively in the StoryTeller Design Tool and need no special exchange formats.
+Such approach works very well for users working completely in OpenText/StreamServe ecosystem. Users create 
+and maintain StoryTeller designs exclusively in the *StoryTeller Design Tool* and need no special exchange formats.
 
-But there are users combining other tools (e.g. Microsoft Word), with StoryTeller process. Currently they have not 
-many possibilities how to integrate the tools except for inefficient and error prone runtime conversion. 
+But there are users combining other tools (e.g. *Microsoft Word*), with *StoryTeller* process. Currently they 
+have little possibilities how to integrate the tools except for inefficient and error prone runtime conversion. 
 
-*Document Builder* together with *Document Exporter* should bring a possibility to easily convert, 
+*Document Builder* together with *Document Writer* should bring a new possibility to easily convert, 
 maintain and migrate *StoryTeller Documents* from/to other formats. It adds relatively simple, 
-human readable and editable exchange format in a form of XML hierarchy and tools to import and export 
-the format to/from *StoryTeller Document* instance.
+human readable and editable exchange format in a form of well specified XML hierarchy and also provides 
+tools to import and export the format to/from *StoryTeller Document* instance.
 
-The following schema demonstrates the overview of the StoryTeller input/output infrastructure and highlights 
+The following schema demonstrates an overview of the StoryTeller input/output infrastructure and highlights 
 the role of *DocBuilder Components*:
 
+![DocBuilder++ overview](docbuilder-overview.png)
 
-The detailed development documentation consists of two section documenting *Builder* and *Exporter* 
+The detailed development documentation consists of two section documenting *Builder* and *Writer* 
 components separately.
 
 # Python implementation
 
-There already exists a different implementation of *DocBuilder* and *DocEnumerator* which serves 
-us very well for at least some of the use cases (regression testing, test design conversion 
-and maintenance, ...). 
+There already exists a different implementation of *DocBuilder* and *DocWriter* which serves us very well 
+for at least some of the use cases (regression testing, test design conversion and maintenance, ...). 
 
 Unfortunately there are several reasons why this version is not suitable for production use:
 
@@ -36,9 +36,8 @@ Unfortunately there are several reasons why this version is not suitable for pro
 -   Not designed for production use
 -   XML structure was incrementally updated and so is not designed very well
 
-In order to address the issues we decided to implement a new *DocBuilder* version, 
-but now the implementation is completely in C++, intended for production usage and 
-a special care is invested to well designed XML structure. 
+In order to address the issues we decided to implement a new *DocBuilder* version, but now implemented completely in C++, 
+intended for production usage with a special care invested to well designed XML structure. 
 
 To disambiguate the new builder component with the old one we call the new builder *DocBuilder++*.
 
@@ -86,6 +85,6 @@ to hide the implementation details).
 # More details
 
 -   STL Use cases
--   STL Syntax
+-   [STL Syntax](syntax.md)
 -   DocBuilder++
 -   DocWriter++
