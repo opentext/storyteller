@@ -97,9 +97,9 @@ All three entities - `stl:source`, `stl:template` and
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/data-xml.xml)
 -   [XML Data
-    Instance](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-xml-xml-m.data.xml)
+    Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-xml-xml-m.data.xml)
 -   [HTML Data
-    Instance](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-xml-xml-m.data.html)
+    Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-xml-xml-m.data.html)
 
 ### Dual Transformation
 
@@ -148,14 +148,14 @@ active *TDT key*.
     -   [TDT
         Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/bbc-trans.xml)
     -   [Data
-        Instance](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-bbc-py-m.data.xml)
+        Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-bbc-py-m.data.xml)
 -   CRO
     -   [Data
         Source](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/cro-data.xml)
     -   [TDT
         Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/cro-trans.xml)
     -   [Data
-        Instance](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-cro-py-m.data.xml)
+        Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-cro-py-m.data.xml)
 
 ### TDT-based document creation
 
@@ -419,9 +419,9 @@ well and is very intuitive:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png" alt="Story example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png" alt="Story example"/>
 
 # Styling
 
@@ -852,9 +852,9 @@ formats:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png" alt="Story example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png" alt="Story example"/>
 
 ### Semantic Tags & Styling
 
@@ -931,9 +931,9 @@ application to a story:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/styles.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png)
 
-  <img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png" alt="Styles example"/>
+  <img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png" alt="Styles example"/>
 
 # Content Entities
 
@@ -954,7 +954,7 @@ application to a story:
     - [[/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png][Resulting Document]]
 
 #+BEGIN_HTML
-  <img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png" alt="Paragraph example"/>
+  <img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png" alt="Paragraph example"/>
 
 ## Span
 
@@ -1066,9 +1066,9 @@ This example demonstrates the usage of a *Span*:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/span.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png" alt="Span example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png" alt="Span example"/>
 
 ## List
 
@@ -1208,9 +1208,9 @@ This example demonstrates the usage of a *Span*:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/list.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png" alt="List example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png" alt="List example"/>
 
 ## Breaks
 
@@ -1261,9 +1261,9 @@ This example demonstrates various kinds of *Break commands*:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/breaks.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png" alt="Break Commands"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png" alt="Break Commands"/>
 
 ## Tab Stops
 
@@ -1329,9 +1329,9 @@ This example demonstrates usage of *Tab Stops*:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/tabs.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png" alt="Tab Stops"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png" alt="Tab Stops"/>
 
 ### Commands
 
@@ -1477,9 +1477,9 @@ external document (e.g. HTML) with no caching:
 This example demonstrates various kinds of *Substitutions*:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/subst.xml)
--   [Resulting Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png)
+-   [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png)
 
-    <img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png" alt="Substitution example"/>
+    <img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png" alt="Substitution example"/>
 
 #### External section references
 
@@ -1605,8 +1605,8 @@ See the following links for details:
 
 -   [Main STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/sections.xml)
 -   [Story STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/sections-story.xml)
--   [Section Definition](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/sections-docdef.xml) (referencing [HTML text](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/Fragment.html), [Tables](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/tables.html) and [Image](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/ducks.png))
--   [Resulting Page Layout HTML](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/sections-py-m.layout.html/index.html)
+-   [Section Definition](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/sections-docdef.xml) (referencing [HTML text](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/Fragment.html), [Tables](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/tables.html) and [Image](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/ducks.png))
+-   [Resulting Page Layout HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/sections-py-m.layout.html/index.html)
 
 ## Repeater
 
@@ -1657,9 +1657,9 @@ This example demonstrates the usage of a *Repeater*:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/repeater.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png" alt="Repeater example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png" alt="Repeater example"/>
 
 ## Switch & Scope
 
@@ -1844,9 +1844,9 @@ This example demonstrates the usage of a *Switch*:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/switch.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png" alt="Switch example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png" alt="Switch example"/>
 
 # Layout Items
 
@@ -1895,9 +1895,9 @@ example like for stories:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png" alt="Text example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png" alt="Text example"/>
 
 ## Image
 
@@ -1964,9 +1964,9 @@ example:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/image.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png" alt="Image example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png" alt="Image example"/>
 
 ## Fragment
 
@@ -2035,9 +2035,9 @@ Folowing example demonstrates definition of *Referenced* and *Embedded*
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/fragment.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png" alt="Fragment example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png" alt="Fragment example"/>
 
 ## Shape
 
@@ -2091,9 +2091,9 @@ example:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/shape.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png" alt="Shapes example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png" alt="Shapes example"/>
 
 ## Path
 
@@ -2143,9 +2143,9 @@ image to DocBuilder++ (either manually or programmatically):
 -   ![](http://alistapart.com/d/using-svg-for-flexible-scalable-and-fun-backgrounds-part-ii/sample5.svg)
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/paths.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png" alt="Paths example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png" alt="Paths example"/>
 
 Note that some of the arc handling code has been inspired by the Paul
 LeBeau's [androidsvg library](https://github.com/BigBadaboom/androidsvg)
@@ -2351,9 +2351,9 @@ This example demonstrates the usage of various kinds of *Tables*:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/table.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png" alt="Table example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png" alt="Table example"/>
 
 ## Interactive Item
 
@@ -2506,9 +2506,9 @@ Following example demonstrates some types of interactive items:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/input.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png" alt="Interactive item example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png" alt="Interactive item example"/>
 
 ## Group
 
@@ -2558,9 +2558,9 @@ Following example demonstrates the grouping in action:
 -   ![](https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg)
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/group.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png" alt="Grouping example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png" alt="Grouping example"/>
 
 ## Barcode
 
@@ -2609,9 +2609,9 @@ For demonstration of barcodes we can look at the following example:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/barcode.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png" alt="Barcode example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png" alt="Barcode example"/>
 
 ## Chart
 
@@ -2928,9 +2928,9 @@ example enumerating all pages of an multipage TIFF image:
 
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/multipage.xml)
 -   [Resulting
-    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png)
+    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png)
 
-<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png" alt="Multipage Image example"/>
+<img src=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png" alt="Multipage Image example"/>
 
 # Load-time vs. Runtime
 
