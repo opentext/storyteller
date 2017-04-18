@@ -1,0 +1,15 @@
+<election year="2012">
+  <region id="CZ-ST" name="Středočeský kraj" municipalities="1145" population="1006408" votes="349796" participation="0.347568779262486"/>
+  <region id="CZ-JC" name="Jihočeský kraj" municipalities="623" population="516534" votes="191917" participation="0.371547661915769"/>
+  <region id="CZ-PL" name="Plzeňský kraj" municipalities="510" population="458038" votes="166758" participation="0.364070229980919"/>
+  <region id="CZ-KA" name="Karlovarský kraj" municipalities="132" population="241114" votes="72130" participation="0.29915309770482"/>
+  <region id="CZ-US" name="Ústecký kraj" municipalities="354" population="663440" votes="213000" participation="0.32105390088026"/>
+  <region id="CZ-LI" name="Liberecký kraj" municipalities="215" population="351263" votes="129482" participation="0.368618385654054"/>
+  <region id="CZ-KR" name="Královéhradecký kraj" municipalities="448" population="448201" votes="163374" participation="0.364510565572143"/>
+  <region id="CZ-PA" name="Pardubický kraj" municipalities="451" population="415553" votes="155464" participation="0.374113530644707"/>
+  <region id="CZ-VY" name="Kraj Vysočina" municipalities="704" population="415794" votes="164072" participation="0.394599248666407"/>
+  <region id="CZ-JM" name="Jihomoravský kraj" municipalities="701" population="954117" votes="347336" participation="0.364039211124003"/>
+  <region id="CZ-MO" name="Moravskoslezský kraj" municipalities="322" population="1011801" votes="319979" participation="0.31624696951278"/>
+  <region id="CZ-OL" name="Olomoucký kraj" municipalities="399" population="524013" votes="176884" participation="0.33755651100259"/>
+  <region id="CZ-ZL" name="Zlínský kraj" municipalities="305" population="485530" votes="186923" participation="0.384987539389945"/>
+</election>

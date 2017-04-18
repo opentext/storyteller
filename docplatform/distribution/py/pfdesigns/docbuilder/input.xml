@@ -1,0 +1,83 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:data>
+	<stl:template>
+      <data xmlns:ddi="http://developer.opentext.com/schemas/storyteller/layout/ddi/v1">
+		<ddi:form>
+          <plain_input>
+			<ddi:input name="drink">Order a drink</ddi:input>
+			<ddi:label>Drink</ddi:label>
+			<ddi:tooltip>Pick a drink you like, please</ddi:tooltip>
+          </plain_input>
+          <group_input>
+			<ddi:input-group multiselect="false" name="Fruits">
+              <choice>
+				<ddi:choice selected="true">apple</ddi:choice>
+				<ddi:label>Apple</ddi:label>
+              </choice>
+              <choice>
+				<ddi:choice selected="false">banana</ddi:choice>
+				<ddi:label>Banana</ddi:label>
+              </choice>
+              <choice>
+				<ddi:choice selected="false">plum</ddi:choice>
+				<ddi:label>Plum</ddi:label>
+              </choice>
+			</ddi:input-group>
+			<ddi:label/>
+			<ddi:tooltip/>
+          </group_input>
+		  <submit>
+			<ddi:input name="submit-button">X</ddi:input>
+			<ddi:label>Submit</ddi:label>
+			<ddi:tooltip>Send form X</ddi:tooltip>
+		  </submit>
+		</ddi:form>
+      </data>
+	</stl:template>
+	<stl:transformation>
+	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+	</stl:transformation>
+  </stl:data>
+  <stl:style>
+	.input {
+	  border:solid lightgray;
+	  font-family:Arial;
+	  font-size:10.0pt;
+	}
+  </stl:style>
+
+  <stl:document>
+	<stl:page w="300pt" h="150pt">
+      <stl:input x="20pt" y="20pt" w="100pt" h="20pt" type="text" xpath="/data/ddi:form/plain_input" class="input"/>
+      <stl:input x="20pt" y="50pt" w="100pt" h="15pt" type="dropdown" xpath="/data/ddi:form/group_input" class="input"/>
+      <stl:input x="20pt" y="80pt" w="100pt" h="50pt" type="listbox" xpath="/data/ddi:form/group_input" class="input"/>
+	  <stl:text x="140pt" y="20pt" w="150pt" h="115pt" style="fill:#ffddcc">
+		<stl:story name="Shared">
+		  <stl:p>This is a story containing interactive form:</stl:p>
+		  <stl:block style="font-family:Arial; font-size:10.0pt">
+			<stl:p>
+			  <stl:scope relation="/data/ddi:form">
+				<stl:story>
+				  <stl:p>
+					<stl:input w="100pt" h="20pt" type="text" xpath="/data/ddi:form/plain_input" style="border:solid lightgrey"/>
+				  </stl:p>
+				  <stl:repeater xpath="/data/ddi:form/group_input/ddi:input-group/choice">
+					<stl:story>
+					  <stl:p>
+						<stl:input w="12pt" h="12pt" type="radio" xpath="."/>
+						<stl:field xpath='string(ddi:label)'/>
+					  </stl:p>
+					</stl:story>
+				  </stl:repeater>
+				  <stl:p style="text-align:center">
+					<stl:input w="60pt" h="20pt" type="submit" xpath="/data/ddi:form/submit"/>
+				  </stl:p>
+				</stl:story>
+			  </stl:scope>
+			</stl:p>
+		  </stl:block>
+		</stl:story>
+	  </stl:text>
+	</stl:page>
+  </stl:document>
+</stl:stl>

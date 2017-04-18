@@ -1,0 +1,6 @@
+<stl:story name="Sections" xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:content uri="strssec:section_html" />
+  <stl:content uri="strssec:section_tables" />
+  <stl:content uri="strssec:section_image" />
+  <stl:content uri="strssec:section_mixed" />
+</stl:story>

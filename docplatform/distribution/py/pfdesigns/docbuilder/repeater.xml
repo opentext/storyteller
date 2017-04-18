@@ -1,0 +1,61 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:data>
+	<stl:source key="_default">
+	  <data>
+		<character>
+          <name>Freddy Kruger</name>
+		</character>
+		<character>
+          <name>Homer J. Simpson</name>
+		</character>
+		<character>
+          <name>Cinderella</name>
+		</character>
+		<character>
+          <name>Oscar Wilde</name>
+		</character>
+      </data>
+	</stl:source>
+	<stl:template>
+	  <data>
+		<character>
+		  <name>?</name>
+		</character>
+	  </data>
+	</stl:template>
+	<stl:transformation key="_default">
+	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
+		<tdt:rule path="/data/character">
+		  <tdt:value key=".">/data/character</tdt:value>
+		  <tdt:value key="recurse">.</tdt:value>
+		</tdt:rule>
+	  </tdt:transformation>
+	</stl:transformation>
+  </stl:data>
+  <stl:document>
+	<stl:page w="300pt" h="120pt">
+	  <stl:text x="20pt" y="20pt" w="260pt" h="80pt" style="fill:#aabbcc">
+		<stl:story>
+		  <stl:p>
+			<stl:span style="font-family:Arial; font-size:16pt; font-weight: bold; ">
+			  Repeated data
+			</stl:span>
+			[
+			<stl:repeater xpath="/data/character">
+			  <stl:story><stl:field xpath="substring(name, 0, 2)"/>, </stl:story>
+			</stl:repeater>
+			]
+			<stl:repeater xpath="/data/character">
+              <stl:story>
+				<stl:p>
+				  <stl:span style="font-style: italic; font-variant: small-caps">Character Name:</stl:span>
+				  <stl:field xpath="name"/>
+				</stl:p>
+              </stl:story>
+			</stl:repeater>
+		  </stl:p>
+        </stl:story>
+	  </stl:text>
+	</stl:page>
+  </stl:document>
+</stl:stl>

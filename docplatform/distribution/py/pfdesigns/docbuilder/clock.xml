@@ -1,0 +1,46 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
+		 xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" version="0.1">
+  <stl:fixtures>
+	<xp:fixture key="link:/empty.xml">
+	  <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+		<stl:document>
+		  <stl:story name="Main">
+		  </stl:story>
+		</stl:document>
+	  </stl:stl>
+	</xp:fixture>
+  </stl:fixtures>
+  <stl:document>
+	<stl:story name="Main">
+	  <stl:p style="font-family:Arial; font-size:28pt; font-weight:bold; margin-bottom:25pt;">
+		Customer meeting schedule:
+	  </stl:p>
+	  <stl:p>
+		<stl:content uri='link:/empty.xml' selector='/story[1]'>
+		  <stl:script language="js">
+			'use strict';
+			var item = require('layout').item();
+			var repo = require('repo');
+			var Mark = require('markup-js');
+			var Baby = require('babyparse');
+
+			var interval = 25;
+			var start = 9;
+			Mark.pipes.minutes = (n) => (n*interval) % 60 * 6;
+			Mark.pipes.hours = (n) => (start + (n*interval)/ 60) * 6 * 5;
+			var addresses = repo.load('wd:/addresses.csv');
+			var template = repo.load( "wd:/addresses-template.xml" );
+			addresses = Baby.parse(addresses, {header: true}).data;
+			var stl = Mark.up(template, {addresses: addresses.slice(0, 18)});
+			//console.log( stl );
+			item.Uri = repo.upload(stl);
+		  </stl:script>
+		</stl:content>
+	  </stl:p>
+	</stl:story>
+
+	<stl:page w="600pt" h="830pt" occurrence="repeatable">
+      <stl:text x="40pt" y="40pt" w="520pt" h="760pt" story="Main"/>
+	</stl:page>
+  </stl:document>
+</stl:stl>

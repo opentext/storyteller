@@ -1,0 +1,979 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout"
+			xmlns:scd="http://developer.opentext.com/schemas/storyteller/chart/definition"
+			xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt"
+			xmlns:xhtml="http://www.w3.org/1999/xhtml"
+			xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+			vc:minVersion="1.1"
+			targetNamespace="http://developer.opentext.com/schemas/storyteller/layout">
+  <!--
+	  This schema represents STL/DocBuilder syntax version 0.1 (initial version).
+
+	  The STL format brings many advantages over SSD StoryTeller format,
+	  but it is very new and is going to be a subject of many changes in following months.
+
+      Please, beware that the syntax is still mostly work-in-progress and we guarantee
+	  *NO FORWARD OR BACKWARD COMPATIBILITY* until we get to version 1.0.
+  -->
+
+  <xsd:import schemaLocation="html.xsd" />
+  <xsd:import schemaLocation="xhtml.xsd" namespace="http://www.w3.org/1999/xhtml" />
+  <xsd:import schemaLocation="tdt.xsd" namespace="http://developer.opentext.com/schemas/storyteller/transformation/tdt" />
+  <xsd:import schemaLocation="scd.xsd" namespace="http://developer.opentext.com/schemas/storyteller/chart/definition" />
+
+  <!-- Attribute types -->
+
+  <xsd:simpleType name="length">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[+-]?([0-9]*\.)?[0-9]+(pt|px|in|pc|mm|cm|em|%)"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="uri">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="(wd|file|link|http|https|ftp|cas|tmp):/.*"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="class">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[a-zA-Z_][a-zA-Z_\-0-9]*"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="style">
+    <xsd:restriction base="xsd:string">
+	  <!-- Whitespace rules may be too strict here, but we want to have the style syntax uniform -->
+      <xsd:pattern value="([a-z\-]+:\s?[^;]+;?\s?)+"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="transform">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="((matrix|translate|scale|rotate|skewX|skewY)\(\s*([+-]?([0-9]*\.)?[0-9]+\s*)+\)\s*)+"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="key">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+
+  <xsd:simpleType name="name">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+
+  <xsd:simpleType name="xpath">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+
+  <xsd:simpleType name="locale">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+
+  <xsd:simpleType name="tabs">
+	<!-- Todo: validate tabs definition string -->
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="points">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="([+-]?([0-9]*\.)?[0-9]+[,;\s]?)+"/>
+	</xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="path_data">
+    <xsd:restriction base="xsd:string">
+	  <!-- This pattern causes assert at libxml_helpers.cxx:304 -->
+<!-- <xsd:pattern value="([mlhvcsqtaMLHVCSQTA]?[,;\s]?([+-]?(([0-9]*\.)?[0-9]+))[,;\s]?)+[zZ]?"/> -->
+	</xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="unbounded_decimal">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="([+-]?([0-9]*\.)?[0-9]+)|max"/>
+	</xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="modification_key">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[@#_a-zA-Z,0-9/]+"/>
+	</xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="break_type">
+    <xsd:restriction base="xsd:string">
+	  <xsd:enumeration value="area" />
+	  <xsd:enumeration value="line" />
+	</xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="command_type">
+    <xsd:restriction base="xsd:string">
+	  <xsd:enumeration value="box" />
+	  <xsd:enumeration value="attachment" />
+	  <xsd:enumeration value="toc" />
+<!-- 
+	 Following commands should be represented inline in text
+	 (the command types are just an internal representation)
+
+	  <xsd:enumeration value="zero-width-control" />
+	  <xsd:enumeration value="substituable-glyph" />
+-->
+	</xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="fragment_category">
+    <xsd:restriction base="xsd:string">
+	  <xsd:enumeration value="format-time" />
+	  <xsd:enumeration value="render-time" />
+	  <xsd:enumeration value="postprocessing" />
+	  <xsd:enumeration value="load-time" />
+	</xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="selector">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="(/(item|story)\[[^\]]+\])+"/>
+	</xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="input_type">
+    <xsd:restriction base="xsd:string">
+	  <xsd:enumeration value="button" />
+	  <xsd:enumeration value="checkbox" />
+	  <xsd:enumeration value="date" />
+	  <xsd:enumeration value="email" />
+	  <xsd:enumeration value="file" />
+	  <xsd:enumeration value="hidden" />
+	  <xsd:enumeration value="number" />
+	  <xsd:enumeration value="password" />
+	  <xsd:enumeration value="radio" />
+	  <xsd:enumeration value="reset" />
+	  <xsd:enumeration value="submit" />
+	  <xsd:enumeration value="tel" />
+	  <xsd:enumeration value="text" />
+	  <xsd:enumeration value="url" />
+
+	  <xsd:enumeration value="multiline" />
+	  <xsd:enumeration value="dropdown" />
+	  <xsd:enumeration value="listbox" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="field_type">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="page-number"/>
+      <xsd:enumeration value="number-of-pages"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="lookup_type">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="metadata"/>
+      <xsd:enumeration value="language"/>
+      <xsd:enumeration value="table"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="story_type">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="referencable"/>
+      <xsd:enumeration value="exposable"/>
+      <xsd:enumeration value="exposed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="story_format">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="native"/>
+      <xsd:enumeration value="XHTML"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="page_occurrence">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9]*|optional|once-or-more|repeatable"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="story_occurrence">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="header-first"/>
+      <xsd:enumeration value="header-all-but-first"/>
+      <xsd:enumeration value="header"/>
+      <xsd:enumeration value="body-all-but-first"/>
+      <xsd:enumeration value="body"/>
+      <xsd:enumeration value="body-all-but-last"/>
+      <xsd:enumeration value="footer"/>
+      <xsd:enumeration value="footer-all-but-last"/>
+      <xsd:enumeration value="footer-last"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="wrapping_mode">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="exact"/>
+      <xsd:enumeration value="bbox"/>
+      <xsd:enumeration value="hstrip"/>
+      <xsd:enumeration value="vstrip"/>
+
+      <xsd:enumeration value="exact-own"/>
+      <xsd:enumeration value="bbox-own"/>
+      <xsd:enumeration value="hstrip-own"/>
+      <xsd:enumeration value="vstrip-own"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="resize_mode">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="fixed"/>
+      <xsd:enumeration value="proportional"/>
+      <xsd:enumeration value="free"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="visibility_mode">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="visible"/>
+      <xsd:enumeration value="hidden"/>
+      <xsd:enumeration value="invisible"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="script_when">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="before"/>
+      <xsd:enumeration value="after"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="script_language">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="js"/>
+      <xsd:enumeration value="py"/>
+      <xsd:enumeration value="strs"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <!-- Attribute groups -->
+
+  <xsd:attributeGroup name="style-attrs">
+	<xsd:attribute name="id" type="xsd:ID"/>
+	<xsd:attribute name="class" type="stl:class"/>
+	<xsd:attribute name="style" type="stl:style"/>
+  </xsd:attributeGroup>
+
+  <xsd:attributeGroup name="bbox-attrs">
+	<!-- Following attributes all handle bbox, we should reduce them to just:
+		 'left', 'top', 'width', 'height' or something similar -->
+	<xsd:attribute name="x" type="stl:length" />
+	<xsd:attribute name="y" type="stl:length" />
+	<xsd:attribute name="w" type="stl:length" />
+	<xsd:attribute name="h" type="stl:length" />
+  </xsd:attributeGroup>
+
+  <xsd:attributeGroup name="bbox-attrs-ellipse">
+	<xsd:attribute name="cx" type="stl:length" />
+	<xsd:attribute name="cy" type="stl:length" />
+	<xsd:attribute name="rx" type="stl:length" />
+	<xsd:attribute name="ry" type="stl:length" />
+  </xsd:attributeGroup>
+
+  <xsd:attributeGroup name="bbox-attrs-circle">
+	<xsd:attribute name="cx" type="stl:length" />
+	<xsd:attribute name="cy" type="stl:length" />
+	<xsd:attribute name="r" type="stl:length" />
+  </xsd:attributeGroup>
+
+  <xsd:attributeGroup name="bbox-attrs-line">
+	<xsd:attribute name="x1" type="stl:length" />
+	<xsd:attribute name="y1" type="stl:length" />
+	<xsd:attribute name="x2" type="stl:length" />
+	<xsd:attribute name="y2" type="stl:length" />
+  </xsd:attributeGroup>
+
+  <xsd:attributeGroup name="layout-item-attrs">
+	<xsd:attribute name="transform" type="stl:transform" />
+	<xsd:attribute name="visibility" type="stl:visibility_mode" />
+	<xsd:attribute name="wrapping-mode" type="stl:wrapping_mode" />
+  </xsd:attributeGroup>
+
+  <xsd:attributeGroup name="layout-item-attrs-fmt">
+	<!-- Following attributes all handle formatting, we should probably reduce them somehow -->
+	<xsd:attributeGroup ref="stl:layout-item-attrs"/>
+	<xsd:attribute name="loose-formatting" type="xsd:boolean" />
+	<xsd:attribute name="content-rescale" type="stl:resize_mode" />
+	<xsd:attribute name="content-h-growth" type="stl:unbounded_decimal" />
+	<xsd:attribute name="content-h-shrink" type="stl:unbounded_decimal" />
+	<xsd:attribute name="content-v-growth" type="stl:unbounded_decimal" />
+	<xsd:attribute name="content-v-shrink" type="stl:unbounded_decimal" />
+	<xsd:attribute name="shape-resize" type="stl:resize_mode" />
+	<xsd:attribute name="shape-h-growth" type="stl:unbounded_decimal" />
+	<xsd:attribute name="shape-h-shrink" type="stl:unbounded_decimal" />
+	<xsd:attribute name="shape-v-growth" type="stl:unbounded_decimal" />
+	<xsd:attribute name="shape-v-shrink" type="stl:unbounded_decimal" />
+	<xsd:attribute name="placement-h-ratio" type="xsd:decimal" />
+	<xsd:attribute name="placement-v-ratio" type="xsd:decimal" />
+  </xsd:attributeGroup>
+
+  <xsd:group name="layout-items">
+	<xsd:choice>
+	  <xsd:element ref="stl:text" />
+	  <xsd:element ref="stl:ellipse" />
+	  <xsd:element ref="stl:circle" />
+	  <xsd:element ref="stl:rect" />
+	  <xsd:element ref="stl:path" />
+	  <xsd:element ref="stl:polygon" />
+	  <xsd:element ref="stl:polyline" />
+	  <xsd:element ref="stl:line" />
+	  <xsd:element ref="stl:image" />
+	  <xsd:element ref="stl:fragment" />
+	  <xsd:element ref="stl:group" />
+	  <xsd:element ref="stl:table" />
+	  <xsd:element ref="stl:chart" />
+	  <xsd:element ref="stl:barcode" />
+	  <xsd:element ref="stl:input" />
+	</xsd:choice>
+  </xsd:group>
+
+  <xsd:group name="content-items">
+	<xsd:choice>
+	  <xsd:element ref="stl:repeater" />
+	  <xsd:element ref="stl:switch" />
+	  <xsd:element ref="stl:scope" />
+	  <xsd:element ref="stl:content" />
+	  <xsd:element ref="stl:field" />
+	  <xsd:element ref="stl:translation" />
+	</xsd:choice>
+  </xsd:group>
+
+  <xsd:group name="runtime-items">
+	<xsd:choice>
+	  <xsd:element ref="stl:script" />
+<!--
+	We do not want to support modifications yet
+	(at least until we know how to handle them in HTML output
+
+	  <xsd:element ref="stl:modification" /> 
+-->
+	</xsd:choice>
+  </xsd:group>
+
+  <xsd:group name="inline-items">
+	<xsd:choice>
+	  <xsd:element ref="stl:span" />
+	  <xsd:element ref="stl:tab" />
+	  <xsd:element ref="stl:break" />
+	  <!-- Consider splitting inline and paragraph commands -->
+	  <xsd:element ref="stl:command" />
+	</xsd:choice>
+  </xsd:group>
+
+  <xsd:group name="paragraph-items">
+	<xsd:choice>
+	  <xsd:element ref="stl:block" />
+	  <xsd:element ref="stl:list" />
+	  <xsd:element ref="stl:p" />
+	  <!-- Consider splitting inline and paragraph commands -->
+	  <xsd:element ref="stl:command" />
+	</xsd:choice>
+  </xsd:group>
+
+  <!-- Runtime -->
+
+  <xsd:element name="script">
+	<xsd:complexType mixed="true">
+      <xsd:attribute name="when" type="stl:script_when" />
+      <xsd:attribute name="language" type="stl:script_language" />
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="modification">
+	<xsd:complexType>
+	  <xsd:simpleContent>
+		<xsd:extension base="xsd:string">
+          <xsd:attribute name="key" type="stl:modification_key" />
+		</xsd:extension>
+	  </xsd:simpleContent>
+	</xsd:complexType>
+  </xsd:element>
+
+  <!-- Fixtures -->
+
+  <xsd:element name="fixtures">
+	<xsd:simpleType>
+	  <!-- We allow whitespace (preprocessor does not clean it up after removing xp:fixture elements) -->
+      <xsd:restriction base="xsd:string">
+        <xsd:pattern value="\s*"/>
+      </xsd:restriction>
+	</xsd:simpleType>
+  </xsd:element>
+
+  <!-- Data --> 
+
+  <xsd:element name="source">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:any processContents="skip" minOccurs="0"/>
+	  </xsd:sequence>
+	  <xsd:attribute name="key" type="stl:key"/>
+	  <xsd:attribute name="src" type="stl:uri"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="template">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:any processContents="skip" minOccurs="0"/>
+	  </xsd:sequence>
+	  <xsd:attribute name="src" type="stl:uri"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="transformation">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:element ref="tdt:transformation" minOccurs="0" maxOccurs="1"/>
+	  </xsd:sequence>
+	  <xsd:attribute name="key" type="stl:key"/>
+	  <xsd:attribute name="src" type="stl:uri"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="data">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:element ref="stl:source" />
+		<xsd:element ref="stl:template" />
+		<xsd:element ref="stl:transformation" />
+	  </xsd:choice>
+	</xsd:complexType>
+  </xsd:element>
+
+  <!-- Command -->
+
+  <xsd:element name="tab">
+	<xsd:complexType>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="break">
+	<xsd:complexType>
+      <xsd:attribute name="type" type="stl:break_type" />
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="command">
+	<xsd:complexType>
+	  <xsd:simpleContent>
+		<xsd:extension base="xsd:string">
+          <xsd:attribute name="type" type="stl:command_type" />
+		</xsd:extension>
+	  </xsd:simpleContent>
+	</xsd:complexType>
+  </xsd:element>
+
+  <!-- Substitution -->
+
+  <xsd:element name="content">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attribute name="uri" type="stl:uri"/>
+	  <xsd:attribute name="selector" type="stl:selector"/>
+	  <xsd:attribute name="xpath" type="stl:xpath"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="field">
+	<xsd:complexType>
+	  <xsd:attribute name="xpath" type="stl:xpath"/>
+	  <xsd:attribute name="type" type="stl:field_type"/>
+	  <xsd:attribute name="key" type="xsd:string"/>
+	  <xsd:attribute name="mask" type="xsd:string"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <!-- Repeater -->
+
+  <xsd:element name="repeater">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="1" maxOccurs="unbounded">
+		<xsd:element ref="stl:repeater" />
+		<xsd:element ref="stl:story" />
+		<xsd:element ref="stl:row" />
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attribute name="xpath" type="stl:xpath"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <!-- Switch -->
+
+  <xsd:element name="switch">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="1" maxOccurs="unbounded">
+		<xsd:element ref="stl:case" />
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attribute name="xpath" type="stl:xpath"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="case">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:element ref="stl:story" />
+	  </xsd:choice>
+	  <xsd:attribute name="key" type="xsd:string"/>
+	  <xsd:attribute name="story" type="stl:name"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="translation">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:element ref="stl:phrase" />
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attribute name="phrase" type="xsd:string"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="phrase">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:element ref="stl:story" />
+	  </xsd:choice>
+	  <xsd:attribute name="locale" type="stl:locale"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="scope">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:element ref="stl:story" />
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attribute name="relation" type="stl:xpath"/>
+	  <xsd:attribute name="hyperlink" type="xsd:string"/>
+	  <xsd:attribute name="screentip" type="xsd:string"/>
+	  <xsd:attribute name="story" type="stl:name"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <!-- Layout items -->
+
+  <xsd:element name="image">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attribute name="src" type="stl:uri"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="input">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attribute name="type" type="stl:input_type"/>
+	  <xsd:attribute name="xpath" type="stl:xpath"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="group">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:group ref="stl:layout-items"/>
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="path">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:element ref="stl:story" />
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attribute name="data" type="stl:path_data"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="rect">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:element ref="stl:story" />
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attribute name="story" type="stl:name"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="ellipse">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:element ref="stl:story" />
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:bbox-attrs-ellipse"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attribute name="story" type="stl:name"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="circle">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:element ref="stl:story" />
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:bbox-attrs-circle"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attribute name="story" type="stl:name"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="polygon">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:element ref="stl:story" />
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attribute name="points" type="stl:points"/>
+	  <xsd:attribute name="story" type="stl:name"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="polyline">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attribute name="points" type="stl:points"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="line">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:bbox-attrs-line"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="text">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:element ref="stl:story" />
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attribute name="story" type="stl:name"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="fragment">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attribute name="src" type="stl:uri"/>
+	  <xsd:attribute name="selector" type="stl:selector"/>
+	  <xsd:attribute name="category" type="stl:fragment_category"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="table">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="1" maxOccurs="unbounded">
+		<xsd:element ref="stl:story" />
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="row">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="1" maxOccurs="unbounded">
+		<xsd:element ref="stl:cell" />
+	  </xsd:choice>
+	  <xsd:attribute name="h" type="stl:length" />
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="cell">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="1" maxOccurs="unbounded">
+		<xsd:group ref="stl:paragraph-items"/>
+	  </xsd:choice>
+	  <xsd:attribute name="w" type="stl:length" />
+	  <xsd:attribute name="colspan" type="xsd:integer" />
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <!-- Is this necessary, or can it be somehow generalized? -->
+	  <xsd:attribute name="chartid" type="xsd:string" />
+	  <xsd:attribute name="y_column" type="xsd:integer" />
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="chart">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:element ref="scd:scd" />
+		<xsd:group ref="stl:runtime-items"/>
+		<!-- 
+			 modification is temporary enabled for charts 
+			 (as we do not have script alternative right now) 
+		-->
+		<xsd:element ref="stl:modification" /> 
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attribute name="modern" type="xsd:boolean"/>
+	  <xsd:attribute name="src" type="stl:uri" />
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="barcode">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:group ref="stl:runtime-items"/>
+		<xsd:element ref="stl:attribute"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attribute name="type" type="xsd:string"/>
+	  <xsd:attribute name="data" type="xsd:string"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="attribute">
+	<xsd:complexType>
+	  <xsd:simpleContent>
+		<xsd:extension base="xsd:string">
+          <xsd:attribute name="name" type="xsd:string" />
+		</xsd:extension>
+	  </xsd:simpleContent>
+	</xsd:complexType>
+  </xsd:element>
+
+  <!-- Content -->
+
+  <xsd:element name="span">
+	<xsd:complexType mixed="true">
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:group ref="stl:layout-items"/>
+		<xsd:group ref="stl:content-items"/>
+		<xsd:group ref="stl:inline-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="p">
+	<xsd:complexType mixed="true">
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:group ref="stl:layout-items"/>
+		<xsd:group ref="stl:content-items"/>
+		<xsd:group ref="stl:inline-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attribute name="tabs" type="stl:tabs" />
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="block">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:group ref="stl:paragraph-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <!-- This is just for DynamicHTML demo, we should design this feature more carefully -->
+	  <xsd:attribute name="collapse-with-summary" type="xsd:string"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="li">
+	<xsd:complexType mixed="true">
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:group ref="stl:layout-items"/>
+		<xsd:group ref="stl:content-items"/>
+		<xsd:group ref="stl:inline-items"/>
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="list">
+	<!-- 
+		 Most likely the syntax of stl:list elements will change considerably 
+		 (we should consider HTML/CSS approach with list-style-type, list-style-position, 
+		 counter-increment, counter-reset, content, ...) 
+	-->
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:element ref="stl:list" />
+		<xsd:element ref="stl:li" />
+		<xsd:element ref="stl:p" />
+		<xsd:element ref="stl:command" />
+	  </xsd:choice>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
+	  <xsd:attribute name="list-mask" type="xsd:string"/>
+	  <xsd:attribute name="list-style" type="stl:style"/>
+	  <xsd:attribute name="numbering-id" type="xsd:integer"/>
+	  <xsd:attribute name="tabs" type="stl:tabs" />
+	</xsd:complexType>
+  </xsd:element>
+
+  <!-- Story -->
+
+  <xsd:element name="story">
+	<!--
+		There are several kinds/flavors of stories:
+		  - Format
+		    - Native story
+		    - XHTML story
+		  - Position
+		    - Document story
+		    - Inline story
+		    - Table story
+		    - Repeater/Switch story
+		  - ...
+
+       Each flavor has it's own specifics, but unfortunately we have to aggregate 
+	   all variants here. It weakens the validation process and hopefully we'll
+	   change it in future.
+
+       For example in XSD 1.1 there area xsd:assertion and xsd:alternative to achieve this.
+	   Or we could utilize XP preprocessor to perform some context sensitive element 
+	   replacement (rename stl:story to stl:story_shared, stl:story_inline, stl:story_table, ...)
+	-->
+	<xsd:complexType mixed="true">
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<!-- The xsd:alternative is not supported in XSD 1.0, so we are mixing various kinds of stl:story --> 
+		<!-- XHTML story -->
+		<xsd:element ref="xhtml:html" />
+		<xsd:element ref="xhtml:body" />
+		<xsd:element ref="html" />
+		<xsd:element ref="body" />
+		<!-- Table story -->
+		<xsd:element ref="stl:row" />
+		<!-- Normal (shared or own) story -->
+		<xsd:group ref="stl:paragraph-items"/>
+		<!-- Inline story (inside a repeater, switch or scope) -->
+		<xsd:group ref="stl:layout-items"/>
+		<xsd:group ref="stl:inline-items"/>
+		<xsd:group ref="stl:content-items"/>
+	  </xsd:choice>
+	  <xsd:attribute name="name" type="stl:name" />
+	  <xsd:attribute name="tag" type="stl:class" />
+	  <xsd:attribute name="type" type="stl:story_type" />
+	  <xsd:attribute name="format" type="stl:story_format"/>
+	  <xsd:attribute name="occurrence" type="stl:story_occurrence"/>
+	  <!-- The following two should probably go to style attribute -->
+	  <xsd:attribute name="w" type="stl:length"/>
+	  <xsd:attribute name="max-width" type="stl:length"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <!-- Page type -->
+
+  <xsd:element name="page">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+		<xsd:group ref="stl:layout-items"/>
+		<xsd:group ref="stl:runtime-items"/>
+	  </xsd:choice>
+	  <xsd:attribute name="w" type="stl:length" use="required"/>
+	  <xsd:attribute name="h" type="stl:length" use="required"/>
+	  <xsd:attribute name="name" type="stl:name"/>
+	  <xsd:attribute name="occurrence" type="stl:page_occurrence"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <!-- Styling -->
+
+  <xsd:element name="stylesheet">
+	<xsd:complexType>
+	  <!-- We should validate stylesheet XML here -->
+	  <xsd:sequence>
+		<xsd:any processContents="skip" minOccurs="0"/>
+	  </xsd:sequence>
+	  <xsd:attribute name="key" type="stl:key"/>
+	  <xsd:attribute name="src" type="stl:uri"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="style">
+	<xsd:complexType>
+	  <xsd:simpleContent>
+		<xsd:extension base="xsd:string">
+          <xsd:attribute name="src" type="stl:uri" />
+		</xsd:extension>
+	  </xsd:simpleContent>
+	</xsd:complexType>
+  </xsd:element>
+
+  <!-- Document -->
+
+  <xsd:element name="document">
+	<xsd:complexType>
+	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+	    <!-- We don't support runtime stylesheet XML syntax (gonna use CSS syntax instead) --> 
+		<!-- <xsd:element ref="stl:stylesheet"/> -->
+		<xsd:element ref="stl:story"/>
+		<xsd:element ref="stl:page"/>
+	  </xsd:choice>
+	</xsd:complexType>
+  </xsd:element>
+
+  <!-- Root -->
+
+  <xsd:element name="stl">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:element ref="stl:fixtures" minOccurs="0" maxOccurs="1"/>
+		<xsd:element ref="stl:data" minOccurs="0" maxOccurs="1"/>
+		<xsd:element ref="stl:style" minOccurs="0" maxOccurs="1"/>
+		<xsd:element ref="stl:document" minOccurs="0" maxOccurs="1"/>
+	  </xsd:sequence>
+	  <xsd:attribute name="version" type="xsd:decimal" use="required"/>
+	</xsd:complexType>
+  </xsd:element>
+</xsd:schema>

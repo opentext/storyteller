@@ -1,0 +1,139 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <!-- Redefine namespace alias to 'res' -->
+  <stl:fixtures xmlns:fix="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor">
+	<!-- Previously defined 'stl' alias still valid -->
+	<fix:fixture key="link:/images/ducks.png" src="wd:/ducks.png"/>
+	<!-- Current namespace map does not propagate to embedded XML resources -->
+	<fix:fixture key="link:/fragments/fragment.html">
+	  <html>
+		<body>
+		  <p>This is an external <b>HTML</b> <i>fragment</i></p>
+		</body>
+	  </html>
+	</fix:fixture>
+	<!-- Even native fragments' namespaces are treated separately -->
+	<fix:fixture key="link:/fragments/fragment.xml">
+	  <stl xmlns="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+		<document>
+		  <page w="220pt" h="90pt">
+			<text x="10pt" y="10pt" w="200pt" h="40pt">
+			  <story>
+				<p>External LXF fragment referenced from the embedded fragment:</p>
+			  </story>
+			</text>
+			<fragment x="100pt" y="0pt" w="80pt" h="80pt" category="load-time" src="wd:/fragment.lxf!/item[1]"/>
+		  </page>
+		</document>
+	  </stl>
+	</fix:fixture>
+  </stl:fixtures>
+  <!-- Define a default namespace -->
+  <data xmlns="http://developer.opentext.com/schemas/storyteller/layout">
+	<source key="cro" src="wd:/cro-data.xml"/>
+	<!-- Current namespace map does not propagate to embedded XML sources -->
+	<source key="bbc">
+	  <data>
+		<book id="bk001">
+		  <author>A Writer</author>
+		  <title>The First Book</title>
+		  <genre>Fiction</genre>
+		  <price>44.95</price>
+		  <pages>256</pages>
+		  <date>2000-10-01</date>
+		  <review>An amazing story of nothing.</review>
+		</book>
+	  </data>
+	</source>
+	<!-- Current namespace map does not propagate to embedded XML data -->
+	<template>
+	  <html xmlns:xdc="http://www.xml.com/books">
+		<head><title>Book Reviews</title></head>
+		<body>
+		  <xdc:bookreview>
+			<h2><xdc:title>?</xdc:title></h2>
+			<h3><xdc:author>?</xdc:author></h3>
+			<table border="1">
+			  <tr align="center">
+				<th>Price</th>
+				<th>Review</th>
+			  </tr>
+			  <tr align="left">
+				<td><xdc:price>?</xdc:price></td>
+				<td><xdc:review>?</xdc:review></td>
+			  </tr>
+			</table>
+		  </xdc:bookreview>
+		</body>
+	  </html>
+	</template>
+	<!-- Current namespace map does not propagate to embedded transformation definition -->
+	<transformation>
+	  <transformation xmlns="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
+		<rule path="/data/day">
+		  <value key=".">/program/den</value>
+		  <value key="@date">@date</value>
+		</rule>
+		<rule path="/data/day/station">
+		  <value key=".">tdt:group( porad, '~@stanice' )</value>
+		  <value key="@name">tdt:ungroup()[1]/nazev_stanice</value>
+		</rule>
+	  </transformation>
+	</transformation>
+  </data>
+  <doc:document xmlns:doc="http://developer.opentext.com/schemas/storyteller/layout">
+	<!-- Current namespace map does not propagate to included stylesheet -->
+<!--
+	<stylesheet xmlns="http://developer.opentext.com/schemas/storyteller/layout">
+	  <stylesheet name="First set of tests">
+		<style selector="normal">
+		  <character>
+			<font>
+			  <name>Arial</name>
+			  <pointsize>14</pointsize>
+			</font>  	      
+		  </character>
+		</style>
+	  </stylesheet>
+	</stylesheet>
+-->
+	<!-- Mixing various namespace aliases -->
+	<story name="Shared" xmlns="http://developer.opentext.com/schemas/storyteller/layout">
+	  <p>
+		This is a 
+		<span style="font-weight:bold">shared</span>
+		<doc:span style="font-style:italic">native</doc:span>
+		<stl:span style="font-weight:bold; font-style:italic">story.</stl:span>
+	  </p>
+	  <doc:p/>
+	</story>
+	<doc:page w="300pt" h="150pt" xmlns:p="http://developer.opentext.com/schemas/storyteller/layout">
+	  <stl:text x="20pt" y="20pt" w="60pt" h="60pt" style="fill:#aabbcc">
+		<!-- Define default namespace -->
+		<story format="XHTML" xmlns="http://developer.opentext.com/schemas/storyteller/layout">
+		  <!-- Redefine default namespace -->
+		  <body xmlns="http://www.w3.org/1999/xhtml">
+			<p>This is a <b>private</b> <a src="https://en.wikipedia.org/wiki/XHTML">XHTML</a> <i>story</i>...</p>
+		  </body>
+		</story>
+	  </stl:text>
+	  <p:text x="100pt" y="20pt" w="80pt" h="100pt" style="fill:#ffddcc">
+		<story xmlns="http://developer.opentext.com/schemas/storyteller/layout">
+		  <!-- Redefine default namespace as well as 'doc' and 'stl' aliases -->
+		  <p:p xmlns="xxx" xmlns:doc="xxx" xmlns:stl="xxx">
+			This is another
+			<!-- The default namespace is redefined => cannot use just 'span' here -->
+			<p:span style="font-weight:bold;">shared</p:span>
+			<!-- The 'doc' alias is redefined => cannot use 'doc:span' here -->
+			<p:span style="font-style:italic">native</p:span>
+			<!-- The 'stl' alias is redefined => cannot use 'stl:span' here -->
+			<p:span style="font-weight:bold; font-style:italic">story.</p:span>
+		  </p:p>
+		</story>
+	  </p:text>
+	  <p:text x="200pt" y="20pt" w="80pt" h="100pt" style="fill:#ffddcc" story="Shared"/>
+	  <!-- Namespace map associated with fragment reference is separate from fragment's namespaces -->
+	  <frg:fragment x="20pt" y="140pt" category="load-time" src="link:/fragments/fragment.xml!/item[1]" style="fill:#ffaaff" 
+					xmlns:frg="http://developer.opentext.com/schemas/storyteller/layout"/>
+	</doc:page>
+  </doc:document>
+</stl:stl>

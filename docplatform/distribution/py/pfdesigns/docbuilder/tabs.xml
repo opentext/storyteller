@@ -1,0 +1,40 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:style>
+	/* style emphasizing a block of a text */
+	.heading {
+	  margin-top:6pt;
+	  font-weight:bold;
+	}
+  </stl:style>
+  <stl:document>
+	<stl:page w="300pt" h="400pt">
+	  <stl:text x="20pt" y="20pt" w="260pt" h="270pt" style="fill:#aabbcc">
+		<stl:story name="Main">
+		  <stl:block style="font-family:Arial">
+			<stl:p class="heading">Default tab definitions:</stl:p>
+			<stl:p>
+			  (left)<stl:tab/>(middle)<stl:tab/>(right)
+			</stl:p>
+			<stl:p class="heading">Custom tab definitions:</stl:p>
+			<stl:p tabs="100pt:200pt">
+			  (left)<stl:tab/>(middle)<stl:tab/>(right)
+			</stl:p>
+			<stl:p class="heading">Custom leader:</stl:p>
+			<stl:p tabs="100pt;left;-+:200pt;left;-+">
+			  (left)<stl:tab/>(middle)<stl:tab/>(right)
+			</stl:p>
+			<!-- Common tabs definition for the complete list -->
+			<stl:p class="heading">Custom tab alignment:</stl:p>
+			<stl:list list-mask="%0!1.&#9;" tabs="20pt:250pt;decimal;.">
+			  <stl:li>Item<stl:tab/> 25,- CZK</stl:li>
+			  <stl:li>Item<stl:tab/> 138,- CZK</stl:li>
+			  <stl:li>Item<stl:tab/> 11 324,- CZK</stl:li>
+			  <stl:li>Item<stl:tab/> 15,- CZK</stl:li>
+			  <stl:li>Item<stl:tab/> 123 344,- CZK</stl:li>
+			</stl:list>
+		  </stl:block>
+		</stl:story>
+	  </stl:text>
+	</stl:page>
+  </stl:document>
+</stl:stl>

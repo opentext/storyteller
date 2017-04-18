@@ -1,0 +1,157 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:data>
+	<stl:template>
+	  <data>
+		<row />
+		<row />
+		<row />
+	  </data>
+	</stl:template>
+	<stl:transformation key="_default">
+	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0" />
+	</stl:transformation>
+  </stl:data>
+  <stl:style>
+	.border {
+	  border:solid lightgray;
+	}
+  </stl:style>
+
+  <stl:document>
+	<stl:story name="Main">
+	  <!-- Paragraph story with header, footer and repeatable body row -->
+	  <stl:table style="border:solid red; fill:lightyellow">
+		<stl:story occurrence="header">
+		  <stl:row>
+			<stl:cell class="border" style="background-color:lightpink"><stl:p>header-left</stl:p></stl:cell>
+			<stl:cell class="border" style="background-color:lightpink"><stl:p>header-middle</stl:p></stl:cell>
+			<stl:cell class="border" style="background-color:lightpink"><stl:p>header-right</stl:p></stl:cell>
+		  </stl:row>
+		</stl:story>
+		<stl:story>
+		  <stl:repeater xpath="/data">
+			<stl:repeater xpath="row">
+			  <stl:row>
+				<stl:cell class="border"><stl:p><stl:field xpath="position()" />. left</stl:p></stl:cell>
+				<stl:cell class="border"><stl:p><stl:field xpath="position()" />. middle</stl:p></stl:cell>
+				<stl:cell class="border"><stl:p><stl:field xpath="position()" />. right</stl:p></stl:cell>
+			  </stl:row>
+			</stl:repeater>		  
+		  </stl:repeater>		  
+		</stl:story>
+		<stl:story occurrence="footer">
+		  <stl:row>
+			<stl:cell class="border" style="background-color:lightpink"><stl:p>footer-left</stl:p></stl:cell>
+			<stl:cell class="border" style="background-color:lightpink"><stl:p>footer-middle</stl:p></stl:cell>
+			<stl:cell class="border" style="background-color:lightpink"><stl:p>footer-right</stl:p></stl:cell>
+		  </stl:row>
+		</stl:story>
+	  </stl:table>
+	</stl:story>
+	<stl:page w="580pt" h="300pt">
+	  <!-- Table with implicit dimensions -->
+	  <stl:table x="20pt" y="20pt" style="border:solid black">
+		<stl:story>
+		  <stl:row>
+			<stl:cell class="border"><stl:p>top-left</stl:p></stl:cell>
+			<stl:cell class="border"><stl:p>top-right</stl:p></stl:cell>
+		  </stl:row>
+		  <stl:row>
+			<stl:cell class="border"><stl:p>bottom-left</stl:p></stl:cell>
+			<stl:cell class="border"><stl:p>bottom-right</stl:p></stl:cell>
+		  </stl:row>
+		</stl:story>
+	  </stl:table>
+	  <!-- Table with explicit width -->
+	  <stl:table x="300pt" y="20pt" w="250pt" style="border:solid black">
+		<stl:story>
+		  <stl:row h="30pt">
+			<stl:cell class="border"><stl:p>top-left</stl:p></stl:cell>
+			<stl:cell class="border"><stl:p>top-right</stl:p></stl:cell>
+		  </stl:row>
+		  <stl:row>
+			<stl:cell class="border"><stl:p>bottom-left</stl:p></stl:cell>
+			<stl:cell class="border"><stl:p>bottom-right</stl:p></stl:cell>
+		  </stl:row>
+		</stl:story>
+	  </stl:table>
+	  <!-- Table with explicit height -->
+	  <stl:table x="20pt" y="70pt" h="40pt" style="border:solid black">
+		<stl:story>
+		  <stl:row>
+			<stl:cell class="border" w="150pt"><stl:p>top-left</stl:p></stl:cell>
+			<stl:cell class="border"><stl:p>top-right</stl:p></stl:cell>
+		  </stl:row>
+		  <stl:row>
+			<stl:cell class="border"><stl:p>bottom-left</stl:p></stl:cell>
+			<stl:cell class="border"><stl:p>bottom-right</stl:p></stl:cell>
+		  </stl:row>
+		</stl:story>
+	  </stl:table>
+	  <!-- Table with explicit width & height -->
+	  <stl:table x="300pt" y="70pt" w="250pt" h="40pt" style="border:solid black">
+		<stl:story>
+		  <stl:row h="30pt">
+			<stl:cell class="border" w="150pt"><stl:p>top-left</stl:p></stl:cell>
+			<stl:cell class="border"><stl:p>top-right</stl:p></stl:cell>
+		  </stl:row>
+		  <stl:row>
+			<stl:cell class="border"><stl:p>bottom-left</stl:p></stl:cell>
+			<stl:cell class="border"><stl:p>bottom-right</stl:p></stl:cell>
+		  </stl:row>
+		</stl:story>
+	  </stl:table>
+	  <!-- Two text frames consuming a paragraph table -->
+	  <stl:text x="20pt" y="150pt" w="260pt" h="60pt" style="background-color:lightcyan" story="Main" />
+	  <stl:text x="300pt" y="150pt" w="260pt" h="60pt" style="background-color:lightcyan" story="Main" />
+	  <!-- HTML table with column span -->
+	  <stl:text x="20pt" y="220pt" w="260pt" h="50pt" style="background-color:lightgreen">
+		<stl:story format="XHTML">
+		  <html xmlns="http://www.w3.org/1999/xhtml">
+			<body>
+			  <table width="260pt" style="background-color: #f1f1c1; border: 1px solid black; border-collapse: collapse;">
+				<tr>
+				  <th border="1">Name</th>
+				  <th border="1" colspan="2">Telephone</th>
+				</tr>
+				<tr>
+				  <td border="1" style="border: black;">Bill Gates</td>
+				  <td border="1">55577854</td>
+				  <td border="1">55577855</td>
+				</tr>
+				<tr>
+				  <td border="1">Steve Balmer</td>
+				  <td border="1">55570666</td>
+				  <td border="1">55570696</td>
+				</tr>
+			  </table>
+			</body>
+		  </html>
+		</stl:story>
+	  </stl:text>
+	  <!-- Native table with column span -->
+	  <stl:text x="300pt" y="220pt" w="260pt" h="50pt" style="background-color:lightgreen">
+		<stl:story>
+		  <stl:table w="260pt" style="background-color:#f1f1c1; border:solid black">
+			<stl:story>
+			  <stl:row>
+				<stl:cell style="border:solid black"><stl:p style="text-align:center; font-weight:bold">Name</stl:p></stl:cell>
+				<stl:cell style="border:solid black" colspan="2"><stl:p style="text-align:center; font-weight:bold">Telephone</stl:p></stl:cell>
+			  </stl:row>
+			  <stl:row>
+				<stl:cell style="border:solid black"><stl:p>Bill Gates</stl:p></stl:cell>
+				<stl:cell style="border:solid black"><stl:p>55577854</stl:p></stl:cell>
+				<stl:cell style="border:solid black"><stl:p>55577855</stl:p></stl:cell>
+			  </stl:row>
+			  <stl:row>
+				<stl:cell style="border:solid black"><stl:p>Steve Balmer</stl:p></stl:cell>
+				<stl:cell style="border:solid black"><stl:p>55570666</stl:p></stl:cell>
+				<stl:cell style="border:solid black"><stl:p>55570696</stl:p></stl:cell>
+			  </stl:row>
+			</stl:story>
+		  </stl:table>
+		</stl:story>
+	  </stl:text>
+	</stl:page>
+  </stl:document>
+</stl:stl>

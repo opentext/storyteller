@@ -1,0 +1,23 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:data>
+	<stl:source key="bbc" src="wd:/bbc-data.xml"/>
+	<stl:source key="cro" src="wd:/cro-data.xml"/>
+	<stl:template>
+	  <data>
+		<day date="?">
+          <station name="?">
+			<category name="?">
+              <broadcast duration="?" time="?">
+				<name>?</name>
+				<synopsis>?</synopsis>
+				<hyperlink>?</hyperlink>
+              </broadcast>
+			</category>
+          </station>
+		</day>
+      </data>
+	</stl:template>
+	<stl:transformation key="bbc" src="wd:/bbc-trans.xml"/>
+	<stl:transformation key="cro" src="wd:/cro-trans.xml"/>
+  </stl:data>
+</stl:stl>

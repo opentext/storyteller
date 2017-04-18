@@ -1,0 +1,5 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
+		 xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" version="0.1">
+  <!-- Let's burn the preprocessor -->
+  <xp:include src="wd:/stack_overflow.xml" />
+</stl:stl>

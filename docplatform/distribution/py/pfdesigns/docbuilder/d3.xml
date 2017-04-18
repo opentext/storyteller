@@ -1,0 +1,66 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:data>
+	<stl:source>
+	  <data>
+		<books>
+		  <book id="bk001">
+			<author>Some Writer</author>
+			<title>The First Book</title>
+			<genre>Fiction</genre>
+			<price>44.95</price>
+			<pages>256</pages>
+			<date>2000-10-01</date>
+			<review>An amazing story of nothing.</review>
+		  </book>
+		  <book id="bk002">
+			<author>Some Poet</author>
+			<title>The Poet's First Poem</title>
+			<genre>Poem</genre>
+			<price>24.95</price>
+			<pages>116</pages>
+			<date>2010-03-01</date>
+			<review>Least poetic poems.</review>
+		  </book>
+		  <book id="bk003">
+			<genre>Educational</genre>
+			<title>XML: A Primer</title>
+			<author>Simon St. Laurent</author>
+			<price>31.98</price>
+			<pages>352</pages>
+			<date>1998/01</date>
+			<review>Fairly basic XML learning resource.</review>
+		  </book>
+		</books>
+		<chart>
+		  <item x="One" y="29.765957771107"/>
+		  <item x="Two" y="0"/>
+		  <item x="Three" y="32.807804682612"/>
+		  <item x="Four" y="196.45946739256"/>
+		  <item x="Five" y="0.19434030906893"/>
+		  <item x="Six" y="98.079782601442"/>
+		  <item x="Seven" y="13.925743130903"/>
+		  <item x="Eight" y="5.1387322875705 "/>
+		</chart>
+	  </data>
+	</stl:source>
+  </stl:data>
+  <stl:document>
+	<stl:page w="500px" h="500px">
+	  <stl:fragment w="100%" h="100%" src="wd:/../svg/piechart.svg" selector="/item[1]">
+		<stl:script when="before" language="js">
+		  var charts = require('charts');
+		  var series = [ { key: 'items', values: '/data/chart/item' } ];
+		  var options = {
+		    showLegend: false,
+			showLabels: true,
+			labelsOutside: true,
+			x: '@x',
+			y: '@y',
+		  };
+
+		  charts.d3chart('pieChart', series, options);
+		</stl:script>
+	  </stl:fragment>
+	</stl:page>
+  </stl:document>
+</stl:stl>

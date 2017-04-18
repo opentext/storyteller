@@ -1,0 +1,34 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:style>
+	.rect {
+	  border:solid black;
+	  background-color:orange;
+	  padding:3pt 3pt 3pt 3pt;
+	}
+  </stl:style>
+  <stl:document>
+	<stl:page w="260pt" h="240pt">
+	  <stl:rect class="rect" x="10pt" y="10pt" w="240pt" h="20pt">
+		<stl:story><stl:p>x="10" y="10" w="40" h="20"</stl:p></stl:story>
+	  </stl:rect>
+	  <stl:rect class="rect" x1="10pt" y1="40pt" width="240pt" height="20pt">
+		<stl:story><stl:p>x1="10" y1="40" width="40" height="20"</stl:p></stl:story>
+	  </stl:rect>
+	  <stl:rect class="rect" x1="10pt" y1="70pt" x2="250pt" y2="90pt">
+		<stl:story><stl:p>x1="10" y1="70" x2="50" y2="90"</stl:p></stl:story>
+	  </stl:rect>
+	  <stl:rect class="rect" cx="130pt" cy="110pt" w="240pt" h="20pt">
+		<stl:story><stl:p>cx="30" cy="110" w="40" h="20"</stl:p></stl:story>
+	  </stl:rect>
+	  <stl:rect class="rect" cx="130pt" cy="140pt" rx="120pt" ry="10pt">
+		<stl:story><stl:p>cx="30" cy="140" rx="20" ry="10"</stl:p></stl:story>
+	  </stl:rect>
+	  <stl:rect class="rect" cx="130pt" cy="170pt" x2="250pt" y2="180pt">
+		<stl:story><stl:p>cx="30" cy="170" x2="50" y2="180"</stl:p></stl:story>
+	  </stl:rect>
+	  <stl:rect class="rect" x="10pt" cy="200pt" ry="10pt" width="240pt">
+		<stl:story><stl:p>x="10" cy="200" ry="10" width="40"</stl:p></stl:story>
+	  </stl:rect>
+	</stl:page>
+  </stl:document>
+</stl:stl>

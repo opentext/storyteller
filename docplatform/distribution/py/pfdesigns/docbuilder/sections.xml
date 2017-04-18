@@ -1,0 +1,62 @@
+<stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
+		 xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:fixtures>
+	<xp:fixture key="link:/story-fragment.xml">
+	  <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+		<stl:document>
+		  <xp:include src="wd:/sections-story.xml" />
+		</stl:document>
+	  </stl:stl>
+	</xp:fixture>
+  </stl:fixtures>
+
+  <stl:style>
+	.center {
+	  text-align: center;
+	}
+	.heading {
+	  font-family:Arial;
+	  font-size:16pt;
+	  font-weight:bold;
+	}
+	.colored {
+	  fill:#ffddcc;
+	}
+  </stl:style>
+  <stl:document>
+	<xp:include src="wd:/sections-story.xml" />
+
+	<stl:story name="ExternContent">
+	  <stl:content uri="link:/story-fragment.xml" selector="/story[1]"/>
+	</stl:story>
+
+	<stl:page w="500pt" h="820pt">
+	  <stl:text x="20pt" y="20pt" w="460pt" h="50pt">
+		<stl:story>
+		  <stl:p class="center">
+			<stl:span class="heading">
+			  Loading-time <stl:span style="font-style:italic">external section references</stl:span>
+			</stl:span>
+		  </stl:p>
+		</stl:story>
+	  </stl:text>
+
+	  <!-- Two Text Frames (observe a shared story) -->
+	  <stl:text x="20pt" y="50pt" w="220pt" h="350pt" class="colored" story="Sections"/>
+	  <stl:text x="260pt" y="50pt" w="220pt" h="350pt" class="colored" story="Sections"/>
+
+	  <stl:text x="20pt" y="420pt" w="460pt" h="50pt">
+		<stl:story>
+		  <stl:p class="center">
+			<stl:span class="heading">
+			  Runtime <stl:span style="font-style:italic">external section references</stl:span>
+			</stl:span>
+		  </stl:p>
+		</stl:story>
+	  </stl:text>
+
+	  <stl:text x="20pt" y="450pt" w="220pt" h="350pt" class="colored" story="ExternContent"/>
+	  <stl:text x="260pt" y="450pt" w="220pt" h="350pt" class="colored" story="ExternContent"/>
+	</stl:page>
+  </stl:document>
+</stl:stl>

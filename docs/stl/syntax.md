@@ -2,7 +2,7 @@
 
 This document describes an XML syntax of *STL definition file*. The
 syntax can be validated programmatically against the following [XSD
-schema](file:///git/docplatform/tree/forsetup/docbuilder/xmlschema/stl.xsd?h=pfi01/develop/docbuilder).
+schema](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/docbuilder/xmlschema/stl.xsd).
 
 Top level structure consists of a root `<stl:stl>` element and four
 optional sub-elements defining *fixtures*, *data*, *styling* and a
@@ -27,7 +27,7 @@ It means that the root of the XML structure looks as follows:
 This is a full example of an empty document definition:
 
 -   [Empty STL
-    Definition](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/empty.xml?h=pfi01/develop/docbuilder)
+    Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empty.xml)
 
 There are three optional sub-elements under the `stl:stl` element, we
 will :
@@ -95,11 +95,11 @@ Instance* to an XML or HTML file.
 All three entities - `stl:source`, `stl:template` and
 `stl:transformation` are directly included in the definition file.
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/data-xml.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/data-xml.xml)
 -   [XML Data
-    Instance](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/data-xml-xml-m.data.xml?h=pfi01/develop/docbuilder)
+    Instance](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-xml-xml-m.data.xml)
 -   [HTML Data
-    Instance](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/data-xml-xml-m.data.html?h=pfi01/develop/docbuilder)
+    Instance](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-xml-xml-m.data.html)
 
 ### Dual Transformation
 
@@ -141,21 +141,21 @@ definition but two kinds of `stl:source` and `stl:transformation` pairs.
 This way we can process two formats of source data changing just the
 active *TDT key*.
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/data-dual.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/data-dual.xml)
 -   BBC
     -   [Data
-        Source](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/bbc-data.xml?h=pfi01/develop/docbuilder)
+        Source](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/bbc-data.xml)
     -   [TDT
-        Definition](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/bbc-trans.xml?h=pfi01/develop/docbuilder)
+        Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/bbc-trans.xml)
     -   [Data
-        Instance](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/data-bbc-py-m.data.xml?h=pfi01/develop/docbuilder)
+        Instance](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-bbc-py-m.data.xml)
 -   CRO
     -   [Data
-        Source](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/cro-data.xml?h=pfi01/develop/docbuilder)
+        Source](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/cro-data.xml)
     -   [TDT
-        Definition](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/cro-trans.xml?h=pfi01/develop/docbuilder)
+        Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/cro-trans.xml)
     -   [Data
-        Instance](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/data-cro-py-m.data.xml?h=pfi01/develop/docbuilder)
+        Instance](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-cro-py-m.data.xml)
 
 ### TDT-based document creation
 
@@ -417,11 +417,11 @@ text *will* get trimmed.
 Following example demonstrates that such normalization works relatively
 well and is very intuitive:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/whitespace.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Story example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png" alt="Story example"/>
 
 # Styling
 
@@ -850,11 +850,11 @@ Some objects (e.g. *texts*, *switches*, *repeaters*) can define their
 Following example demonstrates various *Story* ownership modes and
 formats:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/story.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Story example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png" alt="Story example"/>
 
 ### Semantic Tags & Styling
 
@@ -929,11 +929,11 @@ And *Embedded Stylesheet* associations can look like this:
 Following example demonstrates an embedded stylesheet and it's
 application to a story:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/styles.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/styles.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png)
 
-  <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Styles example"/>
+  <img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png" alt="Styles example"/>
 
 # Content Entities
 
@@ -950,11 +950,11 @@ application to a story:
 
     This example demonstrates a variety of ~stl:p~ attributes:
 
-    - [[/git/docplatform/tree/distribution/py/pfdesigns/docbuilder/paragraph.xml?h=pfi01/develop/docbuilder][STL]]
-    - [[/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png?h=pfi01/develop/docbuilder][Resulting Document]]
+    - [[/git/docplatform/tree/distribution/py/pfdesigns/docbuilder/paragraph.xml][STL]]
+    - [[/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png][Resulting Document]]
 
 #+BEGIN_HTML
-  <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Paragraph example"/>
+  <img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png" alt="Paragraph example"/>
 
 ## Span
 
@@ -1064,11 +1064,11 @@ nested stories:
 
 This example demonstrates the usage of a *Span*:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/span.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/span.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Span example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png" alt="Span example"/>
 
 ## List
 
@@ -1206,11 +1206,11 @@ override the values for specific paragraph if necessary).
 
 This example demonstrates the usage of a *Span*:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/list.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/list.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png?h=pfi01/develop/docbuilder" alt="List example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png" alt="List example"/>
 
 ## Breaks
 
@@ -1259,11 +1259,11 @@ across several areas:
 
 This example demonstrates various kinds of *Break commands*:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/breaks.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/breaks.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Break Commands"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png" alt="Break Commands"/>
 
 ## Tab Stops
 
@@ -1327,11 +1327,11 @@ Users can even utilize an `stl:list` for a common *Tab Stop* definition:
 
 This example demonstrates usage of *Tab Stops*:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/tabs.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/tabs.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Tab Stops"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png" alt="Tab Stops"/>
 
 ### Commands
 
@@ -1476,10 +1476,10 @@ external document (e.g. HTML) with no caching:
 
 This example demonstrates various kinds of *Substitutions*:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/subst.xml?h=pfi01/develop/docbuilder)
--   [Resulting Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/subst.xml)
+-   [Resulting Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png)
 
-    <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png?h=pfi01/develop/docbuilder" alt="Substitution example"/>
+    <img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png" alt="Substitution example"/>
 
 #### External section references
 
@@ -1603,10 +1603,10 @@ supporting full DocBuilder syntax
 
 See the following links for details:
 
--   [Main STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/sections.xml?h=pfi01/develop/docbuilder)
--   [Story STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/sections-story.xml?h=pfi01/develop/docbuilder)
--   [Section Definition](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/sections-docdef.xml?h=pfi01/develop/docbuilder) (referencing [HTML text](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/Fragment.html?h=pfi01/develop/docbuilder), [Tables](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/tables.html?h=pfi01/develop/docbuilder) and [Image](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/ducks.png?h=pfi01/develop/docbuilder))
--   [Resulting Page Layout HTML](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/sections-py-m.layout.html/index.html?h=pfi01/develop/docbuilder)
+-   [Main STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/sections.xml)
+-   [Story STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/sections-story.xml)
+-   [Section Definition](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/sections-docdef.xml) (referencing [HTML text](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/Fragment.html), [Tables](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/tables.html) and [Image](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/ducks.png))
+-   [Resulting Page Layout HTML](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/sections-py-m.layout.html/index.html)
 
 ## Repeater
 
@@ -1655,11 +1655,11 @@ There are two kinds of a repeater:
 
 This example demonstrates the usage of a *Repeater*:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/repeater.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/repeater.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Repeater example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png" alt="Repeater example"/>
 
 ## Switch & Scope
 
@@ -1842,11 +1842,11 @@ semantic tags can be utilized for dynamic styling:
 
 This example demonstrates the usage of a *Switch*:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/switch.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/switch.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Switch example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png" alt="Switch example"/>
 
 # Layout Items
 
@@ -1893,11 +1893,11 @@ And this listing demonstrates a *Text Frame* referending a shared story:
 For *Text Box* and *Text Frame* demonstration we can use identical
 example like for stories:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/story.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Text example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png" alt="Text example"/>
 
 ## Image
 
@@ -1962,11 +1962,11 @@ TIFF:
 For demonstration of *Image item* variants we can look at the following
 example:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/image.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/image.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Image example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png" alt="Image example"/>
 
 ## Fragment
 
@@ -2033,11 +2033,11 @@ Fragments can be absolute positioned on a page:
 Folowing example demonstrates definition of *Referenced* and *Embedded*
 *Fragments* on a *Page* and inside a *Story*:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/fragment.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/fragment.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Fragment example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png" alt="Fragment example"/>
 
 ## Shape
 
@@ -2089,11 +2089,11 @@ story (either shared or private) gets formatted inside the closed shape.
 For demonstration of various shape variants we can look at the following
 example:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/shape.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/shape.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Shapes example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png" alt="Shapes example"/>
 
 ## Path
 
@@ -2141,11 +2141,11 @@ example. It also demonstrates how easy it is to migrate an SVG vector
 image to DocBuilder++ (either manually or programmatically):
 
 -   ![](http://alistapart.com/d/using-svg-for-flexible-scalable-and-fun-backgrounds-part-ii/sample5.svg)
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/paths.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/paths.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Paths example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png" alt="Paths example"/>
 
 Note that some of the arc handling code has been inspired by the Paul
 LeBeau's [androidsvg library](https://github.com/BigBadaboom/androidsvg)
@@ -2349,11 +2349,11 @@ columns.
 
 This example demonstrates the usage of various kinds of *Tables*:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/table.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/table.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Table example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png" alt="Table example"/>
 
 ## Interactive Item
 
@@ -2504,11 +2504,11 @@ and submit button:
 
 Following example demonstrates some types of interactive items:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/input.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/input.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Interactive item example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png" alt="Interactive item example"/>
 
 ## Group
 
@@ -2556,11 +2556,11 @@ collapsable and named *groups*.
 Following example demonstrates the grouping in action:
 
 -   ![](https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg)
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/group.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/group.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Grouping example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png" alt="Grouping example"/>
 
 ## Barcode
 
@@ -2607,11 +2607,11 @@ input data), then it is possible to use `stl:modification` as follows:
 
 For demonstration of barcodes we can look at the following example:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/barcode.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/barcode.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Barcode example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png" alt="Barcode example"/>
 
 ## Chart
 
@@ -2926,11 +2926,11 @@ image:
 For demonstration of runtime modifications we can look at the following
 example enumerating all pages of an multipage TIFF image:
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/multipage.xml?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/multipage.xml)
 -   [Resulting
-    Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png?h=pfi01/develop/docbuilder)
+    Document](https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png)
 
-<img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Multipage Image example"/>
+<img src=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png" alt="Multipage Image example"/>
 
 # Load-time vs. Runtime
 

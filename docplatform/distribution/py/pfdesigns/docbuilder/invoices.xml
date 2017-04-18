@@ -1,0 +1,1855 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:data>
+	<stl:source key="_default">
+	  <ProcessInvoice
+		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		  xmlns:gxsxtd="http://www.gxs.com/sa_ext" 
+		  xsi:schemaLocation="http://www.openapplications.org/oagis/9 ProcessInvoice.xsd" 
+		  releaseID="1.0">
+		<ApplicationArea>
+		  <Sender>
+			<LogicalID>TEST-Seller-001</LogicalID>
+		  </Sender>
+		  <Receiver>
+			<LogicalID>Test-Buyer-001</LogicalID>
+		  </Receiver>
+		  <CreationDateTime>2016-05-02T10:00:00Z</CreationDateTime>
+		  <gxsxtd:InterchangeInformationExtension>
+			<gxsxtd:FilePayloadTotalValues>
+			  <gxsxtd:DiscountSummary/>
+			  <gxsxtd:TaxSummary/>
+			  <gxsxtd:TotalSummary/>
+			</gxsxtd:FilePayloadTotalValues>
+		  </gxsxtd:InterchangeInformationExtension>
+		</ApplicationArea>
+		<DataArea>
+		  <Process/>
+		  <Invoice type="TaxInvoice">
+			<InvoiceHeader>
+			  <DocumentID>
+				<ID>RAVI_20160512_03</ID>
+			  </DocumentID>
+			  <QualifiedAmount type="ABC">789</QualifiedAmount>
+			  <QualifiedAmount type="DEF">456</QualifiedAmount>
+			  <QualifiedAmount type="DEF">123</QualifiedAmount>
+			  <DocumentDateTime>2015-05-27T10:00:00Z</DocumentDateTime>
+			  <Description languageID="en">eInvoice</Description>
+			  <DocumentReference>
+				<DocumentID>
+				  <ID>eInvoice</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <DocumentReference>
+				<ShippingTrackingID>2-1201</ShippingTrackingID>
+			  </DocumentReference>
+			  <DocumentReference>
+				<OperationReference>
+				  <Description>SYPRO_SMT</Description>
+				  <Status>
+					<Reason>Other</Reason>
+					<Reason>Source</Reason>
+				  </Status>
+				</OperationReference>
+			  </DocumentReference>
+			  <Status>
+				<TimePeriod>
+				  <StartDateTime>2015-05-27T10:00:00Z</StartDateTime>
+				  <EndDateTime>2015-05-27T10:00:00Z</EndDateTime>
+				</TimePeriod>
+				<Description>Status of Goods</Description>
+			  </Status>
+			  <ExtendedAmount currencyID="CHF">330000.00</ExtendedAmount>
+			  <TotalAmount currencyID="CHF">330000.00</TotalAmount>
+			  <RemitToParty>
+				<FinancialAccount>
+				  <!--IBANID>IBANID</IBANID-->
+				</FinancialAccount>
+			  </RemitToParty>
+			  <SupplierParty>
+				<PartyIDs>
+				  <ID schemeName="AssignedByBuyerOrBuyersAgent">007359</ID>
+				  <ID schemeName="CPGmarketplace">7000000761</ID>
+				  <ID schemeName="LegalEntityUniqueID">WARNSESUP</ID>
+				  <!--ID schemeName="CompanyRegistryData">Input_Romania_Chamber of Commerce and Industry of Romania, REG33/44-393A</ID-->
+				  <!--ID schemeName="TradeRegisterNumber">WARNSESUP</ID-->
+				  <ID schemeName="BusinessID">Supplier BusinessID</ID>
+				  <ID schemeName="FolioNumber">Supplier Folio Number</ID>
+				  <ID schemeName="SocialSecurityNumber">Supplier SocialSecurityNumber</ID>
+				  <TaxID schemeName="StateTaxNumber">Seller-StateTax-345</TaxID>
+				  <TaxID schemeName="CityTaxNumber">Seller-CityTax-456</TaxID>
+				  <TaxID schemeName="CompanyTaxNumber">WARNSESUP</TaxID>
+				  <TaxID schemeName="GeneralTaxNumber">WARNSESUP-GTN</TaxID>
+				  <TaxID schemeName="JurisdictionCode">O-Seller-Juris-222333</TaxID>
+				  <TaxID schemeName="CompanyRegistrationNumber">O-Seller-CompRegNo-6789</TaxID>
+				  <TaxID schemeAgencyID="Abbr of Country Issuing VAT" schemeID="TypeOfVAT">JP</TaxID>
+				  <TaxID schemeName="ProfessionalTaxNumber">Supplier ProfessionalTaxNumber</TaxID>
+				  <DUNSID>INT007359</DUNSID>
+				  <!--BICID>BICID</BICID-->
+				</PartyIDs>
+				<!--AccountID>O-Dpt-5678</AccountID><AccountID schemeName="BankAccount">O-Dpt-5678</AccountID-->
+				<Name sequence="1">TEST-Seller-001</Name>
+				<!--Name sequenceName="LegalForm">Input_Romania_S.A</Name-->
+				<Location>
+				  <ID schemeName="GLN">INT0076791</ID>
+				  <Address>
+					<StreetName>O-RUE DE CCS BP33</StreetName>
+					<CityName>O-VIENNE LE CHATEAU</CityName>
+					<CountryCode>CH</CountryCode>
+					<PostalCode>11100</PostalCode>
+				  </Address>
+				</Location>
+				<Location type="CorporateAddress">
+				  <!--Address><StreetName>INPUT_ROMANIA_LEGALSTREET</StreetName><CityName>INPUT_ROMANIA_LEGAL_CITYY</CityName><PostalCode>INPUT_ROMANIA_LEG_POSTCOD</PostalCode><CountryCode>INPUT_ROMANIA_LEG_COUNTRY</CountryCode><PostOfficeBox>INPUT_ROMANIA_LEG_POSTBOX</PostOfficeBox></Address><Name>Druann</Name-->
+				</Location>
+				<Contact>
+				  <JobTitle>Supplier Profession</JobTitle>
+				  <Name>O-LEBEL VIRGINIE</Name>
+				  <Communication>
+					<ChannelCode>TelephoneNumber</ChannelCode>
+					<DialNumber>22.26.60.57.03</DialNumber>
+				  </Communication>
+				  <Communication>
+					<ChannelCode>FaxNumber</ChannelCode>
+					<DialNumber>22.26.60.57.19</DialNumber>
+				  </Communication>
+				  <Communication>
+					<URI>O-venkatesh.rao@cpgmarket.com</URI>
+				  </Communication>
+				</Contact>
+				<Contact type="MemberSupervisoryBoard">
+				  <Name>O-LEBEL MemberSupervisoryBoard</Name>
+				</Contact>
+				<!--gxsxtd:RegisteredShareCapital currencyID="abc">40111333</gxsxtd:RegisteredShareCapital-->
+			  </SupplierParty>
+			  <SupplierParty category="DualisticAdministration"></SupplierParty>
+			  <CustomerParty>
+				<PartyIDs>
+				  <ID schemeName="AssignedByBuyerOrBuyersAgent">007895</ID>
+				  <ID schemeName="CPGmarketplace">8000000861</ID>
+				  <ID schemeName="LegalEntityUniqueID">WARNSEBUY</ID>
+				  <ID schemeName="TradeRegisterNumber">WARNSEBUY</ID>
+				  <ID schemeName="BusinessID">Buyer BusinessID</ID>
+				  <TaxID schemeName="StateTaxNumber">Buyer-StateTax-398</TaxID>
+				  <TaxID schemeName="CityTaxNumber">Buyer-CityTax-498</TaxID>
+				  <TaxID schemeName="CompanyTaxNumber">WARNSEBUY</TaxID>
+				  <TaxID schemeName="JurisdictionCode">O-Buyer-Juris-222333</TaxID>
+				  <TaxID schemeName="CompanyRegistrationNumber">O-Buyer-CompRegNo-6789</TaxID>
+				  <DUNSID>3016607320103</DUNSID>
+				</PartyIDs>
+				<AccountID>O-Dpt-1234</AccountID>
+				<Name>Test-Buyer-001</Name>
+				<Location>
+				  <ID schemeName="GLN">INT0079</ID>
+				  <Address>
+					<StreetName>O-Avenue Henri LEFEBVRE BP 189</StreetName>
+					<CityName>O-CAUDRY CEDEX</CityName>
+					<CountryCode>FR</CountryCode>
+					<PostalCode>11144</PostalCode>
+				  </Address>
+				</Location>
+				<Contact>
+				  <JobTitle>Buyer Profession</JobTitle>
+				  <Name>O-O. UNISSART</Name>
+				  <Communication>
+					<ChannelCode>TelephoneNumber</ChannelCode>
+					<DialNumber>11.27.75.67.63</DialNumber>
+				  </Communication>
+				  <Communication>
+					<ChannelCode>TelephoneNumber</ChannelCode>
+					<DialNumber>11.27.75.67.64</DialNumber>
+				  </Communication>
+				  <Communication>
+					<ChannelCode>FaxNumber</ChannelCode>
+					<DialNumber>11.27.75.65.06</DialNumber>
+				  </Communication>
+				  <Communication>
+					<URI>O-abcd</URI>
+				  </Communication>
+				</Contact>
+			  </CustomerParty>
+			  <Party role="ShipTo">
+				<PartyIDs>
+				  <ID>ShipToParty</ID>
+				  <ID schemeName="AssignedByBuyerOrBuyersAgent">007895</ID>
+				  <DUNSID>O-B-3016607320103</DUNSID>
+				</PartyIDs>
+				<AccountID>O-Dpt-1234</AccountID>
+				<Name>TEST-ShipTo-001</Name>
+				<Location>
+				  <ID schemeName="GLN">O-B-3016607320103</ID>
+				  <Address>
+					<StreetName>O-Avenue Henri LEFEBVRE BP 189</StreetName>
+					<CityName>O-CAUDRY CEDEX</CityName>
+					<CountryCode>FR</CountryCode>
+					<PostalCode>59544</PostalCode>
+				  </Address>
+				</Location>
+				<Contact>
+				  <Name>O-O. UNISSART</Name>
+				  <Communication>
+					<ChannelCode>TelephoneNumber</ChannelCode>
+					<DialNumber>11.27.75.77.33</DialNumber>
+				  </Communication>
+				  <Communication>
+					<ChannelCode>FaxNumber</ChannelCode>
+					<DialNumber>22.33.44.55.66</DialNumber>
+				  </Communication>
+				  <Communication>
+					<URI>Vijay.V@gxs.com</URI>
+				  </Communication>
+				</Contact>
+			  </Party>
+			  <Party role="BillTo">
+				<PartyIDs>
+				  <ID>BillToParty</ID>
+				  <ID schemeName="AssignedByBuyerOrBuyersAgent">B-007895</ID>
+				  <ID schemeName="CPGmarketplace">8000000861</ID>
+				  <TaxID schemeName="CompanyTaxNumber">O-BillTo-CompanyTax-456</TaxID>
+				  <TaxID schemeName="CompanyRegistrationNumber">O-BillTo-CompanyRegn-456</TaxID>
+				  <TaxID schemeName="StateTaxNumber">O-BillTo-StateTax-345</TaxID>
+				  <TaxID schemeName="CityTaxNumber">O-BillTo-CityTax-456</TaxID>
+				  <TaxID schemeName="JurisdictionCode">O-BillTo-JurisTax-456</TaxID>
+				  <TaxID schemeName="AdditionalTax">O-BillTo-AddlTax-456</TaxID>
+				</PartyIDs>
+				<AccountID>O-Dpt-1234</AccountID>
+				<Name>TEST-BillTo-001</Name>
+				<Location>
+				  <Address>
+					<StreetName>O-Avenue Henri LEFEBVRE BP 189</StreetName>
+					<CityName>O-CAUDRY CEDEX</CityName>
+					<CountryCode>FR</CountryCode>
+					<PostalCode>59544</PostalCode>
+				  </Address>
+				</Location>
+				<Contact>
+				  <Name>O-O. UNISSART</Name>
+				  <Communication>
+					<ChannelCode>TelephoneNumber</ChannelCode>
+					<DialNumber>11.27.75.67.63</DialNumber>
+				  </Communication>
+				  <Communication>
+					<ChannelCode>FaxNumber</ChannelCode>
+					<DialNumber>1.27.75.65.06</DialNumber>
+				  </Communication>
+				  <Communication>
+					<URI>O-venkatesh.rao@cpgmarket.com</URI>
+				  </Communication>
+				</Contact>
+			  </Party>
+			  <Party role="ShipFrom">
+				<Name>TEST-BillTo-001</Name>
+				<Location>
+				  <Address>
+					<StreetName>O-Avenue Henri LEFEBVRE BP 189</StreetName>
+					<CityName>O-CAUDRY CEDEX</CityName>
+					<CountryCode>FR</CountryCode>
+					<PostalCode>59544</PostalCode>
+				  </Address>
+				</Location>
+				<Contact>
+				  <Name>O-O. UNISSART</Name>
+				  <Communication>
+					<ChannelCode>TelephoneNumber</ChannelCode>
+					<DialNumber>11.27.75.67.63</DialNumber>
+				  </Communication>
+				  <Communication>
+					<ChannelCode>FaxNumber</ChannelCode>
+					<DialNumber>1.27.75.65.06</DialNumber>
+				  </Communication>
+				  <Communication>
+					<URI>O-venkatesh.rao@cpgmarket.com</URI>
+				  </Communication>
+				</Contact>
+			  </Party>
+			  <Party role="SupplierAgent">
+				<PartyIDs>
+				  <ID>BillToParty</ID>
+				  <ID schemeName="AssignedByBuyerOrBuyersAgent">B-007895</ID>
+				  <ID schemeName="CPGmarketplace">8000000861</ID>
+				  <TaxID schemeName="CompanyTaxNumber">O-BillTo-CompanyTax-456</TaxID>
+				  <TaxID schemeName="CompanyRegistrationNumber">O-BillTo-CompanyRegn-456</TaxID>
+				  <TaxID schemeName="StateTaxNumber">O-BillTo-StateTax-345</TaxID>
+				  <TaxID schemeName="CityTaxNumber">O-BillTo-CityTax-456</TaxID>
+				  <TaxID schemeName="JurisdictionCode">O-BillTo-JurisTax-456</TaxID>
+				  <TaxID schemeName="AdditionalTax">O-BillTo-AddlTax-456</TaxID>
+				</PartyIDs>
+				<AccountID>O-Dpt-1234</AccountID>
+				<Name>TEST-BillTo-001</Name>
+				<Location>
+				  <Address>
+					<StreetName>O-Avenue Henri LEFEBVRE BP 189</StreetName>
+					<CityName>O-CAUDRY CEDEX</CityName>
+					<CountryCode>FR</CountryCode>
+					<PostalCode>59544</PostalCode>
+				  </Address>
+				</Location>
+				<Contact>
+				  <Name>O-O. UNISSART</Name>
+				  <Communication>
+					<ChannelCode>TelephoneNumber</ChannelCode>
+					<DialNumber>11.27.75.67.63</DialNumber>
+				  </Communication>
+				  <Communication>
+					<ChannelCode>FaxNumber</ChannelCode>
+					<DialNumber>1.27.75.65.06</DialNumber>
+				  </Communication>
+				  <Communication>
+					<URI>O-venkatesh.rao@cpgmarket.com</URI>
+				  </Communication>
+				</Contact>
+			  </Party>
+			  <Party role="CustomerAgent">
+				<PartyIDs>
+				  <ID>BillToParty</ID>
+				  <ID schemeName="AssignedByBuyerOrBuyersAgent">B-007895</ID>
+				  <ID schemeName="CPGmarketplace">8000000861</ID>
+				  <TaxID schemeName="CompanyTaxNumber">O-BillTo-CompanyTax-456</TaxID>
+				  <TaxID schemeName="CompanyRegistrationNumber">O-BillTo-CompanyRegn-456</TaxID>
+				  <TaxID schemeName="StateTaxNumber">O-BillTo-StateTax-345</TaxID>
+				  <TaxID schemeName="CityTaxNumber">O-BillTo-CityTax-456</TaxID>
+				  <TaxID schemeName="JurisdictionCode">O-BillTo-JurisTax-456</TaxID>
+				  <TaxID schemeName="AdditionalTax">O-BillTo-AddlTax-456</TaxID>
+				</PartyIDs>
+				<AccountID>O-Dpt-1234</AccountID>
+				<Name>TEST-BillTo-001</Name>
+				<Location>
+				  <Address>
+					<StreetName>O-Avenue Henri LEFEBVRE BP 189</StreetName>
+					<CityName>O-CAUDRY CEDEX</CityName>
+					<CountryCode>FR</CountryCode>
+					<PostalCode>59544</PostalCode>
+				  </Address>
+				</Location>
+				<Contact>
+				  <Name>O-O. UNISSART</Name>
+				  <Communication>
+					<ChannelCode>TelephoneNumber</ChannelCode>
+					<DialNumber>11.27.75.67.63</DialNumber>
+				  </Communication>
+				  <Communication>
+					<ChannelCode>FaxNumber</ChannelCode>
+					<DialNumber>1.27.75.65.06</DialNumber>
+				  </Communication>
+				  <Communication>
+					<URI>O-venkatesh.rao@cpgmarket.com</URI>
+				  </Communication>
+				</Contact>
+			  </Party>
+			  <ReasonCode name="abc">Original</ReasonCode>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+			  </PurchaseOrderReference>
+			  <PaymentTerm>
+				<Term>
+				  <DueDateTime>2015-05-27T12:00:00Z</DueDateTime>
+				</Term>
+			  </PaymentTerm>
+			  <PaymentTerm type="Other">
+				<Term>
+				  <Description>AsAgreed</Description>
+				</Term>
+				<Discount>
+				  <DueDateTime>2015-05-27T12:00:00Z</DueDateTime>
+				  <Duration>60</Duration>
+				</Discount>
+			  </PaymentTerm>
+			  <Tax type="ValueAddedTax">
+				<BasisAmount currencyID="CHF">300000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				</Calculation>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="">0.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">30000.00</Amount>
+				<CurrencyExchangeRate/>
+			  </Tax>
+			  <Tax type="Exempt-ForExport">
+				<BasisAmount currencyID="CHF">300000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				</Calculation>
+				<Description>Article 283, 1 of the General tax code</Description>
+				<TaxAuthorityAmount currencyID="">0.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">30000.00</Amount>
+				<CurrencyExchangeRate/>
+			  </Tax>
+			  <Tax type="VATInFullAmount">
+				<BasisAmount currencyID="CHF">300000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				</Calculation>
+				<Description>10%</Description>
+				<TaxAuthorityAmount>0.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">30000.00</Amount>
+				<CurrencyExchangeRate/>
+			  </Tax>
+			  <Tax type="ExemptFromTax">
+				<BasisAmount currencyID="CHF">300000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				</Calculation>
+				<Description>Article 262ter I of the General tax code</Description>
+				<TaxAuthorityAmount currencyID="">0.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">30000.00</Amount>
+				<CurrencyExchangeRate/>
+			  </Tax>
+			  <Tax type="ExchangeRate">
+				<Calculation/>
+				<CurrencyExchangeRate>
+				  <RateNumeric>10.0</RateNumeric>
+				</CurrencyExchangeRate>
+			  </Tax>
+			  <gxsxtd:InvoiceHeaderExtensionGroup>
+				<gxsxtd:Event type="InvoiceDueDate">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-28T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+				<gxsxtd:Event type="DateOfPrepayment">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-25T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+				<gxsxtd:TransportationTerm>
+				  <gxsxtd:IncotermsCode>
+					<gxsxtd:PlaceOfOwnershipTransferLocation>
+					  <gxsxtd:Note type="kilometers">4.5 km</gxsxtd:Note>
+					  <gxsxtd:Note type="miles">3 miles</gxsxtd:Note>
+					  <gxsxtd:Note type="hours">hours</gxsxtd:Note>
+					</gxsxtd:PlaceOfOwnershipTransferLocation>
+				  </gxsxtd:IncotermsCode>
+				</gxsxtd:TransportationTerm>
+			  </gxsxtd:InvoiceHeaderExtensionGroup>
+			</InvoiceHeader>
+			<InvoiceLine>
+			  <LineNumber>00001</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-1L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2004</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID schemeName="BuyersItemNumber">B100001</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100001</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100001</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100001</Description>
+			  </Item>
+			  <Quantity type="BO">1000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">10.00</Amount>
+				<PerQuantity unitCode="BO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000101</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000101</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">10000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">10000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">1000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">1000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T00:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00002</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-2L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2005</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID schemeName="EAN">B100002</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100002</ID>
+				</ManufacturerItemID>
+				<Description>Test-Item-100002</Description>
+			  </Item>
+			  <Quantity type="CO">2000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">20.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">40000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">40000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">4000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">4000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00003</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-3L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2006</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<ManufacturerItemID>
+				  <ID>T100003</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100003</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100003</Description>
+			  </Item>
+			  <Quantity type="CO">3000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">30.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000103</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">90000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">90000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">9000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">9000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00004</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-4L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2007</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID>B100004</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100004</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100004</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100004</Description>
+			  </Item>
+			  <Quantity type="CO">4000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">40.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000104</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">160000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">160000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">16000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">16000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00001</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-1L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2004</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID schemeName="BuyersItemNumber">B100001</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100001</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100001</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100001</Description>
+			  </Item>
+			  <Quantity type="BO">1000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">10.00</Amount>
+				<PerQuantity unitCode="BO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000101</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000101</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">10000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">10000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">1000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">1000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T00:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00002</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-2L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2005</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID schemeName="EAN">B100002</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100002</ID>
+				</ManufacturerItemID>
+				<Description>Test-Item-100002</Description>
+			  </Item>
+			  <Quantity type="CO">2000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">20.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">40000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">40000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">4000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">4000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00003</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-3L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2006</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<ManufacturerItemID>
+				  <ID>T100003</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100003</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100003</Description>
+			  </Item>
+			  <Quantity type="CO">3000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">30.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000103</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">90000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">90000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">9000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">9000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00004</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-4L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2007</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID>B100004</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100004</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100004</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100004</Description>
+			  </Item>
+			  <Quantity type="CO">4000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">40.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000104</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">160000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">160000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">16000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">16000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00001</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-1L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2004</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID schemeName="BuyersItemNumber">B100001</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100001</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100001</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100001</Description>
+			  </Item>
+			  <Quantity type="BO">1000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">10.00</Amount>
+				<PerQuantity unitCode="BO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000101</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000101</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">10000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">10000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">1000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">1000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T00:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00002</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-2L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2005</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID schemeName="EAN">B100002</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100002</ID>
+				</ManufacturerItemID>
+				<Description>Test-Item-100002</Description>
+			  </Item>
+			  <Quantity type="CO">2000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">20.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">40000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">40000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">4000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">4000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00003</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-3L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2006</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<ManufacturerItemID>
+				  <ID>T100003</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100003</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100003</Description>
+			  </Item>
+			  <Quantity type="CO">3000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">30.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000103</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">90000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">90000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">9000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">9000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00004</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-4L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2007</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID>B100004</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100004</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100004</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100004</Description>
+			  </Item>
+			  <Quantity type="CO">4000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">40.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000104</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">160000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">160000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">16000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">16000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00001</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-1L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2004</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID schemeName="BuyersItemNumber">B100001</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100001</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100001</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100001</Description>
+			  </Item>
+			  <Quantity type="BO">1000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">10.00</Amount>
+				<PerQuantity unitCode="BO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000101</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000101</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">10000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">10000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">1000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">1000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T00:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00002</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-2L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2005</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID schemeName="EAN">B100002</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100002</ID>
+				</ManufacturerItemID>
+				<Description>Test-Item-100002</Description>
+			  </Item>
+			  <Quantity type="CO">2000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">20.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">40000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">40000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">4000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">4000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00003</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-3L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2006</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<ManufacturerItemID>
+				  <ID>T100003</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100003</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100003</Description>
+			  </Item>
+			  <Quantity type="CO">3000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">30.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000103</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">90000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">90000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">9000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">9000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00004</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-4L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2007</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID>B100004</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100004</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100004</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100004</Description>
+			  </Item>
+			  <Quantity type="CO">4000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">40.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000104</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">160000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">160000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">16000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">16000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00001</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-1L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2004</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID schemeName="BuyersItemNumber">B100001</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100001</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100001</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100001</Description>
+			  </Item>
+			  <Quantity type="BO">1000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">10.00</Amount>
+				<PerQuantity unitCode="BO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000101</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000101</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">10000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">10000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">1000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">1000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T00:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00002</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-2L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2005</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID schemeName="EAN">B100002</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100002</ID>
+				</ManufacturerItemID>
+				<Description>Test-Item-100002</Description>
+			  </Item>
+			  <Quantity type="CO">2000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">20.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">40000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">40000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">4000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">4000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00003</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-3L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2006</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<ManufacturerItemID>
+				  <ID>T100003</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100003</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100003</Description>
+			  </Item>
+			  <Quantity type="CO">3000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">30.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000103</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">90000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">90000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">9000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">9000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+			<InvoiceLine>
+			  <LineNumber>00004</LineNumber>
+			  <DocumentReference type="TaxInvoice">
+				<ShipUnitReference>
+				  <ID>2-1201-4L</ID>
+				</ShipUnitReference>
+				<DocumentID>
+				  <ID>INV_2007</ID>
+				</DocumentID>
+			  </DocumentReference>
+			  <Status>
+				<Code>DeliveryDateTime</Code>
+				<EffectiveDateTime>2015-05-27T10:00:00Z</EffectiveDateTime>
+			  </Status>
+			  <Item>
+				<CustomerItemID>
+				  <ID>B100004</ID>
+				</CustomerItemID>
+				<ManufacturerItemID>
+				  <ID>T100004</ID>
+				</ManufacturerItemID>
+				<SupplierItemID>
+				  <ID>S100004</ID>
+				</SupplierItemID>
+				<Description>Test-Item-100004</Description>
+			  </Item>
+			  <Quantity type="CO">4000.00</Quantity>
+			  <UnitPrice>
+				<Amount currencyID="CHF">40.00</Amount>
+				<PerQuantity unitCode="CO">1.00</PerQuantity>
+			  </UnitPrice>
+			  <PurchaseOrderReference>
+				<DocumentID>
+				  <ID>Test-01-CO-10051jai</ID>
+				</DocumentID>
+				<LineNumber>000104</LineNumber>
+			  </PurchaseOrderReference>
+			  <ContractReference>
+				<DocumentID>
+				  <ID>BO-8801</ID>
+				</DocumentID>
+				<LineNumber>000102</LineNumber>
+			  </ContractReference>
+			  <TotalAmount currencyID="CHF">160000.00</TotalAmount>
+			  <Tax>
+				<TaxJurisdicationCodes>
+				  <Code>Tax</Code>
+				  <Code>ValueAddedTax</Code>
+				</TaxJurisdicationCodes>
+				<BasisAmount currencyID="CHF">160000.00</BasisAmount>
+				<Calculation>
+				  <RateNumeric>10.0</RateNumeric>
+				  <Description>Other</Description>
+				</Calculation>
+				<Exemption/>
+				<Description>VAT-10</Description>
+				<TaxAuthorityAmount currencyID="CHF">16000.00</TaxAuthorityAmount>
+				<Amount currencyID="CHF">16000.00</Amount>
+			  </Tax>
+			  <gxsxtd:InvoiceLineExtensionGroup>
+				<gxsxtd:Event type="DateOfSupply">
+				  <gxsxtd:StartDateTime>
+					<gxsxtd:Date>2015-05-27T10:00:00Z</gxsxtd:Date>
+				  </gxsxtd:StartDateTime>
+				</gxsxtd:Event>
+			  </gxsxtd:InvoiceLineExtensionGroup>
+			</InvoiceLine>
+		  </Invoice>
+		</DataArea>
+	  </ProcessInvoice>
+	</stl:source>
+	<stl:template>
+	  <data>
+		<invoice>
+		  <parties>
+			<party role="?" category="?">
+			  <name>?</name>
+			  <address>
+				<street>?</street>
+				<city>?</city>
+				<country>?</country>
+				<code>?</code>
+			  </address>
+			  <contacts>
+				<contact type="?">
+				  <profession>?</profession>
+				  <name>?</name>
+				  <item channel="?">?</item>
+				</contact>
+			  </contacts>
+			  <ids>
+				<id scheme="?">?</id>
+			  </ids>
+			</party>
+		  </parties>
+		  <transport>
+			<event type="?">?</event>
+			<note type="?">?</note>
+		  </transport>
+		  <lines>
+			<line number="?" partid="?" description="?" quantity="?"/>
+		  </lines>
+		</invoice>
+	  </data>
+	</stl:template>
+	<stl:transformation key="_default">
+	  <tdt:transformation
+		  xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt"
+		  xmlns:gxsxtd="http://www.gxs.com/sa_ext"
+		  version="1.0">
+		<tdt:rule path="/data/invoice">
+		  <tdt:value key=".">/ProcessInvoice/DataArea/Invoice</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/parties/party">
+		  <tdt:value key=".">InvoiceHeader/Party|InvoiceHeader/CustomerParty|InvoiceHeader/SupplierParty</tdt:value>
+		  <tdt:value key="@role">substring( concat(@role,name()), 0, string-length(concat(@role,name()))-4)</tdt:value>
+		  <tdt:value key="@category">@category</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/parties/party/name">
+		  <tdt:value key=".">Name</tdt:value>
+		  <tdt:value key="text()">.</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/parties/party/address">
+		  <tdt:value key=".">Location/Address</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/parties/party/address/street">
+		  <tdt:value key="text()">StreetName</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/parties/party/address/city">
+		  <tdt:value key="text()">CityName</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/parties/party/address/country">
+		  <tdt:value key="text()">CountryCode</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/parties/party/address/code">
+		  <tdt:value key="text()">PostalCode</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/parties/party/contacts/contact">
+		  <tdt:value key=".">Contact</tdt:value>
+		  <tdt:value key="@type">@type</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/parties/party/contacts/contact/name">
+		  <tdt:value key="text()">Name</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/parties/party/contacts/contact/profession">
+		  <tdt:value key=".">JobTitle</tdt:value>
+		  <tdt:value key="text()">.</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/parties/party/contacts/contact/item">
+		  <tdt:value key=".">Communication</tdt:value>
+		  <tdt:value key="@channel">concat(ChannelCode/text(), substring('Email', (ChannelCode/text()!='')*string-length('Email')+1))</tdt:value>
+		  <tdt:value key="text()">concat(DialNumber,URI)</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/parties/party/ids/id">
+		  <tdt:value key=".">PartyIDs/ID|PartyIDs/TaxID</tdt:value>
+		  <tdt:value key="@scheme">@schemeName</tdt:value>
+		  <tdt:value key="text()">text()</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/transport">
+		  <tdt:value key=".">InvoiceHeader/gxsxtd:InvoiceHeaderExtensionGroup</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/transport/event">
+		  <tdt:value key=".">gxsxtd:Event</tdt:value>
+		  <tdt:value key="@type">@type</tdt:value>
+		  <tdt:value key="text()">gxsxtd:StartDateTime/gxsxtd:Date</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/transport/note">
+		  <tdt:value key=".">//gxsxtd:Note</tdt:value>
+		  <tdt:value key="@type">@type</tdt:value>
+		  <tdt:value key="text()">text()</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/invoice/lines/line">
+		  <tdt:value key=".">InvoiceLine</tdt:value>
+		  <tdt:value key="@number">LineNumber</tdt:value>
+		  <tdt:value key="@partid">Item/ManufacturerItemID/ID</tdt:value>
+		  <tdt:value key="@description">Item/Description</tdt:value>
+		  <tdt:value key="@quantity">Quantity</tdt:value>
+		</tdt:rule>
+	  </tdt:transformation>
+	</stl:transformation>
+  </stl:data>
+</stl:stl>

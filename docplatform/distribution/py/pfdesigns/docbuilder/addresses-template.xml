@@ -1,0 +1,85 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:style>
+	.theader, .trow0, .trow1 {
+	  font-family: Arial;
+	  font-size: 10pt;
+	  padding: 8pt 2pt;
+	}
+	.theader {
+	  font-weight: bold;
+	  background-color: #acf;	  
+	}
+	.trow0 {
+	  background-color: #def;	  
+	}
+	.trow1 {
+	  background-color: #ccf;	  
+	}
+	.handh, .handm {
+	  fill:black;
+	}
+	.link {
+	  color: blue;
+	  text-decoration:underline;
+	}
+  </stl:style>
+  <stl:document>
+	<stl:story name="Main" w="520pt">
+	  <stl:p>
+		<stl:table class="table" w="100%">
+		  <stl:story>
+			<stl:row>
+			  <stl:cell class="theader" w="5%"><stl:p>#</stl:p></stl:cell>
+			  <stl:cell class="theader" w="30%"><stl:p>Company</stl:p></stl:cell>
+			  <stl:cell class="theader" w="30%"><stl:p>Address</stl:p></stl:cell>
+			  <stl:cell class="theader" w="30%"><stl:p>Contact</stl:p></stl:cell>
+			  <stl:cell class="theader" w="10%"><stl:p>Time</stl:p></stl:cell>
+			</stl:row>
+		    {{addresses}}
+			  <stl:row h="50pt">
+				<stl:cell class="trow{{#|mod>2}}"><stl:p>{{##}}</stl:p></stl:cell>
+				<stl:cell class="trow{{#|mod>2}}">
+				  <stl:p>{{last_name}}, {{first_name}}</stl:p>
+				  <stl:p>
+					<stl:scope hyperlink="{{web}}" screentip="Company">
+					  <stl:story>
+						<stl:p class="link">{{company_name}}</stl:p>
+					  </stl:story>
+					</stl:scope>
+				  </stl:p>
+				</stl:cell>
+				<stl:cell class="trow{{#|mod>2}}">
+				  <stl:p>{{address}}</stl:p>
+				  <stl:p>{{city}}, {{county}}</stl:p>
+				  <stl:p>{{state}}, {{zip}}</stl:p>
+				</stl:cell>
+				<stl:cell class="trow{{#|mod>2}}">
+				  <stl:p>{{phone1}}</stl:p>
+				  <stl:p>{{phone2}}</stl:p>
+				  <stl:p>
+					<stl:scope hyperlink="mailto:{{email}}" screentip="Email Address">
+					  <stl:story>
+						<stl:p class="link">{{email}}</stl:p>
+					  </stl:story>
+					</stl:scope>
+				  </stl:p>
+				</stl:cell>
+				<stl:cell class="trow{{#|mod>2}}">
+				  <stl:p>
+					<stl:group transform="scale(0.1)">
+					  <stl:fragment src="wd:/clock-face.svg" selector="/item[1]" />
+					  <stl:group transform="translate(1024 1024) scale(0.22)">
+						<stl:path class="handh" data="M -50,-600  l 50,-50 50,50 0,800  -100,0 z" transform="rotate({{#|hours}})"/>
+						<stl:path class="handm" data="M -40,-900  l 40,-40 40,40 0,1180 -80,0  z" transform="rotate({{#|minutes}})"/>
+					  </stl:group>
+					</stl:group>
+				  </stl:p>
+				</stl:cell>
+			  </stl:row>
+			{{/addresses}}
+		  </stl:story>
+		</stl:table>
+	  </stl:p>
+	</stl:story>
+  </stl:document>
+</stl:stl>

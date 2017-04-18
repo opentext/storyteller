@@ -1,0 +1,41 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+	<stl:page w="300pt" h="120pt">
+	  <stl:text x="20pt" y="20pt" w="260pt" h="100pt" style="fill:#aabbcc">
+		<stl:story>
+		  <stl:p>
+			This is an ordinary single-line paragraph.
+		  </stl:p>
+		  <stl:p>
+			And this  paragraph   contains    multi-space     sequences.
+		  </stl:p>
+		  <stl:p>
+			This paragraph contains a <stl:span style="font-weight:bold;">bold</stl:span> span.
+		  </stl:p>
+		  <stl:p>
+			This
+			paragraph
+			contains
+			newline
+			separated
+			words.
+		  </stl:p>
+		  <stl:p>
+			This paragraph 
+			contains a text
+			split to several 
+			lines.
+		  </stl:p>
+ 		  <stl:p>
+			<stl:span/>       This paragraph starts with a whitespace.
+		  </stl:p>
+		  <stl:p>
+			This paragraph contains a sequence of:
+			<stl:span/> <stl:span/> <stl:span/> <stl:span/> <stl:span/> <stl:span/> <stl:span/> <stl:span/>
+			... 8 spaces.
+		  </stl:p>
+		</stl:story>
+	  </stl:text>
+	</stl:page>
+  </stl:document>
+</stl:stl>

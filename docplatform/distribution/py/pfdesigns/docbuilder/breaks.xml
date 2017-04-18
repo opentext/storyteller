@@ -1,0 +1,31 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+	<stl:story name="Main">
+	  <stl:p>
+		This is a text<stl:break/>
+		mixed with line-breaks<stl:break/>
+		and so broken to several<stl:break type="line"/>lines.
+	  </stl:p>
+	  <stl:p>
+		Here we even create
+		<stl:break/>several
+		<stl:break/>
+		<stl:break/>empty
+		<stl:break/>
+		<stl:break/>lines.
+	  </stl:p>
+	  <stl:p>
+		This is another paragraph - this time it contains an area break. 
+		The break comes right here: {<stl:break type="area"/>}
+		... and so this text comes to the next area and because 
+		of another area break: {<stl:break type="area"/>} 
+		... this text comes to yet another one.
+	  </stl:p>
+    </stl:story>
+	<stl:page w="300pt" h="320pt">
+	  <stl:text x="20pt" y="20pt" w="260pt" h="200pt" style="fill:#aabbcc" story="Main"/>
+	  <stl:text x="20pt" y="230pt" w="260pt" h="40pt" style="fill:#aabbcc" story="Main"/>
+	  <stl:text x="20pt" y="280pt" w="260pt" h="20pt" style="fill:#aabbcc" story="Main"/>
+	</stl:page>
+  </stl:document>
+</stl:stl>

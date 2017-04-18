@@ -1,0 +1,29 @@
+<tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
+  <tdt:rule path="/data/day">
+    <tdt:value key=".">/schedule/day</tdt:value>
+    <tdt:value key="@date">@date</tdt:value>
+	<tdt:rule path="station">
+      <tdt:value key=".">tdt:group( broadcasts/broadcast, '~programme/ownership/service/@key')</tdt:value>
+      <tdt:value key="@name">key[1]</tdt:value>
+	  <tdt:rule path="category">
+		<tdt:value key=".">tdt:group( tdt:ungroup(), '~programme/programme/title/text()' )</tdt:value>
+		<tdt:value key="@name">key[1]</tdt:value>
+		<tdt:rule path="broadcast">
+		  <tdt:value key=".">tdt:ungroup()</tdt:value>
+		  <tdt:value key="@time">substring-before( substring-after( start/text(), 'T' ), 'Z' )</tdt:value>
+		  <tdt:value key="@duration">duration/text()</tdt:value>
+		  <tdt:rule path="hyperlink">
+			<tdt:value key=".">programme/pid</tdt:value>
+			<tdt:value key="text()">concat( 'http://www.bbc.co.uk/programmes/', . )</tdt:value>
+		  </tdt:rule>
+		  <tdt:rule path="name">
+			<tdt:value key="text()">concat( programme/display_titles/title, ' - ', programme/display_titles/subtitle )</tdt:value>
+		  </tdt:rule>
+		  <tdt:rule path="synopsis">
+			<tdt:value key="text()">programme/short_synopsis/text()</tdt:value>
+		  </tdt:rule>
+		</tdt:rule>
+	  </tdt:rule>
+	</tdt:rule>
+  </tdt:rule>
+</tdt:transformation>

@@ -1,0 +1,27 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+    <stl:story name="Main">
+      <stl:p>
+        <stl:repeater xpath="$pages">
+          <stl:script language="js">
+            var PageCount = LoadImageToCurrentResourceContextAndReturnPageCount('wd:/multipage.tiff');
+
+            var vars = require( 'vars' );
+            for ( var i=0; i&lt;PageCount; ++i )
+              vars.set( 'pages', i, [ i ] );
+          </stl:script>
+          <stl:story>
+            <stl:p>
+              <stl:image w="100" h="50" src="wd:/multipage.tiff">
+                <stl:modification key="@IImageItem/Image/Page" value="." />
+              </stl:image>
+            </stl:p>
+          </stl:story>
+        </stl:repeater>
+      </stl:p>
+    </stl:story>
+    <stl:page w="140" h="240" occurrence="repeatable">
+      <stl:text x="20" y="20" w="100" h="200" story="Main"/>
+    </stl:page>
+  </stl:document>
+</stl:stl>

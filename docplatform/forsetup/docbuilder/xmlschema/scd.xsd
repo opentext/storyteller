@@ -1,0 +1,219 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:scd="http://developer.opentext.com/schemas/storyteller/chart/definition"
+			targetNamespace="http://developer.opentext.com/schemas/storyteller/chart/definition">
+  <!-- We are not validating Chart definition right now -->
+
+	<xsd:simpleType name="class">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[a-zA-Z_][a-zA-Z_\-0-9]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="style">
+		<xsd:restriction base="xsd:string">
+			<!-- Whitespace rules may be too strict here, but we want to have the style syntax uniform -->
+			<xsd:pattern value="([a-z\-]+:\s?[^;]+;?\s?)+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="length">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[+-]?([0-9]*\.)?[0-9]+(pt|px|in|pc|mm|cm|em|%)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- Attribute groups -->
+
+	<xsd:attributeGroup name="style-attrs">
+		<xsd:attribute name="id" type="xsd:ID"/>
+		<xsd:attribute name="class" type="scd:class"/>
+		<xsd:attribute name="style" type="scd:style"/>
+	</xsd:attributeGroup>
+
+	<xsd:element name="scd">
+	<xsd:complexType>
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element ref="scd:title" minOccurs="0"/>
+			<xsd:element ref="scd:legend" minOccurs="0"/>
+			<xsd:element ref="scd:plot" minOccurs="0"/>
+			<xsd:element ref="scd:axis_x" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="scd:axis_y" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="scd:support_lines" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="scd:layer" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:choice>
+		<xsd:attributeGroup ref="scd:style-attrs"/>
+	</xsd:complexType>
+  </xsd:element>
+
+	<xsd:element name="title">
+		<xsd:complexType>
+			<xsd:attribute name="text" type="xsd:string" />
+			<xsd:attribute name="position" type="scd:titleposition" />
+			<xsd:attributeGroup ref="scd:style-attrs"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="legend">
+		<xsd:complexType>
+			<xsd:attribute name="alignment_v" type="scd:alignment_vertical" />
+			<xsd:attribute name="alignment_h" type="scd:alignment_horizontal" />
+			<xsd:attributeGroup ref="scd:style-attrs"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="plot">
+		<xsd:complexType>
+			<xsd:attribute name="logical_x_low" type="xsd:decimal" />
+			<xsd:attribute name="logical_x_high" type="xsd:decimal" />
+			<xsd:attribute name="logical_y_low" type="xsd:decimal" />
+			<xsd:attribute name="logical_y_high" type="xsd:decimal" />
+			<xsd:attributeGroup ref="scd:style-attrs"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:attributeGroup name="axis-attrs">
+		<xsd:attribute name="label_alignment" type="scd:alignment_horizontal"/>
+		<xsd:attribute name="label_position_v" type="scd:alignment_vertical"/>
+		<xsd:attribute name="label_position_h" type="scd:alignment_horizontal"/>
+		<xsd:attribute name="label_placement" type="scd:label_placement"/>
+		<xsd:attribute name="logical_position_x" type="xsd:decimal"/>
+		<xsd:attribute name="logical_position_y" type="xsd:decimal"/>
+		<xsd:attribute name="logical_y_low" type="xsd:decimal" />
+		<xsd:attribute name="logical_y_high" type="xsd:decimal" />
+		<xsd:attribute name="logical_width" type="xsd:decimal" />
+		<xsd:attribute name="draw_behind" type="xsd:boolean" />
+		<xsd:attributeGroup ref="scd:style-attrs"/>
+	</xsd:attributeGroup>
+
+	<xsd:attributeGroup name="axisxy-attrs">
+		<xsd:attribute name="label" type="xsd:string" />
+		<xsd:attributeGroup ref="scd:axis-attrs"/>
+	</xsd:attributeGroup>
+
+
+	<xsd:element name="axis_x">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="scd:axisxy-attrs"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="axis_y">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="scd:axisxy-attrs"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="support_lines">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="scd:axis-attrs"/>
+			<xsd:attribute name="logical_step" type="xsd:decimal" />
+			<xsd:attribute name="logical_x_low" type="xsd:decimal" />
+			<xsd:attribute name="logical_x_high" type="xsd:decimal" />
+			<xsd:attribute name="mask" type="xsd:string" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="layer">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="scd:series" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+  		<xsd:attribute name="type" type="scd:chart_type" />
+			<xsd:attribute name="xpath" type="xsd:string" />
+			<xsd:attribute name="labels_offset" type="xsd:decimal" />
+			<xsd:attribute name="labels_line" type="scd:style" />
+			<xsd:attribute name="line" type="scd:style" />
+			<xsd:attribute name="connected_axis_x" type="xsd:nonNegativeInteger" />
+			<xsd:attribute name="connected_axis_y" type="xsd:nonNegativeInteger" />
+			<xsd:attribute name="radius" type="xsd:decimal" />
+			<xsd:attribute name="center_x" type="xsd:decimal" />
+			<xsd:attribute name="center_y" type="xsd:decimal" />
+			<xsd:attribute name="start_angle" type="xsd:nonNegativeInteger" />
+			<xsd:attribute name="clockwise" type="xsd:boolean" />
+			<xsd:attribute name="height3d" type="xsd:decimal" />
+			<xsd:attribute name="xyratio" type="scd:ratio" />
+			<xsd:attribute name="donut_ratio" type="scd:ratio" />
+			<xsd:attribute name="labels_connection" type="scd:labels_connection" />
+			<xsd:attribute name="bar_width" type="xsd:decimal" />
+			<xsd:attribute name="offset_left" type="xsd:decimal" />
+			<xsd:attribute name="offset_right" type="xsd:decimal" />
+			<xsd:attribute name="gap" type="xsd:decimal" />
+			<xsd:attribute name="node_type" type="scd:node_type" />
+			<xsd:attribute name="node_size" type="xsd:decimal" />
+			<xsd:attribute name="area" type="xsd:string" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="series">
+		<xsd:complexType>
+			<xsd:attribute name="col_x" type="xsd:nonNegativeInteger" />
+			<xsd:attribute name="col_y" type="xsd:nonNegativeInteger" />
+			<xsd:attribute name="col_label" type="xsd:nonNegativeInteger" />
+			<xsd:attribute name="col_legend" type="xsd:nonNegativeInteger" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:simpleType name="titleposition">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="top"/>
+			<xsd:enumeration value="bottom"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="alignment_vertical">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="top"/>
+			<xsd:enumeration value="center"/>
+			<xsd:enumeration value="bottom"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="alignment_horizontal">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="left"/>
+			<xsd:enumeration value="center"/>
+			<xsd:enumeration value="right"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="label_placement">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="start"/>
+			<xsd:enumeration value="end"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="chart_type">
+		<xsd:restriction base="xsd:string">
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ratio">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="labels_connection">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="none"/>
+			<xsd:enumeration value="normal"/>
+			<xsd:enumeration value="level"/>
+			<xsd:enumeration value="radial"/>
+			<xsd:enumeration value="underlined"/>
+			<xsd:enumeration value="aligned"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="node_type">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="none"/>
+			<xsd:enumeration value="dot"/>
+			<xsd:enumeration value="square"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>
+
+

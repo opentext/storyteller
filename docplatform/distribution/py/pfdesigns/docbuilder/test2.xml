@@ -1,0 +1,72 @@
+<tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
+  <tdt:rule path="/html">
+	<tdt:value key="$customer">/root/customer-info</tdt:value>
+	<tdt:value key="$period">/root/account-info/period</tdt:value>
+	<tdt:value key="$transactions">/root/transactions</tdt:value>
+	<tdt:value key="$fixed-fees">$transactions/fixed-fees</tdt:value>
+	<tdt:value key="$connection-fees">$transactions/connection-fees</tdt:value>
+	<tdt:value key="head/title/text()">concat(tdt:template()//title, ' ', $customer/tel/text(), ", ", $period )</tdt:value>
+  </tdt:rule>
+  <!-- customer-info -->
+  <tdt:rule path="//span[@class='tel']">
+	<tdt:value key="text()">$customer/tel/text()</tdt:value>
+  </tdt:rule>
+  <tdt:rule path="//div[@class='cust-info']/table/tbody">
+	<tdt:value key="tr[2]/td/text()">$customer/@code</tdt:value>
+	<tdt:value key="tr[3]/td/text()">$customer/tarif/text()</tdt:value>
+  </tdt:rule>
+  <tdt:rule path="//div[@class='account-info']">
+	<tdt:value key="text()">concat(tdt:template()//div[@class='account-info'], ' ', $period )</tdt:value>
+  </tdt:rule>
+  <!-- "credits" table -->
+  <tdt:rule path="//table[@class='credits']">
+	<tdt:value key=".">$transactions/credits[item]</tdt:value>
+	<tdt:value key="tfoot/tr/td[1]/text()">string(@sum)</tdt:value>
+	<tdt:rule path="tbody/tr">
+	  <tdt:value key=".">item</tdt:value>
+	  <tdt:value key="td[1]/text()">label/text()</tdt:value>
+	  <tdt:value key="td[2]/text()">type/text()</tdt:value>
+	  <tdt:value key="td[3]/text()">duration/text()</tdt:value>
+	  <tdt:value key="td[4]/text()">val/text()</tdt:value>
+	  <tdt:value key="td[5]/text()">tax/text()</tdt:value>
+	  <tdt:value key="td[6]/text()">final/text()</tdt:value>
+	</tdt:rule>
+  </tdt:rule>
+  <!-- "fixed-fees" table -->
+  <tdt:rule path="//table[@class='fixed-fees']">
+	<tdt:value key="tfoot/tr/td[1]/text()">string($fixed-fees/@sum)</tdt:value>
+	<tdt:rule path="tbody/tr">
+	  <tdt:value key=".">$fixed-fees/item</tdt:value>
+	  <tdt:value key="td[1]/text()">label/text()</tdt:value>
+	  <tdt:value key="td[2]/text()">duration/text()</tdt:value>
+	  <tdt:value key="td[3]/text()">count/text()</tdt:value>
+	  <tdt:value key="td[4]/text()">val/text()</tdt:value>
+	  <tdt:value key="td[5]/text()">tax/text()</tdt:value>
+	  <tdt:value key="td[6]/text()">final/text()</tdt:value>
+	</tdt:rule>
+  </tdt:rule>
+  <!-- "connection-fees" table -->
+  <tdt:rule path="//table[@class='connection-fees']">
+	<tdt:value key="tfoot/tr/td[1]/text()">string($connection-fees/@sum)</tdt:value>
+	<tdt:rule path="tbody">
+	  <tdt:value key=".">$connection-fees/group</tdt:value>
+	  <tdt:value key="tr[@class='section-header']/th[1]/text()">label/text()</tdt:value>
+	  <tdt:value key="tr[@class='section-footer']/td[2]/text()">sum/text()</tdt:value>
+	  <tdt:rule path="tr[@class='section-data']">
+	    <tdt:value key=".">item</tdt:value>
+		<tdt:value key="td[1]/text()">label/text()</tdt:value>
+		<tdt:value key="td[2]/text()">count/text()</tdt:value>
+		<tdt:value key="td[3]/text()">period/text()</tdt:value>
+		<tdt:value key="td[4]/text()">amount/text()</tdt:value>
+		<tdt:value key="td[5]/text()">free-units/text()</tdt:value>
+		<tdt:value key="td[6]/text()">price/text()</tdt:value>
+		<tdt:value key="td[7]/text()">tax/text()</tdt:value>
+		<tdt:value key="td[8]/text()">final/text()</tdt:value>
+	  </tdt:rule>
+	</tdt:rule>
+  </tdt:rule>
+  <!-- total -->
+  <tdt:rule path="//table[@class='total']//td[@class='sum']">
+	<tdt:value key="text()">$transactions/@sum</tdt:value>
+  </tdt:rule>
+</tdt:transformation>

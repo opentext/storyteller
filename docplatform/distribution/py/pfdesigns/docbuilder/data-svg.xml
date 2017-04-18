@@ -1,0 +1,71 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:data>
+	<stl:source>
+	  <root>
+		<values>
+		  <record index="1" val="100"/>
+		  <record index="1" val="-50"/>
+		  <record index="2" val="20"/>
+		  <record index="2" val="-100"/>
+		  <record index="3" val="130"/>
+		  <record index="4" val="150"/>
+		  <record index="4" val="-90"/>
+		  <record index="5" val="170"/>
+		  <record index="6" val="-90"/>
+		  <record index="7" val="140"/>
+		  <record index="7" val="-130"/>
+		  <record index="8" val="130"/>
+		  <record index="9" val="60"/>
+		  <record index="11" val="130"/>
+		  <record index="12" val="160"/>
+		  <record index="13" val="130"/>
+		  <record index="14" val="150"/>
+		  <record index="14" val="-150"/>
+		</values>
+	  </root>
+	</stl:source>
+	<stl:template src="wd:/chart-template.svg"/>
+	<stl:transformation>
+	  <tdt:transformation 
+		  xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" 
+		  xmlns:dc="http://purl.org/dc/elements/1.1/" 
+		  xmlns:cc="http://creativecommons.org/ns#" 
+		  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+		  xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" 
+		  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" 
+		  version="1.0">
+		<tdt:rule path="/svg:svg/svg:g[@id='layer2']">
+		  <tdt:value key="$base">tdt:split(tdt:template()//svg:path[@id='axis-x']/@d, ' ')[1 &lt; position()]</tdt:value>
+		  <tdt:value key="$y0">tdt:split($base[1], ',')[2]</tdt:value>
+		  <tdt:value key="$x0">tdt:template()//svg:g[@id='layer2']//svg:rect[@id='positive-bar-00']/@x</tdt:value>
+		  <tdt:value key="$wb">tdt:template()//svg:rect[@id='graph-area']/@width - 2 * ($x0 - tdt:template()//svg:rect[@id='graph-area']/@x)</tdt:value>
+		  <tdt:value key="$hu">tdt:template()//svg:g[@id='layer2']//svg:rect[@id='positive-bar-00']/@height div 100</tdt:value>
+		  <tdt:value key="$w">$wb div /root/values/record[last()]/@index</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/svg:svg/svg:g[@id='layer2']/svg:rect[@id='positive-bar-00']">
+		  <tdt:value key=".">/root/values/record[number(@val) &gt; 0]</tdt:value>
+		  <tdt:value key="@id">concat('positive-bar-', @index)</tdt:value>
+		  <tdt:value key="$h">@val * $hu</tdt:value>
+		  <tdt:value key="@height">$h</tdt:value>
+		  <tdt:value key="@x">$x0 + (@index - 1) * $w</tdt:value>
+		  <tdt:value key="@y">$y0 - $h</tdt:value>
+		  <tdt:value key="@width">$w</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/svg:svg/svg:g[@id='layer2']/svg:rect[@id='positive-bar-00']/svg:title">
+		  <tdt:value key="text()">@val
+		  </tdt:value></tdt:rule>
+		<tdt:rule path="/svg:svg/svg:g[@id='layer2']/svg:rect[@id='negative-bar-00']">
+		  <tdt:value key=".">/root/values/record[number(@val) &lt; 0]</tdt:value>
+		  <tdt:value key="@id">concat('negative-bar-', @index)</tdt:value>
+		  <tdt:value key="$h">- @val * $hu</tdt:value>
+		  <tdt:value key="@height">$h</tdt:value>
+		  <tdt:value key="@x">$x0 + (@index - 1) * $w</tdt:value>
+		  <tdt:value key="@width">$w</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/svg:svg/svg:g[@id='layer2']/svg:rect[@id='negative-bar-00']/svg:title">
+		  <tdt:value key="text()">@val</tdt:value>
+		</tdt:rule>
+	  </tdt:transformation>
+	</stl:transformation>
+  </stl:data>
+</stl:stl>

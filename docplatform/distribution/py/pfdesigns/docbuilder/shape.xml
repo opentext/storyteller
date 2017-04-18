@@ -1,0 +1,84 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:style>
+	.centered {
+	  text-align: center;
+	}
+	.circle {
+	  padding:-10pt -25pt -25pt 0pt;
+	}
+  </stl:style>
+  <stl:document>
+	<stl:story name="Main">
+	  <stl:block class="centered" style="font-family:Arial; font-size:7pt">
+		<stl:p>
+		  <stl:circle class="circle" style="fill:#ffccff;" r="10pt">
+			<stl:story><stl:p class="centered">A</stl:p></stl:story>
+		  </stl:circle>
+		  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lacinia urna interdum erat scelerisque, 
+		  at finibus orci mattis. Vivamus ornare libero ullamcorper elit consectetur porttitor. Aliquam erat volutpat. 
+		  Aliquam vulputate sodales arcu. Suspendisse ultricies magna massa, et interdum ante scelerisque ut. Nunc 
+		  faucibus enim malesuada lorem euismod, non egestas lectus lobortis. Maecenas vestibulum aliquam luctus. 
+		  In id vehicula enim, in venenatis sapien.
+		</stl:p>
+		<stl:p>
+		  <stl:circle class="circle" style="fill:#ccffcc;" r="10pt">
+			<stl:story><stl:p class="centered">B</stl:p></stl:story>
+		  </stl:circle>
+		  Cras malesuada massa finibus, auctor lectus vel, posuere sapien. Vivamus non nunc pulvinar urna interdum fringilla. 
+		  Etiam a faucibus elit. Nullam nec nibh cursus, bibendum risus et, tempus ante. Quisque at commodo nibh, cursus 
+		  faucibus arcu. Nullam convallis accumsan vulputate. Etiam varius, nulla ac scelerisque convallis, tortor nisl 
+		  lacinia tortor, vitae molestie odio ipsum ut neque. Aliquam lobortis nisl lectus, eu suscipit dolor dignissim a. 
+		  In hac habitasse platea dictumst. Sed nec interdum lectus. Quisque ac interdum mauris. Integer justo ex, varius 
+		  non venenatis a, pretium ut est. Fusce gravida mi ipsum.
+		</stl:p>
+		<stl:p>
+		  <stl:circle class="circle" style="fill:#ccffff;" r="10pt">
+			<stl:story><stl:p class="centered">C</stl:p></stl:story>
+		  </stl:circle>
+		  Maecenas ac consequat ante. Nunc laoreet tortor pretium odio condimentum tristique. Donec ut ipsum ultrices, 
+		  condimentum elit et, eleifend nisi. Nulla quis nisl et risus tristique venenatis vel eu purus. Nunc feugiat 
+		  aliquet hendrerit. Morbi vitae semper neque, et elementum nisl. Fusce et dignissim sapien, et suscipit metus.
+		</stl:p>
+		<stl:p>
+		  <stl:circle class="circle" style="fill:#ffffcc;" r="10pt">
+			<stl:story><stl:p class="centered">D</stl:p></stl:story>
+		  </stl:circle>
+		  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin vel tristique nibh, 
+		  et euismod augue. Nullam porta feugiat nulla, eget feugiat neque convallis quis. Duis ultricies nec libero sit amet 
+		  ultricies. Mauris maximus ante nunc, sed suscipit urna efficitur eget. Praesent magna ex, tincidunt et dignissim vel, 
+		  convallis at quam. Vivamus non pulvinar sapien.
+		</stl:p>
+		<stl:p>
+		  <stl:circle class="circle" style="fill:#aaccff;" r="10pt">
+			<stl:story><stl:p class="centered">E</stl:p></stl:story>
+		  </stl:circle>
+		  Donec iaculis diam augue, ut molestie lacus pellentesque id. Class aptent taciti sociosqu ad litora torquent per 
+		  conubia nostra, per inceptos himenaeos. Mauris fringilla lacus quis velit scelerisque porttitor. Aliquam porttitor 
+		  lorem arcu. Donec sed pulvinar elit. Nunc et mattis arcu. Sed tempus ex quis tempor condimentum. Maecenas pharetra 
+		  at ante vel rhoncus.
+		</stl:p>
+		<stl:p>
+		  <stl:circle class="circle" style="fill:#ffccaa;" r="10pt">
+			<stl:story><stl:p class="centered">F</stl:p></stl:story>
+		  </stl:circle>
+		  And this is the end of the story.
+		</stl:p>
+	  </stl:block>
+	</stl:story>
+	<stl:page w="550pt" h="550pt">
+	  <stl:rect style="fill:#aaffff" x="20pt" y="20pt" w="200pt" h="100pt" story="Main"/>
+	  <stl:ellipse style="fill:#ffaaff" cx="350pt" cy="70pt" rx="100pt" ry="50pt" story="Main"/>
+	  <stl:path style="stroke:#bbbb00; fill:#ffffaa" data="M130 180 A 85 85, 0, 1, 0, 175 225 L 225 130 Z">
+		<stl:story>
+		  <stl:p class="centered" style="font-family:Arial; font-size:26pt">
+			This is a <stl:span style="font-weight:bold">separate story</stl:span> defining the callout! 
+		  </stl:p>
+		</stl:story>
+	  </stl:path>
+	  <stl:polygon style="fill:#ccffcc" points="250 150 450 200 550 300 300 350" story="Main" />
+	  <stl:circle style="fill:#ccccff" cx="120pt" cy="450pt" r="80pt" story="Main"/>
+	  <stl:line style="stroke:#ff0000" x1="420pt" y1="450pt" x2="550pt" y2="400pt" />
+	  <stl:polyline style="stroke:#0000ff" points="200,340 240,340 240,380 280,380 280,420 320,420 320,460" />
+	</stl:page>
+  </stl:document>
+</stl:stl>

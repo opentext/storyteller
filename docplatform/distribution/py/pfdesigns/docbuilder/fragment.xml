@@ -1,0 +1,37 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
+		 xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" version="0.1">
+  <stl:fixtures>
+	<xp:fixture key="link:/fragments/embedded.xml">
+	  <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+		<stl:document>
+		  <stl:page w="220pt" h="90pt">
+			<stl:text x="10pt" y="10pt" w="200pt" h="40pt">
+			  <stl:story>
+				<stl:p>External LXF fragment referenced from the embedded fragment:</stl:p>
+			  </stl:story>
+			</stl:text>
+			<stl:fragment x="100pt" y="0pt" w="80pt" h="80pt" transform="translate(-140 -40) scale(6 6) translate(140 40) " category="load-time" src="wd:/fragment.lxf!/item[1]"/>
+		  </stl:page>
+		</stl:document>
+	  </stl:stl>
+	</xp:fixture>
+  </stl:fixtures>
+  <stl:document>
+	<stl:page w="300pt" h="260pt">
+      <stl:text x="20pt" y="20pt" w="200pt" h="20pt">
+		<stl:story>
+		  <stl:p>External LXF fragment:</stl:p>
+		</stl:story>
+      </stl:text>
+      <stl:fragment x="120pt" y="0pt" w="80pt" h="80pt" transform="translate(-160 -40) scale(10 10) translate(160 40) " category="load-time" src="wd:/fragment.lxf!/item[1]"/>
+      <stl:text x="20pt" y="120pt" w="220pt" h="200pt" style="fill:#ddffff">
+		<stl:story>
+		  <stl:p>Embedded native inline fragment:</stl:p>
+		  <stl:p>
+			<stl:fragment x="20pt" y="140pt" category="load-time" src="link:/fragments/embedded.xml!/item[1]" style="fill:#ffaaff"/>
+		  </stl:p>
+		</stl:story>
+      </stl:text>
+	</stl:page>
+  </stl:document>
+</stl:stl>

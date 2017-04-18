@@ -1,0 +1,33 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt"
+			targetNamespace="http://developer.opentext.com/schemas/storyteller/transformation/tdt">
+
+  <xsd:element name="transformation">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:element ref="tdt:rule" minOccurs="0" maxOccurs="unbounded"/>
+	  </xsd:sequence>
+	  <xsd:attribute name="version" type="xsd:decimal" use="required"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="rule">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:element ref="tdt:value" minOccurs="0" maxOccurs="unbounded"/>
+	  </xsd:sequence>
+	  <xsd:attribute name="path" type="xsd:string" use="required"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="value">
+	<xsd:complexType>
+	  <xsd:simpleContent>
+		<xsd:extension base="xsd:string">
+		  <xsd:attribute name="key" type="xsd:string" use="required"/>
+		</xsd:extension>
+	  </xsd:simpleContent>
+	</xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

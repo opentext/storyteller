@@ -1,0 +1,105 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:data>
+	<stl:template>
+	  <data>
+		<message priority='L'>
+		  Forth Run [1]PT_BILL_3.5_003 CorpCommunications screen for bill messages. The expectation to turn around
+		  LC scripts within a day is fast approaching. Please read this email from Stephan. This report tracks the # of
+		  days scripts are with us and have 0 high or critical defects # meaning the scripts steps should be continued.
+		  I#m scheduling a meeting for us tomorrow and will add this to the agenda. As of right now, if you#re going
+		  on vacation and have an open script, please reassign it to another team member. Also, when you finish your
+		  script and send it to the next time, it is critical that you change the assigned to team or else it will show as still
+		  with Billing. Here#s an example of a script that shows assigned to Billing, but it#s really with Maria Brothers in
+		  SO.
+		</message>
+		<message priority='M'>
+		  Fith run, Low priority marketing Message. Repeat Whole Scenario from step 20 to 120, for Create a statement
+		  where there are more messages than available space on statement. By adding Create a one-time message
+		  for a customer (U of M). Create a regulatory, Confirm that messages prioritize accordingly and lowest priority
+		  message per business rules fall off the bottom of the statement and do not truncate mid-message.
+		</message>
+		<message priority='L'>
+		  Third run PT_BILL_3.5_003 CorpCommunications screen for bill messages Repeat Whole Scenario from step
+		  20 to 120, by adding Create a recurring message with an expiration date. Generate the statement associated to
+		  the target market. Invoice next month after the message expiration date lapses.Expected: Message is created
+		  successfully for customer on next bill. Follow statement next month where the validity date has lapsed does not
+		  contain the message.
+		</message>
+		<message priority='H'>
+		  Sixth Run [1]PT_BILL_3.5_003 CorpCommunications screen for bill messages Posting date
+		</message>
+		<message priority='L'>
+		  DTE Energy reports the payment histories of all customers to the major credit reporting agencies. Paying your
+		  bill in full and on time, or entering into a payment agreement can help you avoid having unfavorable payment
+		  information reported to a credit reporting agency.
+		</message>
+	  </data>
+	</stl:template>
+	<stl:transformation>
+	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0" />
+	</stl:transformation>
+  </stl:data>
+  <stl:style>
+	.cell {
+	  padding:2 2 2 2; 
+	  border:solid black;
+	}
+	.high-priority {
+	  text-align:left; 
+      font-family:Arial; 
+      font-size:10; 
+      color:red;
+    }
+	.low-priority {
+	  text-align:left; 
+      font-family:Arial; 
+      font-size:10; 
+      color:black;
+    }
+  </stl:style>
+  <stl:document>
+	<stl:story name="Shared">
+	  <stl:p>
+		<stl:table>
+		  <stl:story>
+			<stl:repeater xpath="/data/message[@priority='H']">
+			  <stl:row>
+				<stl:cell w="490" class="cell">
+				  <stl:p class="high-priority"><stl:field xpath="normalize-space(.)"/></stl:p>
+				</stl:cell>
+			  </stl:row>
+			</stl:repeater>
+			<stl:repeater xpath="/data/message[@priority='M']">
+			  <stl:row>
+				<stl:cell w="490" class="cell">
+				  <stl:p class="high-priority"><stl:field xpath="normalize-space(.)"/></stl:p>
+				</stl:cell>
+			  </stl:row>
+			</stl:repeater>
+			<stl:repeater xpath="/data/message[@priority='L']">
+			  <stl:row>
+				<stl:cell w="490" class="cell">
+				  <stl:script when="after" language="js">
+					var layout = require('layout');
+					var item = layout.item();
+					console.log( item );
+					item.Visibility = 'Invisible';
+				  </stl:script>
+				  <stl:p class="low-priority">
+					<stl:field xpath="normalize-space(.)"/>
+				  </stl:p>
+				</stl:cell>
+			  </stl:row>
+			</stl:repeater>
+		  </stl:story>
+		</stl:table>
+	  </stl:p>
+	</stl:story>
+	<stl:page w="540" h="500">
+	  <stl:text x="20" y="20" w="500" h="480" story="Shared"/>
+	</stl:page>
+	<stl:page w="540" h="500">
+	  <stl:text x="20" y="20" w="500" h="60" story="Shared"/>
+	</stl:page>
+  </stl:document>
+</stl:stl>

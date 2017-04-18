@@ -1,0 +1,79 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:data>
+	<stl:source>
+	  <data>
+		<book id="bk001">
+		  <author>A Writer</author>
+		  <title>The First Book</title>
+		  <genre>Fiction</genre>
+		  <price>44.95</price>
+		  <pages>256</pages>
+		  <date>2000-10-01</date>
+		  <review>An amazing story of nothing.</review>
+		</book>
+		<book id="bk002">
+		  <author>A Poet</author>
+		  <title>The Poet's First Poem</title>
+		  <genre>Poem</genre>
+		  <price>24.95</price>
+		  <pages>116</pages>
+		  <date>2010-03-01</date>
+		  <review>Least poetic poems.</review>
+		</book>
+		<book id="bk003">
+		  <title>XML: A Primer</title>
+		  <author>Simon St. Laurent</author>
+		  <price>31.98</price>
+		  <pages>352</pages>
+		  <date>1998/01</date>
+		  <review>Fairly basic XML learning resource.</review>
+		</book>
+	  </data>
+	</stl:source>
+	<stl:template>
+	  <html xmlns:xdc="http://www.xml.com/books"
+			xmlns="http://www.w3.org/HTML/1998/html4">
+		<head><title>Book Reviews</title></head>
+		<body>
+		  <xdc:bookreview>
+			<h2><xdc:title>?</xdc:title></h2>
+			<h3><xdc:author>?</xdc:author></h3>
+			<table border="1">
+			  <tr align="center">
+				<th>Price</th>
+				<th>Review</th>
+			  </tr>
+			  <tr align="left">
+				<td><xdc:price>?</xdc:price></td>
+				<td><xdc:review>?</xdc:review></td>
+			  </tr>
+			</table>
+		  </xdc:bookreview>
+		</body>
+	  </html>
+	</stl:template>
+	<stl:transformation>
+	  <tdt:transformation 
+		  xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" 
+		  xmlns:xdc="http://www.xml.com/books"
+		  xmlns="http://www.w3.org/HTML/1998/html4"
+		  version="1.0">
+		<tdt:rule path="/html/body/xdc:bookreview">
+		  <tdt:value key=".">/data/book</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/html/body/xdc:bookreview/h2/xdc:title">
+		  <tdt:value key="text()">title</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/html/body/xdc:bookreview/h3/xdc:author">
+		  <tdt:value key="text()">author</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/html/body/xdc:bookreview/table/tr[2]/td[1]/xdc:price">
+		  <tdt:value key="text()">price</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/html/body/xdc:bookreview/table/tr[2]/td[2]/xdc:review">
+		  <tdt:value key="text()">review</tdt:value>
+		</tdt:rule>
+	  </tdt:transformation>
+	</stl:transformation>
+  </stl:data>
+</stl:stl>

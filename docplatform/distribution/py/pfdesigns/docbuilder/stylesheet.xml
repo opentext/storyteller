@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<stylesheet name="First set of tests">
+  <style selector="normal">
+    <character>
+      <foreground>RGB(0,0,128)</foreground>
+      <font>
+        <name>Arial</name>
+        <pointsize>11</pointsize>
+      </font>  	      
+    </character>
+    <paragraph>
+      <alignment>center</alignment>
+    </paragraph>
+  </style>
+  <style selector="other">
+    <character>
+      <background>RGB(128,255,255)</background>
+      <font>
+        <name>Arial</name>
+        <pointsize>14</pointsize>
+      </font>  	      
+    </character>
+    <paragraph>
+      <alignment>right</alignment>
+    </paragraph>
+  </style>    
+  <style selector="quote">
+    <character>
+      <font>
+        <italic>1</italic>
+      </font>  	      
+    </character>
+    <paragraph>
+      <linespacing>2</linespacing>
+      <leftindent>18</leftindent>
+      <rightindent>18</rightindent>
+    </paragraph>
+  </style>    
+  <style selector="underline">
+    <character>
+      <underline>1</underline>
+    </character>
+  </style>    
+  <style selector="em">
+    <character>
+      <background>RGBA(255,128,255,102)</background>
+      <font>
+        <pointsize>12</pointsize>
+      </font>
+      <font>
+        <italic>1</italic>
+      </font>  	      
+    </character>
+  </style>    
+  <style selector="painted">
+    <character>
+      <foreground>RGB(255,64,255)</foreground>
+      <background>RGBA(128,255,128)</background>
+    </character>
+  </style>    
+</stylesheet>

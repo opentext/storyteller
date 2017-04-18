@@ -1,0 +1,107 @@
+<stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" 
+		 xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:fixtures>
+	<xp:fixture key="link:/stories/box.xml">
+	  <!-- story content reused three times - a paragraph containing (possibly suppressed) inline text box with a dynamic content -->
+	  <stl:p>
+		<stl:text w="490pt" h="0pt" shape-resize="free" shape-h-shrink="0" shape-h-growth="0" shape-v-growth="max" style="border:solid black;">
+          <!--<stl:modification key="@ILayoutItem/Visibility">$suppress</stl:modification>-->
+          <stl:script language="js">
+	        var vars = require('vars');
+		    if (vars.has('suppress') &amp;&amp; vars.all.suppress === '1')
+			  require('layout').item().Visibility = 'Hidden';
+		  </stl:script>
+		  <stl:story>
+			<stl:p style="text-align:left; font-family:Arial; font-size:10pt">
+			  <stl:field xpath="normalize-space(.)"/>
+			</stl:p>
+		  </stl:story>
+		</stl:text>
+	  </stl:p>
+	</xp:fixture>
+  </stl:fixtures>
+  <stl:data>
+	<stl:template>
+	  <data>
+		<message priority='L'>
+		  Forth Run [1]PT_BILL_3.5_003 CorpCommunications screen for bill messages. The expectation to turn around
+		  LC scripts within a day is fast approaching. Please read this email from Stephan. This report tracks the # of
+		  days scripts are with us and have 0 high or critical defects # meaning the scripts steps should be continued.
+		  I#m scheduling a meeting for us tomorrow and will add this to the agenda. As of right now, if you#re going
+		  on vacation and have an open script, please reassign it to another team member. Also, when you finish your
+		  script and send it to the next time, it is critical that you change the assigned to team or else it will show as still
+		  with Billing. Here#s an example of a script that shows assigned to Billing, but it#s really with Maria Brothers in
+		  SO.
+		</message>
+		<message priority='M'>
+		  Fith run, Low priority marketing Message. Repeat Whole Scenario from step 20 to 120, for Create a statement
+		  where there are more messages than available space on statement. By adding Create a one-time message
+		  for a customer (U of M). Create a regulatory, Confirm that messages prioritize accordingly and lowest priority
+		  message per business rules fall off the bottom of the statement and do not truncate mid-message.
+		</message>
+		<message priority='L'>
+		  Third run PT_BILL_3.5_003 CorpCommunications screen for bill messages Repeat Whole Scenario from step
+		  20 to 120, by adding Create a recurring message with an expiration date. Generate the statement associated to
+		  the target market. Invoice next month after the message expiration date lapses.Expected: Message is created
+		  successfully for customer on next bill. Follow statement next month where the validity date has lapsed does not
+		  contain the message.
+		</message>
+		<message priority='H'>
+		  Sixth Run [1]PT_BILL_3.5_003 CorpCommunications screen for bill messages Posting date
+		</message>
+		<message priority='L'>
+		  DTE Energy reports the payment histories of all customers to the major credit reporting agencies. Paying your
+		  bill in full and on time, or entering into a payment agreement can help you avoid having unfavorable payment
+		  information reported to a credit reporting agency.
+		</message>
+	  </data>
+	</stl:template>
+	<stl:transformation>
+	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0" />
+	</stl:transformation>
+  </stl:data>
+  <stl:document>
+	<stl:story name="Shared">
+	  <!-- this story contains a rectagle (representing a "previous content") followed by 
+		   three repeaters sorting messages by priority (third one marks that suppress is possible) -->
+	  <stl:p>
+		<stl:rect w="500pt" h="50pt" style="fill:yellow" />
+	  </stl:p>
+	  <stl:p>
+		<stl:repeater xpath="/data/message[@priority='H']">
+		  <stl:story>
+			<xp:include src="link:/stories/box.xml"/>
+		  </stl:story>
+		</stl:repeater>
+	  </stl:p>
+	  <stl:p>
+		<stl:repeater xpath="/data/message[@priority='M']">
+		  <stl:story>
+			<xp:include src="link:/stories/box.xml"/>
+		  </stl:story>
+		</stl:repeater>
+	  </stl:p>
+	  <stl:p>
+		<stl:repeater xpath="/data/message[@priority='L']">
+		  <stl:script language="js">require('vars').all.suppress = 0;</stl:script>
+		  <stl:story>
+			<xp:include src="link:/stories/box.xml"/>
+		  </stl:story>
+		</stl:repeater>
+	  </stl:p>
+	  <stl:p>
+		... and content follows ...
+	  </stl:p>
+	</stl:story>
+	<stl:page w="540pt" h="800pt" occurrence="repeatable">
+	  <!-- repeatable page (possibly suppressed) referencing the shared story and setting suppress variable -->
+      <!--<stl:modification key="@ILayoutItem/Visibility">$suppress</stl:modification>-->
+	  <stl:text x="20pt" y="20pt" w="500pt" h="200pt" story="Shared" style="fill:cyan"/>
+	  <stl:script when="after" language="js">
+	    var vars = require('vars');
+	    if (vars.has('suppress'))
+		  vars.all.suppress = 1;
+	  </stl:script>
+	</stl:page>
+  </stl:document>
+</stl:stl>

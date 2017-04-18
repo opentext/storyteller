@@ -1,0 +1,67 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+ <stl:style>
+	.indented {
+	  text-indent:10pt;
+	  font-weight:bold;
+	}
+  </stl:style>
+  <stl:document>
+	<stl:page w="300pt" h="400pt">
+	  <stl:text x="20pt" y="20pt" w="260pt" h="360pt" style="fill:#aabbcc">
+		<stl:story>
+		  <!-- Bulleted list -->
+		  <stl:list list-mask="♣   " list-style="font-size:14pt">
+			<stl:li>First item</stl:li>
+			<stl:list list-mask="♠   " style="text-indent:10pt">
+			  <stl:li>First nested item</stl:li>
+			  <stl:li>Second nested item</stl:li>
+			</stl:list>
+			<stl:li>Second item</stl:li>
+			<stl:list list-mask="♠   " style="text-indent:10pt">
+			  <stl:li>Another nested item</stl:li>
+			</stl:list>
+		  </stl:list>
+		  <stl:p/>
+		  <!-- Continuous numbered list -->
+		  <stl:list list-mask="%0!1.%1!R&#9;" list-style="font-weight:bold">
+			<stl:li>First level, first item</stl:li>
+			<stl:li>First level, second item</stl:li>
+			<stl:list list-style="font-weight:bold; font-style:italic">
+			  <stl:li>Second level, first item</stl:li>
+			  <stl:li>Second level, second item</stl:li>
+			</stl:list>
+		  </stl:list>
+		  <stl:p/>
+		  <stl:block style="font-family:Arial; font-size:11pt">
+			<!-- Divided numbered list -->
+			<stl:list list-mask="(%0!A.%1!a)&#9;" list-style="color:#aa44aa" numbering-id="4">
+			  <stl:li>First level, first item</stl:li>
+			  <stl:list list-style="color:#aa44aa">
+				<stl:li>Second level, first item</stl:li>
+				<stl:li>Second level, second item</stl:li>
+			  </stl:list>
+			</stl:list>
+			<stl:p>This is an interleaving paragraph, but numbering still continues...</stl:p>
+			<stl:list list-mask="(%0!A.%1!a)&#9;" list-style="color:#aa44aa" numbering-id="4">
+			  <stl:li>First level, second item</stl:li>
+			  <stl:list list-style="color:#aa44aa">
+				<stl:li>Second level, first item</stl:li>
+				<stl:li>Second level, second item</stl:li>
+				<stl:li>Second level, third item</stl:li>
+			  </stl:list>
+			</stl:list>
+		  </stl:block>
+		  <!-- Mixed numbered and plain paragraphs -->
+		  <stl:list list-mask="%0!1. " list-style="font-weight:bold; font-style:italic">
+			<stl:li class="indented" style="margin-top:5pt">First Chapter</stl:li>
+			<stl:p>Text of the first chapter</stl:p>
+			<stl:li class="indented">Second Chapter</stl:li>
+			<stl:p>Text of the second chapter</stl:p>
+			<stl:li class="indented">Third Chapter</stl:li>
+			<stl:p>Text of the third chapter</stl:p>
+		  </stl:list>
+		</stl:story>
+	  </stl:text>
+	</stl:page>
+  </stl:document>
+</stl:stl>

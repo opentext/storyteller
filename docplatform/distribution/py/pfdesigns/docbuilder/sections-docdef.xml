@@ -1,0 +1,40 @@
+<definition name="DocDefSections" templateVersion="1" templateName="DocDefSections">
+  <section id="section_html">
+    <resource id="resource:/?id=txt-1;v=1" displayName="Text" path="Fragment.html" type="html" uri="www.example.com/text">
+      <property key="editable" value="true"/>
+    </resource>
+  </section>
+
+  <section id="section_tables">
+    <resource id="tables" displayName="Tables" path="tables.html" type="html" uri="www.example.com/tables">
+      <property key="editable" value="true"/>
+    </resource>
+  </section>
+
+  <section id="section_image">
+    <resource id="resource:/?id=img-1;v=1" displayName="Image" path="ducks.png" type="image" uri="www.example.com/image">
+      <property key="placement" value="paragraph"/>
+      <property key="alignment" value="center"/>
+      <property key="editable" value="true"/>
+      <resizing/>
+      <size type="original"/>
+    </resource>
+  </section>
+
+  <section id="section_mixed">
+    <resource id="tables" displayName="Tables" path="tables.html" type="html" uri="www.example.com/tables">
+      <property key="editable" value="true"/>
+    </resource>
+    <resource id="resource:/?id=img-1;v=1" displayName="Image" path="ducks.png" type="image" uri="www.example.com/image">
+      <property key="placement" value="paragraph"/>
+      <property key="alignment" value="center"/>
+      <property key="editable" value="true"/>
+      <resizing/>
+      <size type="original"/>
+    </resource>
+    <resource id="resource:/?id=txt-1;v=1" displayName="Text" path="Fragment.html" type="html" uri="www.example.com/text">
+      <property key="editable" value="true"/>
+    </resource>
+  </section>
+
+</definition>

@@ -1,0 +1,164 @@
+<stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
+		 xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
+		 version="0.1">
+  <stl:fixtures>
+    <xp:fixture key="link:/included/content.xml">
+      <stl:p>
+		This story content is embedded as a 
+		<stl:span style="background-color:yellow; font-weight:bold"> fixture </stl:span>
+		and included several times.
+	  </stl:p>
+    </xp:fixture>
+  </stl:fixtures>
+  <stl:data>
+	<stl:template src="wd:/invoice-data.xml"/>
+	<stl:transformation>
+	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+	</stl:transformation>
+  </stl:data>
+  <stl:style>
+	.bold {
+	  font-weight:bold;
+	}
+  </stl:style>
+  <stl:document>
+    <!-- Content fixture is included inside a shared story -->
+    <stl:story name="Shared">
+      <xp:include src="link:/included/content.xml" />
+    </stl:story>
+	<stl:page w="460pt" h="380pt">
+      <!-- Content fixture is included inside text boxes (with a poor man's loading-time styling) -->
+      <stl:text x="20pt" y="20pt" w="200pt" h="50pt" style="fill:burlywood">
+		<stl:story>
+		  <stl:block style="font-family:Arial; color:blue">
+			<xp:include src="link:/included/content.xml" />
+		  </stl:block>
+		</stl:story>
+      </stl:text>
+      <stl:text x="20pt" y="80pt" w="200pt" h="50pt" style="fill:burlywood">
+		<stl:story>
+		  <stl:block style="font-family:Courier New; color:green">
+			<xp:include src="link:/included/content.xml" />
+		  </stl:block>
+		</stl:story>
+      </stl:text>
+
+	  <!-- Story is shared between two frames -->
+      <stl:text x="240pt" y="20pt" w="200pt" h="20pt" story="Shared" style="fill:darkseagreen">
+		<stl:script language="js">
+		  <xp:include src="wd:/printItemBox.js" parse="text"/>
+		</stl:script>
+	  </stl:text>
+      <stl:text x="240pt" y="80pt" w="200pt" h="20pt" story="Shared" style="fill:darkseagreen">
+		<stl:script language="js">
+		  <xp:include src="wd:/printItemBox.js" parse="text"/>
+		</stl:script>
+	  </stl:text>
+
+	  <!-- Let Preprocessor include the content right inside the story -->
+      <stl:text x="20pt" y="140pt" w="200pt" h="40pt" style="fill:lightpink">
+		<stl:story format="XHTML">
+		  <xp:include src="wd:/Fragment.html" />
+		</stl:story>
+      </stl:text>
+
+	  <!-- Let DocBuilder create external content substitution  -->
+      <stl:text x="240pt" y="140pt" w="200pt" h="40pt" style="fill:khaki">
+		<stl:story>
+		  <stl:content uri="wd:/Fragment.html" />
+		</stl:story>
+      </stl:text>
+
+	  <!-- Let Preprocessor include partial (xpath based) HTML selection  -->
+      <stl:text x="20pt" y="190pt" w="200pt" h="40pt" style="fill:lightcyan">
+		<stl:story format="XHTML">
+		  <html xmlns="http://www.w3.org/1999/xhtml">
+			<body>
+			  <xp:include src="wd:/Fragment.html" xpath="/html/body/p" />
+			</body>
+		  </html>
+		</stl:story>
+      </stl:text>
+
+	  <!-- Let Preprocessor perform a loading-time data calculation -->
+      <stl:text x="240pt" y="190pt" w="200pt" h="40pt" style="fill:lightcyan">
+		<stl:story>
+		  <stl:p>
+			The length of the included text was:
+			<stl:span class="bold">
+			  <xp:include src="wd:/Fragment.html" xpath="string-length(/)" />
+			</stl:span>
+		  </stl:p>
+		</stl:story>
+      </stl:text>
+
+	  <!-- Let Preprocessor include XHTML markup as text  -->
+      <stl:text x="20pt" y="240pt" w="420pt" h="70pt" style="fill:lightgreen">
+		<stl:story format="XHTML">
+		  <html xmlns="http://www.w3.org/1999/xhtml">
+			<body>
+			  <pre><xp:include src="wd:/Fragment.html" parse="text"/></pre>
+			</body>
+		  </html>
+		</stl:story>
+      </stl:text>
+
+	  <!-- Loadtime (preprocessor realized) substitutions -->
+      <stl:text x="20pt" y="320pt" w="200pt" h="45pt" style="fill:lightblue">
+		<stl:story>
+		  <stl:p>
+			<stl:span class="bold">
+			  Phone: 
+			</stl:span>
+			<stl:tab/>
+			<xp:include src="wd:/invoice-data.xml" xpath="/root/customer-info/tel/text()"/>
+		  </stl:p>
+		  <stl:p>
+			<stl:span class="bold">
+			Tarif: 
+			</stl:span>
+			<stl:tab/>
+			<stl:tab/>
+			<xp:include src="wd:/invoice-data.xml" xpath="/root/customer-info/tarif/text()"/>
+		  </stl:p>
+		  <stl:p>
+			<stl:span class="bold">
+			  Period: 
+			</stl:span>
+			<stl:tab/>
+			<xp:include src="wd:/invoice-data.xml" xpath="/root/account-info/period/text()"/>
+		  </stl:p>
+		</stl:story>
+      </stl:text>
+
+	  <!-- Runtime (formatter realized) substitutions -->
+      <stl:text x="240pt" y="320pt" w="200pt" h="45pt" style="fill:lightblue">
+		<stl:story>
+		  <stl:p>
+			<stl:span class="bold">
+			  Phone: 
+			</stl:span>
+			<stl:tab/>
+			<stl:field xpath="/root/customer-info/tel/text()"/>
+		  </stl:p>
+		  <stl:p>
+			<stl:span class="bold">
+			Tarif: 
+			</stl:span>
+			<stl:tab/>
+			<stl:tab/>
+			<stl:field xpath="/root/customer-info/tarif/text()"/>
+		  </stl:p>
+		  <stl:p>
+			<stl:span class="bold">
+			  Period: 
+			</stl:span>
+			<stl:tab/>
+			<stl:field xpath="/root/account-info/period/text()"/>
+		  </stl:p>
+		</stl:story>
+      </stl:text>
+
+	</stl:page>
+  </stl:document>
+</stl:stl>

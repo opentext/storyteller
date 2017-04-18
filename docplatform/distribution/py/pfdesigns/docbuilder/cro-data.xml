@@ -1,0 +1,85 @@
+<program>
+  <den datum="Středa 2.7." date="2014-07-02">
+    <porad stanice="CR1T" relace="dopoledne" id="849608106">
+      <nazev_stanice>Český rozhlas 1 - Radiožurnál</nazev_stanice>
+      <casvysilani od="0" do="540">2014-07-02 00:00:00</casvysilani>
+      <edice rscr_kod="0" priznak=""/>
+      <nazev>Zprávy</nazev>
+      <popis>Zpravodajství z Česka i ze světa. Sport, Zelená vlna a předpověď počasí. O dopravní situaci informujte na bezplatné lince 800 12 20 12. </popis>
+      <url>_porad/157</url>
+      <typporadu_nazev id="1">Zpravodajství (zprávy vč. sportovních)</typporadu_nazev>
+      <minutaz>9</minutaz>
+    </porad>
+    <porad stanice="CR1T" relace="dopoledne" id="849608135">
+      <nazev_stanice>Český rozhlas 1 - Radiožurnál</nazev_stanice>
+      <casvysilani od="16200" do="16320">2014-07-02 04:30:00</casvysilani>
+      <edice rscr_kod="0" priznak=""/>
+      <nazev>Zprávy</nazev>
+      <popis>Zpravodajství z Česka i ze světa. Sport, Zelená vlna a předpověď počasí. O dopravní situaci informujte na bezplatné lince 800 12 20 12. </popis>
+      <url>_porad/157</url>
+      <typporadu_nazev id="1">Zpravodajství (zprávy vč. sportovních)</typporadu_nazev>
+      <minutaz>2</minutaz>
+    </porad>
+    <porad stanice="CRo2" relace="dopoledne" id="849608302">
+      <nazev_stanice>Český rozhlas 2 - Praha</nazev_stanice>
+      <casvysilani od="16200" do="18000">2014-07-02 04:30:00</casvysilani>
+      <edice rscr_kod="0" priznak=""/>
+      <nazev>Hudební budíček</nazev>
+      <popis>Maximum hudby pro příjemné probuzení. </popis>
+      <typporadu_nazev id="13">Ostatní pořady (jinak neuvedené)</typporadu_nazev>
+      <minutaz>30</minutaz>
+    </porad>
+    <porad stanice="CRo2" relace="dopoledne" id="849608303">
+      <nazev_stanice>Český rozhlas 2 - Praha</nazev_stanice>
+      <casvysilani od="18000" do="30600">2014-07-02 05:00:00</casvysilani>
+      <edice rscr_kod="0" priznak=""/>
+      <nazev>Dobré ráno, Česko!</nazev>
+      <popis>Moderují Jitka Lukešová a Pavel Kučera. Čerstvé informace, počasí, ranní noviny, kalendárium a vaše příběhy.  K tomu písničky, které vás naladí, i humor, který vás pobaví. Kontaktní e-mail: rano@rozhlas.cz. 
+      
+      <br/>Zprávy: 5.00, 5.30, 6.00, 6.30, 7.00, 7.30, 8.00 
+      
+      </popis>
+      <url>_porad/100293</url>
+      <typporadu_nazev id="15">Magazín zprav., publicistiky a hudby</typporadu_nazev>
+      <minutaz>210</minutaz>
+    </porad>
+    <porad stanice="WAVE" relace="dopoledne" id="849608578">
+      <nazev_stanice>Český rozhlas Radio Wave</nazev_stanice>
+      <casvysilani od="18000" do="21600">2014-07-02 05:00:00</casvysilani>
+      <edice rscr_kod="0" priznak=""/>
+      <nazev>Friday Ripple</nazev>
+      <popis>Alternative music, global style! Jason The Shark presents the hottest  electronic sounds from all around the planet. There's a heavy focus on the latest music from Africa, but you'll also hear from scenes all over the world.  There's a lot out there ? tune in for what you won't hear on radio anywhere else in Europe!  </popis>
+      <url>http://www.rozhlas.cz/radiowave/friday_ripple/</url>
+      <typporadu_nazev id="35">Hudební pořady jiné - populární hudba</typporadu_nazev>
+      <minutaz>60</minutaz>
+    </porad>
+    <porad stanice="WAVE" relace="dopoledne" id="849608579">
+      <nazev_stanice>Český rozhlas Radio Wave</nazev_stanice>
+      <casvysilani od="21600" do="25200">2014-07-02 06:00:00</casvysilani>
+      <edice rscr_kod="0" priznak=""/>
+      <nazev>Music Check</nazev>
+      <popis>Music Check je hodina plná hudby vybírané z playlistu Radia Wave.  </popis>
+      <url>http://www.rozhlas.cz/radiowave/porady/_zprava/371629</url>
+      <typporadu_nazev id="35">Hudební pořady jiné - populární hudba</typporadu_nazev>
+      <minutaz>60</minutaz>
+    </porad>
+    <porad stanice="DDur" relace="vecer" id="849608571">
+      <nazev_stanice>Český rozhlas D-dur</nazev_stanice>
+      <casvysilani od="78281" do="79565">2014-07-02 21:44:00</casvysilani>
+      <edice rscr_kod="0" priznak=""/>
+      <nazev>Franz Liszt: Koncert pro klavír a orchestr č. 2 A dur, S. 125</nazev>
+      <popis>Hrají Marc-André Hamelin (klavír) a Montrealský symfonický orchestr, řídí Kent Nagano.</popis>
+      <typporadu_nazev id="10">Hudební pořady</typporadu_nazev>
+      <minutaz>22</minutaz>
+    </porad>
+    <porad stanice="DDur" relace="vecer" id="849608573">
+      <nazev_stanice>Český rozhlas D-dur</nazev_stanice>
+      <casvysilani od="82881" do="83114">2014-07-02 23:01:00</casvysilani>
+      <edice rscr_kod="0" priznak=""/>
+      <nazev>Georges Bizet: Farandole, z 'L'Arlésienne Suite č. 2'</nazev>
+      <popis>Hraje Montrealský symfonický orchestr, řídí Kent Nagano.</popis>
+      <typporadu_nazev id="10">Hudební pořady</typporadu_nazev>
+      <minutaz>4</minutaz>
+    </porad>
+  </den>
+</program>

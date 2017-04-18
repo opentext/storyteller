@@ -1,0 +1,157 @@
+<root>
+  <customer-info code="1.13746193">
+	<tel>739 447 098</tel>
+	<tarif>O2 Optimum Profi Light</tarif>
+  </customer-info>
+  <account-info>
+	<period>08.06. - 07.07.</period>
+  </account-info>
+  <transactions sum="678,28">
+	<credits sum="-568,13">
+	  <item>
+		<label>OPP+Light směr O2- 1,00 Kč</label>
+		<type>na spojení</type>
+		<duration>08.06. - 07.07.</duration>
+		<val>-10,17</val>
+		<tax>21%</tax>
+		<final>-12,30</final>
+	  </item>
+	  <item>
+		<label>OPP+Light směr ost- 1,50 Kč</label>
+		<type>na spojení</type>
+		<duration>08.06. - 07.07.</duration>
+		<val>-556,16</val>
+		<tax>21%</tax>
+		<final>-673,00</final>
+	  </item>
+	  <item>
+		<label>OP+OPPromo+Light - SMS 0,90Kč</label>
+		<type>na spojení</type>
+		<duration>08.06. - 07.07.</duration>
+		<val>-1,80</val>
+		<tax>21%</tax>
+		<final>-2,20</final>
+	  </item>
+	</credits>
+	<fixed-fees sum="381,00">
+	  <item>
+		<label>O2 Optimum Profi Light</label>
+		<count>1</count>
+		<duration>08.06. - 07.07.</duration>
+		<val>30,00</val>
+		<tax>21%</tax>
+		<final>36,30</final>
+	  </item>
+	  <item>
+		<label>O2 Mobilní Internet Pro</label>
+		<count>1</count>
+		<duration>08.06. - 07.07.</duration>
+		<val>350,00</val>
+		<tax>21%</tax>
+		<final>423,50</final>
+	  </item>
+	  <item>
+		<label>Team Nonstop</label>
+		<count>1</count>
+		<duration>08.06. - 07.07.</duration>
+		<val>1,00</val>
+		<tax>21%</tax>
+		<final>1,20</final>
+	  </item>
+	</fixed-fees>
+	<connection-fees sum="865,41">
+	  <group>
+		<label>Volání</label>
+		<item>
+		  <label>Do mobilní sítě O2</label>
+		  <count>3</count>
+		  <period>špička</period>
+		  <amount>6:45 min</amount>
+		  <free-units>0:00</free-units>
+		  <price>16,95</price>
+		  <tax>21%</tax>
+		  <final>20,51</final>
+		</item>
+		<item>
+		  <label>Do ostatních mobilních sítí ČR</label>
+		  <count>19</count>
+		  <period>špička</period>
+		  <amount>89:56 min</amount>
+		  <free-units>0:00</free-units>
+		  <price>394,28</price>
+		  <tax>21%</tax>
+		  <final>477,08</final>
+		</item>
+		<item>
+		  <label/>
+		  <count>2</count>
+		  <period>mimo šp.</period>
+		  <amount>51:59 min</amount>
+		  <free-units>0:00</free-units>
+		  <price>227,73</price>
+		  <tax>21%</tax>
+		  <final>275,55</final>
+		</item>
+		<item>
+		  <label/>
+		  <count>5</count>
+		  <period>víkend</period>
+		  <amount>42:21 min</amount>
+		  <free-units>0:00</free-units>
+		  <price>185,59</price>
+		  <tax>21%</tax>
+		  <final>224,56</final>
+		</item>
+		<item>
+		  <label>Do pevných sítí v ČR</label>
+		  <count>4</count>
+		  <period>špička</period>
+		  <amount>8:17 min</amount>
+		  <free-units>0:00</free-units>
+		  <price>36,36</price>
+		  <tax>21%</tax>
+		  <final>44,00</final>
+		</item>
+		<item>
+		  <label>Na bezplatné infolinky v ČR</label>
+		  <count>1</count>
+		  <period>špička</period>
+		  <amount>4:00 min</amount>
+		  <free-units>0:00</free-units>
+		  <price>0,00</price>
+		  <tax>21%</tax>
+		  <final>0,00</final>
+		</item>
+		<sum>860,91</sum>
+	  </group>
+	  <group>
+		<label>Zprávy</label>
+		<item>
+		  <label>SMS do mobilních sítí v ČR</label>
+		  <count/>
+		  <period>vždy</period>
+		  <amount>3 SMS</amount>
+		  <free-units>0</free-units>
+		  <price>4,50</price>
+		  <tax>21%</tax>
+		  <final>5,45</final>
+		</item>
+		<sum>4,50</sum>
+	  </group>
+	  <group>
+		<label>Data, Internet</label>
+		<item>
+		  <label>Připojení k Internetu</label>
+		  <count/>
+		  <period>vždy</period>
+		  <amount>126 874 kB</amount>
+		  <free-units>0</free-units>
+		  <price>0,00</price>
+		  <tax>21%</tax>
+		  <final>0,00</final>
+		</item>
+		<sum>0,00</sum>
+	  </group>
+	</connection-fees>
+  </transactions>
+</root>
