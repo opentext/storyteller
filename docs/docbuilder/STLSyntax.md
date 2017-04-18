@@ -1,19 +1,14 @@
-STL definition syntax
-=====================
+# STL definition syntax
 
 This document describes an XML syntax of *STL definition file*. The
 syntax can be validated programmatically against the following [XSD
 schema](file:///git/docplatform/tree/forsetup/docbuilder/xmlschema/stl.xsd?h=pfi01/develop/docbuilder).
 
-Top level STL Structure
-=======================
-
 Top level structure consists of a root `<stl:stl>` element and four
 optional sub-elements defining *fixtures*, *data*, *styling* and a
 *document*.
 
-STL Root
---------
+# STL Root
 
 One of the *DocBuilder++* design goals was to unify its XML structure
 with the output format of the *Page Layout Driver*. While *Page Layout
@@ -24,7 +19,7 @@ formats to a single logical structure.
 
 It means that the root of the XML structure looks as follows:
 
-``` {.xml}
+```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
 </stl:stl>
 ```
@@ -43,8 +38,7 @@ will :
     more `stl:source` and `stl:transformation` elements)
 -   `stl:document` ... it represents hierarchical document definition
 
-Data
-----
+## Data
 
 To make it usable in even more use cases, we decided to integrate data
 aspect to the *DocBuilder++* format. It means that it is possible to
@@ -61,7 +55,7 @@ referenced via `uri` attribute.
 
 Top level of the data section can look as follows:
 
-``` {.xml}
+```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:data>
     <stl:source>
@@ -116,7 +110,7 @@ unified to a single format represented as a single *Data Template*.
 
 The data part of the *STL file* can look as follows:
 
-``` {.xml}
+```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:data>
     <stl:source key="bbc" src="wd:/bbc-data.xml"/>
@@ -168,8 +162,7 @@ active *TDT key*.
 Some examples of *TDT-based document creation* are described in the
 *STL/SSDX Framework Documentation*, chapter *DocBuilder utilization*.
 
-Whitespace handling
--------------------
+# Whitespace handling
 
 Generally we try not to mix elements with text data at a single level of
 the *STL* format. That way any inter-element whitespace (created for
@@ -186,7 +179,7 @@ provide users with powerful enough means to create content they need
 
 Consider the following example:
 
-``` {.xml}
+```xml
 <stl:story>
   <stl:p>
     This is a single-line text
@@ -199,7 +192,7 @@ to be inserted to a Story.
 
 On the other hand in the following case:
 
-``` {.xml}
+```xml
 <stl:story>
   <stl:p>Author: <stl:datasource xpath="/data/author/name"/></stl:p>
 </stl:story>
@@ -222,7 +215,7 @@ For detailed discussion about whitespace treatment possibilities see the
 on the [Text Encoding Initiative
 Wiki](http://wiki.tei-c.org/index.php/Main_Page).
 
-### normalize-space algorithm
+## normalize-space algorithm
 
 XPath `normalize-space` algorithm does basically the following:
 
@@ -230,10 +223,9 @@ XPath `normalize-space` algorithm does basically the following:
 -   trim all leading and trailing space characters
 -   collapse all space sequences to a single space
 
-    This is relatively simple c++ implementation:
+This is relatively simple c++ implementation:
 
-<!-- -->
-
+```cpp
     void normalize_data( std::string& data, bool trim_left = true, bool trim_right = true, bool collapse = true )
     {
         // replace all whitespaces with spaces in-place
@@ -265,6 +257,7 @@ XPath `normalize-space` algorithm does basically the following:
             std::end(data) );
         }
     }
+```
 
 The advantage is that the algorithm and easy to understand and well
 known and frequently used (available in any XPath and XSLT processor).
@@ -273,7 +266,7 @@ may not be necessary.
 
 That is why we also consider and alternative approach.
 
-### split-trim-join algorithm
+## split-trim-join algorithm
 
 We call the algorithm `split-trim-join` and it works as follows:
 
@@ -284,10 +277,9 @@ We call the algorithm `split-trim-join` and it works as follows:
 -   for all remaining lines - trim all leading and trailing space
     characters
 
-    This is a c++ implementation:
+This is a c++ implementation:
 
-<!-- -->
-
+``` c++
     void normalize_data( std::string& data )
     {
         auto const not_a_space = []( auto c ) { return c != ' '; };
@@ -341,8 +333,9 @@ We call the algorithm `split-trim-join` and it works as follows:
             data.erase( cursor, limit );
         }
     }
+```
 
-### normalize-space-auto-trim
+## normalize-space-auto-trim
 
 We believe that the normalization algorithm should better preserve
 users' intention and so we are also experimenting with a slightly
@@ -353,7 +346,7 @@ in text-only elements. If there is a mixture of data and sub-elements at
 a single level then we are trying to preserve a single space where
 appropriate:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p> Both leading and trailing spaces are trimmed </stl:p>
@@ -364,7 +357,7 @@ appropriate:
 
 Consider the following encoding:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>  The <stl:span style="font-style:italic"> cat </stl:span> ate  the <stl:span style="font-weight:bold">grande croissant</stl:span>. I didn't!
@@ -376,7 +369,7 @@ Consider the following encoding:
 By convention, it is presumed that this encodes a passage that could
 have been equivalently encoded as follows:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -400,7 +393,7 @@ The algorithm to normalize space in mixed content is:
 
 The result is as if the encoding had been
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>The <stl:span style="font-style:italic">cat</stl:span> ate the <stl:span style="font-weight:bold">grande croissant</stl:span>. I didn't!</stl:p>
@@ -411,7 +404,7 @@ The result is as if the encoding had been
 Note: The normalization process would have corrupted the text had the
 encoder put spaces inside the `stl:span` elements, like this:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>The<stl:span style="font-style:italic"> cat </stl:span>ate the<stl:span style="font-weight:bold"> grande croissant </stl:span>. I didn't!</stl:p>
@@ -437,8 +430,7 @@ well and is very intuitive:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Story example"/>
 
-Styling
--------
+# Styling
 
 For *load-time styling* in Docbuilder++ we use a subset of
 [CSS](https://en.wikipedia.org/wiki/Cascading_Style_Sheets) syntax.
@@ -451,44 +443,37 @@ rendered.
 CSS saves a lot of work. It can control the layout of multiple objects
 in multiple documents all at once.
 
-### CSS Application
+## CSS Application
 
 CSS can be added to HTML elements in 3 ways:
 
--   *Inline* - by using the style attribute in HTML elements
--   *Internal* - by using a &lt;stl:style&gt; element before
-    &lt;stl:document&gt;
--   *External* - by using an external CSS file
+-   Inline ... by using the style attribute in HTML elements
+-   Internal ... by using a `stl:style` element before `stl:document`
+-   External ... by using an external CSS file
 
 The most common way to add CSS, is to keep the styles in separate CSS
 files. However, here we will start with inline and internal styling,
 because this is easier to demonstrate.
 
-1.  Inline CSS
+### Inline CSS
 
-    Setting the style of a particular document element (line
-    `stl:elipse`, `stl:p` or `stl:span`), can be done with the `style`
-    attribute.
+Setting the style of a particular document element (line `stl:elipse`, `stl:p` or `stl:span`), can be done with the `style` attribute. 
 
-    The `style` attribute has the following syntax:
+The `style` attribute has the following syntax:
 
-    ``` {.xml}
+```xml
     <stl:p style="text-align:center;">
       Centered content ...
     </stl:p>
-    ```
+```
 
-    xml
+### Internal CSS
 
-2.  Internal CSS
+An internal CSS is used to define a style for a single *STL definition*.
 
-    An internal CSS is used to define a style for a single *STL
-    definition*.
+An internal CSS is defined in the top-level section of a definition file, before `stl:document` element.
 
-    An internal CSS is defined in the top-level section of a definition
-    file, before `stl:document` element.
-
-    ``` {.xml}
+```xml
       <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
         <stl:style>
           .centered {
@@ -504,19 +489,15 @@ because this is easier to demonstrate.
          ...
        </stl:document>
     </stl:stl>
-    ```
+```
 
-    xml
+### External CSS
 
-3.  External CSS
+An external style sheet is used to define the style for many DocBuilder++ documents.
 
-    An external style sheet is used to define the style for many
-    DocBuilder++ documents.
+With an external style sheet, you can change the look of an entire library of documents by changing a single file!
 
-    With an external style sheet, you can change the look of an entire
-    library of documents by changing a single file!
-
-    ``` {.xml}
+```xml
       <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
         <stl:style src="wd:/default.css"/>
         <stl:document>
@@ -528,11 +509,9 @@ because this is easier to demonstrate.
          ...
        </stl:document>
     </stl:stl>
-    ```
+```
 
-    xml
-
-### CSS Properties
+## CSS Properties
 
 While CSS is very rich and powerful language, only a very limited subset
 is supported by DocBuilder++.
@@ -571,228 +550,172 @@ of delivering thousands of incorectly formatted documents because of a
 typo in a stylesheet) and is easily extensible in future (without
 worrying that we break backward compatibility).
 
-1.  Length Units
+### Length Units
 
-    CSS offers a number of different units for expressing length. Some
-    of them are currently supported in *DocBuilder++* and so can be used
-    throughout *STL definition* markup:
+CSS offers a number of different units for expressing length. Some
+of them are currently supported in *DocBuilder++* and so can be used
+throughout *STL definition* markup:
 
-    -   `pt` ... Absolute length in points (1px = 1/72th of 1in)
-    -   `px` ... Absolute length in pixels (1px = 1/96th of 1in)
-    -   `in` ... Absolute length in inches (1in = 96px = 2.54cm)
-    -   `pc` ... Absolute length in picas (1pc = 12 pt)
-    -   `mm` ... Absolute length in millimeters
-    -   `cm` ... Absolute length in centimeters
-    -   `em` ... Relative to the font-size of the element (2em means 2
-        times the size of the current font)
-    -   `%` ... Relative to the length of same property of parent
-        element
+-   `pt` ... Absolute length in points (1px = 1/72th of 1in)
+-   `px` ... Absolute length in pixels (1px = 1/96th of 1in)
+-   `in` ... Absolute length in inches (1in = 96px = 2.54cm)
+-   `pc` ... Absolute length in picas (1pc = 12 pt)
+-   `mm` ... Absolute length in millimeters
+-   `cm` ... Absolute length in centimeters
+-   `em` ... Relative to the font-size of the element (2em means 2 times the size of the current font)
+-   `%` ... Relative to the length of same property of parent element
 
-    For more detailed CSS unit description see the [W3C
-    documentation](https://www.w3.org/Style/Examples/007/units.en.html).
+For more detailed CSS unit description see the [W3C documentation](https://www.w3.org/Style/Examples/007/units.en.html).
 
-2.  Color Definition
+### Color Definition
 
-    Right now a six-digit (`#rrggbb`) and three-digit (`#rgb`) forms of
-    hex format RGB color are implemented:
+Right now a six-digit (`#rrggbb`) and three-digit (`#rgb`) forms of hex format RGB color are implemented:
 
-    ``` {.xml}
+```xml
     <stl:text x="20pt" y="20pt" w="260pt" h="180pt" style="fill:#0effff; stroke:#4b0082;">
       <stl:story>
         This is a<stl:span style="background-color:#d2691e; color:#0f0;"> colored </stl:span> text.
       </stl:story>
     </stl:text>
-    ```
+```
 
-    ... and also [CSS3 Extended Color
-    Keywords](https://www.w3.org/TR/css3-color/#svg-color) are
-    supported:
+... and also [CSS3 Extended Color Keywords](https://www.w3.org/TR/css3-color/#svg-color) are supported:
 
-    ``` {.xml}
+```xml
     <stl:text x="20pt" y="20pt" w="260pt" h="180pt" style="fill:lightcyan; stroke:indigo;">
       <stl:story>
         This is a<stl:span style="background-color:chocolate; color:lime"> colored </stl:span> text.
       </stl:story>
     </stl:text>
-    ```
+```
 
-    ... and finally decimal `rgb()` and `rgba()` notations are
-    supported:
+... and finally decimal `rgb()` and `rgba()` notations are supported:
 
-    ``` {.xml}
+```xml
     <stl:text x="20pt" y="20pt" w="260pt" h="180pt" style="fill:rgb(224,255,255); stroke:rgba(75,0,130,1.0);">
       <stl:story>
         This is a<stl:span style="background-color:rgba(210,105,30,1.0); color:rgb(0,255,0);"> colored </stl:span> text.
       </stl:story>
     </stl:text>
-    ```
+```
 
-    But for genericity and user convenience we could implement a support
-    for full [CSS color](https://www.w3.org/TR/css3-color/#colorunits)
-    in future (e.g. decimal `hsl` and `hsla` notations).
+But for genericity and user convenience we could implement a support for full [CSS color](https://www.w3.org/TR/css3-color/#colorunits) in future (e.g. decimal `hsl` and `hsla` notations).
 
-3.  Pen Definition
+### Pen Definition
 
-    -   `border` (color) ... maps to *Pen* property
-    -   `stroke` (color) ... maps to *Pen.Brush.Color* property
-    -   `stroke-width` (length) ... maps to the *Pen.Thickness* property
-    -   `stroke-linecap` (`butt`, `dashed`, `dotted`) ... maps to the
-        *Pen.LineCap* property
-    -   `stroke-linejoin` (`miter`, `round`, `bevel`) ... maps to the
-        *Pen.LineJoin* property
-    -   `stroke-opacity` (numeric) ... maps to *Pen.Brush.Color.Alpha*
-        property
-    -   `stroke-dasharay` (sequence of lengths) ... maps to
-        *Pen.DashStyle* property (`SOLID`, `DASH`, `DOT`, `DASHDOT`,
-        `DASHDOTDOT`)
-    -   `opacity` ... (number) ... maps to *Pen.Color.Alpha* property
+-   `border` (color) ... maps to *Pen* property
+-   `stroke` (color) ... maps to *Pen.Brush.Color* property
+-   `stroke-width` (length) ... maps to the *Pen.Thickness* property
+-   `stroke-linecap` (`butt`, `dashed`, `dotted`) ... maps to the *Pen.LineCap* property
+-   `stroke-linejoin` (`miter`, `round`, `bevel`) ... maps to the *Pen.LineJoin* property
+-   `stroke-opacity` (numeric) ... maps to *Pen.Brush.Color.Alpha* property
+-   `stroke-dasharay` (sequence of lengths) ... maps to *Pen.DashStyle* property
+     (`SOLID`, `DASH`, `DOT`, `DASHDOT`, `DASHDOTDOT`)
+-   `opacity` ... (number) ... maps to *Pen.Color.Alpha* property
 
-4.  Brush definition
+### Brush definition
 
-    -   `background-color` (color) ... maps to *Brush.Color* property
-    -   `fill` (color) ... maps to *Brush.Color* property
-    -   `fill-opacity` (number) ... maps to *Brush.Color.Alpha* property
-    -   `opacity` (number) ... maps to *Brush.Color.Alpha* property
+-   `background-color` (color) ... maps to *Brush.Color* property
+-   `fill` (color) ... maps to *Brush.Color* property
+-   `fill-opacity` (number) ... maps to *Brush.Color.Alpha* property
+-   `opacity` (number) ... maps to *Brush.Color.Alpha* property
 
-5.  Drawing Style Definition
+### Drawing Style Definition
 
-    Any *layout item* (`stl:text`, `stl:input`, `stl:table`, `stl:rect`,
-    `stl:circle`, ...) defining a `style` attribute can use following
-    optional CSS properties modifying item's *drawing style*:
+Any *layout item* (`stl:text`, `stl:input`, `stl:table`, `stl:rect`,`stl:circle`, ...) defining a `style` attribute 
+can use following optional CSS properties modifying item's *drawing style*:
 
-    -   `border-collapse` ... NOOP
-    -   `border` (width + style + color) ... maps to *DrawingStyle.Pen*
-        property
-        -   `border-top`
-        -   `border-bottom`
-        -   `border-left`
-        -   `border-right`
-    -   `margin` (one to four lengths) ... maps to
-        *DrawingStyle.OuterMargin* property
-        -   `margin-top` (length)
-        -   `margin-bottom` (length)
-        -   `margin-left` (length)
-        -   `margin-right` (length)
-    -   `padding` (one to four lengths) ... maps to
-        *DrawingStyle.InnerMargin* property
-        -   `padding-top` (length)
-        -   `padding-bottom` (length)
-        -   `padding-left` (length)
-        -   `padding-right` (length)
-    -   `fill-rule` (`winding`, `evenodd`) ... maps to
-        *DrawingStyle.WindingFill*
+-   `border-collapse` ... NOOP
+-   `border` (width + style + color) ... maps to *DrawingStyle.Pen* property
+    -   `border-top`
+    -   `border-bottom`
+    -   `border-left`
+    -   `border-right`
+-   `margin` (one to four lengths) ... maps to *DrawingStyle.OuterMargin* property
+    -   `margin-top` (length)
+    -   `margin-bottom` (length)
+    -   `margin-left` (length)
+    -   `margin-right` (length)
+-   `padding` (one to four lengths) ... maps to *DrawingStyle.InnerMargin* property
+    -   `padding-top` (length)
+    -   `padding-bottom` (length)
+    -   `padding-left` (length)
+    -   `padding-right` (length)
+-   `fill-rule` (`winding`, `evenodd`) ... maps to *DrawingStyle.WindingFill*
 
-    Right now only a solid Fill (*Brush*) and Stroke (*Pen*) is
-    generated for given color.
+Right now only a solid Fill (*Brush*) and Stroke (*Pen*) is generated for given color.
 
-    In future we are going to support more advanced *Fill* and *Stroke*
-    definitions, via inline [CSS
-    Style](https://www.w3.org/TR/SVG/styling.html#StylingWithCSS):
+In future we are going to support more advanced *Fill* and *Stroke* definitions, via inline [CSS Style](https://www.w3.org/TR/SVG/styling.html#StylingWithCSS):
 
-    ``` {.xml}
+```xml
     <stl:line x1="40pt" x2="120pt" y1="100pt" y2="100pt" style="stroke: black; stroke-width: 20pt; stroke-linecap: round;"/>
-    ```
+```
 
-6.  Paragraph Style Definition
+### Paragraph Style Definition
 
-    Content elements defining a `style` attribute (`stl:p`, `stl:list`,
-    `stl:li` and `stl:span` outside a paragraph) can use following
-    optional CSS properties modifying current *paragraph style*:
+Content elements defining a `style` attribute (`stl:p`, `stl:list`, `stl:li` and `stl:span` outside a paragraph) can use following optional CSS properties modifying current *paragraph style*:
 
-    -   `text-align` (`left`, `right`, `center`, `justify`) ... maps to
-        *Alignment* property
-    -   `margin-top` (length) ... maps to the *ParagraphSpacingBefore*
-        property
-    -   `margin-bottom` (length) ... maps to the *ParagraphSpacingAfter*
-        property
-    -   `margin-left` (length) ... maps to the *LeftIndent* property
-    -   `margin-right` (length) ... maps to the *RightIndent* property
-    -   `text-indent` (length) ... maps to the *FirstIndent* property
-    -   `line-height` (length) ... maps to *LineSpacing* property with
-        *LineSpacingMode* set to LS~RELATIVE~
-    -   `page-break-before` (`always` or `auto`) ... `always` sets
-        *StartPosition* property to *SP~PAGE~* (`auto` leaves it as
-        *SP~ANYWHERE~*)
-    -   `page-break-after` (`avoid` or `auto`) `avoid` sets
-        *KeepWithNext* property to 1 (`auto` leaves it 0)
-    -   `orphans` (integral) ... maps to the *KeepTogetherFirst*
-        property
-    -   `widows` (integral) ... maps to the *KeepTogetherLast* property
-    -   `direction` (`ltr`, `rtl`) ... maps to *Direction* property
-    -   `column-count` (integral), `column-width` (length), `column-gap`
-        (length) ... maps to *ColumnSection* command
+-   `text-align` (`left`, `right`, `center`, `justify`) ... maps to *Alignment* property
+-   `margin-top` (length) ... maps to the *ParagraphSpacingBefore* property
+-   `margin-bottom` (length) ... maps to the *ParagraphSpacingAfter* property
+-   `margin-left` (length) ... maps to the *LeftIndent* property
+-   `margin-right` (length) ... maps to the *RightIndent* property
+-   `text-indent` (length) ... maps to the *FirstIndent* property
+-   `line-height` (length) ... maps to *LineSpacing* property with *LineSpacingMode* set to LS~RELATIVE~
+-   `page-break-before` (`always` or `auto`) ... `always` sets *StartPosition* property to *SP~PAGE~* 
+     (`auto` leaves it as *SP~ANYWHERE~*)
+-   `page-break-after` (`avoid` or `auto`) `avoid` sets *KeepWithNext* property to 1 (`auto` leaves it 0)
+-   `orphans` (integral) ... maps to the *KeepTogetherFirst* property
+-   `widows` (integral) ... maps to the *KeepTogetherLast* property
+-   `direction` (`ltr`, `rtl`) ... maps to *Direction* property
+-   `column-count` (integral), `column-width` (length), `column-gap` (length) ... maps to *ColumnSection* command
 
-    Then there are following additional *paragraph style* related
-    attributes with no meaningfull mapping to CSS:
+Then there are following additional *paragraph style* related attributes with no meaningfull mapping to CSS:
 
-    -   `bidi-and-shaping` (string)
-    -   `tabs` tab definition string (see *Tab Stops* section below)
-    -   `outline-level` (numeric)
+-   `bidi-and-shaping` (string)
+-   `tabs` tab definition string (see *Tab Stops* section below)
+-   `outline-level` (numeric)
 
-    We can consider creating a CSS extension with a `storyteller` prefix
-    (line `webkit` or `moz` prefixes).
+We can consider creating a CSS extension with a `storyteller` prefix (line `webkit` or `moz` prefixes).
 
-7.  Character Style Definition
+### Character Style Definition
 
-    Content elements defining a `style` attribute (`stl:p`, `stl:list`,
-    `stl:li` and `stl:span`) can use following optional CSS properties
-    modifying current *character style*:
+Content elements defining a `style` attribute (`stl:p`, `stl:list`, `stl:li` and `stl:span`) can use following optional CSS properties modifying current *character style*:
 
-    -   `font`
-        -   `font-family` (string) ... maps to *Font.Name* property
-        -   `font-size` (length) ... maps to *Font.Size* property
-        -   `font-weight` (`bold` or `normal`) ... maps to *Font.Bold*
-            boolean property
-        -   `font-style` (`italic` or `normal`) ... maps to
-            *Font.Italic* boolean property
-        -   `font-variant` (`normal` or `small-caps`) ... maps to
-            *Font.Smallcaps* boolean property
-    -   `text-decoration` (`line-through`, `underline` or `none`) ...
-        maps to *Font.Underline* and *Font.Strikethrough* boolean
-        properties
-    -   `vertical-align` (`baseline`, `sub` or `super`) ... maps to
-        *Font.Superscript* and *Font.Subscript* boolean properties
-    -   `word-break` (`keep-all` or `break-all`) ... maps to
-        *Hyphenation* property
-    -   `color` (color) ... maps to *Foreground.Color* property
-    -   `background-color` (color) ... maps to *Background.Color*
-        property
-    -   `text-anchor` ... NOOP
-    -   `opacity` (numeric) ... maps to *Foreground.Color.Alpha*
-        property
+-   `font`
+    -   `font-family` (string) ... maps to *Font.Name* property
+    -   `font-size` (length) ... maps to *Font.Size* property
+    -   `font-weight` (`bold` or `normal`) ... maps to *Font.Bold* boolean property
+    -   `font-style` (`italic` or `normal`) ... maps to *Font.Italic* boolean property
+    -   `font-variant` (`normal` or `small-caps`) ... maps to *Font.Smallcaps* boolean property
+-   `text-decoration` (`line-through`, `underline` or `none`) ... maps to *Font.Underline* and *Font.Strikethrough* boolean properties
+-   `vertical-align` (`baseline`, `sub` or `super`) ... maps to *Font.Superscript* and *Font.Subscript* boolean properties
+-   `word-break` (`keep-all` or `break-all`) ... maps to *Hyphenation* property
+-   `color` (color) ... maps to *Foreground.Color* property
+-   `background-color` (color) ... maps to *Background.Color* property
+-   `text-anchor` ... NOOP
+-   `opacity` (numeric) ... maps to *Foreground.Color.Alpha* property
 
-    Then there is an attribute `lang` definition language for whole
-    element subtree
+Then there is an attribute `lang` definition language for whole element subtree
 
-### CSS Parser
+## CSS Parser
 
-As an initial implementation of the CSS parser we used regex-based [CCSS
-library](https://github.com/jdeng/ccss) based on
-[css-parse](https://github.com/reworkcss/css-parse) and
-[css-stringify](https://github.com/reworkcss/css-stringify) libraries,
-all released under MIT licence.
+As an initial implementation of the CSS parser we used regex-based [CCSS library](https://github.com/jdeng/ccss) based on
+[css-parse](https://github.com/reworkcss/css-parse) and [css-stringify](https://github.com/reworkcss/css-stringify) libraries, all released under MIT licence.
 
-The parsing code was very much rewritten, but we still consider a
-possibility to use more powerfull engine like
-[LibCSS](http://www.netsurf-browser.org/projects/libcss/).
+The parsing code was very much rewritten, but we still consider a possibility to use more powerfull engine like [LibCSS](http://www.netsurf-browser.org/projects/libcss/).
 
-Document Design
-===============
+# Document Design
 
-Document
---------
+## Document
 
-In principle it would be possible to define several documents and for
-example share a single data definition among them.
+In principle it would be possible to define several documents and for example share a single data definition among them.
 
-But right now user can define just a single `stl:document` element in
-the *STL file*. It's structure consists of a list of (shared) *Stories*
-represented as `stl:story` elements and a sequence of *Page Types*
-represented as `stl:page` elements.
+But right now user can define just a single `stl:document` element in the *STL file*. It's structure consists of a list of (shared) *Stories* represented as `stl:story` elements and a sequence of *Page Types* represented as `stl:page` elements.
 
 Following listing shows how the top level XML structure can look like:
 
-``` {.xml}
+```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   ...
   <stl:document>
@@ -806,18 +729,13 @@ Following listing shows how the top level XML structure can look like:
 </stl:stl>
 ```
 
-There can be a support for multiple `stl:document` definitions in future
-but right now only none or a single `stl:document` is supported.
+There can be a support for multiple `stl:document` definitions in future but right now only none or a single `stl:document` is supported.
 
-Document Structure
-------------------
+## Document Structure
 
-Right now there is no *DocBuilder++* support for advanced document
-structure.
+Right now there is no *DocBuilder++* support for advanced document structure.
 
-Currently users can create individual `stl:page` elements (representing
-*Page Types* and *Page References* at the same time) and add an optional
-`occurrence` attribute to each such page.
+Currently users can create individual `stl:page` elements (representing *Page Types* and *Page References* at the same time) and add an optional `occurrence` attribute to each such page.
 
 The `occurrence` attribute value can be one of the following:
 
@@ -827,11 +745,9 @@ The `occurrence` attribute value can be one of the following:
 -   `<numeric value>` ... there will be exactly the specific number of
     page instances
 
-If there is no `occurrence` attribute then the page will be instantiated
-exactly once.
+If there is no `occurrence` attribute then the page will be instantiated exactly once.
 
-Page
-----
+## Page
 
 The `stl:page` represents a definition of a single *Page Type*. Right
 now the sequence of *Page Types* leads to a flat *Document Structure*
@@ -841,7 +757,7 @@ explicit *Document Structure* definition.
 
 Single (repeatable) *Page Type* definition looks as follows:
 
-``` {.xml}
+```xml
 ...
 <stl:page w="300pt" h="500pt" occurrence="repeatable">
   ...
@@ -849,21 +765,13 @@ Single (repeatable) *Page Type* definition looks as follows:
 ...
 ```
 
-Each page typically contains a hierarchy of various *Layout Items* (like
-*texts*, *images*, *fragments* etc).
+Each page typically contains a hierarchy of various *Layout Items* (like *texts*, *images*, *fragments* etc).
 
-Following sections describe various *Layout Items* which user can
-include in `stl:page` hierarchy as *page objects* or inside native
-`stl:story` sequence as *inline* or *paragraph objects*.
+Following sections describe various *Layout Items* which user can include in `stl:page` hierarchy as *page objects* or inside native `stl:story` sequence as *inline* or *paragraph objects*.
 
-Story
------
+## Story
 
-A single *Story* represents a linear content sequence sometimes
-containing one or more inline of paragraph layout objects (*texts*,
-*tables*, ...) as well as data objects (*switches*, *repeaters*,
-*substitutions*) or other content objects (*commands*, *hyperlinks*,
-...).
+A single *Story* represents a linear content sequence sometimes containing one or more inline of paragraph layout objects (*texts*, *tables*, ...) as well as data objects (*switches*, *repeaters*, *substitutions*) or other content objects (*commands*, *hyperlinks*, ...).
 
 ### Story Format
 
@@ -875,7 +783,7 @@ in future.
 
 Following listing shows a very simple example of a native content:
 
-``` {.xml}
+```xml
 ...
   <stl:story>
     <stl:p>This is a private (and native) story...</stl:p>
@@ -885,7 +793,7 @@ Following listing shows a very simple example of a native content:
 
 And here is an example of an XHTML content:
 
-``` {.xml}
+```xml
 ...
   <stl:story format="XHTML">
     <body>
@@ -916,7 +824,7 @@ reference* from the same or a different document).
 
 Shared stories can be referenced via `index` or a `name`:
 
-``` {.xml}
+```xml
 ...
 <stl:document>
   <stl:story name="Shared">
@@ -934,7 +842,7 @@ Shared stories can be referenced via `index` or a `name`:
 Some objects (e.g. *texts*, *switches*, *repeaters*) can define their
 *Private Story* right inside their corresponding XML element:
 
-``` {.xml}
+```xml
 ...
 <stl:text x="10pt" y="10pt" w="100pt" h="100pt" style="stroke:#0000ff">
   <stl:story>
@@ -968,7 +876,7 @@ stream.
 
 An *External Stylesheet* can be associated as follows:
 
-``` {.xml}
+```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   ...
   <stl:document>
@@ -985,7 +893,7 @@ An *External Stylesheet* can be associated as follows:
 
 And *Embedded Stylesheet* associations can look like this:
 
-``` {.xml}
+```xml
 <stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" 
          xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:fixtures>
@@ -1032,11 +940,11 @@ application to a story:
 -   [Resulting
     Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png?h=pfi01/develop/docbuilder)
 
-  <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Styles examp
-* Content Entities
+  <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Styles example"/>
 
+# Content Entities
 
-** Paragraph
+## Paragraph
 
    Users can use ~stl:p~ element to create a paragraph.
 
@@ -1045,7 +953,7 @@ application to a story:
    /Paragraph style/ properties are specified for every single paragraph and do not get propagated 
    to potentially nested paragraphs (e.g. paragraphs inside a nested switch).
 
-*** Example
+#### Example
 
     This example demonstrates a variety of ~stl:p~ attributes:
 
@@ -1055,8 +963,7 @@ application to a story:
 #+BEGIN_HTML
   <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Paragraph example"/>
 
-Span
-----
+## Span
 
 Users can use `stl:span` element to change style for enclosed content.
 Style changes are propagated even to stories associated with nested
@@ -1074,7 +981,7 @@ attribute.
 
 You can change style of a text span as follows:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>This is a <stl:span style="font-weight:bold">bold</stl:span> text</stl:p>
@@ -1084,7 +991,7 @@ You can change style of a text span as follows:
 
 Spans can be nested and associated styles can be arbitrarily combined:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1103,7 +1010,7 @@ Spans can be nested and associated styles can be arbitrarily combined:
 
 and toggled:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1119,7 +1026,7 @@ and toggled:
 
 A `stl:span` can span over several `stl:p` paragraphs as follows:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:span style="font-family:Courier New">
@@ -1133,7 +1040,7 @@ A `stl:span` can span over several `stl:p` paragraphs as follows:
 *DocBuilder++ Engine* makes sure that changed styles get propagated to
 nested stories:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:span style="font-family:Courier New">
@@ -1170,8 +1077,7 @@ This example demonstrates the usage of a *Span*:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Span example"/>
 
-List
-----
+## List
 
 A relatively frequent use-case is to create a bulleted or numbered
 lists. *DocBuilder++ Engine* supports the `stl:list` element for that
@@ -1200,7 +1106,7 @@ by a value of the `text` attribute.
 
 For example - this is a nested bulleted list:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <!-- Bulleted list -->
@@ -1221,7 +1127,7 @@ For example - this is a nested bulleted list:
 
 And this is on the other hand an example of a numbered list:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <!-- Continuous numbered list -->
@@ -1243,7 +1149,7 @@ example if user wants to attach a list to a previous one and continue
 the numbering, he can pick a custom `numbering-id` and use it as an
 identifier representing a specific numbering sequence:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <!-- Divided numbered list -->
@@ -1271,7 +1177,7 @@ It is possible to arbitrarily interleave bulleted/numbered paragraphs
 (`stl:li`) with plain normal paragraphs with no numbering (`stl:p`)
 inside a single `stl:list`:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <!-- Mixed numbered and plain paragraphs -->
@@ -1303,7 +1209,7 @@ overriden (so it is for example possible to set `left-indent`,
 `space-before` and `space-after` globally for the whole list and
 override the values for specific paragraph if necessary).
 
-### Example
+#### Example
 
 This example demonstrates the usage of a *Span*:
 
@@ -1313,13 +1219,12 @@ This example demonstrates the usage of a *Span*:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png?h=pfi01/develop/docbuilder" alt="List example"/>
 
-Breaks
-------
+## Breaks
 
 Users can use an `stl:break` command to explicitly break formatting of a
 current *line* or *area*. *Line breaks* can be created as follows:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1343,7 +1248,7 @@ current *line* or *area*. *Line breaks* can be created as follows:
 *Area breaks* can help users to create a single paragraph spanning
 across several areas:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1367,8 +1272,7 @@ This example demonstrates various kinds of *Break commands*:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Break Commands"/>
 
-Tab Stops
----------
+## Tab Stops
 
 There is another type of command - `stl:tab`, which can be used for
 creation of [Tab Stops](https://en.wikipedia.org/wiki/Tab_stop).
@@ -1376,7 +1280,7 @@ creation of [Tab Stops](https://en.wikipedia.org/wiki/Tab_stop).
 Users can simply mix individual `stl:tab` commands with rest of the text
 and utilize default *Tab Stop* definitions as follows:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1400,7 +1304,7 @@ The `tabs` attribute colon separated list of tab definitions:
 
 This is an example of custom *Tab Stop* definition:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p tabs="100pt:200pt">
@@ -1412,7 +1316,7 @@ This is an example of custom *Tab Stop* definition:
 
 Users can even utilize an `stl:list` for a common *Tab Stop* definition:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:list list-mask="%0!1.&#9;" tabs="20pt:250pt;decimal;.">
@@ -1436,18 +1340,15 @@ This example demonstrates usage of *Tab Stops*:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Tab Stops"/>
 
-Commands
---------
+### Commands
 
 TBD
 
-TOC styles
-----------
+### TOC styles
 
 TBD
 
-Content Items
-=============
+# Content Items
 
 Any *Content Item* can have following optional properties:
 
@@ -1455,8 +1356,7 @@ Any *Content Item* can have following optional properties:
 -   `description`
 -   ...
 
-Mapping overview
-----------------
+## Mapping overview
 
 There is untrivial mapping between STL elements and internal *DocModel*
 entities. Here is the overview:
@@ -1481,8 +1381,7 @@ entities. Here is the overview:
         `<stl:scope hyperlink="..." screentip="...">...</stl:scope>`
     -   Story reference ... `<stl:scope story="..." />`
 
-Substitution
-------------
+## Substitution
 
 A substitution serves as an item to be *substituted* with some
 externally retrieved content or data. There are various kinds and
@@ -1503,7 +1402,7 @@ substitutions as separate elements:
 [XPath](https://en.wikipedia.org/wiki/XPath) and retrieves a string
 value from *Data Instance*:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1518,7 +1417,7 @@ value from *Data Instance*:
 *Field Substitution* evaluates a special value like current page number
 or number of pages in current document.
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1534,7 +1433,7 @@ or number of pages in current document.
 *Calculation Substitution* is used for computing totals and sub-totals
 of transactional data.
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1550,7 +1449,7 @@ of transactional data.
 *DocBuilder++* or *RTF*) into a cache and evaluates a specific story
 based on a specified `src` attrivute content a *Moniker* selector:
 
-``` {.xml}
+```xml
 ...
 <stl:fixtures>
   <xp:fixture key="link:/fragments/content.xml">
@@ -1577,7 +1476,7 @@ based on a specified `src` attrivute content a *Moniker* selector:
 *Repository Substitution* directly converts comlete content of an
 external document (e.g. HTML) with no caching:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1597,7 +1496,7 @@ There are several kinds of lookup substitutions:
 -   `language`
 -   `table`
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1609,36 +1508,30 @@ There are several kinds of lookup substitutions:
 
 ### Examples
 
-1.  Kitchen sink
+####  Kitchen sink
 
-    This example demonstrates various kinds of *Substitutions*:
+This example demonstrates various kinds of *Substitutions*:
 
-    -   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/subst.xml?h=pfi01/develop/docbuilder)
-    -   [Resulting
-        Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png?h=pfi01/develop/docbuilder)
+-   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/subst.xml?h=pfi01/develop/docbuilder)
+-   [Resulting Document](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png?h=pfi01/develop/docbuilder)
 
     <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png?h=pfi01/develop/docbuilder" alt="Substitution example"/>
 
-2.  External section references
+#### External section references
 
-    So far we kept the tools for creating design and filling external
-    content separate. Users can use the *StoryTeller Editor* to create a
-    document design and put any number of *Section References* to it and
-    then a (possibly different) user can open the *StoryBoeard* web
-    application and fill individual *Sections* with actual content (a
-    mixture of HTML text and images).
+So far we kept the tools for creating design and filling external content separate. Users can use the *StoryTeller Editor* to create a document design and put any number of *Section References* to it and then a (possibly different) user can open the *StoryBoeard* web application and fill individual *Sections* with actual content (a mixture of HTML text and images).
 
-    But what if the business user wants to reorder the existing *Section
-    References*, delete existing ones or even create new ones from
-    scratch? Would not it be nice if there was an easy way to extend the
-    *StoryBoard* web editor with such functionality?
+But what if the business user wants to reorder the existing *Section
+References*, delete existing ones or even create new ones from
+scratch? Would not it be nice if there was an easy way to extend the
+*StoryBoard* web editor with such functionality?
 
-    One possible approach is to learn the *StoryBoard* (at least a
-    subset of) *STL file* syntax. Imagine we provide a set of predefined
-    *DocBuilder++* templates containing all the layout but not the main
-    story. Such designs could look like the following:
+One possible approach is to learn the *StoryBoard* (at least a
+subset of) *STL file* syntax. Imagine we provide a set of predefined
+*DocBuilder++* templates containing all the layout but not the main
+story. Such designs could look like the following:
 
-    ``` {.xml}
+```xml
     <stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" 
              xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
       <stl:document>
@@ -1651,16 +1544,14 @@ There are several kinds of lookup substitutions:
         </stl:page>
       </stl:document>
     </stl:stl>
-    ```
+```
 
-    ... note that the main story is not present, but rather externally
-    included.
+... note that the main story is not present, but rather externally included.
 
-    Let's say we have the following *Section definitions*
-    (`section_html`, `section_tables`, `section_image` and
+Let's say we have the following *Section definitions* (`section_html`, `section_tables`, `section_image` and
     `section_mixed`):
 
-    ``` {.xml}
+```xml
     <definition name="DocDefSections" templateVersion="1" templateName="DocDefSections">
       <section id="section_html">
         <resource displayName="Text" path="Fragment.html" type="html" uri="www.example.com/text">
@@ -1681,33 +1572,33 @@ There are several kinds of lookup substitutions:
         ...
       </section>
     </definition>
-    ```
+```
 
-    Then the *StoryBoard web editor* could let user edit the sequence of
-    the sections and based on his choice generate the actual content of
-    the main story, for example as follows:
+Then the *StoryBoard web editor* could let user edit the sequence of 
+the sections and based on his choice generate the actual content of
+the main story, for example as follows:
 
-    ``` {.xml}
+```xml
     <stl:story name="Sections" xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
       <stl:content src="strssec:section_html" />
       <stl:content src="strssec:section_tables" />
       <stl:content src="strssec:section_image" />
       <stl:content src="strssec:section_mixed" />
     </stl:story>
-    ```
+```
 
-    ... and *DocBuilder* interpreting the *STL definition file* would
-    simply do the right thing - it would generate a *Document Design*
-    containing main *Story* with appropriate sequence of *Section
-    References*. *Document Formatter* would then retrieve the
-    corresponding content for each *Section Reference* and generate the
-    resulting *Document Instance*.
+... and *DocBuilder* interpreting the *STL definition file* would
+simply do the right thing - it would generate a *Document Design*
+containing main *Story* with appropriate sequence of *Section
+References*. *Document Formatter* would then retrieve the
+corresponding content for each *Section Reference* and generate the
+resulting *Document Instance*.
 
-    There is also an alternative approach - utilizing *Extenal Content
-    Substitution* and postponing interpretation of the dynamic story to
-    runtime. The top level design could look as follows:
+There is also an alternative approach - utilizing *Extenal Content
+Substitution* and postponing interpretation of the dynamic story to
+runtime. The top level design could look as follows:
 
-    ``` {.xml}
+```xml
     <stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" 
              xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
       <stl:fixtures>
@@ -1732,57 +1623,41 @@ There are several kinds of lookup substitutions:
         </stl:page>
       </stl:document>
     </stl:stl>
-    ```
+```
 
-    There is a disadvantage that the dynamic story is created in runtime
-    with each formatting invoke (obviously there can be some caching
-    involved, but in principle it can be slower than `xp:include` based
-    solution). On the other hand there is a big advantage that the main
-    document definition does not have to be *DocBuilder-based*, it is
-    possible to have an SSD created in StoryTeller editor and reference
-    a single *DocBuilder-based story* via external content substitution.
-    This way we can gradually extend existing documents without
-    supporting full DocBuilder syntax
+There is a disadvantage that the dynamic story is created in runtime
+with each formatting invoke (obviously there can be some caching
+involved, but in principle it can be slower than `xp:include` based
+solution). On the other hand there is a big advantage that the main
+document definition does not have to be *DocBuilder-based*, it is
+possible to have an SSD created in StoryTeller editor and reference
+a single *DocBuilder-based story* via external content substitution.
+This way we can gradually extend existing documents without
+supporting full DocBuilder syntax
 
-    -   instead we may just incrementally extend *StoryBoard* editor
-        with just additions necessary
+-   instead we may just incrementally extend *StoryBoard* editor with just additions necessary to fulfill given use cases.
 
-    to fulfill given use cases.
+See the following links for details:
 
-    See the following links for details:
+-   [Main STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/sections.xml?h=pfi01/develop/docbuilder)
+-   [Story STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/sections-story.xml?h=pfi01/develop/docbuilder)
+-   [Section Definition](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/sections-docdef.xml?h=pfi01/develop/docbuilder) (referencing [HTML text](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/Fragment.html?h=pfi01/develop/docbuilder), [Tables](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/tables.html?h=pfi01/develop/docbuilder) and [Image](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/ducks.png?h=pfi01/develop/docbuilder))
+-   [Resulting Page Layout HTML](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/sections-py-m.layout.html/index.html?h=pfi01/develop/docbuilder)
 
-    -   [Main
-        STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/sections.xml?h=pfi01/develop/docbuilder)
-    -   [Story
-        STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/sections-story.xml?h=pfi01/develop/docbuilder)
-    -   [Section
-        Definition](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/sections-docdef.xml?h=pfi01/develop/docbuilder)
-        (referencing [HTML
-        text](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/Fragment.html?h=pfi01/develop/docbuilder),
-        [Tables](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/tables.html?h=pfi01/develop/docbuilder)
-        and
-        [Image](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/ducks.png?h=pfi01/develop/docbuilder))
-    -   [Resulting Page Layout
-        HTML](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/sections-py-m.layout.html/index.html?h=pfi01/develop/docbuilder)
+## Repeater
 
-Repeater
---------
-
-*Repeater* can repeat it's content several times based on an associated
-data query.
+*Repeater* can repeat it's content several times based on an associated data query.
 
 Data query is specified as `xpath` attribute.
 
 There are two kinds of a repeater:
 
--   `paragraph` repeater ... each iteration creates one or more
-    paragraphs
--   `inline` repeater ... all iterations are hosted inside a single
-    paragraph
+-   `paragraph` repeater ... each iteration creates one or more paragraphs
+-   `inline` repeater ... all iterations are hosted inside a single paragraph
 
 ### Paragraph Repeater
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1799,7 +1674,7 @@ There are two kinds of a repeater:
 
 ### Inline Repeater
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1822,13 +1697,11 @@ This example demonstrates the usage of a *Repeater*:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Repeater example"/>
 
-Switch & Scope
---------------
+## Switch & Scope
 
 ### Switch
 
-*Switch* can select a single variant of a sub-content based on an
-associated data query.
+*Switch* can select a single variant of a sub-content based on an associated data query.
 
 Data query is specified as `xpath` attribute. There is a `stl:switch`
 element with nested `stl:case` elements. Each nested `stl:case` element
@@ -1836,7 +1709,7 @@ has a unique `key` attribute which is matched to a result of the data
 query. There can be a single `stl:case` element with no `key` attribute
 - it is picked by default if no better match is found.
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1862,7 +1735,7 @@ Any `stl:case` can reference a *shared referencable story* which has
 been previously defined, this was a single content definition can be
 shared several times as in the following example:
 
-``` {.xml}
+```xml
 ...
 <stl:story name="Shared #1" type="referencable">
   was just a handful of characters
@@ -1899,7 +1772,7 @@ sub-content can be nested directly under the `stl:scope` element.
 A scope can be used for nesting a separate story (native or XHTML)
 inside a hosting story:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1918,7 +1791,7 @@ inside a hosting story:
 
 An `stl:scope` can also be used as a *hyperlink*:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1935,7 +1808,7 @@ An `stl:scope` can also be used as a *hyperlink*:
 
 ... or as a *form* if it associates content with a *data relation*:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -1953,7 +1826,7 @@ An `stl:scope` can also be used as a *hyperlink*:
 
 Scope can be also used as a direct story reference:
 
-``` {.xml}
+```xml
 <stl:story name="Shared #2" type="referencable">
   <stl:p>
     { This is a 
@@ -1975,7 +1848,7 @@ And finally - users can use scope to associate semantic tags with
 content ranges. If a stylesheet is associated with the document, then
 semantic tags can be utilized for dynamic styling:
 
-``` {.xml}
+```xml
 <stl:stylesheet>
   <stylesheet name="First set of tests">
     <style selector="hilighted">
@@ -2011,8 +1884,7 @@ This example demonstrates the usage of a *Switch*:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Switch example"/>
 
-Layout Items
-============
+# Layout Items
 
 Any *Layout Item* can have following optional properties:
 
@@ -2025,8 +1897,7 @@ Any *Layout Item* can have following optional properties:
 -   `screentip`
 -   ...
 
-Text
-----
+## Text
 
 The `stl:text` element can represent either a *Text Box* or a *Text
 Frame* depending on the ownership of associated story (it can either
@@ -2035,7 +1906,7 @@ define it's own story or be associated with an existing shared story).
 Following listing demonstrates a *Text Box* defining it's own private
 story:
 
-``` {.xml}
+```xml
 ...
 <stl:text x="20pt" y="20pt" w="60pt" h="60pt" style="fill:#aabbcc">
   <stl:story>
@@ -2047,7 +1918,7 @@ story:
 
 And this listing demonstrates a *Text Frame* referending a shared story:
 
-``` {.xml}
+```xml
 ...
 <stl:text x="120pt" y="20pt" w="60pt" h="60pt" story="Main" style="stroke:#00ff00"/>
 ...
@@ -2064,8 +1935,7 @@ example like for stories:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Text example"/>
 
-Image
------
+## Image
 
 The `stl:image` element allows to create an *Image Item* on a *Page*
 (inside an `stl:page` element) or as an inline item inside a *story*
@@ -2074,7 +1944,7 @@ The `stl:image` element allows to create an *Image Item* on a *Page*
 Following code creates an absolutely positioned and sized *Image* on a
 *Page*:
 
-``` {.xml}
+```xml
 ...
 <stl:page>
   <stl:image x="20pt" y="120pt" w="60pt" h="60pt" src="wd:/ducks.png" style="fill:#aaffff"/>
@@ -2086,7 +1956,7 @@ Following code creates an absolutely positioned and sized *Image* on a
 Following code creates a relatively positioned and auto-sized inline
 *Image* inside a *Story*:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -2096,10 +1966,9 @@ Following code creates a relatively positioned and auto-sized inline
 ...
 ```
 
-Following code creates an inline *Image* from XHTML embedded [Data
-URI](https://en.wikipedia.org/wiki/Data_URI_scheme):
+Following code creates an inline *Image* from XHTML embedded [Data URI](https://en.wikipedia.org/wiki/Data_URI_scheme):
 
-``` {.xml}
+```xml
 ...
 <stl:story format="XHTML">
   <body style="font-family: Arial">
@@ -2115,7 +1984,7 @@ URI](https://en.wikipedia.org/wiki/Data_URI_scheme):
 Following code creates an *Image* showing 3rd page from a multipage
 TIFF:
 
-``` {.xml}
+```xml
 ...
 <stl:page>
   <stl:image x="20pt" y="20pt" w="100pt" h="50pt" src="wd:/multipage.tiff" page="2"/>
@@ -2135,8 +2004,7 @@ example:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Image example"/>
 
-Fragment
---------
+## Fragment
 
 The `stl:fragment` element creates a *Fragment Item* on a *Page* (inside
 an `stl:page` element) or as an inline item inside a *story*
@@ -2145,7 +2013,7 @@ an `stl:page` element) or as an inline item inside a *story*
 Fragments can be either *external* referenced via an *Absolute Moniker*
 like in this case:
 
-``` {.xml}
+```xml
 ...
 <stl:fragment x="20pt" y="220pt" w="80pt" h="80pt" transform="scale(10)" category="loading-time" src="wd:/fragment.lxf!/item[1]" style="stroke:#ff0000"/>
 ...
@@ -2153,7 +2021,7 @@ like in this case:
 
 ... or embedded using *symlink* moniker:
 
-``` {.xml}
+```xml
 ...
 <stl:fixtures>
   <xp:fixture key="link:/fragments/embedded.xml">
@@ -2176,7 +2044,7 @@ like in this case:
 
 Fragments can be absolute positioned on a page:
 
-``` {.xml}
+```xml
 ...
 <stl:page w="120pt" h="120pt">
   <stl:fragment x="20pt" y="20pt" category="loading-time" src="link:/fragments/embedded.xml!/item[1]" style="fill:#ffaaff"/>
@@ -2186,7 +2054,7 @@ Fragments can be absolute positioned on a page:
 
 ... or relatively positioned as inline object inside a story:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -2207,8 +2075,7 @@ Folowing example demonstrates definition of *Referenced* and *Embedded*
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Fragment example"/>
 
-Shape
------
+## Shape
 
 ### Line & Polyline
 
@@ -2219,7 +2086,7 @@ Following open shapes are supported:
 -   `stl:polyline` ... sequence of lines connecting points defined by
     `points` attribute
 
-``` {.xml}
+```xml
 ...
 <stl:page w="600pt" h="800pt">
   <stl:line style="stroke:#ff0000" x1="420pt" y1="450pt" x2="550pt" y2="400pt" />
@@ -2243,7 +2110,7 @@ A variety of closed shapes is also supported:
 User can optionally associate a story with any closed shape. Then the
 story (either shared or private) gets formatted inside the closed shape.
 
-``` {.xml}
+```xml
 ...
 <stl:page w="600pt" h="800pt">
   <stl:rect style="fill:#aaffff" x="20pt" y="20pt" w="200pt" h="100pt" story="Main"/>
@@ -2253,8 +2120,7 @@ story (either shared or private) gets formatted inside the closed shape.
 </stl:page>
 ...
 ```
-
-**Example:**
+### Example:
 
 For demonstration of various shape variants we can look at the following
 example:
@@ -2265,7 +2131,7 @@ example:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Shapes example"/>
 
-### Path
+## Path
 
 There is also a support for very powerfull and generic SVG-like path.
 
@@ -2273,7 +2139,7 @@ The `stl:path` element has `data` attribute containing a SVG Path Data
 sequence containing commands like `moveto`, `lineto` and `curveto` and
 can look as follows:
 
-``` {.xml}
+```xml
 ...
 <stl:page w="600pt" h="800pt">
   <stl:path fill="#ff0000" data="M10 610 H 100 V 700 H 10 Z"/>
@@ -2298,13 +2164,13 @@ All of the commands above can also be expressed with lower letters.
 Capital letters means absolutely positioned, lower cases means
 relatively positioned.
 
-**References:**
+### References:
 
 -   [SVG Path Specification](https://www.w3.org/TR/SVG/paths.html)
 -   [Mozilla Path
     Tutorial](https://developer.mozilla.org/en/docs/Web/SVG/Tutorial/Paths)
 
-**Examples:**
+### Examples:
 
 For demonstration of SVG-like path variants we can look at the following
 example. It also demonstrates how easy it is to migrate an SVG vector
@@ -2324,8 +2190,7 @@ code from the [Apache Batik
 library](https://xmlgraphics.apache.org/batik/) (Apache-2 license as
 well). Both libraries are implemented in Java programming language.
 
-Table
------
+## Table
 
 For *Table Item* creation there are several docbuilder elements
 available, namely `stl:table`, `stl:row` and `stl:cell`.
@@ -2338,7 +2203,7 @@ The following table has implicit dimensions - it means that it's width
 and height are not explicitly specified, but computed based on it's rows
 heights and cell/column widths instead:
 
-``` {.xml}
+```xml
 ...
 <stl:page w="600pt" h="800pt">
   <!-- Table with implicit dimensions -->
@@ -2365,7 +2230,7 @@ by default (if not stated otherwise).
 Alternatively users can explicitly specify *height* of each individual
 *row* and/or specify a *width* of the whole *table*:
 
-``` {.xml}
+```xml
 ...
 <stl:page w="600pt" h="800pt">
   <!-- Table with explicit width -->
@@ -2389,7 +2254,7 @@ Or users can specify column width with specifying `w` attribute of the
 *cells* inside the very first *row* and also specify a *height* of the
 whole *table*:
 
-``` {.xml}
+```xml
 ...
 <stl:page w="600pt" h="800pt">
   <!-- Table with explicit height -->
@@ -2414,7 +2279,7 @@ heights* and *cell widths* and explicitly specify *table* *width*,
 *height* or both. The resulting table has the specified table dimensions
 and *row* and *column* dimensions get rescaled accordingly:
 
-``` {.xml}
+```xml
 ...
 <stl:page w="600pt" h="800pt">
   <!-- Table with explicit width & height -->
@@ -2448,7 +2313,7 @@ It is also possible to repeat one or more rows with a `stl:repeater`.
 Following example demonstrates a *paragraph table* containing *header*,
 *footer* and a *body story* with a *repeatable row*:
 
-``` {.xml}
+```xml
 ...
 <stl:document>
   <stl:story name="Main">
@@ -2495,7 +2360,7 @@ attribute.
 
 Consider the following example:
 
-``` {.xml}
+```xml
 ...
 <stl:table>
   <stl:story>
@@ -2516,7 +2381,7 @@ Consider the following example:
 ... the cell containing text *Telephone* actually spans across two table
 columns.
 
-### Example
+#### Example
 
 This example demonstrates the usage of various kinds of *Tables*:
 
@@ -2526,8 +2391,7 @@ This example demonstrates the usage of various kinds of *Tables*:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Table example"/>
 
-Interactive Item
-----------------
+## Interactive Item
 
 User can use `stl:input` element to create an interactive item.
 
@@ -2574,7 +2438,7 @@ kinds of interactive items see:
 
 Following definition creates a simple text input field:
 
-``` {.xml}
+```xml
 ...
 <stl:data>
   <stl:template>
@@ -2606,7 +2470,7 @@ Following definition creates a simple text input field:
 And following definition creates a single-select (radio button) choice
 and submit button:
 
-``` {.xml}
+```xml
 ...
 <stl:data>
   <stl:template>
@@ -2682,12 +2546,11 @@ Following example demonstrates some types of interactive items:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Interactive item example"/>
 
-Group
------
+## Group
 
 User can use `stl:group` element for page object grouping:
 
-``` {.xml}
+```xml
 ...
 <stl:page w="300pt" h="150pt">
   <stl:group transform="rotate(-5)">
@@ -2702,7 +2565,7 @@ User can use `stl:group` element for page object grouping:
 
 as well as inline object grouping:
 
-``` {.xml}
+```xml
 ...
 <stl:text x="110pt" y="30pt" w="80pt" h="100pt" style="fill:#ffddcc">
   <stl:story>
@@ -2735,8 +2598,7 @@ Following example demonstrates the grouping in action:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Grouping example"/>
 
-Barcode
--------
+## Barcode
 
 Users can use `stl:barcode` element for creating an instance of page or
 inline barcode.
@@ -2748,7 +2610,7 @@ Following barcode specific attributes are supported:
 
 User can create a barcode right on a page as follows:
 
-``` {.xml}
+```xml
 ...
 <stl:page w="300pt" h="150pt">
   <stl:group transform="rotate(-5)">
@@ -2761,7 +2623,7 @@ User can create a barcode right on a page as follows:
 If data must be dynamic (for example if we repeat barcodes based on
 input data), then it is possible to use `stl:modification` as follows:
 
-``` {.xml}
+```xml
 ...
 <stl:story>
   <stl:p>
@@ -2787,8 +2649,7 @@ For demonstration of barcodes we can look at the following example:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Barcode example"/>
 
-Chart
------
+## Chart
 
 Users can use `stl:chart` element for creating an instance of page or
 inline chart.
@@ -2797,7 +2658,7 @@ Following chart specific attributes are supported:
 
 -   `style` ... default style for the chart
 
-``` {.xml}
+```xml
  <stl:chart w="311.81pt" h="99.54pt" modern="false">
    <scd:scd style="font-family:Arial;font-size: 7pt;">
       <scd:plot left_offset="28.35pt" right_offset="14.17pt" top_offset="14.17pt" bottom_offset="28.35pt" logical_x_low="0" logical_x_high="100" logical_y_low="0" logical_y_high="1000"/>
@@ -2808,10 +2669,8 @@ Following chart specific attributes are supported:
     <scd:series y_column="1" x_column="2" label_column="3"/>
       </scd:layer>
    </scd:scd>
-</scd:chart>   
+</stl:chart>   
 ```
-
-xml
 
 ### Chart definition
 
@@ -2838,7 +2697,7 @@ Users can specify the chart parts elements:
 -   `scd:layer` ... layer definition, more than one layer can be
     defined, order of defintion defines z-order
 
-1.  scd:title
+#### scd:title
 
     Users can specify following attributes
 
@@ -2847,7 +2706,7 @@ Users can specify the chart parts elements:
     -   `style` ... style of title
     -   `class` ... style class (limited when used for svg charts)
 
-2.  scd:legend
+####  scd:legend
 
     Users can specify following attributes
 
@@ -2857,7 +2716,7 @@ Users can specify the chart parts elements:
     -   `style` ... style of legend text and border line
     -   `class` ... style class (limited when used for svg charts)
 
-3.  scd:plot
+####  scd:plot
 
     Users can specify following attributes
 
@@ -2870,7 +2729,7 @@ Users can specify the chart parts elements:
     -   `logical_y_low` ... logical low y value
     -   `logical_y_high` ... logical high y value
 
-4.  scd:axis~x~, scd:axis~y~
+####  scd:axis~x~, scd:axis~y~
 
     Users can specify following attributes
 
@@ -2892,7 +2751,7 @@ Users can specify the chart parts elements:
 
     -   `draw_behind` ... axis should be drawn behind the chart
 
-5.  scd:support~lines~
+####  scd:support~lines~
 
     Users can specify following attributes
 
@@ -2918,7 +2777,7 @@ Users can specify the chart parts elements:
     -   `mask` ... format mask of values
     -   `style` ... style of labels and lines
 
-6.  scd:layer
+####  scd:layer
 
     Users can specify following attributes
 
@@ -2981,7 +2840,7 @@ Users can specify the chart parts elements:
 
 Data structure must be defined to use charts
 
-``` {.xml}
+```xml
  <ddi:tabledata id="table1" default_style="font-family:Arial">
     <ddi:header>
    <ddi:cell data_type="number" data_style="fill:#ff0000;stroke:#ff0000">Value</ddi:cell>
@@ -3001,11 +2860,11 @@ defines default text style for data labels.
 
 Elements:
 
-1.  ddi:header
+####  ddi:header
 
     Users defines column headers for data columns.
 
-    1.  ddi:cell
+#####  ddi:cell
 
         Attributes:
 
@@ -3013,11 +2872,11 @@ Elements:
             not defined, string type is taken as default
         -   `data_style` ... style for the whole series
 
-2.  ddi:row
+####  ddi:row
 
     Users defines rows of data
 
-    1.  ddi:cell
+#####  ddi:cell
 
         Attributes:
 
@@ -3031,15 +2890,13 @@ Elements:
         -   `label_v_position` ... vertical position of label
             (top/center/bottom), default is bottom
 
-Runtime Behavior
-================
+# Runtime Behavior
 
 Another level of power lies in a possibility to associate runtime
 elements with individual design items and modify them based on runtime
 criteria.
 
-Script
-------
+## Script
 
 Users can associate custom scripts with various items via the
 `stl:script` element. Even in a single document design there can be a
@@ -3056,7 +2913,7 @@ Items* there are two script events *Before* and *After* formatting the
 item. Users can specify the event via the `when` attribute (either
 `before` or `after`).
 
-``` {.xml}
+```xml
 ...
 <stl:image src="wd:/logo.png">
   <stl:script language="js" when="before">
@@ -3074,7 +2931,7 @@ XML [PCDATA](https://en.wikipedia.org/wiki/PCDATA) (which is by default
 everything in XML). So for example a simple javascript `for` loop must
 be escaped as folllows:
 
-``` {.xml}
+```xml
 ...
 <stl:script language="js">
  for ( var i=0; i &lt; item.PageCount; ++i )
@@ -3086,7 +2943,7 @@ be escaped as folllows:
 If users find this encoding annoying, they can explicitly switch to
 [CDATA](https://en.wikipedia.org/wiki/CDATA) mode as follows:
 
-``` {.xml}
+```xml
 ...
 <stl:script language="js"><![CDATA[
  for ( var i=0; i < item.PageCount; ++i )
@@ -3098,7 +2955,7 @@ If users find this encoding annoying, they can explicitly switch to
 Another alternative is to keep scripts separate and use `xp:include`
 directive to include them:
 
-``` {.xml}
+```xml
 ...
 <stl:script language="js">
   <xp:include src="wd:/scripts/printPageCounts.js" parse="text" />
@@ -3106,8 +2963,7 @@ directive to include them:
 ...
 ```
 
-Modification
-------------
+## Modification
 
 For simple property modifications users can use the `stl:modification`
 element.
@@ -3116,7 +2972,7 @@ Following snipped repeats an image reference and modifies it's `Page`
 property in order to visualize all individual pages of an multipage TIFF
 image:
 
-``` {.xml}
+```xml
 ...
 <stl:repeater xpath="$pages">
   <stl:story>
@@ -3128,8 +2984,7 @@ image:
 ...
 ```
 
-Example
--------
+### Example
 
 For demonstration of runtime modifications we can look at the following
 example enumerating all pages of an multipage TIFF image:
@@ -3140,16 +2995,12 @@ example enumerating all pages of an multipage TIFF image:
 
 <img src="/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png?h=pfi01/develop/docbuilder" alt="Multipage Image example"/>
 
-Load-time vs. Runtime
-=====================
+# Load-time vs. Runtime
 
 TBD
 
-Story References
-----------------
+## Story References
 
-Substitutions
--------------
+## Substitutions
 
-Styling
--------
+## Styling
