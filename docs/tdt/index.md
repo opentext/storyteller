@@ -511,7 +511,7 @@ the *Data Transformation*.
 
 This section should provide a brief reference of those functions.
 
-#### <document> tdt:template()
+#### &lt;document> tdt:template()
 
 This function provides us with access to *Data Template* hierarchy.
 
@@ -538,7 +538,7 @@ Then we can access the just defined lookup table as follows:
 </tdt:rule>
 ```
 
-#### <document> tdt:document( <string> )
+#### &lt;document&gt; tdt:document( &lt;string&gt; )
 
 This function provides an access to an external XML source document.
 User can access any external XML specified by first parameter
@@ -556,7 +556,7 @@ can utilize all the goodies provided by *StoryTeller Repository
 Framework* (like *Mount points* and *Proprietary URL schemas* like
 `wd:` or `otmm:`).
 
-####  <node-set> tdt:tokenize( <node-set>, <string> )
+####  &lt;node-set&gt; tdt:tokenize( &lt;node-set&gt;, &lt;string&gt; )
 
 This function is similar to the
 [str:tokenize](http://www.exslt.org/str/functions/tokenize/)
@@ -594,7 +594,7 @@ For example the definition of:
 </data>
 ```
 
-#### <node-set> tdt:split( <node-set>, <string> )
+#### &lt;node-set&gt; tdt:split( &lt;node-set&gt;, &lt;string&gt; )
 
 This function is similar to the
 [str:split](http://www.exslt.org/str/functions/split/) function
@@ -629,7 +629,7 @@ For example the definition of:
 
 Empty string is not allowed as the second parameter.
 
-#### <string> tdt:concat( <node-set> \[, <string> \] )
+#### &lt;string&gt; tdt:concat( &lt;node-set&gt; \[, &lt;string&gt; \] )
 
 This function is similar to the
 [str:concat](http://www.exslt.org/str/functions/concat/) function
@@ -641,7 +641,7 @@ that node set. If the node set is empty, it returns an empty string.
 If the separator is an empty string then strings are concatenated
 without a separator.
 
-####  <node-set> tdt:group( <node-set> \[ , <string>, ... \] ) + <node-set> tdt:ungroup( <node> )
+####  &lt;node-set&gt; tdt:group( &lt;node-set&gt; \[ , &lt;string&gt;, ... \] ) + &lt;node-set&gt; tdt:ungroup( &lt;node&gt; )
 
 This function allows to group given nodes based on given grouping
 criteria.
@@ -750,7 +750,7 @@ if data is not already aggregated or sorted). That behavior differs
 from SQL’s GROUP BY which aggregates common elements regardless of
 their input order.
 
-####  <node-set> tdt:nodeset( \[ <object>, ... \] )
+####  &lt;node-set&gt; tdt:nodeset( \[ &lt;object&gt;, ... \] )
 
 This function accepts any number of arguments (`0`, `1` or more) of
 any type (`node-set`, `node`, `string`, `number`) and creates a
