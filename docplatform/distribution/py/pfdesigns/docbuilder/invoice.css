@@ -1,0 +1,149 @@
+    body {
+        font-family: sans-serif;
+        font-size: 8pt;
+    }
+    
+    div.main {
+        width: 512pt;
+    }
+    
+    div.transactions, div.text-message {
+        clear: both;
+    }
+    
+    div.text-message {
+        padding-top: 24pt;
+        font-size: 6pt;
+        line-height: 2;
+    }
+    
+    .transactions table {
+        width: 100%;
+        border: solid 1pt;
+        border-radius: 12pt;
+        border-spacing: 0;
+        margin-top: 24pt;
+    }
+    
+    thead, tfoot, .section-header, .section-footer {
+        font-weight: bold;
+        font-size: 6pt;
+    }
+    
+    .transactions thead tr:first-child th:first-child {
+        border-radius: 12pt 0 0 0;
+        text-transform: uppercase;
+        font-size: 9pt;
+    }
+    
+    .transactions thead tr:first-child th:last-child {
+        border-radius: 0 12pt 0 0;
+    }
+    
+    td, th {
+        border: none;
+        padding: 1pt 2pt 1pt 2pt;
+        font-weight: inherit;
+    }
+    
+    th:first-child, td:first-child {
+        text-align: left;
+    }
+       
+    thead th {
+        border-bottom: solid 1pt;
+        background-color: silver;
+        padding-top: 4pt;
+    }
+    
+    tfoot td, tfoot th {
+        border-top: solid 2pt;
+        padding-bottom: 4pt;
+    }
+    
+    td.sum {
+        border-right: solid 2pt;
+        border-left: solid 2pt;
+    }
+    
+    th {
+        text-align: left;
+    }
+    
+    td:first-child {
+        text-indent: 8pt;
+    }
+    
+    table.credits th:nth-child(3), table.credits td:nth-child(3) {
+        text-align: center;
+    }
+    
+    table.credits th:nth-child(4), table.credits td:nth-child(4),
+    table.credits th:nth-child(5), table.credits td:nth-child(5),
+    table.credits th:nth-child(6), table.credits td:nth-child(6),
+    table.credits tfoot td:nth-child(2)
+    {
+        text-align: right;
+    }
+    
+    table.fixed-fees th:nth-child(2), table.fixed-fees td:nth-child(2) {
+        text-align: center;
+    }
+    
+    table.fixed-fees th:nth-child(3), table.fixed-fees td:nth-child(3),
+    table.fixed-fees th:nth-child(4), table.fixed-fees td:nth-child(4),
+    table.fixed-fees th:nth-child(5), table.fixed-fees td:nth-child(5),
+    table.fixed-fees th:nth-child(6), table.fixed-fees td:nth-child(6),
+    table.fixed-fees tfoot td:nth-child(2)
+    {
+        text-align: right;
+    }
+    
+    table.connection-fees th:nth-child(2), table.connection-fees td:nth-child(2),
+    table.connection-fees th:nth-child(4), table.connection-fees td:nth-child(4),
+    table.connection-fees th:nth-child(5), table.connection-fees td:nth-child(5),
+    table.connection-fees th:nth-child(6), table.connection-fees td:nth-child(6),
+    table.connection-fees th:nth-child(7), table.connection-fees td:nth-child(7),
+    table.connection-fees th:nth-child(8), table.connection-fees td:nth-child(8),
+    table.connection-fees tfoot td:nth-child(2)
+    {
+        text-align: right;
+    }
+    
+    table.total {
+        width: 100%;
+        border-top: solid 1.4pt;
+        border-spacing: 0;
+        margin-top: 18pt;
+    }
+    
+    table.total tfoot td.sum {
+        text-align: right;
+        background: silver;
+        border-bottom: solid 2pt;
+    }
+    div.cust-info {
+        float: left;
+    }
+    
+    div.cust-info td {
+        font-weight: bold;
+    }
+    
+    div.account-info {
+        float: right;
+    }
+    
+    span.tel {
+        font-size: 150%;
+    }
+    
+    footer {
+        margin-top: 72pt;
+        font-size: 6pt;
+    }
+    
+    footer p {
+        margin: 0pt;
+        line-height: 1.6;
+    }
