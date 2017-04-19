@@ -1,0 +1,14 @@
+<root>
+  <page>
+    <script when="docapi.BEFORE" language="js">
+	  'use strict';
+	  let harmony = require('./harmony');
+
+	  harmony.scoping();
+	  harmony.containers();
+	  harmony.symbols();
+	  harmony.generators();
+	  harmony.arrow();
+    </script>
+  </page>
+</root>

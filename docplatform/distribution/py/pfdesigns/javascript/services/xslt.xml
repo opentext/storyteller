@@ -1,0 +1,18 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+	<stl:page w="600px" h="600px">
+	  <stl:script language="js">
+		var assert = require('assert');
+		var streams = require('streams');
+		var services = require('services');	
+
+		var xslt = services.xslt(streams.stream('wd:/cdcatalog.xslt'));
+		var src = streams.stream('wd:/cdcatalog.xml');
+		var expected = streams.stream('wd:/cdcatalog.html');
+		var dst = streams.stream();
+		xslt(src, dst);
+        assert.strictEqual(dst.read(), expected.read());
+	  </stl:script>
+	</stl:page>
+  </stl:document>
+</stl:stl>

@@ -1,0 +1,76 @@
+<root>
+  <template>
+    <data>
+      <message>
+        <details>
+          <item>
+            <dt-booking>????-??-??</dt-booking>
+            <dt-currency>????-??-??</dt-currency>
+            <verification>??????????</verification>
+            <receiver>?</receiver>
+            <amount>?.??</amount>
+            <balance>-?.??</balance>
+          </item>
+        </details>
+      </message>
+    </data>
+  </template>
+  <tdt:transformation 
+      version="1.0" 
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt">
+    <tdt:rule path="/data/message">
+      <tdt:value key=".">/data/message</tdt:value>
+      <tdt:value key="recurse">.</tdt:value>
+    </tdt:rule>
+  </tdt:transformation>
+
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var data = require('data');
+      var pp = require( './postprocessor' );
+      
+      var items = data.js('/data/message/details/item').item;
+      var options = {
+        height: 'auto',
+        autowidth: true,
+        shrinkToFit: true,
+        sortable: true,
+        rownumbers: true,
+        colNames: ['Booking Date', 'Currency Date', 'Verification', 'Text / Receiver', 'Amount', 'Balance' ],
+        colModel: [
+          {name:'dt-booking',index:'dt-booking', sorttype:'date', formatter:'date', 
+            formatoptions: { srcformat:'Y-m-d', newformat:'D m/d/Y' } },
+          {name:'dt-currency',index:'dt-currency', sorttype:'date', formatter:'date',
+            formatoptions: { srcformat:'Y-m-d', newformat:'D m/d/Y' } },
+          {name:'verification',index:'verification', sorttype:'int', 
+            summaryType:'count', summaryTpl:'{0} item(s)'},
+          {name:'receiver',index:'receiver'},
+          {name:'amount',index:'amount', align:'right',sorttype:'float', formatter:'currency', summaryType:'sum',
+            formatoptions:{decimalSeparator:",", thousandsSeparator: ",", decimalPlaces: 2, prefix: "$ "} },
+          {name:'balance',index:'balance', align:'right',sorttype:'float', formatter:'currency',
+            formatoptions:{decimalSeparator:",", thousandsSeparator: ",", decimalPlaces: 2, prefix: "$ "} },
+        ],
+        multiselect: false,
+        multiSort: true,
+        grouping: true,
+        groupingView: { 
+          groupField: ['receiver'], 
+          groupDataSorted: false, 
+          groupColumnShow: false, 
+          groupSummary : [true],
+          showSummaryOnHide: true
+        },
+        caption: "Feed dynamic grid from embedded data island",
+      };
+
+      var htmldir = 'wd:/../../regr_output/pfdesigns/javascript/html-table.py-html/';
+      var repo = require('repo');
+      var doc = pp.document( repo.load(htmldir + 'index.html') );
+
+      var label = doc.find('body > div > div > span').first();
+      label.text( 'Dynamic Postprocessing of ' + label.text() );
+      doc.table( 'table', 'main-grid', options, items );
+      repo.save(htmldir + 'index-dynamic.html', doc.save() );
+    </script>
+  </page>
+</root>

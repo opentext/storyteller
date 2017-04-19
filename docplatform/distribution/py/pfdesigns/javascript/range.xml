@@ -1,0 +1,28 @@
+<root>
+  <template>
+    <items>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+    </items>
+  </template>
+  <tdt:transformation 
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var assert = require('assert');
+      var range = require('range');
+
+      assert.deepEqual([0, 1, 2, 3], range(4) );
+      assert.deepEqual([3, 4, 5], range(3,6) );
+      assert.deepEqual([0, 2, 4, 6, 8], range(0,10,2) );
+      assert.deepEqual([10, 9, 8, 7, 6, 5, 4, 3, 2, 1], range(10,0,-1) );
+      assert.deepEqual([8, 6, 4], range(8,2,-2) );
+      assert.deepEqual([], range(8,2) );
+      assert.deepEqual([], range(8,2,2) );
+      assert.deepEqual([], range(1,5,-1) );
+      assert.deepEqual([], range(1,5,-2) );
+    </script>
+  </page>
+</root>

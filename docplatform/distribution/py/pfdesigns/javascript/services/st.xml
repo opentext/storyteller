@@ -1,0 +1,40 @@
+<stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
+		 xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
+		 version="0.1">
+  <stl:fixtures>
+	<xp:fixture key="link:/empty.svg" type="application/xml">
+	  <svg xmlns="http://www.w3.org/2000/svg" width="0px" height="0px"></svg>
+	</xp:fixture>
+  </stl:fixtures>
+  <stl:document>
+	<stl:page w="600px" h="600px">
+	  <!--<stl:text w="100%" h="10%"><stl:story>Hello world!</stl:story></stl:text>-->
+	  <stl:fragment x="10%" y="10%" w="80%" h="80%" 
+					transform="rotate(5)" style="stroke:#000; fill:none"
+					src="link:/empty.svg" selector="/item[1]" > 
+		<stl:script language="js">
+		  var streams = require('streams');
+		  var services = require('services');	
+
+		  var item = require('layout').item();
+		  if (item.Box.W &gt; 50) {
+ 
+		    var markup = streams.stream('wd:/st.xml').read();
+			markup = markup.replace('stl:page w="600px" h="600px"', 'stl:page w="100%" h="100%"');
+			var design = streams.stream().write(markup);
+
+		    var st = services.st(design);
+			var options = {
+			  target: {width: item.Box.W+'pt', height: item.Box.H+'pt'},
+		      driver: {type: 'svg', dpi: 96, pagemode: 'auto', compression: 6, background: 'none'},
+			  output: 'local:' //'wd:/test%d-'+Math.round(item.Box.W)+'.svg'
+			};
+			var result = st(options);
+			//console.log(result);
+			item.Uri = result.output[0].uri;
+		  }
+		</stl:script>
+	  </stl:fragment>
+	</stl:page>
+  </stl:document>
+</stl:stl>

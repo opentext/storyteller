@@ -1,0 +1,103 @@
+<root>
+  <template>
+    <fragments>
+      <text>This is the first formula: </text>
+      <formula>$x=\frac{1+y}{1+2z^2}$</formula>
+      <text>, and this is the second formula: </text>
+      <formula>$\int_0^\infty e^{-x^2} dx=\frac{\sqrt{\pi}}{2}$</formula>
+      <text>, followed by the third formula: </text>
+      <formula>$${n+1\choose k} = {n\choose k} + {n \choose k-1}$$</formula>
+      <text>, and the forth formula: </text>
+      <formula>\left\{\frac{x^2}{y^3}\right\}</formula>
+      <text>, and this is a formula with sub and superscripts and braces: </text>
+      <formula>
+        $$
+        \underbrace{a+\overbrace{b+\cdots}^{{}=t}+z}
+        _{\mathrm{total}} ~~
+        a+{\overbrace{b+\cdots}}^{126}+z
+        $$
+      </formula>
+      <text>. This is a matrix formula: </text>
+      <formula>
+        \begin{bmatrix}
+        \frac{5}{6} &amp; \frac{1}{6} &amp; 0           \\[0.3em]
+        \frac{5}{6} &amp; 0           &amp; \frac{1}{6} \\[0.3em]
+        0           &amp; \frac{5}{6} &amp; \frac{1}{6}
+        \end{bmatrix}
+      </formula>
+      <text>, and even bigger one: </text>
+      <formula>
+        A_{m,n} =
+        \begin{pmatrix}
+        a_{1,1} &amp; a_{1,2} &amp; \cdots &amp; a_{1,n} \\
+        a_{2,1} &amp; a_{2,2} &amp; \cdots &amp; a_{2,n} \\
+        \vdots  &amp; \vdots  &amp; \ddots &amp; \vdots  \\
+        a_{m,1} &amp; a_{m,2} &amp; \cdots &amp; a_{m,n}
+        \end{pmatrix}
+      </formula>
+      <text>, and finally - we are getting at the very last formula which is relatively complicated and recursive: </text>
+      <formula>
+        $$
+        \frac{1}{\displaystyle 1+
+        \frac{1}{\displaystyle 2+
+        \frac{1}{\displaystyle 3+x}}} +
+        \frac{1}{1+\frac{1}{2+\frac{1}{3+x}}}
+        $$
+      </formula>
+      <text>, and that's all for now.</text>
+    </fragments>
+  </template>
+
+  <tdt:transformation
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+
+  <story name="main">
+      <p>
+        This test demonstrates how embedded javascript can help to integration DocPlatform Formatter 
+        with a service rendering external entities like for example the LaTeX formulas. Individual 
+        formulas are retrieved from message data and passed directly to the external rendering service. 
+        Rendered results are then visualized as plain images with appropriate dimension and resolution. 
+      </p>
+      <p/>
+      <p>
+        <style name='Arial' size='20' bold="1"/>
+        <rep xpath="/fragments/*" name="fragment">
+          <swi xpath="name(.)" >
+            <case key="formula">
+              <img pos='0,0' size='150,30' uri='wd:/none.png' content_rescale="resourcesapi.RM_PROPORTIONAL" v_placement="1.0">
+                <script when="docapi.BEFORE" language="js">
+                  var dpi = 300;
+                  var services = require('./services');
+                  var image = require('layout').item();
+                  var data = require('data');
+                  var repo = require('repo');
+                  var png = require('png-js');
+                  var formula = data.dump('string(.)');
+                  var uri = services.formula(formula, {dpi: dpi, format: 'png'});
+                  var data = repo.load(uri, null);
+                  var header = png.PNG(data);
+                  image.Uri = repo.upload(data, null);
+                  image.Box.W = header.width*72/dpi;
+                  image.Box.H = header.height*72/dpi;
+                </script>
+              </img>
+            </case>
+            <case key="text">
+              <subst xpath="text()" sample="Text" texttype="0"/>
+            </case>
+          </swi>
+        </rep>
+      </p>
+  </story>
+  <page occurrence="docapi.OCC_ONCE_OR_MORE">
+    <text pos='20,20' size='550,50' pen_rgb='255,255,255,0'>
+      <p>
+        <style name='Arial' size='36.0'/>
+        Formula Demo
+      </p>
+    </text>
+    <text pos='20,80' size='550,750' 
+          brush_rgb='225,225,250,255' pen_rgb='100,100,155,255' inner_margins='8,8,8,8' corners='rounded @ 5 5;' 
+          storyref='main'/>
+  </page>
+</root>

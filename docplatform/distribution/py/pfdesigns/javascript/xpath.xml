@@ -1,0 +1,57 @@
+<root>
+  <template>
+    <data>
+	  <items>
+		<item id="0"/>
+		<item id="1"/>
+		<item id="2"/>
+		<item id="3"/>
+		<item id="4"/>
+		<item id="5"/>
+		<item id="6"/>
+		<item id="7"/>
+		<item id="8"/>
+		<item id="9"/>
+	  </items>
+    </data>
+  </template>
+  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0" />
+  <story name="Main">
+    <p>
+      <rep xpath="/data/items">
+		<rep xpath="item">
+		  <script when="docapi.BEFORE" language="js">
+			var assert = require('assert');
+			var data = require('data');
+
+			var xmldump = data.dump('/data/items');
+			assert.strictEqual(1, data.dump('position()'));
+			assert.strictEqual(1, data.dump('last()'));
+			assert.strictEqual('', data.dump('string()'));
+			assert.strictEqual(xmldump, data.dump('current()'));
+			assert.strictEqual(xmldump, data.dump('.'));
+			assert.strictEqual(xmldump, data.dump('self::node()'));
+			assert.deepEqual([], data.dump('text()'));
+			assert.strictEqual('', data.dump('string(text())'));
+			assert.strictEqual(0, data.dump('count(text())'));
+		  </script>
+          <style name='Arial' size='8'/>
+          <subst xpath="@id"/>
+		</rep>
+		<rep xpath="$array1d">
+          <style name='Arial' size='8'/>
+          <subst xpath="."/>
+		</rep>
+	  </rep>
+    </p>
+  </story>
+  <page occurrence="docapi.OCC_ONCE_OR_MORE">
+	<script when="docapi.BEFORE" language="js">
+      var vars = require('vars');
+      vars.set('array1d', 0, [0]);
+      vars.set('array1d', 1, [1]);
+      vars.set('array1d', 2, [2]);
+	</script>
+    <text pos='10,10' brush='1' size='500,800' storyref="Main"/>
+  </page>
+</root>

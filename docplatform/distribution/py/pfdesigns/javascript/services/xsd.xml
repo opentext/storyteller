@@ -1,0 +1,20 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+	<stl:page w="600px" h="600px">
+	  <stl:script language="js">
+		var assert = require('assert');
+		var streams = require('streams');
+		var services = require('services');	
+
+		var xsd = services.xsd('stinst:/docbuilder/xmlschema/stl.xsd');
+		var stl = streams.stream('wd:/xsd.xml');
+		xsd(stl);
+
+		var svg = streams.stream('wd:/clock.svg');
+		assert.throws( 
+          function() { xsd(svg); }, 
+          /No matching global declaration available for the validation root./ );
+	  </stl:script>
+	</stl:page>
+  </stl:document>
+</stl:stl>

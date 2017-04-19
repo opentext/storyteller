@@ -1,0 +1,34 @@
+<root>
+  <template>
+    <items>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+    </items>
+  </template>
+  <tdt:transformation 
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var share = require('share');
+      share.counter=0;
+    </script>
+    <script when="docapi.AFTER" language="js">
+      var share = require('share');
+      require( 'assert' ).strictEqual( 3, share.counter );
+	</script>
+    <text pos='20,20' size='550,50' pen_rgb='255,255,255,0'>
+      <rep xpath="/items/item" name="My Repeater">
+        <p>
+          <subst xpath="concat( position(),': ', text() )" name="My Substitution" texttype="0">
+            <script language="js">
+              var share = require('share');
+              share.counter++;
+            </script>
+          </subst>
+        </p>
+      </rep>
+    </text>
+  </page>
+</root>

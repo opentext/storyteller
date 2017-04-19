@@ -1,0 +1,18 @@
+{
+	"urls" : {
+		"MC Donalds" : "http://www.mcdonalds.com",
+		"Seven eleven" : "http://www.7-eleven.com",
+		"Shell" : "http://www.shell.com",
+		"Telia" : "http://www.telia.com",
+		"StreamBank" : "http://www.hilcostreambank.com",
+		"2Entertain" : "http://www.2entertain.com",
+		"Virgin Records" : "http://www.virginrecords.com",
+		"Lufthansa" : "http://www.lufthansa.com",
+		"Frankfurt Airport" : "http://www.frankfurt-airport.com",
+		"Wallmart" : "http://www.walmart.com",
+		"Hilton": "http://www3.hilton.com",
+		"Spotify" : "http://www.spotify.com", 
+		"Heathrow Airport" : "http://www.heathrowairport.com",
+		"Sheraton" : "http://www.starwoodhotels.com/sheraton"
+	}
+}

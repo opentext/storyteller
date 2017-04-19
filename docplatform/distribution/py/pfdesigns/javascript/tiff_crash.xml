@@ -1,0 +1,19 @@
+<root>
+  <page name="My Page" size="980,440">
+    <img pos='20,20' size='300,400' pen='1' name="My Image" uri="wd:/none.png">
+      <script when="docapi.BEFORE" language="js">
+        require( 'layout' ).item().Moniker = "wd:/DAT_6506085232_002.TIF!0";
+      </script>
+	</img>
+    <img pos='340,20' size='300,400' pen='1' name="My Image" uri="wd:/none.png">
+      <script when="docapi.BEFORE" language="js">
+        require( 'layout' ).item().Moniker = "wd:/DAT_6506085232_002.TIF!1";
+      </script>
+	</img>
+    <img pos='660,20' size='300,400' pen='1' name="My Image" uri="wd:/none.png">
+      <script when="docapi.BEFORE" language="js">
+        require( 'layout' ).item().Moniker = "wd:/DAT_6506085232_002.TIF!2";
+      </script>
+	</img>
+  </page>
+</root>

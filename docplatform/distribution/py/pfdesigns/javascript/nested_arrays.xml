@@ -1,0 +1,19 @@
+<root>  
+  <page>
+    <text pos='20,20' size='50,50' pen='1'>
+      <script when="docapi.BEFORE" language="js">
+        var vars = require( 'vars' );
+        var assert = require( 'assert' );
+
+        // array1d variable
+        vars.set( 'array3d', null, [ 0, 0, 0 ] );
+
+		for ( var i=0; i&lt;10; ++i )
+		  vars.all.array3d[0][i%2].push(i);
+
+		console.log( vars.all.array3d );
+      </script>
+      A
+    </text>
+  </page>
+</root>

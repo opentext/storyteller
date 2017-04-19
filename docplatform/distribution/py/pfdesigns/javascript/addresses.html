@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <style type="text/css">
+      table { width:100%; }
+    </style>
+  </head>
+  <body>
+    <table border="1">
+      <tr>
+        <col width="5%"/>
+        <col width="20%"/>
+        <col width="25%"/>
+        <col width="25%"/>
+        <col width="25%"/>
+        <th><h2>#</h2></th>
+        <th><h2>Name</h2></th>
+        <th><h2>Company</h2></th>
+        <th><h2>Address</h2></th>
+        <th><h2>Contact</h2></th>
+      </tr>
+      {{addresses}}
+      <tr>
+        <td>{{##}}</td>
+        <td>{{last_name}}, {{first_name}}</td>
+        <td><a href="{{web}}">{{company_name}}</a></td>
+        <td>{{address}}<br/>{{city}}, {{county}}<br/>{{state}}, {{zip}}</td>
+        <td>{{phone1}}<br/>({{phone2}})<br/><a href="mailto:{{email}}">{{email}}</a></td>
+      </tr>
+      {{/addresses}}
+    </table>
+  </body>
+</html>

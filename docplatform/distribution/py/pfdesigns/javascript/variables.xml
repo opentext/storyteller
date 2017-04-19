@@ -1,0 +1,109 @@
+<root>  
+  <page>
+    <text pos='20,20' size='50,50' pen='1'>
+      <script when="docapi.BEFORE" language="js">
+        var vars = require( 'vars' );
+
+        // scalar variable
+        vars.set( 'scalar', 5 );
+
+        // set scalar variable via syntax sugar
+        console.log( vars.all.scalar );  // 5
+        vars.all.scalar = 10;
+
+        // array variable
+        vars.set( 'array2d', 20, [ 0, 0 ] );
+        vars.set( 'array2d', 30, [ 0, 1 ] );
+        vars.set( 'array2d', 40, [ 1, 0 ] );
+
+		console.log( vars.all.array2d[0][0] ); // 20
+		vars.all.array2d[0][1] = 30;
+		//vars.all.new_array[0] = 3;
+      </script>
+      A
+    </text>
+    <text pos='20,120' size='50,50' pen='1'>
+      <script when="docapi.BEFORE" language="js">
+        var vars = require( 'vars' );
+        var assert = require( 'assert' );
+
+        // variable presence
+        assert.strictEqual( true, vars.has('scalar') );
+        assert.strictEqual( false, vars.has('some_other_variable') );
+        
+        // read scalar variable
+        assert.strictEqual( '10', vars.get( 'scalar' ) );
+
+        // read scalar variable - proxy based syntax sugar
+        assert.strictEqual( '10', vars.all.scalar );
+        assert.strictEqual( true, 'scalar' in vars.all );
+		console.log(Object.keys(vars.all));
+        assert.notEqual( -1, Object.keys(vars.all).indexOf('scalar') );
+        assert.notEqual( -1, Object.keys(vars.all).indexOf('array2d') );
+		for (var name in vars.all)
+		  console.log(name);
+
+        // read array variable
+        assert.strictEqual( '20', vars.get( 'array2d', [0, 0] ) );
+        assert.strictEqual( '30', vars.get( 'array2d', [0, 1] ) );
+        assert.strictEqual( '40', vars.get( 'array2d', [1, 0] ) );
+        assert.strictEqual( undefined, vars.get( 'array2d', [1, 1] ) );
+
+        // read non-existent variable
+        assert.throws(
+		  function () { vars.get( 'xxx' ); },
+		  /Error: Undefined variable 'xxx'./ );
+
+        // read array variable as scalar
+        assert.throws( 
+		  function () { vars.get( 'array2d' ); },
+		  /Error: Array variable 'array2d' accessed as scalar./ );
+
+        // read scalar variable as array
+        assert.throws( 
+		  function () { vars.get( 'scalar', [0] ); },
+		  /Error: Scalar variable 'scalar' accessed as array./ );
+
+        // read missing array value
+        assert.strictEqual( undefined, vars.get( 'array2d', [1, 1] ) );
+
+        // set scalar variable as array
+        assert.throws( 
+          function() { vars.set( 'scalar', 42, [ 3 ] ); }, 
+          /Array 'scalar' has '0' dimensions, '1' dimensions used./ );
+
+        // set array variable as scalar
+        assert.throws( 
+          function() { vars.set( 'array2d', 42 ); }, 
+          /Array 'array2d' has '2' dimensions, '0' dimensions used./ );
+
+        // change number of dimentions
+        assert.throws( 
+          function() { vars.set( 'array2d', 42, [ 2 ] ); }, 
+          /Array 'array2d' has '2' dimensions, '1' dimensions used./ );
+
+        // scalar variable returns an empty array
+        assert.deepEqual( [], vars.dim( 'scalar' ) );
+
+        // array variable returns an array of bounds for each dimension
+        assert.deepEqual( 2, vars.dim( 'array2d', [] ) );
+        assert.deepEqual( 2, vars.dim( 'array2d', [0] ) );
+        assert.deepEqual( 1, vars.dim( 'array2d', [1] ) );
+
+        // non-existing variable returns an empty array
+        assert.deepEqual( [], vars.dim( 'xxx' ) );
+
+        // dump whole variable hierarchy (particular varaible or all variables)
+        assert.deepEqual( undefined, vars.dump( 'xxx' ) );
+        assert.deepEqual( '10', vars.dump( 'scalar' ) );
+        assert.deepEqual( [ [ '20', '30' ], [ '40' ] ], vars.dump( 'array2d' ) );
+
+        var dump = vars.dump();
+        assert.deepEqual( [ [ '20', '30' ], [ '40' ] ], dump.array2d );
+		assert.strictEqual( '10', dump.scalar );
+		console.log( 'All variables: ', dump );
+      </script>
+      B
+    </text>
+  </page>
+</root>

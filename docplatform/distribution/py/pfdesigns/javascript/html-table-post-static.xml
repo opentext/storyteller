@@ -1,0 +1,111 @@
+<root>
+  <template>
+    <data>
+      <message>
+        <details>
+          <item>
+            <dt-booking>????-??-??</dt-booking>
+            <dt-currency>????-??-??</dt-currency>
+            <verification>??????????</verification>
+            <receiver>?</receiver>
+            <amount>?.??</amount>
+            <balance>-?.??</balance>
+          </item>
+        </details>
+      </message>
+    </data>
+  </template>
+  <tdt:transformation 
+      version="1.0" 
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt">
+    <tdt:rule path="/data/message">
+      <tdt:value key=".">/data/message</tdt:value>
+      <tdt:value key="recurse">.</tdt:value>
+    </tdt:rule>
+  </tdt:transformation>
+
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      function make_link(link, label) {
+        return '&lt;a href="' + link + '"&gt;' + label + '&lt;/a&gt;';
+      }
+      function make_pre(str) {
+        return '&lt;pre style="margin:0px;"&gt;' + str + '&lt;/pre&gt;';
+      }
+
+      var assert = require('assert');
+      var repo = require('repo');
+      var data = require('data');
+      var lookup = require('./html-table-lookup.json');
+      var moment = require('moment');
+      var accounting = require('accounting');
+      var options = {
+        symbol: "$",
+        decimal: ".",
+        thousand: ",",
+        precision: 2,
+        format: {
+          pos: "%s %v",
+          neg: "%s (%v)",
+          zero: "%s  --"
+        }
+      };
+      var items = data.js('/data/message/details/item').item;
+      var htmldir = 'wd:/../../regr_output/pfdesigns/javascript/html-table.py-html/';
+      var cheerio = require('cheerio');
+      var $ = cheerio.load(repo.load(htmldir + 'index.html'));
+
+      var label = $('body > div > div > span').first();
+      label.text('Static Postprocessing of ' + label.text());
+
+      // replace fixed table width with a percentage
+      $('table').each( function () {
+        $(this).css('width', '100%');
+      });
+
+      // create zebra background
+      $('tr').filter(i => i%2).children('td').each( function () {
+        $(this).css('background-color', 'white');
+      });
+
+	  // fetch table body rows and make sure their count matches data
+      var bodyrows = $('table tr').filter(i => i!==0);
+	  assert.equal(items.length, bodyrows.length);
+      // format currencies to columns
+      var amounts = accounting.formatColumn( items.map(i => +(i.amount)), options );
+      var balances = accounting.formatColumn(items.map(i => +(i.balance)), options);
+      bodyrows.each( function (row_index) {
+        var cells = $(this).children('td');
+        var booking = cells.first().find('div span');
+        var date = cells.eq(1).find('div span');
+        var link = cells.eq(3).find('div span');
+        var amount = cells.eq(4).find('div span');
+        var balance = cells.last().find('div span');
+
+        // reformat dates and make the currency date relative
+        var bm = moment(items[row_index]['dt-booking'], "YYYY-MM-DD");
+        booking.text(bm.format( 'L' ));
+        var cm = moment(items[row_index]['dt-currency'], "YYYY-MM-DD");
+        var diff = cm.diff( bm, 'days' );
+        diff = diff ? (diff === 1 ? 'a day later' : diff + ' days later') : 'same day';
+        date.text(cm.format('dddd') + ' (' + diff + ')');
+        
+        // lookup link url and transform plain text to a hyperlink
+        if (link.text() in lookup.urls) {
+          var markup = '&lt;a class="' + link.attr('class') + '" href="' + lookup.urls[link.text()] + '"&gt;'
+            + link.text() + '&lt;/a&gt;';
+          link.contents().replaceWith(make_link(lookup.urls[link.text()], link.text()));
+          link.contents().addClass(link.attr('class')).css('color', 'blue');
+        }
+        
+        // change color of a negative to red and preformat amount and balance content
+        if (+(items[row_index].balance) &lt; 0) 
+          balance.css('color', 'red');
+        amount.contents().replaceWith(make_pre(amounts[row_index]));
+        balance.contents().replaceWith(make_pre(balances[row_index]));
+      } );
+      
+      repo.save(htmldir + 'index-static.html', $.html());
+    </script>
+  </page>
+</root>

@@ -1,0 +1,94 @@
+{
+    "modules": {
+        "basepath" : "wd:/",
+        "suffixes" : [ "", ".js", ".json", "/index.js", "/index.json" ],
+        "core" : {
+            "__init__"   : "stinst:/js/__init__.json",
+            "share"      : "stinst:/js/core/share.js",
+            "range"      : "stinst:/js/core/range.js",
+            "process"    : "stinst:/js/core/process.js",
+            "vars"       : "stinst:/js/core/vars.js",
+            "layout"     : "stinst:/js/core/layout.js",
+            "data"       : "stinst:/js/core/data.js",
+            "repo"       : "stinst:/js/core/repo.js",
+            "streams"    : "stinst:/js/core/streams.js",
+            "units"      : "stinst:/js/core/units.js",
+            "i18n"       : "stinst:/js/core/i18n.js",
+            "services"   : "stinst:/js/core/services.js",
+
+            "buffer"     : "stinst:/js/core/buffer",
+            "ieee754"    : "stinst:/js/core/ieee754",
+            "base64-js"  : "stinst:/js/core/base64js",
+
+            "util"       : "stinst:/js/core/node/util.js",
+            "console"    : "stinst:/js/core/node/console.js",
+            "path"       : "stinst:/js/core/node/path.js",
+            "url"        : "stinst:/js/core/node/url.js",
+            "assert"     : "stinst:/js/core/node/assert.js",
+            "events"     : "stinst:/js/core/node/events.js",
+            "punycode"   : "stinst:/js/core/node/punycode.js",
+            "querystring": "stinst:/js/core/node/querystring.js",
+
+            "sax"        : "stinst:/js/core/sax/sax.js",
+            "xml2js"     : "stinst:/js/core/xml2js/xml2js.js",
+            "xmldom"     : "stinst:/js/core/xmldom/dom-parser.js",
+            "xpath"      : "stinst:/js/core/xpath/xpath.js",
+
+            "charts"    : "stinst:/js/core/charts.js",
+
+            "jslint"     : "stinst:/js/core/jslint/jslint.js",
+
+            "accounting" : "stinst:/js/libs/accounting/accounting.js",
+            "cheerio"    : "stinst:/js/libs/cheerio",
+            "d3"         : "stinst:/js/libs/d3/d3.js",
+            "dateformat" : "stinst:/js/libs/dateformat/dateformat.js",
+            "he"         : "stinst:/js/libs/he/he.js",
+            "js-sha1"    : "stinst:/js/libs/js-sha1/src/sha1.js",
+            "jsdom"      : "stinst:/js/libs/jsdom/lib/jsdom.js",
+            "jszip"      : "stinst:/js/libs/jszip/jszip.js",
+            "juice2"     : "stinst:/js/libs/juice2",
+            "markup-js"  : "stinst:/js/libs/markup-js",
+            "markup-js/dates": "stinst:/js/libs/markup-js/dates.js",
+            "markup-js/i18n" : "stinst:/js/libs/markup-js/i18n.js",
+            "moment"     : "stinst:/js/libs/moment",
+            "money"      : "stinst:/js/libs/money/money.js",
+            "nvd3"       : "stinst:/js/libs/nvd3/build/nv.d3.js",
+            "onecolor"   : "stinst:/js/libs/onecolor",
+            "babyparse"  : "stinst:/js/libs/babyparse/babyparse.js",
+            "png-js"     : "stinst:/js/libs/png-js/png.js",
+            "underscore" : "stinst:/js/libs/underscore/underscore.js"
+        }
+    },
+    "data" : {
+        "xml2js" : {
+            "defaults" : {
+                "async": false,
+                "explicitRoot": false,
+                "explicitArray": false,
+                "mergeAttrs": true,
+                "parseNumbers": true
+            }
+        },
+        "xml" : {
+            "root" : "tdt:root",
+            "alias" : "xmlns:tdt",
+            "ns": "http://developer.opentext.com/schemas/storyteller/transformation/tdt"
+        }
+    },
+    "jslint" : {
+        "enabled": true,
+        "options": {
+            "node": true,
+            "es6": true
+        },
+        "suppress" : [
+            "stinst:/js/core/node/",
+            "stinst:/js/core/xmldom/",
+            "stinst:/js/core/xml2js/",
+            "stinst:/js/core/sax/",
+            "stinst:/js/core/xpath/",
+
+            "stinst:/js/libs/"
+        ]
+    }
+}

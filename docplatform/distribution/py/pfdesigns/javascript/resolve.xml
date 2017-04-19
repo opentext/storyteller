@@ -1,0 +1,20 @@
+<root>
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var assert = require( 'assert' );
+	  var a_uri = require.resolve('wd:/a.js');
+	  assert.strictEqual( a_uri, require.resolve( './dir_module/../dir_module/../a.js' ) );
+	  assert.strictEqual( a_uri, require.resolve( './dir_module/./../././a.js' ) );
+	  assert.strictEqual( a_uri, require.resolve( './dir_module/////..//////a.js' ) );
+      assert.throws( 
+	    function () { require.resolve( './dir_module\\./..\\././a.js' ); },
+        /Error: Backslash separator not supported, use slash on all platforms/ );
+
+      // the following test is disabled because the feature is (temporarily) enabled
+      //assert.throws( 
+	  //  function () { require.resolve( '../javascript/core/../././a.js' ); },
+	  //  /Error: Relative uris outside working tree are not allowed/ );
+	  assert.strictEqual( a_uri, require.resolve( '../javascript/dir_module/../././a.js' ) );
+    </script>
+  </page>
+</root>

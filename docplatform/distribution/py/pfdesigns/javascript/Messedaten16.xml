@@ -1,0 +1,92 @@
+<root>
+  <template>
+    <data>
+	  <message>
+		<item id="0.000000" x="-0.040724" y="0.005532"/>
+		<item id="1.000000" x="-0.040653" y="0.004659"/>
+		<item id="2.000000" x="-0.041240" y="0.004970"/>
+		<item id="3.000000" x="-0.042541" y="0.006273"/>
+		<item id="4.000000" x="-0.044486" y="0.008225"/>
+		<item id="5.000000" x="-0.046890" y="0.010411"/>
+		<item id="6.000000" x="-0.049500" y="0.012448"/>
+		<item id="7.000000" x="-0.052064" y="0.014065"/>
+		<item id="8.000000" x="-0.054379" y="0.015143"/>
+		<item id="9.000000" x="-0.056323" y="0.015706"/>
+		<item id="10.000000" x="-0.057858" y="0.015877"/>
+		<item id="19190.000000" x="-0.043673" y="0.008012"/>
+		<item id="19191.000000" x="-0.044983" y="0.007860"/>
+		<item id="19192.000000" x="-0.046175" y="0.008066"/>
+		<item id="19193.000000" x="-0.047077" y="0.008556"/>
+		<item id="19194.000000" x="-0.047531" y="0.009156"/>
+		<item id="19195.000000" x="-0.047438" y="0.009626"/>
+		<item id="19196.000000" x="-0.046796" y="0.009690"/>
+		<item id="19197.000000" x="-0.045700" y="0.009057"/>
+		<item id="19198.000000" x="-0.044299" y="0.007457"/>
+		<item id="19199.000000" x="-0.042755" y="0.004697"/>
+		<item id="19200.000000" x="-0.041197" y="0.000732"/>
+	  </message>
+	</data>
+  </template>
+<!--  <tdt:transformation 
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>-->
+  <story fmt_mode="docapi.DO_NOT_FIT_ERROR" name="Story 1">
+    <p alignment="resourcesapi.AL_CENTER">
+      O
+      <style size="10.0"/>
+      PEN
+      <style/>
+      T
+      <style size="10.0"/>
+      EXT
+    </p>
+    <style name="Arial" size="10.0"/>
+    <p alignment="resourcesapi.AL_CENTER"/>
+    <p alignment="resourcesapi.AL_CENTER">StreamServe created chart with measurement data</p>
+    <p alignment="resourcesapi.AL_CENTER">Powered by javascript in StoryTeller</p>
+    <style name="Arial" size="7.0"/>
+    <p alignment="resourcesapi.AL_CENTER">1-2 seconds to render</p>
+    <style name="Arial" size="10.0"/>
+    <p alignment="resourcesapi.AL_CENTER"/>
+    <p alignment="resourcesapi.AL_CENTER">
+      <fragment pos="0,0" pen_rgb="255,0,255,255" alignment_mode="resourcesapi.AM_FULL" category="docapi.FC_FORMATTING_TIME" moniker="!/item[1]" shape_rescale="resourcesapi.RM_FREE" size="144,144" thickness="0.0" transform="_default">
+        <script language="js" when="docapi.BEFORE">
+		  // This script creates new LXF fragment, uploads it to local repository 
+		  // and then it points the fragment reference to it
+		  var data = require('data');
+		  var repo = require('repo');
+		  var util = require('util');
+		  var fragment = require( 'layout' ).item();
+		  var box = fragment.Box;
+
+		  var header = util.format('&lt;?xml version="1.0"?&gt;\
+		  &lt;s-lxf&gt;\
+		  &lt;page size="%s,%s"&gt;\
+		  &lt;path position="0,0" size="%s,%s" linewidth="1" fillmode="alternate" nodes="', box.W, box.H, box.W, box.H );
+		  var footer = '"/&gt;&lt;/page&gt;&lt;/s-lxf&gt;';
+
+		  var items = data.js('/data/message/item').item;
+
+		  var vMin = -0.3, vMax = 0.3;
+		  var ratio = box.W / (vMax-vMin);
+		  var polygon = 'm,' + items.map( function( item ) { 
+		  return (ratio*(+item.x - vMin)).toFixed(3) + ',' + (ratio*(-item.y - vMin)).toFixed(3);
+		  } ).join(',l,');
+
+		  var lxf = header + polygon + footer;
+		  fragment.Uri = repo.upload( lxf );
+		</script>
+        <doc>
+          <template>
+            <data/>
+          </template>
+          <page>
+            <shape form="0.0,0.0;0.0,0.0;0.0,0.0;72.0,0.0;72.0,0.0;72.0,0.0;36.0,72.0;36.0,72.0;36.0,72.0;72.0,72.0;72.0,72.0;72.0,72.0" shape_rescale="resourcesapi.RM_FIXED" size="72,72" type="polyline"/>
+          </page>
+        </doc>
+      </fragment>
+    </p>
+  </story>
+  <page name="Page 1">
+    <text alignment_mode="resourcesapi.AM_VERTICAL" pos="3.00002,0" shape_rescale="resourcesapi.RM_FIXED" size="459,686.25" storyindex="0" thickness="0.0" translate="60,87.75"/>
+  </page>
+</root>

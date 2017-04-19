@@ -1,0 +1,23 @@
+<tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" 
+					xmlns:svg="http://www.w3.org/2000/svg" 
+					xmlns:xlink="http://www.w3.org/1999/xlink" 
+					version="1.0">
+  <tdt:rule path="/">
+	<tdt:value key="$time">/time</tdt:value>
+  </tdt:rule>
+  <tdt:rule path="/svg:svg">
+	<tdt:value key="$time">tdt:tokenize($time, ':')</tdt:value>
+  </tdt:rule>
+  <tdt:rule path="/svg:svg/svg:title">
+	<tdt:value key="text()">concat('Current time: ', tdt:concat($time,':') )</tdt:value>
+  </tdt:rule>
+  <tdt:rule path="/svg:svg/svg:use[2]">
+	<tdt:value key="@transform">concat('rotate(', 30*$time[1]+0.5*$time[2], ')')</tdt:value>
+  </tdt:rule>
+  <tdt:rule path="/svg:svg/svg:use[3]">
+	<tdt:value key="@transform">concat('rotate(', 6*$time[2], ')')</tdt:value>
+  </tdt:rule>
+  <tdt:rule path="/svg:svg/svg:use[4]">
+	<tdt:value key="@transform">concat('rotate(', 6*$time[3], ')')</tdt:value>
+  </tdt:rule>
+</tdt:transformation>

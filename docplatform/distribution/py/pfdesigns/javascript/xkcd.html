@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <style type="text/css">
+      table { width:100%; }
+    </style>
+  </head>
+  <body>
+    {{if comics}}
+    <h1>XKCD ({{comics_msg|pluralize>`comics.length`}})</h1>
+    <table border="1">
+        <col width="20%"/>
+        <col width="80%"/>
+        <tr>
+        <th><h2>Title</h2></th>
+        <th><h2>Image</h2></th>
+      </tr>
+      {{comics}}
+      <tr>
+        <td>
+          <h3><a href="{{link}}">{{title}}</a></h3>
+          <p>
+            <font color="green">
+              <em>
+                {{date|datetime>l}}<br/>
+                {{date|datetime>F j, Y}}
+              </em>
+            </font>
+          </p>
+          {{alt}}
+        </td>
+        <td><img src="{{img}}" aligh="middle"/></td>
+      </tr>
+      {{/comics}}
+    </table>
+    {{/if}}
+    {{if articles}}
+    <h1>What If? ({{articles_msg|pluralize>`articles.length`}})</h1>
+    {{articles}}
+    <h2><a href="{{link}}">{{title}}</a></h2>
+    <blockquote>
+      <font color="green">
+        <em>{{question}}</em><br/>
+        [{{attribute}}]
+      </font>
+    </blockquote>
+    {{body}}
+    <br/>
+    <hr/>
+    {{/articles}}
+    {{/if}}
+  </body>
+</html>

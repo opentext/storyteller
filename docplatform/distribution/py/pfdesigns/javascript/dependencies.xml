@@ -1,0 +1,46 @@
+<root>
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var assert = require( 'assert' );
+      var share = require('share');
+      share.test = '==== First run ====\n';
+      var a = require('./a');
+	  a.path = require.resolve('./a')
+      var b = require('./b');
+	  b.path = require.resolve('./b')
+      share.test += 'main: a.done = ' + a.done + ', b.done = ' + b.done + '\n';
+      console.log( share.test );
+
+      assert.strictEqual( [
+        '==== First run ====',
+        a.path + ': starting',
+        b.path + ': starting',
+        b.path + ': a.done = false',
+        b.path + ': done',
+        a.path + ': b.done = true',
+        a.path + ': done',
+        'main: a.done = true, b.done = true',
+        ''
+        ].join('\n'), share.test );
+    </script>
+  </page>
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var assert = require( 'assert' );
+      var share = require('share');
+      share.test = '==== Second run ====\n';
+      var a = require('./a');
+      var b = require('./b');
+      share.test += 'main: a.done = ' + a.done + ', b.done = ' + b.done + '\n';
+      console.log( share.test );
+
+      assert.strictEqual( [
+        '==== Second run ====',
+        'main: a.done = true, b.done = true',
+        ''
+        ].join('\n'), share.test );
+
+		//console.log(require.cache);
+    </script>
+  </page>
+</root>

@@ -1,0 +1,172 @@
+<root>
+  <template>
+    <charts>
+      <chart label="QR Code">
+        <type>qr</type>
+        <dimension>200x200</dimension>
+        <qrdata>Hello World</qrdata>
+      </chart>
+
+      <chart label="Line Chart">
+        <title>Line Chart</title>
+        <type>sparkline</type>
+        <dimension>400x200</dimension>
+
+        <label>1</label>
+        <label>2</label>
+        <label>3</label>
+        <label>4</label>
+        <solid_fill>bg,s,e0eded</solid_fill>
+        <data_scale>a</data_scale>
+        <grid>20,50,3,3,10,20</grid>
+        <fill>c,lg,90,FFE7C6,0,76A4FB,0.5</fill>
+
+        <series_label>Temp</series_label>
+        <series_color>000000</series_color>
+        <series_data>10,20,40,30</series_data>
+        <series_line>3,6,3</series_line>
+
+        <series_label>Sales</series_label>
+        <series_color>0000FF</series_color>
+        <series_data>30,20,15,40</series_data>
+        <series_line>5</series_line>
+      </chart>
+
+      <chart label="Radar Chart">
+        <type>radar_curved</type>
+        <dimension>400x200</dimension>
+        <grid>25.0,25.0,4.0,4.0</grid>
+
+        <series_data>77,66,15,0,31,48,100,77</series_data>
+        <series_color>FF0000</series_color>
+        <series_line>2.0,4.0,0.0</series_line>
+        <marker>B,FF000080,0,1.0,5.0</marker>
+
+        <series_data>20,36,100,2,0,100</series_data>
+        <series_color>FF9900</series_color>
+        <series_line>2.0,4.0,0.0</series_line>
+        <marker>B,FF990080,1,1.0,5.0</marker>
+
+        <visible_axes>x</visible_axes>
+        <axis_label>0:|0|45|90|135|180|225|270|315</axis_label>
+        <axis_range>0,0.0,360.0</axis_range>
+      </chart>
+
+      <chart label="Bar Chart">
+        <type>bar_stacked_vert</type>
+        <dimension>400x200</dimension>
+        <data_scale>0,20</data_scale>
+        <title_style>000000,15</title_style>
+        <bar_width>r,.6</bar_width>
+
+        <series_data>4,4,4,4,4,3</series_data>
+        <series_color>a3d5f7</series_color>
+        <series_line>2.0,4.0,0.0</series_line>
+
+        <series_data>10,9,10,9,8,6</series_data>
+        <series_color>389ced</series_color>
+        <series_line>2.0,4.0,0.0</series_line>
+
+        <series_data>3,2,4,2,3,5</series_data>
+        <series_color>004f9f</series_color>
+        <series_line>2.0,4.0,0.0</series_line>
+
+        <marker>N,FF0000,-1,,12</marker>
+        <marker>N,000000,0,,12,,c</marker>
+        <marker>N,000000,1,,12,,c</marker>
+        <marker>N,ffffff,2,,12,,c</marker>
+
+        <visible_axes>x</visible_axes>
+        <axis_label>0:|May|Jun|Jul|Aug|Sep|Oct</axis_label>
+
+      </chart>
+
+      <chart label="Line Chart">
+        <type>line_xy</type>
+        <dimension>500x200</dimension>
+        <visible_axes>x,y</visible_axes>
+        <data_scale>0,7000,400,1300</data_scale>
+
+        <series_data>0,87,144,214,285,353,425,494,565,638,707,777,848,918,989,1061,1132,1227,1308,1348,1413,1513,1553,1624,1697,1764,1858,1906,1981,2047,2118,2200,2259,2330,2401,2476,2541,2612,2683,2756,2826,2899,2971,3035,3107,3189,3248,3319,3390,3459,3533,3608,3673,3742,3812,3885,3961,4024,4095,4165,4235,4306,4376,4448,4521,4589,4660,4730,4801,4871,4942,5012,5084,5167,5225,5296,5370,5435,5515,5585,5658,5719,5789,5861,5934,6009,6075,6143,6218,6289,6356,6424,6494,6564,6637,6706,6777,6848,6935,6988</series_data>
+        <axis_range>0,0,70</axis_range>
+
+        <series_data>444,444,454,452,451,445,445,442,448,441,440,442,446,446,442,439,439,438,444,443,439,435,436,439,438,438,436,436,439,437,435,435,438,450,465,468,468,480,495,492,481,466,471,471,473,475,475,477,477,477,483,482,482,482,487,480,478,480,473,595,696,699,700,777,835,877,888,890,944,971,987,1010,1009,1011,1007,996,969,932,922,912,912,911,910,888,848,810,790,765,761,741,737,723,706,691,681,640,630,605,575,574</series_data>
+        <axis_range>1,431,1011</axis_range>
+
+        <marker>ALucerne,,0,1,9</marker>
+        <marker>AHorw,,0,8,9</marker>
+        <marker>AAlpnach,,0,20,9</marker>
+        <marker>ASachseln,,0,42,9</marker>
+        <marker>AGiswil,,0,48,9</marker>
+        <marker>AMeiringen,,0,66,9</marker>
+        <marker>ABrienzwiler,,0,63,9</marker>
+        <marker>ABrienz,,0,72,9</marker>
+        <marker>ABönigen,,0,96,9</marker>
+        <marker>AInterlaken,,0,98,9</marker>
+      </chart>
+
+      <chart label="Map Chart">
+        <type>map:fixed=-60,0,80,-35</type>
+        <dimension>500x250</dimension>
+        <title>Last Five Olympic Hosts</title>
+
+        <region>CA-BC</region>
+        <region>CN</region>
+        <region>IT</region>
+        <region>GR</region>
+        <region>US-UT</region>
+
+        <series_label>Vancouver</series_label>
+        <series_label>Beijing</series_label>
+        <series_label>Torino</series_label>
+        <series_label>Athens</series_label>
+        <series_label>Salt Lake City</series_label>
+
+        <series_color>B3BCC0|5781AE|FF0000|FFC726|885E80|518274</series_color>
+
+        <marker>f2010 Winter,000000,0,0,10</marker>
+        <marker>f2008 Summer,000000,0,1,10</marker>
+        <marker>f2008 Winter,000000,0,2,10,1,:-5:10</marker>
+        <marker>f2004 Summer,000000,0,3,10</marker>
+        <marker>f2004 Summer,000000,0,4,10</marker>
+      </chart>
+
+    </charts>
+  </template>
+
+  <tdt:transformation 
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+
+  <story name="main">
+    <rep xpath="/charts/chart" name="charts">
+      <p keep_with_next="1">
+        <style name='Arial' size='20' bold="1"/>
+        <subst xpath="@label" name="address" sample="Chart Label" texttype="0"/>
+      </p>
+      <p>
+        <img pos='50,50' size='200,200' uri='wd:/none.png' shape_rescale="resourcesapi.RM_FREE">
+          <script when="docapi.BEFORE" language="js">
+            var services = require('./services');
+            var image = require('layout').item();
+            var data = require('data');
+            var dt = data.js('.', {ignoreAttrs : true});
+            image.Uri = services.chart(dt.chart); 
+          </script>
+        </img>
+      </p>
+    </rep>
+  </story>
+
+  <page occurrence="docapi.OCC_ONCE_OR_MORE">
+    <text pos='20,20' size='550,50' pen_rgb='255,255,255,0'>
+      <p>
+        <style name='Arial' size='36.0'/>
+        Chart Demo
+      </p>
+    </text>
+
+    <text pos='20,80' size='550,750' 
+          brush_rgb='225,225,250,255' pen_rgb='100,100,155,255' inner_margins='8,8,8,8' corners='rounded @ 5 5;' 
+          storyref='main'/>
+  </page>
+</root>

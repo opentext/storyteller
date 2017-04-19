@@ -1,0 +1,25 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+	<stl:page w="600px" h="600px">
+	  <stl:fragment w="100%" h="100%" src="wd:/clock.svg" selector="/item[1]"> 
+		<stl:script language="js">
+		  var streams = require('streams');
+		  var data = require('data');	
+		  var services = require('services');	
+		  var item = require('layout').item();
+
+		  var template = streams.stream('wd:/clock.svg');
+		  var rules = streams.stream('wd:/clock-tdt.xml');
+		  var source = streams.stream().write(data.dump('/'));
+		  var output = streams.stream('local:');
+
+		  var tdt = services.tdt(template, rules);
+		  var params = {time: new Date().toLocaleTimeString()};
+		  tdt(source, output, params);
+		  console.log(output.uri);
+		  item.Uri = output.uri;
+		</stl:script>
+	  </stl:fragment>
+	</stl:page>
+  </stl:document>
+</stl:stl>

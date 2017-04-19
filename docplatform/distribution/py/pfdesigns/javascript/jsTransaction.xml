@@ -1,0 +1,127 @@
+<root>
+  <template>
+    <data/>
+  </template>
+  <story fmt_mode="docapi.DO_NOT_FIT_ERROR" name="Story 1">
+    <style bold="True" foreground="54,95,145,255" name="Arial" size="14.0"/>
+    <p alignment="resourcesapi.AL_LEFT" keep_together_first="999" keep_together_last="999" keep_with_next="1" line_spacing="1.15" spacing_before="24.0">Javascript in StoryTeller</p>
+    <style name="Arial" size="10.0"/>
+    <p alignment="resourcesapi.AL_LEFT"/>
+    <p alignment="resourcesapi.AL_LEFT">
+      JIRA Epic:_
+      <swi address="https://jira.opentext.com/browse/STRSER-5932" sample="">
+        <case>
+          <style bold="True" name="Arial" size="10.0"/>
+          StoryTeller: Enable javascript
+          <style name="Arial" size="10.0"/>
+          __https://jira.opentext.com/browse/STRSER-5932
+        </case>
+      </swi>
+    </p>
+    <p alignment="resourcesapi.AL_LEFT"/>
+    <p alignment="resourcesapi.AL_LEFT">
+      Development documentation:_
+      <swi address="http://prglinux1/doc/Dev-JavascriptEmbedding.html" sample="">
+        <case>
+          <style bold="True" name="Arial" size="10.0"/>
+          Javascript embedding
+          <style name="Arial" size="10.0"/>
+          _http://prglinux1/doc/Dev-JavascriptEmbedding.html
+        </case>
+      </swi>
+    </p>
+    <p alignment="resourcesapi.AL_LEFT"/>
+    <p alignment="resourcesapi.AL_LEFT">
+      <subst mask="" sample="&lt;empty&gt;" texttype="0" xpath="$value">
+        <script language="js" when="docapi.BEFORE">//JavaScript 
+console.log( "Log from javascript");
+var vars = require( "vars" );
+vars.set ("value", 'Value set' );
+
+var $variables = vars.all;
+vars.has( "value" );
+$variables.value = $variables.value + ' and added by $variables' ;
+
+$variables.total = 0;
+var i;
+for( i=0; i&lt; 100; i++ )
+{
+	//$variables.arrValues[i] = i;
+	vars.set( "arrValues", i, [i] );
+}</script>
+      </subst>
+    </p>
+    <p alignment="resourcesapi.AL_LEFT"/>
+    <p alignment="resourcesapi.AL_LEFT">
+      <table brush_rgb="255,255,255,255" dim="2,6" mode="paragraph" shape_rescale="resourcesapi.RM_FIXED" size="450,14.8159" translate="0,23.25" widths="36.0;162.0;63.0;63.0;63.0;63.0">
+        <header>
+          <style name="Arial" size="10.0"/>
+          <row height="14.81589355468751" index="0" inner_margins="0,0,2,2" shape_h_growth="0.0" shape_h_shrink="0.0" shape_rescale="resourcesapi.RM_FREE" shape_v_shrink="0.0">
+            <cell brush_rgb="227,227,228,255" inner_margins="3,3,2,2" shape_rescale="resourcesapi.RM_FIXED" size="36,14.8159" thickness="0.5">
+              <p alignment="resourcesapi.AL_CENTER"/>
+            </cell>
+            <cell brush_rgb="227,227,228,255" inner_margins="3,3,2,2" shape_rescale="resourcesapi.RM_FIXED" size="162,14.8159" thickness="0.5" translate="36,0">
+              <p>Description</p>
+            </cell>
+            <cell brush_rgb="227,227,228,255" inner_margins="3,3,2,2" shape_rescale="resourcesapi.RM_FIXED" size="63,14.8159" thickness="0.5" translate="198,0">
+              <p alignment="resourcesapi.AL_RIGHT">Position</p>
+            </cell>
+            <cell brush_rgb="227,227,228,255" inner_margins="3,3,2,2" shape_rescale="resourcesapi.RM_FIXED" size="63,14.8159" thickness="0.5" translate="261,0">
+              <p alignment="resourcesapi.AL_RIGHT">Current</p>
+            </cell>
+            <cell brush_rgb="227,227,228,255" inner_margins="3,3,2,2" shape_rescale="resourcesapi.RM_FIXED" size="63,14.8159" thickness="0.5" translate="324,0">
+              <p alignment="resourcesapi.AL_RIGHT">Value</p>
+            </cell>
+            <cell brush_rgb="227,227,228,255" inner_margins="3,3,2,2" shape_rescale="resourcesapi.RM_FIXED" size="63,14.8159" thickness="0.5" translate="387,0">
+              <p alignment="resourcesapi.AL_RIGHT">Total</p>
+            </cell>
+          </row>
+        </header>
+        <body>
+          <style name="Arial" size="10.0"/>
+          <rep xpath="$arrValues">
+            <style name="Arial" size="10.0"/>
+            <row height="14.81589355468751" index="1" inner_margins="0,0,2,2" shape_h_growth="0.0" shape_h_shrink="0.0" shape_rescale="resourcesapi.RM_FREE" shape_v_shrink="0.0">
+              <script language="js" when="docapi.BEFORE">//JavaScript 
+var data = require( "data" );
+var $variables = require( "vars" ).all;
+$variables.position = data.dump( 'position()' );
+$variables.value = "1";//data.dump( 'current()' );
+$variables.total = Number($variables.total)+ Number($variables.value);</script>
+              <cell brush_rgb="255,255,255,255" inner_margins="3,3,2,2" shape_rescale="resourcesapi.RM_FIXED" size="36,14.8159" thickness="0.5">
+                <p alignment="resourcesapi.AL_CENTER" list_text="%n"/>
+              </cell>
+              <cell brush_rgb="255,255,255,255" inner_margins="3,3,2,2" shape_rescale="resourcesapi.RM_FIXED" size="162,14.8159" thickness="0.5" translate="36,0">
+                <p list_numbering_id="1" list_text="%n!A ">Description</p>
+              </cell>
+              <style language="" name="Arial" size="10.0"/>
+              <cell brush_rgb="255,255,255,255" inner_margins="3,3,2,2" shape_rescale="resourcesapi.RM_FIXED" size="63,14.8159" thickness="0.5" translate="198,0">
+                <p alignment="resourcesapi.AL_RIGHT">
+                  <subst mask="" sample="position" texttype="0" xpath="$position"/>
+                </p>
+              </cell>
+              <cell brush_rgb="255,255,255,255" inner_margins="3,3,2,2" shape_rescale="resourcesapi.RM_FIXED" size="63,14.8159" thickness="0.5" translate="261,0">
+                <p alignment="resourcesapi.AL_RIGHT">
+                  <subst mask="" sample="current" texttype="0" xpath="."/>
+                </p>
+              </cell>
+              <cell brush_rgb="255,255,255,255" inner_margins="3,3,2,2" shape_rescale="resourcesapi.RM_FIXED" size="63,14.8159" thickness="0.5" translate="324,0">
+                <p alignment="resourcesapi.AL_RIGHT">
+                  <subst mask="" sample="value" texttype="0" xpath="$value"/>
+                </p>
+              </cell>
+              <cell brush_rgb="255,255,255,255" inner_margins="3,3,2,2" shape_rescale="resourcesapi.RM_FIXED" size="63,14.8159" thickness="0.5" translate="387,0">
+                <p alignment="resourcesapi.AL_RIGHT">
+                  <subst mask="" sample="total" texttype="0" xpath="$total"/>
+                </p>
+              </cell>
+            </row>
+          </rep>
+        </body>
+      </table>
+    </p>
+  </story>
+  <page name="Page 1" occurrence="docapi.OCC_ONCE_OR_MORE">
+    <text alignment_mode="resourcesapi.AM_VERTICAL" shape_rescale="resourcesapi.RM_FIXED" size="468,709.5" storyindex="0" thickness="0.0" translate="63,82.5"/>
+  </page>
+</root>

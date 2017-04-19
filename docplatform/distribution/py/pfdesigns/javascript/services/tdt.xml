@@ -1,0 +1,23 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:data>
+	<stl:source>
+	  <time>13:45:21</time>
+	</stl:source>
+	<stl:template src="wd:/clock.svg"/>
+	<stl:transformation src="wd:/clock-tdt.xml"/>
+  </stl:data>
+  <stl:document>
+	<stl:page w="600px" h="600px">
+	  <stl:fragment w="100%" h="100%" src="wd:/clock.svg" selector="/item[1]"> 
+		<stl:script language="js">
+		  var repo = require('repo');
+		  var data = require('data');	
+		  var item = require('layout').item();
+
+		  var svg = data.dump('/');
+		  item.Uri = repo.upload(svg);
+		</stl:script>
+	  </stl:fragment>
+	</stl:page>
+  </stl:document>
+</stl:stl>

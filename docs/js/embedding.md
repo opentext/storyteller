@@ -1,19 +1,14 @@
 StoryTeller Javascript Embedding
 
-This Section describes the motivation and technology behind the
-*DocPlatform Javascript Embedding*. It is the second part of the
-[Javascript Documentation](file:///doc/Dev-Javascript.html).
+This Section describes the motivation and technology behind the *DocPlatform Javascript Embedding*. It is the second part of the
+[Javascript Documentation](/storyteller/js/index.md).
 
--   First we describe the scripting support currently implemented in
-    *StoryTeller*.
--   Then we will compare some existing *Javascript Hosting Platforms* as
-    a source of inspiration.
--   We will are also provide a detailed description of the Javascript
-    Embedding approach we decided to follow including *C++ Bindings* and
-    *Core Libraries*.
--   Then we will conclude this section with some example use cases using
-    exposed *DocPlatform* services and also *3rd Party Javascript
-    Libraries* as well as external *On-line Services*.
+-   First we describe the scripting support currently implemented in *StoryTeller*.
+-   Then we will compare some existing *Javascript Hosting Platforms* as a source of inspiration.
+-   We will are also provide a detailed description of the Javascript Embedding approach we decided 
+    to follow including *C++ Bindings* and *Core Libraries*.
+-   Then we will conclude this section with some example use cases using exposed *DocPlatform* services 
+    and also *3rd Party Javascript Libraries* as well as external *On-line Services*.
 
 ![Javascript Embedding](embedding.png)
 
@@ -169,8 +164,7 @@ engine](http://en.wikipedia.org/wiki/V8_%28JavaScript_engine%29) as a
 *Javascript Interpreter*.
 
 At the very bottom of the diagram there are also *Native Services*
-provided as part of the [DocPlatform
-API](file:///doc/Dev-Services.html). Some of the services are then
+provided as part of the [DocPlatform API](file:///doc/Dev-Services.html). Some of the services are then
 exposed to javascript in a form of *C++ Binding*.
 
 On top of the *C++ Bindings* layer there is are several *Core Modules*
@@ -348,9 +342,9 @@ SyntaxError: In strict mode code, functions can only be declared at top level
              or immediately within another function.
 ```
 
-The [strict~mode~.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/strict_mode.xml?h=develop)
+The [strict~mode~.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/strict_mode.xml)
 regression test (along with
-[strict~mode~.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/strict_mode.js?h=develop)
+[strict~mode~.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/strict_mode.js)
 module) demonstrates how *strict mode* makes javascript a better
 language.
 
@@ -396,9 +390,9 @@ console.log(a.map(s => s.length));
 ```
 
 The
-[harmony.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/harmony.xml?h=develop)
+[harmony.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/harmony.xml)
 regression test (along with
-[harmony.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/harmony.js?h=develop)
+[harmony.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/harmony.js)
 module) demonstrates some of the supported ES6 language features.
 
 ### JSLint
@@ -407,7 +401,7 @@ To further enhance the quality of javascript source code we optionally
 enabled the [Douglas Crockford](http://www.crockford.com/)'s
 [JSLint](https://github.com/douglascrockford/JSLint) runtime checker for
 all loaded modules. It can be configured in the `jslint` section of the
-[\_\_init\_\_.json](file:///git/docplatform/tree/forsetup/js/__init__.json?h=develop)
+[\_\_init\_\_.json](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/__init__.json)
 configuration file.
 
 If the *JSLint* functionality is enabled and you require a *module* with
@@ -463,11 +457,11 @@ Parts](http://www.amazon.com/exec/obidos/ASIN/0596517742/wrrrldwideweb):
 For more details see the [JSLint Help
 Page](http://www.jslint.com/help.html).
 
-The [lint.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/lint.py?h=develop)
-regression test (along with [lint.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/lint.xml?h=develop)
-definition and [lint-syntax.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/lint-syntax.js?h=develop)
+The [lint.py](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/lint.py)
+regression test (along with [lint.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/lint.xml)
+definition and [lint-syntax.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/lint-syntax.js)
 +
-[lint-semantics.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/lint-semantics.js?h=develop)
+[lint-semantics.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/lint-semantics.js)
 modules) demonstrates the *JSLint* behavior.
 
 It seems that community starts to aggree that naked loops (traditional
@@ -496,7 +490,7 @@ function createCells(count) {
 }
 ```
 
-For such cases there is a helper module called [range](file:///git/docplatform/tree/forsetup/js/core/range.js?h=develop).
+For such cases there is a helper module called [range](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/core/range.js).
 It implements a single function
 
 ```
@@ -516,7 +510,7 @@ function createCells(count) {
 ```
 
 The
-[range.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/range.xml?h=develop)
+[range.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/range.xml)
 regression test demonstrates the `range` module functionality.
 
 ## StoryTellerJS Embedding Framework
@@ -546,10 +540,9 @@ ReferenceError: __bindings is not defined
     at wd:/user_module.js:1:1
 ```
 
-All the c++ bindings are initialized in the [InterpreterContext
-constructor](file:///git/docplatform/tree/code/interpreters/jsinterpreter/jsscripthandler.cxx?h=develop#n917)
+All the c++ bindings are initialized in the `InterpreterContext` constructor
 and passed as a `__bindings` global variable to the bootstrapping script
-- [\_\_init\_\_.js](file:///git/docplatform/tree/forsetup/js/__init__.js?h=develop).
+- [\_\_init\_\_.js](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/__init__.js).
 
 ### Module Support
 
@@ -564,9 +557,9 @@ Right now we support *Core modules*, *File modules (.js|.json)* and
 nor the *package.json* manifest for [Folders as modules](https://nodejs.org/api/modules.html#modules_folders_as_modules).
 
 The implementation of the globally available `require( id: string )` function is available in the
-[\_\_init\_\_.js](file:///git/docplatform/tree/forsetup/js/__init__.js?h=develop)
+[\_\_init\_\_.js](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/__init__.js)
 bootstrap script. The list of all currently used *core modules* is available in the
-[\_\_init\_\_.json](file:///git/docplatform/tree/forsetup/js/__init__.json?h=develop) file.
+[\_\_init\_\_.json](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/__init__.json) file.
 
 The `require()` implementation uses the `__bindings.functions.eval( code: string )` c++ binding which evaluates
 given javascript in given `globals` variable context. It also uses the `repo` core module described below.
@@ -593,7 +586,7 @@ The corresponding c++/javascript binding is available as `__binding.process` var
     -   sets process-level with given name
 
 On top of this interface there is a very thin wrapper - the
-[process](file:///git/docplatform/tree/forsetup/js/core/process.js?h=develop)
+[process](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/core/process.js)
 core library.
 
 There are following additional properties and methods available:
@@ -616,8 +609,8 @@ There are following additional properties and methods available:
 Thanks to the fact that the process javascript module mimics the
 *Node.js* [process module](https://nodejs.org/api/process.html), it is
 very easy to provide users with other core libraries for user
-convenience - the [console](file:///git/docplatform/tree/forsetup/js/core/node/console.js?h=develop)
-and [util](file:///git/docplatform/tree/forsetup/js/core/node/util.js?h=develop).
+convenience - the [console](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/core/node/console.js)
+and [util](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/core/node/util.js).
 The implementation of both modules is taken from *Node.js* and works as
 it is (with no necessary porting or other kinds of changes).
 
@@ -637,8 +630,8 @@ console.timeEnd('test');
 // test: 6ms
 ```
 
-The [tracing.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/tracing.py?h=develop)
-regression test (along with [tracing.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/tracing.xml?h=develop)
+The [tracing.py](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/tracing.py)
+regression test (along with [tracing.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/tracing.xml)
 definition) demonstrates the tracing possibilities.
 
 ### Binary Buffer
@@ -660,7 +653,7 @@ console.log(str + ": " + str.length + " characters, "
 // 1/2 + 1/4 = 3/4: 9 characters, 12 bytes
 ```
 
-The [buffer.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/buffer.xml?h=develop)
+The [buffer.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/buffer.xml)
 regression test demonstrates the available functionality.
 
 ### Helper Modules
@@ -685,7 +678,7 @@ For example the following core modules are available:
 -   ...
 
 The complete list of all currently used *core modules* is available in
-the [\_\_init\_\_.json](file:///git/docplatform/tree/forsetup/js/__init__.json?h=develop) file.
+the [\_\_init\_\_.json](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/__init__.json) file.
 
 Following code shows some of the possibilities:
 
@@ -759,7 +752,7 @@ variable:
 </page>
 ```
 
-The [share.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/share.xml?h=develop)
+The [share.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/share.xml)
 regression test demonstrates the concept of *shared variables*.
 
 ### StreamServe Variables
@@ -781,7 +774,7 @@ There are following methods available:
 -   `list() : string[]`
     -   list all variable names
 
-For client code there is the [vars](file:///git/docplatform/tree/forsetup/js/core/vars.js?h=develop)
+For client code there is the [vars](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/core/vars.js)
 core library available. It is built in javascript on top of the
 `__binding.variables` c++ bindings.
 
@@ -850,7 +843,7 @@ guaranteed to be available for users:
     items with given separator
 -   `toString()` method - equivalent to `join(',')` method call
 
-The [variables.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/variables.xml?h=develop)
+The [variables.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/variables.xml)
 regression test demonstrates the *StreamServe Variable* accessibility.
 
 The following code is possible thanks to the array-like interface described above:
@@ -869,7 +862,7 @@ arr.length = 10;
 // Error: Array enlargement not supported.
 ```
 
-The [array.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/array.xml?h=develop)
+The [array.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/array.xml)
 regression test demonstrates the *StreamServe Variable* array
 accessibility.
 
@@ -899,7 +892,7 @@ possible to read and write such variables in a different scripting
 language or possibly even in a different *StreamServe Process*.
 
 The
-[multilang.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/multilang.xml?h=develop)
+[multilang.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/multilang.xml)
 regression test demonstrates how a single variable can be shared between
 *Javascript* scripts and *Python* scripts inside a single design. This
 is simply not possible with *Javascript Shared Variables*.
@@ -919,7 +912,7 @@ There are following methods available:
     -   get a property value from current item
 
 On top of this simple *key* -> *value* interface an object model is built. 
-The object model is implemented in the [layout](file:///git/docplatform/tree/forsetup/js/core/layout.js?h=develop) core library.
+The object model is implemented in the [layout](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/core/layout.js) core library.
 
 Right now there is following hierarchy of objects:
 
@@ -962,7 +955,7 @@ item.Box.X += 10;
 item.Name = 'Right-Shifted Text';
 ```
 
-The [layout_item.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/layout_item.xml?h=develop)
+The [layout_item.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/layout_item.xml)
 regression test demonstrates the available possibilities.
 
 DocPlatform works internally in 72 DPI and so its internal units correspond to typographic 
@@ -981,7 +974,7 @@ additional unit (e.g. *centimeter*, *meter*, *inch*, *feet*, *pica*,
 The proper solution is to provide a separate unit conversion module and
 let users to make conversions explicitly.
 
-The [units](file:///git/docplatform/tree/forsetup/js/core/units.js?h=develop)
+The [units](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/core/units.js)
 core module is such a library - right now it contains just two helper functions:
 
 -   `pt2mm( points: number ) : number`
@@ -1007,7 +1000,7 @@ console.log(item.Box.H + 'pt -> ' + units.pt2mm(item.Box.H) + 'mm');
 // 15pt -> 5.291666666666667mm
 ```
 
-The [units.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/units.xml?h=develop)
+The [units.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/units.xml)
 regression test demonstrates the available functionality.
 
 We could probably use some 3rd party library for unit conversion, like
@@ -1016,7 +1009,7 @@ We could probably use some 3rd party library for unit conversion, like
 ### Layout Cursor Access
 
 User can access layout cursor of the paragraph currently formatted via the
-[layout](file:///git/docplatform/tree/forsetup/js/core/layout.js?h=develop) core library.
+[layout](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/core/layout.js) core library.
 
 The following function is available:
 
@@ -1035,7 +1028,7 @@ var layout = require('layout');
 assert.deepEqual({X:20, Y:25}, layout.cursor());
 ```
 
-The [layout~cursor~.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/layout_cursor.xml?h=develop)
+The [layout~cursor~.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/layout_cursor.xml)
 regression test demonstrates the available functionality.
 
 ### Repository
@@ -1060,7 +1053,7 @@ The `load` method returns either a *String* or a *Buffer* based on the
 `binary` argument. The `save` method accepts either a *String* or a
 *Buffer* and optional `uri`.
 
-On top of this binding we created the [repo](file:///git/docplatform/tree/forsetup/js/core/repo.js?h=develop)
+On top of this binding we created the [repo](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/core/repo.js)
 core module. This module adds functionality for `encoding` and returns
 *Node.js* like *Buffer* instead of Uint8Array for binary data. It also
 provides a *Stream API* described in the following section.
@@ -1096,7 +1089,7 @@ console.log(repo.load(uri, 'base64'));
 // dGVzdCBkYXRh
 ```
 
-The [repo.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/repo.xml?h=develop)
+The [repo.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/repo.xml)
 regression test demonstrates the available functionality.
 
 ### Streams
@@ -1182,7 +1175,7 @@ if (validate_data(cache)) {
 }
 ```
 
-The [stream.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/stream.xml?h=develop)
+The [stream.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/stream.xml)
 regression test demonstrates some of the available functionality.
 
 ### Data Access
@@ -1264,7 +1257,7 @@ processing phase (like TDT) or possibly extend the TDT toolset to
 embed javascript routines.
 
 On top of the raw data access functionality the
-[data](file:///git/docplatform/tree/forsetup/js/core/data.js?h=develop)
+[data](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/core/data.js)
 core module implements another layer for improved user convenience:
 
 ####  XML2JS Data Conversion
@@ -1341,7 +1334,7 @@ console.log(subitems[1].dom('text()').node.data);
 // 2b   
 ```
 
-The [data.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/data.xml?h=develop)
+The [data.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/data.xml)
 regression test demonstrates most of the available functionality.
 
 ### Runtime Services
@@ -1361,8 +1354,7 @@ The javascript/c++ binding for services is available as `__binding.services` and
 
 ####  XML Processor
 
-Thanks to Javascript API it is now possible to call [XML
-Processor](file:///doc/Dev-XMLParsing.html) in runtime directly from
+Thanks to Javascript API it is now possible to call [XML Processor](file:///doc/Dev-XMLParsing.html) in runtime directly from
 *StoryTeller* runtime script or a *JSFilter* implementation.
 
 -   `services.xp(): service`
@@ -1389,7 +1381,7 @@ var xp = services.xp();
 xp(src, dst);
 ```
 
-The [xp.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services/xp.xml?h=develop)
+The [xp.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/services/xp.xml)
 regression test demonstrates the available functionality.
 
 ####  TDT
@@ -1442,7 +1434,7 @@ item.Uri = dst.uri;
 The previous example demonstrates a possibility to use *TDT* in
 runtime to dynamically modify an SVG and use it as a *dynamic fragment*.
 
-The [tdtjs.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services/tdtjs.xml?h=develop)
+The [tdtjs.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/services/tdtjs.xml)
 regression test demonstrates the available functionality.
 
 ####  XSLT
@@ -1485,7 +1477,7 @@ var dst = streams.stream();
 xslt(src, dst);
 ```
 
-The [xslt.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services/xslt.xml?h=develop)
+The [xslt.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/services/xslt.xml)
 regression test demonstrates the available functionality.
 
 ####  XSD Validation
@@ -1515,7 +1507,7 @@ var stl = streams.stream('wd:/stl.xml');
 xsd(stl);
 ```
 
-The [xsd.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services/xsd.xml?h=develop)
+The [xsd.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/services/xsd.xml)
 regression test demonstrates the available functionality.
 
 ### Processing Properties
@@ -1540,13 +1532,13 @@ There is the following method available:
 -   `translate( key: string, language: string ): string`
     -   use the configured *Language Lookup Tables* to translate given `key` to given `language`
 
-On top of the raw lookup functionality there is the [i18n](file:///git/docplatform/tree/forsetup/js/core/i18n.js?h=develop)
+On top of the raw lookup functionality there is the [i18n](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/core/i18n.js)
 core module implementing another layer for improved user convenience. Right now it does not do much, 
 it just makes the `language` argument optional - in such case a *default language* (retrieved via the
 `__binding.process.get('language')` call) is used for lookup.
 
-The [translate.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/translate.py?h=develop)
-regression test (along with [translate.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/translate.xml?h=develop)
+The [translate.py](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/translate.py)
+regression test (along with [translate.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/translate.xml)
 definition) demonstrates the available functionality.
 
 Syntax Check
@@ -1592,7 +1584,7 @@ For example:
 
 There is also a new regression test pfdesigns/javascript/check~syntax~.py available testing this new
 functionality from python 
-([pfdesigns/javascript/check~syntax~.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/check_syntax.py)).
+([pfdesigns/javascript/check~syntax~.py](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/check_syntax.py)).
 
 ## Runtime Scripts In StoryTeller
 
@@ -1623,7 +1615,7 @@ Right now the individual script fragments can be uploaded to a
 *Language* tag specifying a *Scripting Language* the script is written
 in (it may be `strs`, `py`, `js`, ...).
 
-The [programmatic.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/programmatic.py?h=develop)
+The [programmatic.py](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/programmatic.py)
 regression test demonstrates the possibility to attach a *Script* to a
 *Layout Item* programmatically via *DocPlatform API*.
 
@@ -1639,7 +1631,7 @@ single *Document*.
 </text>
 ```
 
-The [multilang.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/multilang.xml?h=develop)
+The [multilang.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/multilang.xml)
 regression test demonstrates how such a declarative definition can look
 like and how one can combine scripts in different languages to a single
 *Document Design*.
@@ -1747,7 +1739,7 @@ module.exports = function (config) {
 ```
 
 A full experimental implementation of such filter can be seen here:
-[stl2html.js](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/stl2html/stl2html.js?h=develop).
+[stl2html.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/stl2html/stl2html.js).
 
 # Use Cases
 
@@ -1782,7 +1774,7 @@ var _ = require('http://underscorejs.org/underscore-min.js');
 ```
 
 Full source code of this example is available here:
-[underscore.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/underscore.xml?h=develop)
+[underscore.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/underscore.xml)
 
 ### Localization
 
@@ -1889,15 +1881,15 @@ exports.reformat_money = function (value, locale, from) {
 
 The full regression test is available in the following files:
 
--   [locales.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/locales.xml?h=develop)
+-   [locales.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/locales.xml)
     -   main document definition
--   [locales.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/locales.js?h=develop)
+-   [locales.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/locales.js)
     -   user module containing some helper services
--   [currencies.json](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/currencies.json?h=develop)
+-   [currencies.json](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/currencies.json)
     -   JSON file containing locale information (based on the
         [currencymap.json](http://www.localeplanet.com/api/auto/currencymap.json)
         on-line map)
--   [rates.json](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/rates.json?h=develop)
+-   [rates.json](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/rates.json)
     -   JSON file containing cached currency conversion rates
 
 The following 3rd party libraries are used:
@@ -1910,14 +1902,14 @@ The following 3rd party libraries are used:
     [accounting.js](http://openexchangerates.github.io/accounting.js/)
 
 And here is the 
-[Resulting PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/javascript/locales-xml-m.c.pdf?h=develop).
+[Resulting PDF](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/javascript/locales-xml-m.c.pdf).
 
 ### CSV parsing
 
 Imagine that we get input data in o form of [CSV file](https://en.wikipedia.org/wiki/Comma-separated_values).
 
 The content of the file can look as follows (full example data available
-[here](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/addresses.csv?h=develop)):
+[here](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/addresses.csv)):
 
 ```javascript
 "first_name","last_name","company_name","address","city","county","state","zip"...
@@ -1981,7 +1973,7 @@ As a first step we create the HTML markup. For that purpose we can utilize a *Te
 [Markup.js](https://github.com/adammark/Markup.js/).
 
 So we create the following HTML template:
-[addresses.html](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/addresses.html?h=develop)
+[addresses.html](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/addresses.html)
 
 ```html
 <html>
@@ -2028,10 +2020,10 @@ subst.Uri = repo.upload(html);
 ```
 
 Full source code of this example is available here:
-[addresses.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/addresses.xml?h=develop)
+[addresses.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/addresses.xml)
 
 And here is the [Resulting
-PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/javascript/addresses-xml-m.c.pdf?h=develop).
+PDF](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/javascript/addresses-xml-m.c.pdf).
 
 ### Web Scraping
 
@@ -2081,7 +2073,7 @@ var html = scraping.xkcd({ /* settings */ });
 subst.Uri = repo.upload(html);
 ```
 
-In the [scraping.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/scraping.js?h=develop)
+In the [scraping.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/scraping.js)
 helper module there is a `xkcd( settings ) : string` method generating a
 *HTML fragment* configured by given `settings`.
 
@@ -2100,15 +2092,15 @@ A single resulting HTML is then generated with help of the
 [Markup.js](https://github.com/adammark/Markup.js/) *Template Engine*.
 
 The following *HTML Template* is used for that purpose:
-[xkcd.html](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/xkcd.html?h=develop)
+[xkcd.html](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/xkcd.html)
 
 Full source code of this example is available here:
-[xkcd.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/xkcd.xml?h=develop)
+[xkcd.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/xkcd.xml)
 +
-[scraping.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/scraping.js?h=develop)
+[scraping.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/scraping.js)
 
 And here is the [Resulting
-PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/javascript/xkcd-xml-m.c.pdf?h=develop).
+PDF](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/javascript/xkcd-xml-m.c.pdf).
 
 ## On-line Services
 
@@ -2219,7 +2211,7 @@ console.log( yuml );
 
 Let's now send the created markup to the on-line service. To encapsuate
 on-line service URI creation we have created a separate javascript
-module - [services.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services.js?h=develop).
+module - [services.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/services.js).
 
 There is a `diagram()` method accepting `yuml` and `options` arguments.
 It's implementation is relatively simple and looks roughly like this:
@@ -2252,10 +2244,10 @@ image.Uri = services.diagram(yuml, {type:'usecase', style:'scruffy', scale:200})
 ```
 
 The whole implementation is visible here:
-[diagram.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/diagram.xml?h=develop)
+[diagram.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/diagram.xml)
 
 Here is the [Resulting
-PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/javascript/diagram-xml-m.c.pdf?h=develop).
+PDF](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/javascript/diagram-xml-m.c.pdf).
 
 ### LaTeX Formulas
 
@@ -2348,7 +2340,7 @@ image.Uri = repo.upload(data, null);
 The last piece to the puzzle is the `services.formula( latex, options )`
 helper function.
 
-It is implemented in the [services.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services.js?h=develop)
+It is implemented in the [services.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/services.js)
 helper module and it's code looks as follows:
 
 ```javascript
@@ -2375,10 +2367,10 @@ exports.formula = function (latex, options) {
 ```
 
 The whole test implementation is available here:
-[formulas.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/formulas.xml?h=develop).
+[formulas.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/formulas.xml).
 
 Here is the 
-[Resulting PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/javascript/formulas-xml-m.c.pdf?h=develop).
+[Resulting PDF](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/javascript/formulas-xml-m.c.pdf).
 
 ### Google Charts
 
@@ -2436,7 +2428,7 @@ exports.chart = function (options) {
 ```
 
 The full `services.chart( data )` function is implemented in
-[services.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services.js?h=develop).
+[services.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/services.js).
 
 With such a function we have a flexible way to represent *chart
 definition* and we can hold such chart representations in a persistent
@@ -2493,10 +2485,10 @@ For given *URI* we get image which looks like the following [Image
 Chart](http://chart.googleapis.com/chart?cht=bvs&chs=400x200&chds=0%2C20&chts=000000%2C15&chbh=r%2C.6&chd=t%3A4%2C4%2C4%2C4%2C4%2C3%7C10%2C9%2C10%2C9%2C8%2C6%7C3%2C2%2C4%2C2%2C3%2C5&chco=a3d5f7%2C389ced%2C004f9f&chls=2.0%2C4.0%2C0.0%7C2.0%2C4.0%2C0.0%7C2.0%2C4.0%2C0.0&chm=N%2CFF0000%2C-1%2C%2C12%7CN%2C000000%2C0%2C%2C12%2C%2Cc%7CN%2C000000%2C1%2C%2C12%2C%2Cc%7CN%2Cffffff%2C2%2C%2C12%2C%2Cc&chxt=x&chxl=0%3A%7CMay%7CJun%7CJul%7CAug%7CSep%7COct).
 
 The whole implementation is visible here:
-[chart.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/chart.xml?h=develop)
+[chart.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/chart.xml)
 
 Here is the [Resulting
-PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/javascript/chart-xml-m.c.pdf?h=develop).
+PDF](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/javascript/chart-xml-m.c.pdf).
 
 ### Country Maps
 
@@ -2509,7 +2501,7 @@ generate thumbnails for all world countries:
 Initially we download and parse a JSON file containing all countries in
 the world:
 
-[countries.json](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/countries.json?h=develop)
+[countries.json](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/countries.json)
 (downloaded from [this
 address](http://data.okfn.org/data/core/country-codes/r/country-codes.json))
 
@@ -2519,7 +2511,7 @@ var countries = JSON.parse(repo.load("wd:/countries.json"));
 
 Then for each country we create a URL representing a thumbnail of the
 country map (we use the `chart()` helper function from the
-[services.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services.js?h=develop)
+[services.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/services.js)
 module for that purpose so that each country is associated with a single
 map thumbnail like [this
 one](http://chart.googleapis.com/chart?cht=map&chs=200x200&chco=676767%7CFF0000%7C0000BB&chld=AF))
@@ -2550,7 +2542,7 @@ var html = '\ufeff' + Mark.up(template, {countries : countries});
 
 We use the following HTML template for that purpose:
 
-[countries.html](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/countries.html?h=develop)
+[countries.html](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/countries.html)
 
 ```html
 <html>
@@ -2583,10 +2575,10 @@ subst.Uri = repo.upload(html);
 ```
 
 The whole implementation is visible here:
-[countries.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/countries.xml?h=develop)
+[countries.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/countries.xml)
 
 Here is the [Resulting
-PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/javascript/countries-xml-m.c.pdf?h=develop).
+PDF](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/javascript/countries-xml-m.c.pdf).
 
 ## HTML Post-Processing
 
@@ -2600,15 +2592,15 @@ worth the trouble.
 
 Let's say we have the followign XML data:
 
-[html-table-data.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/html-table-data.xml?h=develop)
+[html-table-data.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/html-table-data.xml)
 
 If we want to generate an HTML table presenting the data above, we can
 prepare a *StoryTeller Design* like this one:
 
-[html-table-design.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/html-table-design.xml?h=develop)
+[html-table-design.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/html-table-design.xml)
 
 Such design and data results in this [HTML
-Document](file:///git/docplatform/plain/distribution/py/pfdesigns/javascript/html-table-out.html?h=develop).
+Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/javascript/html-table-out.html).
 
 ### Current Post-Processing
 
@@ -2619,12 +2611,12 @@ HTML and let client (typically a Web Browser) to make some
 post-processing.
 
 For example the following code -
-[html-table-post.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/html-table-post.js?h=develop)
+[html-table-post.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/html-table-post.js)
 - injects a [TinySort Javascript Library](http://tinysort.sjeiti.com/)
 and makes the HTML table sortable:
 
 The result can be seen in this [HTML
-Document](file:///git/docplatform/plain/distribution/py/pfdesigns/javascript/html-table-post.html?h=develop).
+Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/javascript/html-table-post.html).
 
 ### Static Post-Processing in Javascript
 
@@ -2705,7 +2697,7 @@ date.text(cm.format('dddd') + ' (' + diff + ')');
 ```
 
 ##### (6.2) Add hyperlinks to *Receiver* texts (use
-[html-table-lookup.json](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/html-table-lookup.json?h=develop)
+[html-table-lookup.json](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/html-table-lookup.json)
 table for that purpose)
 
 ```javascript
@@ -2741,10 +2733,10 @@ balance.contents().replaceWith(make_pre(balances[row_index]));
 The full implemetation of the *Static Post-Processing* example is
 available here:
 
-[html-table-post-static.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/html-table-post-static.xml?h=develop)
+[html-table-post-static.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/html-table-post-static.xml)
 
 The result can be seen in this [HTML
-Document](file:///git/docplatform/plain/distribution/py/pfdesigns/javascript/html-table-post-static.html?h=develop).
+Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/javascript/html-table-post-static.html).
 
 ### Dynamic Post-Processing in Javascript
 
@@ -2819,13 +2811,13 @@ html = doc.save();
 The full implementation of the *Dynamic Post-Processing* example is
 available here:
 
-[html-table-post-dynamic.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/html-table-post-dynamic.xml?h=develop)
+[html-table-post-dynamic.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/html-table-post-dynamic.xml)
 +
-[postprocessor.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/postprocessor.js?h=develop)
+[postprocessor.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/postprocessor.js)
 
 Two possible variants of resulting documents can be reached here:
-[Sorting](file:///git/docplatform/plain/distribution/py/pfdesigns/javascript/html-table-post-dynamic.html?h=develop),
-[Grouping](file:///git/docplatform/plain/distribution/py/pfdesigns/javascript/html-table-post-dynamic-grouping.html?h=develop)
+[Sorting](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/javascript/html-table-post-dynamic.html),
+[Grouping](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/javascript/html-table-post-dynamic-grouping.html)
 
 # 3rd Party Libraries
 

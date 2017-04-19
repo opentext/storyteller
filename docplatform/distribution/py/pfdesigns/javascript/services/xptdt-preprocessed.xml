@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:fixtures>
+	<!-- <xp:fixture key="link:/tdt/functions.xml"/> -->
+  </stl:fixtures>
+
+  <stl:data>
+	<stl:template>
+	  <data></data>
+	</stl:template>
+	<stl:transformation>
+	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
+		<!-- <xp:include src="link:/tdt/functions.xml" xpath="//tdt:rule"> --><tdt:rule path="usr:extreme">
+		  <tdt:value key="$nodeset"></tdt:value>
+		  <tdt:value key="$xpath"></tdt:value>
+		  <tdt:value key="$op"></tdt:value>
+		  <tdt:value key="$expr">concat('$nodeset[not(',$xpath, $op, 'preceding-sibling::*/', $xpath, ') and not(', $xpath, $op, 'following-sibling::*/', $xpath, ')]/', $xpath)</tdt:value>
+		  <tdt:value key="return">tdt:eval($expr)</tdt:value>
+		</tdt:rule><tdt:rule path="usr:min">
+		  <tdt:value key="$nodeset"></tdt:value>
+		  <tdt:value key="$xpath"></tdt:value>
+		  <tdt:value key="return">usr:extreme( $nodeset, $xpath, '&gt;=')</tdt:value>
+		</tdt:rule><tdt:rule path="usr:max">
+		  <tdt:value key="$nodeset"></tdt:value>
+		  <tdt:value key="$xpath"></tdt:value>
+		  <tdt:value key="return">usr:extreme( $nodeset, $xpath, '&lt;=')</tdt:value>
+		</tdt:rule><!-- </xp:include> -->
+	  </tdt:transformation>
+	</stl:transformation>
+  </stl:data>
+</stl:stl>

@@ -1,0 +1,51 @@
+<root>
+  <template>
+    <client>
+      <settings>
+        <comics>
+          <current>1200</current>
+          <count>2</count>
+        </comics>
+        <articles>
+          <current>136</current>
+          <count>1</count>
+        </articles>
+      </settings>
+    </client>
+  </template>
+  <tdt:transformation 
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+
+  <story name='main_story'>
+    <style name='Arial' size='14.0'/>
+    <subst type='docapi.SubstitutionTypes.REPOSITORY' uri='nonsense'>
+      <script when="docapi.BEFORE" language="js">
+        var subst = require('layout').item();
+        var data = require('data');
+        var repo = require('repo');
+        var settings = data.js('//settings/*');
+        var scraping = require('./scraping');
+        var html = scraping.xkcd({
+          comics: +settings.comics.count, 
+          current_comic: +settings.comics.current,
+          articles: +settings.articles.count,
+          current_article: +settings.articles.current,
+        });
+        subst.Uri = repo.upload(html);
+      </script>
+    </subst>
+  </story>
+  
+  <page occurrence="docapi.OCC_ONCE_OR_MORE">
+    <text pos='20,20' size='550,50' pen_rgb='255,255,255,0'>
+      <p>
+        <img size='100,40' uri='http://imgs.xkcd.com/static/terrible_small_logo.png'/>_
+        <style name='Arial' size='36.0'/>
+        Web Scraping Demo
+      </p>
+    </text>
+    <text pos='20,80' size='550,750' 
+          brush_rgb='225,225,250,255' pen_rgb='100,100,155,255' inner_margins='8,8,8,8' corners='rounded @ 5 5;' 
+          storyref='main_story'/>
+  </page>
+</root>

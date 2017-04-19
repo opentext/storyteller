@@ -1,0 +1,14 @@
+<root>  
+  <page>
+    <script when="docapi.BEFORE" language="js">
+	  var vars = require('vars');
+	  vars.set('arrModules', null, [0] );
+	  var $arrModules = vars.all.arrModules;
+	  var i, modules = "util,console,vars,share,data,units,layout,repo,querystring,url,range,path,buffer,i18n".split(',');
+	  for( i=0; i&lt;modules.length; i++ ) {
+	    console.log(modules[i]);
+	    $arrModules[i] = modules[i];
+      }
+    </script>
+  </page>
+</root>

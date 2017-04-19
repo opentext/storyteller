@@ -1,0 +1,64 @@
+<root>
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var assert = require( 'assert' );
+      //var _ = require( 'http://underscorejs.org/underscore-min.js' );
+      var _ = require( 'underscore' );
+
+      // examples taken from this blog post:
+      // http://code.tutsplus.com/tutorials/getting-cozy-with-underscorejs--net-24581
+
+      var scores = [84, 99, 91, 65, 87, 55, 72, 68, 95, 42];
+      var topScorers = [];
+      var scoreLimit = 90;
+ 
+      // vanilla javascript
+      for (var i=0; i&lt;scores.length; i++) {
+        if (scores[i]>scoreLimit) {
+          topScorers.push(scores[i]);
+        }
+      }
+      assert.deepEqual( [ 99, 91, 95 ], topScorers );
+
+      // Underscore filter
+      topScorers = _.filter(scores, function(score){ return score > scoreLimit;});
+      assert.deepEqual( [ 99, 91, 95 ], topScorers );
+
+      // Pluck
+      var Tuts = [
+        {name : 'NetTuts', niche : 'Web Development'}, 
+        {name : 'WPTuts', niche : 'WordPress'}, 
+        {name : 'PSDTuts', niche : 'PhotoShop'}, 
+        {name : 'AeTuts', niche : 'After Effects'}];
+      var niches = _.pluck(Tuts, 'niche');
+      assert.deepEqual( [ "Web Development", "WordPress", "PhotoShop", "After Effects" ], niches );
+
+      // Map
+      var names = _(Tuts).pluck('name').map(function (value){return value + '+'});
+      assert.deepEqual( ["NetTuts+", "WPTuts+", "PSDTuts+", "AeTuts+"], names );
+
+      // Uniq
+      var unique = _.uniq([1,5,4,4,5,2,1,1,3,2,2,3,4,1]);
+      assert.deepEqual( [1, 5, 4, 2, 3], unique );
+
+      // Range and Intersection
+      var tens = _.range(0, 100, 10);
+      var eights = _.range(0, 100, 8);
+      var fives = _.range(0, 100, 5);
+      var common = _.intersection(tens, eights, fives );
+      assert.deepEqual( [ 0, 40, 80 ], common);
+
+      // Defaults
+      var tuts = { NetTuts : 'Web Development'};
+      var defaults = { NetTuts : 'Web Development', niche: 'Education'};
+      _.defaults(tuts, defaults);
+      assert.deepEqual( { NetTuts: 'Web Development', niche: 'Education' }, tuts );
+
+      // Functions
+      var o = { greeting: "Howdy" };
+      var fn = function(name) { return this.greeting +" "+ name; };
+      var greet = _.bind(fn, o); 
+      assert.strictEqual( greet("Jess"), "Howdy Jess" );
+    </script>
+  </page>
+</root>

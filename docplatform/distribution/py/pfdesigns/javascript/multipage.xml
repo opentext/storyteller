@@ -1,0 +1,11 @@
+<root>  
+  <story>
+	<p>
+    <img name="Singlepage Fragment" category="docapi.FC_FORMATTING_TIME" moniker="multipage.tiff">
+      <script when="docapi.BEFORE" language="js">
+        var item = require( 'layout' ).item();
+        item.PageCount;
+      </script>
+    </img>
+  </page>
+</root>

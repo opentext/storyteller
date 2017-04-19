@@ -1,0 +1,11 @@
+<root>
+  <page>
+    <text pos='20,20' size='550,50' pen_rgb='255,255,255,0'>
+      <script when="docapi.BEFORE" language="js">
+		require('./lint-syntax');
+		require('./lint-semantics');
+	  </script>
+	  Text
+    </text>
+  </page>
+</root>

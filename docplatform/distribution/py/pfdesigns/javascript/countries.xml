@@ -1,0 +1,45 @@
+<root>
+  <story name='main_story'>
+    <style name='Arial' size='14.0'/>
+    <subst type='docapi.SubstitutionTypes.REPOSITORY' uri='wd:/nonsense'>
+      <script when="docapi.BEFORE" language="js">
+        var subst = require( 'layout' ).item();
+        var repo = require( 'repo' );
+        var services = require( './services' );
+
+        var countries = JSON.parse( repo.load( "wd:/countries.json" ) );
+        countries = countries.slice( 0, 10 );
+
+        countries.forEach( function( country ) {
+          var code = country['ISO3166-1-Alpha-2'];
+
+          country.map = services.chart( { 
+            type: 'map',
+            dimension: '200x200',
+            series_color: '676767|FF0000|0000BB',
+            region: code 
+          } );
+          country.info = 'http://en.wikipedia.org/wiki/ISO_3166-2:' + code;
+        } );
+        
+        var Mark = require( 'markup-js' );
+        var template = repo.load( "wd:/countries.html" );
+        var html = '\ufeff' + Mark.up( template, { countries : countries } );
+        //repo.save( "file:///tmp/countries.html", html );
+        subst.Uri = repo.upload( html );
+      </script>
+    </subst>
+  </story>
+  
+  <page occurrence="docapi.OCC_ONCE_OR_MORE">
+    <text pos='20,20' size='550,50' pen_rgb='255,255,255,0'>
+      <p>
+        <style name='Arial' size='36.0'/>
+        Map Chart Demo
+      </p>
+    </text>
+    <text pos='20,80' size='550,750' 
+          brush_rgb='225,225,250,255' pen_rgb='100,100,155,255' inner_margins='8,8,8,8' corners='rounded @ 5 5;' 
+          storyref='main_story'/>
+  </page>
+</root>

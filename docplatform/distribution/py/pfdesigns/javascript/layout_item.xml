@@ -1,0 +1,318 @@
+<root>  
+  <template>
+    <items>
+      <item>A</item>
+      <item>B</item>
+      <item>C</item>
+    </items>
+  </template>
+  <tdt:transformation 
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+  <script when="docapi.BEFORE" language="js">
+    var assert = require( 'assert' );
+    var layout = require( 'layout' );
+    var item = require( 'layout' ).item();
+
+    console.log( item );
+
+    assert.strictEqual( '{Document}', item.inspect() );
+  </script>
+  <page name="My Page">
+    <script when="docapi.BEFORE" language="js">
+	  'use strict';
+      var assert = require( 'assert' );
+      var item = require( 'layout' ).item();
+
+      console.log( item );
+
+      assert.strictEqual( 'Page', item.Class );
+      assert.strictEqual( 'My Page', item.Name );
+      assert.strictEqual( '', item.Description );
+
+      assert.strictEqual( '{Page "My Page"}', item.inspect() );
+
+      item.Name = 'Modified Page';
+      assert.strictEqual( 'Modified Page', item.Name );
+
+      assert.strictEqual( '{Page "Modified Page"}', item.inspect() );
+
+      assert.throws( 
+        function() { item.XXX = null; },
+        /Can't add property XXX, object is not extensible/ );
+    </script>
+    <script when="docapi.AFTER" language="js">
+      var assert = require( 'assert' );
+      var item = require( 'layout' ).item();
+      assert.strictEqual( true, item.Empty );
+    </script>
+    <text pos='20,25' size='50,15' pen='1' name="My Text">
+      <script when="docapi.BEFORE" language="js">
+        var assert = require( 'assert' );
+        var item = require( 'layout' ).item();
+
+        console.log( item );
+
+        assert.strictEqual( '{Text "My Text"}', item.inspect() );
+
+        assert.strictEqual( 'Box', item.Box.Class );
+        assert.strictEqual( '{Box [20, 25, 50, 15]}', item.Box.inspect() );
+
+        assert.strictEqual( 20, item.Box.X );
+        assert.strictEqual( 25, item.Box.Y );
+        assert.strictEqual( 50, item.Box.W );
+        assert.strictEqual( 15, item.Box.H );
+
+        item.Box.H = 60;
+        assert.strictEqual( '{Box [20, 25, 50, 60]}', item.Box.inspect() );
+
+        assert.strictEqual( '{Border [RGBA(0,255,0,255)]}', item.Border.inspect() );
+        assert.strictEqual( '{Fill [Solid, Transparent]}', item.Fill.inspect() );
+      </script>
+      <script when="docapi.AFTER" language="js">
+        var assert = require( 'assert' );
+        var item = require( 'layout' ).item();
+        assert.strictEqual( false, item.Empty );
+      </script>
+      Items:
+      <rep xpath="/items/item" name="My Repeater">
+        <script when="docapi.BEFORE" language="js">
+          var assert = require( 'assert' );
+          var item = require( 'layout' ).item();
+          
+          console.log( item );
+          assert.strictEqual( '{Repeater "My Repeater"}', item.inspect() );
+        </script>
+        <p>
+		  <swi xpath='$switch_key' name="My Switch">
+			<script when="docapi.BEFORE" language="js">
+              var assert = require( 'assert' );
+              var item = require( 'layout' ).item();
+              
+              console.log( item );
+              assert.strictEqual( '{Switch "My Switch"}', item.inspect() );
+			</script>
+			<case key='true'>
+			  <p>A</p>
+			</case>
+			<case/>
+		  </swi>
+          <subst xpath="concat( position(),': ', text() )" name="My Substitution" texttype="0">
+            <script when="docapi.BEFORE" language="js">
+              var assert = require( 'assert' );
+              var item = require( 'layout' ).item();
+              
+              console.log( item );
+              assert.strictEqual( '{Substitution "My Substitution"}', item.inspect() );
+            </script>
+            <script when="docapi.AFTER" language="js">
+              var assert = require( 'assert' );
+              var item = require( 'layout' ).item();
+              assert.strictEqual( false, item.Empty );
+            </script>
+          </subst>
+        </p>
+      </rep>
+    </text>
+    <img pos='20,120' size='50,50' pen='1' name="My Image" uri="wd:/none.png">
+      <script when="docapi.BEFORE" language="js">
+        var assert = require( 'assert' );
+        var item = require( 'layout' ).item();
+
+        console.log( item );
+        assert.strictEqual( '{Image "My Image"}', item.inspect() );
+        assert.strictEqual( 'wd:/none.png', item.Uri, "Invalid Uri" );
+        item.Moniker = "wd:/multipage.tiff!1";
+        assert.strictEqual( 'wd:/multipage.tiff', item.Uri, "Invalid Uri" );
+        assert.equal( 3, item.PageCount );
+      </script>
+    </img>
+    <fragment pos="20,220" size="60,50" name="Singlepage Fragment" category="docapi.FC_FORMATTING_TIME" moniker="!/item[1]">
+      <script when="docapi.BEFORE" language="js">
+        var assert = require( 'assert' );
+        var item = require( 'layout' ).item();
+
+        console.log( item );
+        assert.strictEqual( '{Fragment "Singlepage Fragment"}', item.inspect() );
+        assert.ok( /local:[0-9a-f]{40}!\/item\[1\]/.test( item.Moniker ), "Invalid Moniker" );
+		assert.throws( 
+          function() { return item.PageCount; },
+          /Cannot retrieve number of pages from singlepage fragment/ );
+
+		assert.deepEqual( {}, item.Transformation.Parameters );
+		item.Transformation.Parameters = { a: 1, b: 2 };
+        assert.deepEqual( { a: '1', b: '2' }, item.Transformation.Parameters );
+		item.Transformation.Parameters = { a: 'a &amp; b', b: 'c : d|e' };
+        assert.deepEqual( { a: 'a &amp; b', b: 'c : d|e' }, item.Transformation.Parameters );
+
+		assert.throws( 
+          function() { item.Transformation.Parameters = { ':a' : 1 }; },
+          /Invalid map key/ );
+      </script>
+      <doc>
+        <page name="Fragment Page">
+          <script when="docapi.BEFORE" language="js">
+            var assert = require( 'assert' );
+            var item = require( 'layout' ).item();
+            
+            console.log( item );
+			assert.strictEqual( '{Page "Fragment Page"}', item.inspect() );
+          </script>
+          <text pos="0,0" size="50,50"><p>Embedded Fragment</p></text>
+        </page>
+      </doc>
+    </fragment>
+    <fragment pos="120,220" size="60,50" name="Multipage Fragment" category="docapi.FC_LOADING_TIME" moniker="" selector="/item[1]">
+      <script when="docapi.BEFORE" language="js">
+        var assert = require( 'assert' );
+        var item = require( 'layout' ).item();
+
+        console.log( item );
+        assert.strictEqual( '{Fragment "Multipage Fragment"}', item.inspect() );
+        assert.ok( /local:[0-9a-f]{40}/.test( item.Moniker ), "Invalid Moniker" );
+		assert.equal( 3, item.PageCount );
+      </script>
+      <doc>
+        <page name="Fragment Page #1"/>
+        <page name="Fragment Page #2"/>
+        <page name="Fragment Page #3"/>
+      </doc>
+    </fragment>
+    <group name="My Group">
+      <script when="docapi.BEFORE" language="js">
+        var assert = require( 'assert' );
+        var item = require( 'layout' ).item();
+
+        console.log( item );
+
+        assert.strictEqual( '{Group "My Group"}', item.inspect() );
+      </script>
+      <barcode pos="20,320" size="72,72" name="My Barcode" type="Code 39" data="12" brush_rgb="255,255,255,255">
+        <script when="docapi.BEFORE" language="js">
+          var assert = require( 'assert' );
+          var item = require( 'layout' ).item();
+          
+          console.log( item );
+
+          assert.strictEqual( '{Barcode "My Barcode"}', item.inspect() );
+
+          assert.strictEqual( 'Code 39', item.Type );
+
+          assert.strictEqual( '12', item.Data );
+
+          item.Type = 'Code 128';
+          item.Data = '42';
+
+          assert.strictEqual( 'Code 128', item.Type );
+          assert.strictEqual( '42', item.Data );
+        </script>
+      </barcode>
+      <chart pos="20,420" size="50,50" name="My Chart">
+        <script when="docapi.BEFORE" language="js">
+          var assert = require( 'assert' );
+          var item = require( 'layout' ).item();
+          
+          console.log( item );
+
+          assert.strictEqual( '{Chart "My Chart"}', item.inspect() );
+
+          assert.strictEqual( 'L2R', item.Direction );
+          item.Direction = 'R2L';
+          assert.strictEqual( 'R2L', item.Direction );
+          assert.strictEqual( 'chars', item.BidiAndShaping );
+          item.BidiAndShaping = 'glyphs';
+          assert.strictEqual( 'glyphs', item.BidiAndShaping );
+        </script>
+      </chart>
+    </group>
+    <shape pos='20,520' size='50,50' type='rectangle' name="My Shape">
+      <script when="docapi.BEFORE" language="js">
+        var assert = require( 'assert' );
+        var item = require( 'layout' ).item();
+        
+        console.log( item );
+
+        assert.strictEqual( '{Shape "My Shape"}', item.inspect() );
+      </script>
+    </shape>
+    <table pos="20, 620" size='80,40' dim='2,2' name="My Table">
+      <script when="docapi.BEFORE" language="js">
+		'use strict';
+        var util = require( 'util' );
+        var assert = require( 'assert' );
+        var item = require( 'layout' ).item();
+        
+        console.log( item );
+
+        assert.strictEqual( '{Table "My Table"}', item.inspect() );
+
+        assert.strictEqual( 'L2R', item.Direction );
+        item.Direction = 'R2L';
+        assert.strictEqual( 'R2L', item.Direction );
+
+        assert.deepEqual( '[ {TableColumn #0}, {TableColumn #1} ]', util.inspect(item.Columns) );
+        assert.strictEqual( 40, item.Columns[1].Width );
+        assert.strictEqual( '{Box [20, 620, 80, 40]}', item.Box.inspect() );
+        item.Columns[1].Width = 50;
+        assert.strictEqual( 50, item.Columns[1].Width );
+        assert.strictEqual( '{Box [20, 620, 90, 40]}', item.Box.inspect() );
+
+        assert.throws( 
+          function() { item.Columns = []; },
+          /Cannot set property Columns of \[object Object\] which has only a getter/ );
+        assert.throws( 
+          function() { item.Columns[0] = 42; },
+          /Cannot assign to read only property '0' of \[object Array\]/ );
+      </script>
+      <script when="docapi.AFTER" language="js">
+        var assert = require( 'assert' );
+        var item = require( 'layout' ).item();
+        assert.strictEqual( false, item.Empty );
+      </script>
+      <body>
+        <row index='0' name="My Row">
+          <script when="docapi.BEFORE" language="js">
+			'use strict';
+            var util = require( 'util' );
+            var assert = require( 'assert' );
+            var item = require( 'layout' ).item();
+            
+            console.log( item );
+
+            var cells = item.Cells;
+            assert.strictEqual( '{TableRow "My Row"}', item.inspect() );
+            assert.deepEqual( '[ {TableCell #0}, {TableCell #1} ]', util.inspect(cells) );
+
+            assert.strictEqual( '{Box [0, 0, 90, 20]}', item.Box.inspect() );
+
+            assert.strictEqual( 1, cells[0].ColumnSpan );
+            cells[0].ColumnSpan = 2;
+            assert.strictEqual( 2, cells[0].ColumnSpan );
+
+            assert.throws( 
+              function() { item.Cells = []; },
+              /Cannot set property Cells of \[object Object\] which has only a getter/ );
+
+            assert.throws( 
+              function() { cells[0] = 42; },
+              /Cannot assign to read only property '0' of \[object Array\]/ );
+          </script>
+          <script when="docapi.AFTER" language="js">
+            var assert = require( 'assert' );
+            var item = require( 'layout' ).item();
+            assert.strictEqual( false, item.Empty );
+          </script>
+          <cell><p>cell 1</p></cell>
+          <cell><p>cell 2</p></cell>
+        </row>
+        <row index='1'>
+          <cell><p>cell 3</p></cell>
+          <cell><p>cell 4</p></cell>
+        </row>
+        <row index='1'>
+          <cell><p>cell 5</p></cell>
+          <cell><p>cell 6</p></cell>
+        </row>
+      </body>
+    </table>
+  </page>
+</root>

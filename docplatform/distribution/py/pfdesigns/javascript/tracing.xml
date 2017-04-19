@@ -1,0 +1,20 @@
+<root>
+  <page>
+    <script when="docapi.BEFORE" language="js">
+	  console.time( 'page formatting' );
+	</script>
+    <script when="docapi.AFTER" language="js">
+	  console.timeEnd( 'page formatting' );
+	</script>
+    <text pos='20,20' size='550,50' pen_rgb='255,255,255,0'>
+      <script when="docapi.BEFORE" language="js">
+		console.log( 'log message' );
+		console.info( 'info message' );
+		console.error( 'error message' );
+		console.warn( 'warn message' );
+		console.dir( console );
+	  </script>
+	  Text
+    </text>
+  </page>
+</root>

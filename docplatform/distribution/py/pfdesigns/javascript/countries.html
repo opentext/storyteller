@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <style type="text/css">
+      table { width:100%; }
+    </style>
+  </head>
+  <body>
+    <table border="1">
+      <tr>
+        <col width="5%"/>
+        <col width="15%"/>
+        <col width="40%"/>
+        <col width="40%"/>
+        <th><h2>#</h2></th>
+        <th><h2>Map</h2></th>
+        <th><h2>Country</h2></th>
+        <th><h2>Currency</h2></th>
+      </tr>
+      {{countries}}
+      <tr>
+        <td>{{##}}</td>
+        <td>
+          <img src="{{map}}" aligh="middle" height="50" width="50"/>
+        </td>
+        <td>
+          <a href="{{info}}">{{name}}</a>
+        </td>
+        <td>{{currency_name}}</td>
+      </tr>
+      {{/countries}}
+    </table>
+  </body>
+</html>

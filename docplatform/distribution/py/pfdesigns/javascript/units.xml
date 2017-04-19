@@ -1,0 +1,51 @@
+<root>
+  <page>
+    <text pos='20,25' size='50,15' pen='1' name="First Text">
+      <script when="docapi.BEFORE" language="js">
+        var assert = require( 'assert' );
+        var item = require( 'layout' ).item();
+        var units = require( 'units' );
+        
+        assert.strictEqual(20, item.Box.X );
+        assert.strictEqual(25, item.Box.Y );
+        assert.strictEqual(50, item.Box.W );
+        assert.strictEqual(15, item.Box.H );
+
+        assert.strictEqual(0.2777777777777778, units.pt2in( item.Box.X ) );
+        assert.strictEqual(0.3472222222222222, units.pt2in( item.Box.Y ) );
+        assert.strictEqual(0.6944444444444444, units.pt2in( item.Box.W ) );
+        assert.strictEqual(0.20833333333333334, units.pt2in( item.Box.H ) );
+
+        assert.strictEqual(7.055555555555555, units.pt2mm( item.Box.X ) );
+        assert.strictEqual(8.819444444444445, units.pt2mm( item.Box.Y ) );
+        assert.strictEqual(17.638888888888889, units.pt2mm( item.Box.W ) );
+        assert.strictEqual(5.291666666666667, units.pt2mm( item.Box.H ) );
+
+        function almost_equal( x, y, delta ) {
+          delta = delta || 0.00000000001;
+          return Math.abs(x - y) &lt; delta; 
+        }
+
+        assert(almost_equal(item.Box.X, units.in2pt(units.pt2in(item.Box.X))));
+        assert(almost_equal(item.Box.Y, units.in2pt(units.pt2in(item.Box.Y))));
+        assert(almost_equal(item.Box.W, units.in2pt(units.pt2in(item.Box.W))));
+        assert(almost_equal(item.Box.H, units.in2pt(units.pt2in(item.Box.H))));
+
+        assert(almost_equal(item.Box.X, units.mm2pt(units.pt2mm(item.Box.X))));
+        assert(almost_equal(item.Box.Y, units.mm2pt(units.pt2mm(item.Box.Y))));
+        assert(almost_equal(item.Box.W, units.mm2pt(units.pt2mm(item.Box.W))));
+        assert(almost_equal(item.Box.H, units.mm2pt(units.pt2mm(item.Box.H))));
+
+        assert(almost_equal(units.pt2mm(item.Box.X), units.in2mm(units.pt2in(item.Box.X ))));
+        assert(almost_equal(units.pt2mm(item.Box.Y), units.in2mm(units.pt2in(item.Box.Y ))));
+        assert(almost_equal(units.pt2mm(item.Box.W), units.in2mm(units.pt2in(item.Box.W ))));
+        assert(almost_equal(units.pt2mm(item.Box.H), units.in2mm(units.pt2in(item.Box.H ))));
+
+        assert(almost_equal(units.mm2in(units.pt2mm(item.Box.X)), units.pt2in(item.Box.X)));
+        assert(almost_equal(units.mm2in(units.pt2mm(item.Box.Y)), units.pt2in(item.Box.Y)));
+        assert(almost_equal(units.mm2in(units.pt2mm(item.Box.W)), units.pt2in(item.Box.W)));
+        assert(almost_equal(units.mm2in(units.pt2mm(item.Box.H)), units.pt2in(item.Box.H)));
+      </script>
+    </text>
+  </page>
+</root>

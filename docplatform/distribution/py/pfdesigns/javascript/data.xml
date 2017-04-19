@@ -1,0 +1,142 @@
+<root>
+  <template>
+    <items>
+      <item>1</item>
+      <item>
+        <subitem>2a</subitem>
+        <subitem>2b</subitem>
+      </item>
+    </items>
+  </template>
+  <tdt:transformation 
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var assert = require( 'assert' );
+      var data = require( 'data' );
+    
+      var json = {
+        document: '{"item":["1",{"subitem":["2a","2b"]}]}',
+        root: '{"xmlns:tdt":"http://developer.opentext.com/schemas/storyteller/transformation/tdt","items":{"item":["1",{"subitem":["2a","2b"]}]}}',
+        subitems: '{"xmlns:tdt":"http://developer.opentext.com/schemas/storyteller/transformation/tdt","subitem":["2a","2b"]}',
+      };
+        
+      var xml = {
+        document: [
+          '&lt;?xml version="1.0" encoding="UTF-8"?&gt;',
+          '&lt;items&gt;&lt;item&gt;1&lt;/item&gt;&lt;item&gt;&lt;subitem&gt;2a&lt;/subitem&gt;&lt;subitem&gt;2b&lt;/subitem&gt;&lt;/item&gt;&lt;/items&gt;',
+          ''
+        ].join('\n'),
+        root: [
+          '&lt;?xml version="1.0" encoding="UTF-8"?&gt;',
+          '&lt;tdt:root xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt"&gt;&lt;items&gt;&lt;item&gt;1&lt;/item&gt;&lt;item&gt;&lt;subitem&gt;2a&lt;/subitem&gt;&lt;subitem&gt;2b&lt;/subitem&gt;&lt;/item&gt;&lt;/items&gt;&lt;/tdt:root&gt;',
+          ''
+        ].join('\n'),
+        subitems: [
+          '&lt;?xml version="1.0" encoding="UTF-8"?&gt;',
+          '&lt;tdt:root xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt"&gt;&lt;subitem&gt;2a&lt;/subitem&gt;&lt;subitem&gt;2b&lt;/subitem&gt;&lt;/tdt:root&gt;',
+          ''
+        ].join('\n')
+      };
+
+      // document
+      assert.strictEqual(xml.document, data.dump('/'));
+      assert.strictEqual(xml.document, data.dom('/').dump('/'));
+      assert.strictEqual(xml.document, data.dom('/').dom('/').dump('/'));
+      assert.strictEqual(json.document, JSON.stringify( data.js('/')));
+      assert.strictEqual(json.document, JSON.stringify( data.dom('/').js('/')));
+
+      // root
+      assert.strictEqual(xml.root, data.dump('/items'));
+      assert.strictEqual(xml.root, data.dom('/').dump('.'));
+      assert.strictEqual(xml.root, data.dom('/').dump('//items'));
+      assert.strictEqual(xml.root, data.dom('/').dom('//items').dump('.'));
+      assert.strictEqual(json.root, JSON.stringify( data.js('/items')));
+      assert.strictEqual(json.root, JSON.stringify( data.dom('/').js('.')));
+
+      // subitems
+      assert.strictEqual(xml.subitems, data.dump('//subitem'));
+      assert.strictEqual(xml.subitems, data.dump('/items/item/subitem'));
+      assert.strictEqual(xml.subitems, data.dom('/items').dump('//item/subitem'));
+      assert.strictEqual(xml.subitems, data.dom('/items').dom('.').dump('//item/subitem'));
+      assert.strictEqual(xml.subitems, data.dom('/items').dom('//item')[1].dump('subitem'));
+      assert.strictEqual(xml.subitems, data.dom('/items').dom('//item[2]').dump('subitem'));
+
+      assert.strictEqual(xml.subitems, data.dom('/items/item').dump('//subitem'));
+      assert.strictEqual(xml.subitems, data.dom('/').dump('/items/item/subitem'));
+      assert.strictEqual(xml.subitems, data.dom('/').dom('/items/item')[1].dump('subitem'));
+      assert.strictEqual(xml.subitems, data.dom('/').dom('/items/item[2]').dump('subitem'));
+      assert.strictEqual(xml.subitems, data.dom('/').dom('/items').dump('item/subitem'));
+      assert.strictEqual(xml.subitems, data.dom('/').dom('/').dump('/items/item/subitem'));
+      assert.strictEqual(json.subitems, JSON.stringify( data.js('//subitem')));
+      assert.strictEqual(json.subitems, JSON.stringify( data.dom('/items').js('//item/subitem')));
+
+      // value
+      assert.strictEqual('2b', data.dump('string(//subitem[2])'));
+      assert.strictEqual('2b', data.dom('//subitem[2]').dump('string(.)'));
+      assert.strictEqual('2b', data.dom('/').dump('string(//subitem[2])'));
+      assert.strictEqual('2b', data.dom('/').dom('//subitem[2]/text()').node.data);
+      assert.strictEqual('2a', data.js('string(//subitem[1])'));
+      assert.strictEqual('2a', data.dom('//subitem[1]').js('string(.)'));
+      assert.strictEqual('2a', data.dom('/').dom('//subitem[1]/text()').js('.')._);
+      assert.strictEqual('2b', data.js('/').item[1].subitem[1]);
+      assert.strictEqual('2b', data.js('//subitem').subitem[1]);
+
+      var items = data.dom('//item');
+      var subitems = items.dom('item/subitem');
+
+      assert.strictEqual(2, items.dump('count(item)'));
+      assert.strictEqual(2, subitems.length );
+      assert.strictEqual('2a', subitems[0].dump('string(.)'));
+      assert.strictEqual('2b', subitems[1].dom('text()').node.data);
+
+	  /////////////////////////
+
+	  assert.deepEqual( [], data.dump('//non-existing'));
+	  assert.deepEqual( '', data.dump('string("")'));
+	  assert.strictEqual( '1', data.dump('string(/items/item)'));
+	  assert.strictEqual( 1, data.dump('count(/items/item[1])'));
+	  assert.strictEqual( 2, data.dump('count(/items/item)'));
+	  assert.strictEqual( false, data.dump('count(/items/item) = 0'));
+
+	  assert.deepEqual( [], data.js('//non-existing') );
+	  assert.strictEqual( '1', data.js('string(/items/item)'));
+	  assert.strictEqual( 1, data.js('count(/items/item[1])'));
+	  assert.strictEqual( 2, data.js('count(/items/item)'));
+	  assert.strictEqual( false, data.js('count(/items/item) = 0'));
+	  assert.strictEqual( 2, data.js('/items/item').item.length);
+	  assert.strictEqual( 1, data.js('/items/item[1]').item.length);
+
+	  assert.deepEqual( [], data.dom('//non-existing') );
+	  assert.strictEqual( '1', data.dom('string(/items/item)'));
+	  assert.strictEqual( 1, data.dom('count(/items/item[1])'));
+	  assert.strictEqual( 2, data.dom('count(/items/item)'));
+	  assert.strictEqual( false, data.dom('count(/items/item) = 0'));
+	  assert.strictEqual( 2, data.dom('/items/item').node.childNodes.length );
+
+	  var doc = data.dom('/');
+	  assert.deepEqual( '', doc.dump('//non-existing') );
+	  assert.strictEqual( '1', doc.dump('string(/items/item)'));
+	  assert.strictEqual( 1, doc.dump('count(/items/item[1])'));
+	  assert.strictEqual( 2, doc.dump('count(/items/item)'));
+	  assert.strictEqual( false, doc.dump('count(/items/item[1]) = 0'));
+
+	  assert.deepEqual( [], doc.js('//non-existing') );
+	  assert.strictEqual( '1', doc.js('string(/items/item)'));
+	  assert.strictEqual( 1, doc.js('count(/items/item[1])'));
+	  assert.strictEqual( 2, doc.js('count(/items/item)'));
+	  assert.strictEqual( false, doc.js('count(/items/item[1]) = 0'));
+	  assert.strictEqual( 2, doc.js('/items/item').item.length );
+	  assert.strictEqual( 1, doc.js('/items/item[1]').item.length );
+
+	  assert.deepEqual( [], doc.dom('//non-existing') );
+	  assert.strictEqual( '1', doc.dom('string(/items/item)'));
+	  assert.strictEqual( 1, doc.dom('count(/items/item[1])'));
+	  assert.strictEqual( 2, doc.dom('count(/items/item)'));
+	  assert.strictEqual( false, doc.dom('count(/items/item[1]) = 0'));
+	  assert.strictEqual( 2, doc.dom('/items/item').length );
+	  assert.strictEqual( 1, doc.dom('/items/item[1]').length );
+    </script>
+  </page>
+</root>

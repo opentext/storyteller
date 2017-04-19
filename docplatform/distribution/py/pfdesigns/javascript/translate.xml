@@ -1,0 +1,24 @@
+<root>
+  <page>
+    <text size='400,400' pos='10,10' pen='1'>
+      <script language="js">
+        var i18n = require( 'i18n' );
+        var assert = require( 'assert' );
+
+        // explicit language selection
+        assert.strictEqual( 'cs-CZ český text12 ůúěščřžýáíé', i18n.translate( 'Label2', 'cs-CZ' ) );
+        assert.strictEqual( 'en text12', i18n.translate( 'Label2', 'en' ) );
+        assert.strictEqual( 'en-US text12', i18n.translate( 'Label2', 'en-US' ) );
+
+        assert.throws( 
+          function() { i18n.translate( 'Label2', 'de' ); }, 
+          /Could not find an entry for id 'Label2' and language 'de'. Table size: '11'./ );
+
+        // implicit language selection (default language is used)
+        assert.strictEqual( 'cs-CZ český text12 ůúěščřžýáíé', i18n.translate( 'Label2' ) );
+      </script>
+      Text
+    </text>
+  </page>
+</root>
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:fixtures>
+    <!-- <xp:fixture key="link:/xp.js"/> -->
+  </stl:fixtures>
+  <stl:document>
+	<stl:page w="600px" h="600px">
+	  <stl:script language="js">
+		<!-- <xp:include src="link:/xp.js" parse="text"> -->
+	  var assert = require('assert');
+	  var streams = require('streams');
+	  var services = require('services');	
+	  
+	  var src = streams.stream('wd:/xp.xml');
+	  var expected = streams.stream('wd:/xp_preprocessed.xml');
+	  var dst = streams.stream();
+	  var xp = services.xp()
+	  xp(src, dst);
+      assert.strictEqual(dst.read(), expected.read());
+    <!-- </xp:include> -->
+	  </stl:script>
+	</stl:page>
+  </stl:document>
+</stl:stl>

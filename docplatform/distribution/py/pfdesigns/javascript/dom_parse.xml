@@ -1,0 +1,9 @@
+<root>
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var assert = require( 'assert' );
+      var data = require( 'data' );
+	  console.log( data.xml2dom('wd:/document.xml') );
+    </script>
+  </page>
+</root>

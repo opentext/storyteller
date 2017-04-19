@@ -1,0 +1,133 @@
+<root>
+  <template>
+    <people>
+      <person>
+        <name>Deron Eriksson</name>
+        <allowance>$2,000.00</allowance>
+        <birth>1972-01-20 09:32</birth>
+        <eyes>blue</eyes>
+        <locale>sv</locale>
+      </person>
+      <person>
+        <name>William Hopkins</name>
+        <allowance>$2,000.00</allowance>
+        <birth>1989-12-03 11:49</birth>
+        <eyes>brown</eyes>
+        <locale>en-gb</locale>
+      </person>
+      <person>
+        <name>Larry Smith</name>
+        <allowance>$2,000.00</allowance>
+        <birth>1966-09-09 11:49</birth>
+        <eyes>darkblue</eyes>
+        <locale>en-us</locale>
+      </person>
+      <person>
+        <name>Pierre Gautier</name>
+        <allowance>$2,000.00</allowance>
+        <birth>1933-05-22 22:37</birth>
+        <eyes>black</eyes>
+        <locale>fr</locale>
+      </person>
+      <person>
+        <name>Kateřina Ťuhýková</name>
+        <allowance>$2,000.00</allowance>
+        <birth>1969-07-29 18:03</birth>
+        <eyes>green</eyes>
+        <locale>cs</locale>
+      </person>
+      <person>
+        <name>Афанасий Аллочкин</name>
+        <allowance>$2,000.00</allowance>
+        <birth>1919-04-13 01:44</birth>
+        <eyes>darkgray</eyes>
+        <locale>ru</locale>
+      </person>
+      <person>
+        <name>آمنة عبد الحميد</name>
+        <allowance>$2,000.00</allowance>
+        <birth>2001-06-19 16:24</birth>
+        <eyes>darkred</eyes>
+        <locale>ar-sa</locale>
+      </person>
+      <person>
+        <name>আহসান अकबर चन्दना</name>
+        <allowance>$2,000.00 USD</allowance>
+        <birth>1976-07-28 07:32</birth>
+        <eyes>maroon</eyes>
+        <locale>hi</locale>
+      </person>
+      <person>
+        <name>日本人の氏名</name>
+        <allowance>$2,000.00 USD</allowance>
+        <birth>1988-03-13 14:23</birth>
+        <eyes>navy</eyes>
+        <locale>ja</locale>
+      </person>
+    </people>
+  </template>
+  <tdt:transformation 
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+
+  <story name="main">
+    <table dim="2,4" widths="220;220;60" translate="0,20" size="522,0" mode="paragraph">
+      <body>
+        <row index="0">
+          <cell inner_margins="5,5,5,5"><p><style bold="1"/>Name</p></cell>
+          <cell inner_margins="5,5,5,5"><p><style bold="1"/>Birth</p></cell>
+          <cell inner_margins="5,5,5,5"><p><style bold="1"/>Eyes</p></cell>
+          <cell inner_margins="5,5,5,5"><p><style bold="1"/>Allowance</p></cell>
+        </row>
+        <rep xpath="/people/person" name="item">
+          <style name='Arial Unicode MS' size='12'/>
+          <row index="1">
+            <script when="docapi.BEFORE" language="js">
+              // retrieve data corresponding to current person
+              var data = require('data');
+              var person = data.js('.').person;
+			  console.log(person);
+
+              var vars = require('vars').all;
+              // format birth date for person's locale
+              var locales = require('./locales');
+              vars.birth = locales.reformat_date(person.birth, person.locale, 'YYYY-MM-DD HH:mm', 'LLLL');
+              // convert dollar allowance to person's currency and format it based on person's local
+              vars.allowance = locales.reformat_money(person.allowance, person.locale);
+              // convert color name to RGB
+              var color = require('onecolor');
+              vars.color = color(person.eyes).css();
+            </script>
+
+            <cell inner_margins="5,5,5,5">
+              <p>
+                <subst xpath="name" name="name" texttype="0"/>
+              </p>
+            </cell>
+            <cell inner_margins="5,5,5,5">
+              <p>
+                <subst xpath="$birth" name="birth" texttype="0"/>
+              </p>
+            </cell>
+            <cell inner_margins="5,5,5,5">
+              <p>
+                <subst xpath="eyes" texttype="0">
+                  <modification value="$color" key="@ISubstitution/CharacterStyle/Foreground/Color"/>
+                </subst>
+              </p>
+            </cell>
+            <cell inner_margins="5,5,5,5">
+              <p>
+                <subst xpath="$allowance" name="allowance" texttype="0"/>
+              </p>
+            </cell>
+
+          </row>
+        </rep>
+      </body>
+    </table>
+  </story>
+
+  <page occurrence="docapi.OCC_ONCE_OR_MORE" size="800,600">
+    <text pos='50,50' size='700,500' pen_rgb='255,255,255,0' storyref="main"/>
+  </page>
+</root>

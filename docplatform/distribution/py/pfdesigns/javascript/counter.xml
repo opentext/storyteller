@@ -1,0 +1,40 @@
+<root>
+  <template>
+    <data>
+      <item id="0"/>
+      <item id="1"/>
+      <item id="2"/>
+      <item id="3"/>
+    </data>
+  </template>
+  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0" />
+  <story name="Main">
+    <rep xpath="/data/item">
+      <p>
+        <rep xpath="/data/item">
+          <rep xpath="/data/item">
+            <style name='Arial' size='8'/>
+            <subst xpath="@id">
+              <script when="docapi.BEFORE" language="js">
+                test += 1;
+                console.log( test, 'Hello from javascript!' );
+              </script>
+            </subst>
+          </rep>
+          _
+        </rep>
+      </p>
+    </rep>
+  </story>
+  <page occurrence="docapi.OCC_ONCE_OR_MORE">
+    <text pos='10,10' brush='1' size='500,800' storyref="Main">
+      <script when="docapi.BEFORE" language="js">
+        var test = 0;
+      </script>
+      <script when="docapi.AFTER" language="js">
+        var assert = require('assert');
+        assert.strictEqual( test, 64 );
+      </script>
+    </text>
+  </page>
+</root>

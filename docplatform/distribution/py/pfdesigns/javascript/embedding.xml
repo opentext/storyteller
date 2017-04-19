@@ -1,0 +1,64 @@
+<root>
+  <story name='main_story'>
+    <p>
+      <table size='400, 0' dim='2,2' mode='paragraph'>
+        <script when="docapi.BEFORE" language="js">
+          var lib = require( './test' );
+          var item = require( 'layout' ).item();
+          var vars = require( 'vars' );
+
+          console.log( item.Width );
+          item.Box.W *= 2;
+          console.log( item.Width );
+          vars.set( 'width', item.Box.W );
+          vars.set( 'scalar', 42 );
+          vars.set( 'array', 22, [ 3, 2 ] );
+          vars.set( 'array', 21, [ 3, 3 ] );
+        </script>
+        <body>
+          <row index='0'>
+            <cell><p>cell 1</p></cell>
+            <cell><p>cell 2</p></cell>
+          </row>
+          <row index='1'>
+            <cell><p>cell 3</p></cell>
+            <cell><p>cell 4</p></cell>
+          </row>
+          <row index='1'>
+            <cell><p>cell 5</p></cell>
+            <cell><p>cell 6</p></cell>
+          </row>
+        </body>
+      </table>
+      <swi xpath='$switch_key'>
+        <script when="docapi.BEFORE" language="js">
+          var vars = require( 'vars' );
+          vars.get( 'width' ) + ' === ' + vars.get( 'width' );
+          vars.get( 'array', [ 3, 2 ] ) + " " + vars.get( 'array', [ 3, 3 ] );
+        </script>
+        <case key='true'>
+          <p>text</p>
+          <p>text</p>
+          <p>text</p>
+        </case>
+        <case/>
+      </swi>
+    </p>
+  </story>
+  
+  <page occurrence="docapi.OCC_ONCE_OR_MORE">
+    <script when="docapi.BEFORE" language="js">
+      //var test = require( './test' );
+      //test.dump_item( 'item' );
+      //test.dateformat();
+      //test.he();
+      //test.xmldom();
+      //test.markup();
+
+      var services = require( './services' );
+      var uri = services.chart( { type : 'qr', dimension : [ 200, 200 ], qrdata : 'Hello World!' } );
+      console.log( 'QR: ', uri );
+    </script>
+    <text size='400,50' pos='10,10' pen='1' storyref='main_story'/>
+  </page>
+</root>

@@ -1,0 +1,88 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
+		 xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" version="0.1">
+  <stl:fixtures>
+	<xp:fixture key="link:/sample.json">
+{"widget": {
+    "debug": "on",
+    "window": {
+        "title": "Sample Konfabulator Widget",
+        "name": "main_window",
+        "width": 500,
+        "height": 500
+    },
+    "image": { 
+        "src": "Images/Sun.png",
+        "name": "sun1",
+        "hOffset": 250,
+        "vOffset": 250,
+        "alignment": "center"
+    },
+    "text": {
+        "data": "Click Here",
+        "size": 36,
+        "style": "bold",
+        "name": "text1",
+        "hOffset": 250,
+        "vOffset": 100,
+        "alignment": "center",
+        "onMouseUp": "sun1.opacity = (sun1.opacity / 100) * 90;"
+    }
+}}    
+	</xp:fixture>
+	<xp:fixture key="link:/sample.xml">
+	  <widget>
+		<debug>on</debug>
+		<window>
+		  <title>Sample Konfabulator Widget</title>
+          <name>main_window</name>
+          <width>500</width>
+          <height>500</height>
+		</window>
+		<image>
+		  <src>Images/Sun.png</src>
+		  <name>sun1</name>
+          <hOffset>250</hOffset>
+          <vOffset>250</vOffset>
+          <alignment>center</alignment>
+		</image>
+		<text>
+		  <data>Click Here</data>
+		  <size>36</size>
+		  <style>bold</style>
+          <name>text1</name>
+          <hOffset>250</hOffset>
+          <vOffset>100</vOffset>
+          <alignment>center</alignment>
+          <onMouseUp>sun1.opacity = (sun1.opacity / 100) * 90;</onMouseUp>
+		</text>
+	  </widget>
+	</xp:fixture>
+  </stl:fixtures>
+  <stl:document>
+	<stl:page w="300pt" h="220pt">
+      <stl:script language="js">
+		var assert = require('assert');
+		var streams = require('streams');
+		var xml = streams.stream('link:/sample.xml');
+		var json = streams.stream('link:/sample.json');
+
+		// use xml2js to convert xml markup to js hierarchy
+		function toJS( xml ) {
+          var res;
+		  require('xml2js').parseString(xml, function(err,result){
+            if (err) throw new Error('XML parsing error!');
+            res = result;
+		  });
+          return res;
+		}
+
+		var json2xml = require('./json2xml');
+		// perform the conversion JSON -> js -> xml string
+		var converted = json2xml(JSON.parse(json.read()));
+		var expected = xml.read();
+		// convert xml back to js hierarchy and compare the results
+		assert.deepEqual( toJS(converted), toJS(expected) );
+      </stl:script>
+	</stl:page>
+  </stl:document>
+</stl:stl>

@@ -1,0 +1,92 @@
+{
+  "sv": {
+    "symbol": "SEK",
+    "symbol_native": "kr",
+    "decimal_digits": 2,
+    "rounding": 0,
+    "code": "SEK",
+	"format": "%v %s",
+	"decimal": ",",
+	"group": " "
+  },
+  "en-us": {
+    "symbol": "$",
+    "symbol_native": "$",
+    "decimal_digits": 2,
+    "rounding": 0,
+    "code": "USD",
+	"format": "%s%v",
+	"decimal": ".",
+	"group": ","
+  },
+  "en-gb": {
+    "symbol": "£",
+    "symbol_native": "£",
+    "decimal_digits": 2,
+    "rounding": 0,
+    "code": "GBP",
+	"format": "%s%v",
+	"decimal": ".",
+	"group": ","
+  },
+  "fr": {
+    "symbol": "€",
+    "symbol_native": "€",
+    "decimal_digits": 2,
+    "rounding": 0,
+    "code": "EUR",
+	"format": "%v %s",
+	"decimal": ",",
+	"group": " "
+  },
+  "cs": {
+    "symbol": "CZK",
+    "symbol_native": "Kč",
+    "decimal_digits": 2,
+    "rounding": 0,
+    "code": "CZK",
+	"format": "%v %s",
+	"decimal": ",",
+	"group": " "
+  },
+  "ru": {
+    "symbol": "RUB",
+    "symbol_native": "руб.",
+    "decimal_digits": 2,
+    "rounding": 0,
+    "code": "RUB",
+	"format": "%v %s",
+	"decimal": ",",
+	"group": " "
+  },
+  "ar-sa": {
+    "symbol": "SAR",
+    "symbol_native": "ر.س.‏",
+    "decimal_digits": 2,
+    "rounding": 0,
+    "code": "SAR",
+	"format": "%s%v",
+	"decimal": "٫",
+	"group": "٬"
+  },
+  "hi": {
+    "symbol": "₹",
+    "symbol_native": "₨",
+    "decimal_digits": 2,
+    "rounding": 0,
+    "code": "INR",
+	"format": "%s%v",
+	"decimal": ".",
+	"group": ","
+  },
+  "ja": {
+    "symbol": "¥",
+    "symbol_native": "￥",
+    "decimal_digits": 0,
+    "rounding": 0,
+    "code": "JPY",
+	"format": "%s%v",
+	"decimal": ".",
+	"group": ","
+  }
+}

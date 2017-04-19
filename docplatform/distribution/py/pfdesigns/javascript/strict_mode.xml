@@ -1,0 +1,37 @@
+<root>
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var assert = require( 'assert' );
+
+      // it is not possible to implicitly modify global variable scope in strict mode --
+      assert.throws( 
+        function() { xxx = 42; },
+        /ReferenceError: xxx is not defined/ );
+
+      // make sure even modules run in strict mode (with statement is disabled)
+      assert.throws( 
+        function() { require( './strict_mode.js' ); },
+        /SyntaxError: Strict mode code may not include a with statement/ );
+
+      // strict mode makes sure there are no accidental object extensions
+      assert.throws( 
+        function() {
+          var obj = {prop1 : 1};
+          Object.preventExtensions(obj);
+          obj.prop2 = 2;
+        },
+        /TypeError: Can't add property prop2, object is not extensible/ );
+
+      // strict mode avoids standalone functions from binding 'this' to global object
+      assert.strictEqual( undefined, (function() { return this; })() );
+
+      // strict mode runs 'eval()' in a separate scope
+      assert.throws( 
+        function() {
+          eval("var bar = 10;");
+          console.log( bar );
+        },
+        /ReferenceError: bar is not defined/ );
+    </script>
+  </page>
+</root>

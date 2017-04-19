@@ -1,0 +1,42 @@
+<root>
+  <page>
+    <text pos='20,25' size='50,15' pen='1' name="First Text">
+      <script when="docapi.BEFORE" language="js">
+        var vars = require( 'vars' ).all;
+        var item = require( 'layout' ).item();
+        
+        vars.names = item.Name;
+        console.log( 'Hello from javascript!' );
+      </script>
+    </text>
+    <text pos='20,125' size='50,15' pen='1' name="Second Text">
+      <script when="docapi.BEFORE" language="py">
+vars.setVar( "names", '\n'.join( ( vars.getVar( "names" ), fun.Item().Name() ) ) )
+print( 'Hi from python!' );
+      </script>
+    </text>
+    <text pos='20,225' size='50,15' pen='1' name="Third Text">
+      <script when="docapi.BEFORE" language="js">
+        var vars = require( 'vars' ).all;
+        var item = require( 'layout' ).item();
+        
+        vars.names = [ vars.names, item.Name ].join('\n');
+        console.log( 'Hello from javascript again!' );
+      </script>
+    </text>
+    <script when="docapi.AFTER" language="js">
+      var assert = require( 'assert' );
+      var vars = require( 'vars' ).all;
+      
+      var names = vars.names;
+      
+      assert.strictEqual( [
+        'First Text',
+        'Second Text',
+        'Third Text' ].join('\n'), names );
+      
+      console.log( 'Accumulated Names:' );
+      console.log( names );
+     </script>
+  </page>
+</root>

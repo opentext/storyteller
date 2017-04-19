@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="stl2html.xslt"?>
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
+		 xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" version="0.1">
+  <stl:fixtures>
+	<xp:fixture key="link:/empty.svg" type="application/xml"><svg xmlns="http://www.w3.org/2000/svg" width="0px" height="0px"></svg></xp:fixture>
+	<xp:fixture key="link:/stackedAreaData.json" type="application/json" src="wd:/stackedAreaData.json"/>
+	<xp:fixture key="link:/icons/important.png" encoding="base64" type="image/png">
+	  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
+	</xp:fixture>
+  </stl:fixtures>
+  <stl:data>
+    <stl:template>
+	  <data>
+		<genres>
+		  <genre id="fic">Fiction</genre>
+		  <genre id="poe">Poetry</genre>
+		  <genre id="edu">Education</genre>
+		</genres>
+		<book>
+		  <author>?</author>
+		  <title>?</title>
+		  <genre>?</genre>
+		  <price>?</price>
+		  <pages>?</pages>
+		  <date>?</date>
+		  <review>?</review>
+		</book>
+	  </data> 
+    </stl:template>
+    <stl:transformation>
+	  <tdt:transformation
+		  xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
+		<tdt:rule path="/data/book">
+		  <tdt:value key=".">/data/book</tdt:value>
+		  <tdt:value key="recurse">.</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/book/date">
+		  <tdt:value key=".">published</tdt:value>
+		  <tdt:value key="text()">concat(@year,'/', @month,'/', @day)</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/book/genre">
+		  <tdt:value key="$id">@genre</tdt:value>
+		  <tdt:value key=".">.</tdt:value>
+		  <tdt:value key="text()">tdt:template()/data/genres/genre[@id=$id]</tdt:value>
+		</tdt:rule>
+		<tdt:rule path="/data/genres">
+		  <tdt:value key=".">tdt:nodeset()</tdt:value>
+		</tdt:rule>
+	  </tdt:transformation>
+    </stl:transformation>
+  </stl:data>
+  <stl:style>
+	.paragraph {
+	  text-align: justify;
+	  margin-bottom: 8pt;
+	}
+
+	/* style emphasizing a block of a text */
+	.emphasis {
+	  font-style: italic;
+	}
+
+	.table {
+	  background-color: lightblue;
+	  border-collapse: collapse;
+	}
+
+	/* styles representing cell and table border */
+	.theader, .even-trow, .odd-trow {
+	  font-family: Arial;
+	  font-size: 10pt;
+	  padding: 8pt 2pt;
+	}
+	.theader {
+	  font-weight: bold;
+	  background-color: #acf;	  
+	}
+	.even-trow {
+	  border-top: 1pt solid darkblue;
+	  background-color: #def;	  
+	}
+	.odd-trow {
+	  background-color: #edf3fe;	  
+	}
+
+	.two-columns {
+	  column-count: 2;
+	  column-gap: 2em; 
+	  column-width: 200pt;
+
+	  /* Chrome, Safari, Opera */
+	  -webkit-column-count: 2;
+	  -webkit-column-gap: 2em; 
+	  -webkit-column-width: 200pt;
+
+	  /* Firefox */
+	  -moz-column-count: 2;
+	  -moz-column-gap: 2em; 
+	  -moz-column-width: 200pt;
+	}
+  </stl:style>
+  <stl:document>
+	<stl:story name="Main" tag="Normal" w="540pt" max-width="800pt">
+	  <stl:p class="paragraph" style="text-align:center;">
+		<stl:span style="font-size: 42pt; font-weight: bold; ">O</stl:span>ne morning, when Gregor Samsa woke from 
+		troubled dreams, he found himself transformed in his bed into a horrible vermin. 
+		He lay on his armour-like back, and if he lifted his head a little he could see 
+		his brown belly, slightly domed and divided by arches into stiff sections. 
+		The bedding was hardly able to cover it and seemed ready to slide off any moment. 
+		His many legs, pitifully thin compared with the size of the rest of him, 
+		waved about helplessly as he looked.
+	  </stl:p>
+	  <stl:block class="two-columns">
+		<stl:p class="paragraph" >
+		  <stl:image src="link:/icons/important.png"/> 
+		  <stl:span class="emphasis">“What’s happened to me?”</stl:span> he thought. It wasn’t a dream. 
+		  His room, a proper human room although a little too small, lay peacefully between its four 
+		  familiar walls. A collection of textile samples lay spread out on the table – Samsa was 
+		  a travelling salesman – and above it there hung a picture that he had recently cut out 
+		  of an illustrated magazine and housed in a nice, gilded frame. It showed a lady fitted 
+		  out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered 
+		  the whole of her lower arm towards the viewer.
+		</stl:p>
+		<stl:p class="paragraph" >
+		  Gregor then turned to look out the window at the dull weather. Drops of rain could be 
+		  heard hitting the pane, which made him feel quite sad. <stl:span class="emphasis">“How about 
+		  if I sleep a 1 little bit longer and forget all this nonsense”</stl:span>, he thought, 
+		  but that was something he was unable to do because he was used to sleeping on his right, 
+		  and in his present state couldn’t get into that position. However hard he threw himself 
+		  onto his right, he always rolled back to where he was. He must have tried it a hundred times, 
+		  shut his eyes so that he wouldn’t have to look at the floundering legs, and only stopped 
+		  when he began to feel a mild, dull pain there that he had never felt before.
+		</stl:p>
+	  </stl:block>
+	  <stl:p>
+		<stl:table class="table" w="100%">
+		  <stl:story>
+			<stl:row h="30pt">
+			  <stl:cell class="theader" w="13%"><stl:p>Date</stl:p></stl:cell>
+			  <stl:cell class="theader" w="30%"><stl:p>Author</stl:p></stl:cell>
+			  <stl:cell class="theader" w="30%"><stl:p>Title</stl:p></stl:cell>
+			  <stl:cell class="theader" w="13%"><stl:p>Genre</stl:p></stl:cell>
+			  <stl:cell class="theader" w="7%"><stl:p style="text-align:center;">Price</stl:p></stl:cell>
+			  <stl:cell class="theader" w="7%"><stl:p style="text-align:center;">Pages</stl:p></stl:cell>
+			</stl:row>
+			<stl:repeater xpath="//book">
+			  <stl:row h="30pt">
+				<stl:cell class="even-trow"><stl:p><stl:field xpath="date"/></stl:p></stl:cell>
+				<stl:cell class="even-trow"><stl:p><stl:field xpath="author"/></stl:p></stl:cell>
+				<stl:cell class="even-trow"><stl:p><stl:field xpath="title"/></stl:p></stl:cell>
+				<stl:cell class="even-trow"><stl:p><stl:field xpath="genre"/></stl:p></stl:cell>
+				<stl:cell class="even-trow"><stl:p style="text-align:right;"><stl:field xpath="price"/></stl:p></stl:cell>
+				<stl:cell class="even-trow"><stl:p style="text-align:right;"><stl:field xpath="pages"/></stl:p></stl:cell>
+			  </stl:row>
+			  <stl:row h="30pt">
+				<stl:cell class="odd-trow" colspan="6">
+				  <stl:p><stl:span style="font-weight:bold;">Review:</stl:span> <stl:field xpath="review"/></stl:p>
+				</stl:cell>
+			  </stl:row>
+			</stl:repeater>
+		  </stl:story>
+		</stl:table>
+	  </stl:p>
+	  <stl:block collapse-with-summary="Click to open chart section">
+		<stl:p style="text-align:center;">
+		  <stl:fragment w="250pt" h="250pt" src="link:/empty.svg" selector="/item[1]">
+			<stl:script when="before" language="js">
+			  var charts = require('charts');
+			  var series = [{ key: 'books', values: '/data/book' }];
+			  var options = {
+			  donut: true,
+			  padAngle: .08,
+              cornerRadius: 5,
+			  //pie: { startAngle: d => d.startAngle/2 -Math.PI/2, endAngle: d => d.endAngle/2 -Math.PI/2 },
+		      showLegend: false,
+			  showLabels: true,
+			  labelsOutside: true,
+			  x: 'genre',
+			  y: 'price'
+			  };
+
+			  charts.d3chart('pieChart', series, options);
+			</stl:script>
+		  </stl:fragment>
+		  <stl:fragment w="280pt" h="250pt" src="link:/empty.svg" selector="/item[1]">
+			<stl:script when="before" language="js">
+				var charts = require('charts');
+				var data = require('data');
+
+				var prices = data.js('/data/book/price').price;
+				var pages = data.js('/data/book/pages').pages;
+				var genres = data.js('/data/book/genre').genre;
+				var series = [
+				{ key: "Prices", color: "pink", values: genres.map( (g, i) => ({genre: g, value: -prices[i]}) ) },
+				{ key: "Pages", color: "lightblue", values: genres.map( (g, i) => ({genre: g, value: pages[i]}) ) },
+				];
+				var options = {
+				showLegend: false,
+				showValues: true,
+				showYAxis: false,
+				valueFormat: v => Math.abs(Math.round(v)),
+				x: d => d.genre,
+				y: d => d.value
+				};
+				charts.d3chart('multiBarHorizontalChart', series, options);
+			</stl:script>
+		  </stl:fragment>
+		</stl:p>
+		<stl:p style="text-align:center;page-break-before:always;">
+		  <stl:fragment w="100%" h="400pt" src="link:/empty.svg" selector="/item[1]">
+			<stl:script when="before" language="js">
+				var charts = require('charts');
+				var repo = require('repo');
+
+				var series = JSON.parse( repo.load('link:/stackedAreaData.json') );
+				var options = {
+				margin: {right: 100},
+				x: d => d[0],
+				y: d => d[1],
+				useInteractiveGuideline: true,
+				rightAlignYAxis: true,
+				showLegend: false,
+				xAxis:  { tickFormat: d => charts.time.format('%x')(new Date(d)) },
+				yAxis: { tickFormat: charts.format(',.2f') },
+				};
+				charts.d3chart('stackedAreaChart', series, options);
+			</stl:script>
+		  </stl:fragment>
+		</stl:p>
+<!--
+		<stl:p style="text-align:center;">
+		  <stl:chart w="100%" h="100pt" modern="true">
+			<ccd>Custom chart definition</ccd>
+		  </stl:chart>
+		</stl:p>
+-->
+	  </stl:block>
+	</stl:story>
+	<stl:page w="600pt" h="820pt" occurrence="repeatable">
+	  <stl:text x="30pt" y="30pt" w="540pt" h="780pt" story="Main"/>
+	</stl:page>
+  </stl:document>
+</stl:stl>

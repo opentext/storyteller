@@ -1,0 +1,16 @@
+<root>
+  <page>
+    <script when="docapi.BEFORE" language="js">
+	  var repo = require('repo' );
+      var assert = require( 'assert' );
+
+	  var code = "'use strict';\nexports.text = 'hello';";
+	  var uri = repo.upload( code );
+	  assert.strictEqual( 'local:74281248b366813f24e78d828e21eb53bc8d1ed0', uri );
+
+	  var module = require( uri );
+	  assert.strictEqual( 'hello', module.text );
+    </script>
+  </page>
+</root>
+

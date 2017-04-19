@@ -1,0 +1,91 @@
+<root>  
+  <page>
+    <text pos='20,20' size='50,50' pen='1'>
+      <script when="docapi.BEFORE" language="js">
+        var vars = require( 'vars' );
+        var assert = require( 'assert' );
+        vars.set( 'array1d', 'a', [ 0 ] );
+
+		assert.strictEqual( 1, vars.all.array1d.length );
+		assert.strictEqual( 'a', vars.all.array1d[0] );
+		vars.all.array1d.push( 'b' );
+		assert.strictEqual( 2, vars.all.array1d.length );
+		assert.strictEqual( 'a', vars.all.array1d[0] );
+		assert.strictEqual( 'b', vars.all.array1d[1] );
+		assert.strictEqual( undefined, vars.all.array1d[2] );
+
+		//console.log( Object.getOwnPropertyNames(Array1d.prototype) );
+
+		assert.strictEqual( 'a,b', vars.all.array1d.toString() );
+		vars.all.array1d.push( 'c' );
+		assert.strictEqual( 'a b c', vars.all.array1d.join(' ') );
+
+		vars.all.array1d.push( 'b' );
+		assert.strictEqual( 0, vars.all.array1d.indexOf('a') );
+		assert.strictEqual( 1, vars.all.array1d.indexOf('b') );
+		assert.strictEqual( -1, vars.all.array1d.indexOf('x') );
+		assert.strictEqual( 3, vars.all.array1d.lastIndexOf('b') );
+		assert.strictEqual( 'b', vars.all.array1d.pop() );
+
+		assert.strictEqual( 'c', vars.all.array1d.pop() );
+		assert.strictEqual( 2, vars.all.array1d.length );
+		assert.strictEqual( undefined, vars.all.array1d[2] );
+		assert.strictEqual( 'a', vars.all.array1d[0] );
+
+		vars.all.array1d.length = 1;
+		assert.strictEqual( 1, vars.all.array1d.length );
+		assert.strictEqual( 'a', vars.all.array1d[0] );
+		assert.strictEqual( undefined, vars.all.array1d[1] );
+
+		var arr = vars.all.array1d;
+		assert.strictEqual( 'a', arr.pop() );
+		assert.strictEqual( 0, arr.length );
+		assert.strictEqual( '', arr.toString() );
+		vars.all.array1d.push('A');
+		assert.strictEqual( 1, arr.length );
+		assert.strictEqual( 'A', arr.pop() );
+		assert.strictEqual( undefined, arr.pop() );
+
+        // cannot set length to prolong the array1d (unlike with native Array) 
+        assert.throws(
+		  function () { vars.all.array1d.length = 10; },
+		  /Error: Array enlargement not supported./ );
+
+        // cannot set length to prolong the array1d (unlike with native Array) 
+        assert.throws(
+		  function () { vars.all.array1d.xxx = 'xxx'; },
+		  /Error: Invalid setter: xxx/ );
+
+        // array1d variable
+        vars.set( 'array3d', 123, [ 0, 0, 0 ] );
+        vars.set( 'array3d', 1000, [ 0, 0, 1 ] );		
+
+        // variable presence
+        assert.deepEqual( 1, vars.dim('array3d', []) );
+        assert.deepEqual( 2, vars.dim('array3d', [0,0]) );
+
+		assert.strictEqual( 1, vars.all.array3d.length );
+        assert.throws(
+		  function () { vars.all.array3d.toString(); },
+		  /Error: Accessing 1. level of 3-dim array./ );
+
+		assert.strictEqual( 1, vars.all.array3d[0].length );
+        assert.throws(
+		  function () { vars.all.array3d[0].toString(); },
+		  /Error: Accessing 2. level of 3-dim array./ );
+
+		assert.strictEqual( 2, vars.all.array3d[0][0].length );
+		assert.strictEqual( '123,1000', vars.all.array3d[0][0].toString() );
+		assert.strictEqual( 3, vars.all.array3d[0][0][0].length );
+		assert.strictEqual( '123', vars.all.array3d[0][0][0].toString() );
+		
+		console.log( vars.dump() );
+		console.log( vars.all );
+		Object.keys(vars.all).forEach( function(key) {
+		  console.log( key, '...', vars.all[key] );
+		});
+      </script>
+      A
+    </text>
+  </page>
+</root>

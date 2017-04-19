@@ -1,0 +1,12 @@
+<root>
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var fm = require( './file_module' );
+      console.log( 'square( %d ) === %d', fm.value, fm.square( fm.value ) );
+      var dm = require( './dir_module' );
+	  console.log( dm.label );
+      var jm = require( './json_module' );
+	  console.log( jm.greeting );
+    </script>
+  </page>
+</root>

@@ -1,0 +1,42 @@
+<root>
+  <template>
+    <people>
+      <person>Deron Eriksson</person>
+      <person>William Hopkins</person>
+      <person>Larry Smith</person>
+      <person>Pierre Gautier</person>
+      <person>Kateřina Ťuhýková</person>
+      <person>Афанасий Аллочкин</person>
+      <person>آمنة عبد الحميد</person>
+      <person>আহসান अकबर चन्दना</person>
+      <person>日本人の氏名</person>
+      <person></person>
+    </people>
+  </template>
+  <tdt:transformation 
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+
+  <story name="main">
+    <rep xpath="/people/person" name="item">
+	  <p>
+		<style name='Arial Unicode MS' size='12'/>
+        <subst xpath="$name" name="name" texttype="0">
+		  <script when="docapi.BEFORE" language="js">
+            var data = require('data');
+            var person = data.js('.').person;
+			var subst = require( 'layout' ).item();
+			if ( person ) {
+			  subst.Data = person.split(" ").reverse().join( ", " );
+			} else {
+			  subst.Data = '"" (that\'s a name what\'s missing)';
+			}
+          </script>
+		</subst>
+	  </p>
+    </rep>
+  </story>
+
+  <page occurrence="docapi.OCC_ONCE_OR_MORE" size="800,600">
+    <text pos='50,50' size='700,500' pen_rgb='255,255,255,0' storyref="main"/>
+  </page>
+</root>

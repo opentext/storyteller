@@ -1,0 +1,63 @@
+<root>
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var assert = require( 'assert' );
+      var repo = require( 'repo' );
+      var util = require( 'util' );
+	  var content = {
+	      utf8: 'Číča šimrá kuřátko\n',
+		  base64: 'xIzDrcSNYSDFoWltcsOhIGt1xZnDoXRrbwo=',
+		  hex: 'c48cc3adc48d6120c5a1696d72c3a1206b75c599c3a1746b6f0a',
+		  binary: 'ÄÃ­Äa Å¡imrÃ¡ kuÅÃ¡tko\n',
+		  ascii: 'D\fC-D\ra E!imrC! kuE\u0019C!tko\n',
+		  inspect: '&lt;Buffer c4 8c c3 ad c4 8d 61 20 c5 a1 69 6d 72 c3 a1 20 6b 75 c5 99 c3 a1 74 6b 6f 0a&gt;',
+	  };
+	  var files = {
+	    utf8: 'wd:/repo.utf8',
+	    utf16le: 'wd:/repo.utf16',
+	    ucs2: 'wd:/repo.utf8',
+	  };
+	  var tests = {
+	    local: {
+          type: 'local:',
+		  content: content,
+		  uri: 'local:38a94eb278a24fbba60516b502c8218ead001ed2',
+		},
+	    data: {
+          type: 'data:',
+		  content: content,
+		  uri: 'data:application/octet-stream;base64,xIzDrcSNYSDFoWltcsOhIGt1xZnDoXRrbwo=',
+		},
+	  };
+
+	  function uri_test(test) {
+	    var uri = repo.save(test.type, test.content.utf8);
+        assert.strictEqual(test.uri, uri);
+	    assert.deepEqual( { type: 'STREAM', size: 26, uri: test.uri }, repo.stat( uri ) );
+        assert.strictEqual( test.content.utf8, repo.load( uri ) );
+
+		var uri2 = repo.save(test.type, repo.load(uri, null));
+		assert.strictEqual(uri, uri2);
+
+		Object.keys(test.content).forEach(function (key) {
+		  var data = (key === 'inspect')
+		    ? util.inspect(repo.load( uri, null ))
+			: repo.load(uri, key);
+		  assert.strictEqual(test.content[key], data);
+		});
+		if (test.files) {
+		  // load from files in various encodings
+		  Object.keys(test.files).forEach(function (key) {
+		    assert.strictEqual(test.content.utf8, repo.load(test.files[key], key));
+		  });
+		}
+		assert.strictEqual(test.content.utf8, repo.load(repo.upload(test.content.base64, 'base64')));
+	  }
+
+      uri_test(tests.local);
+      uri_test(tests.data);
+
+	  assert.strictEqual(null, repo.stat('non-existing-uri'));
+    </script>
+  </page>
+</root>

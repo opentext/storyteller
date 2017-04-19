@@ -1,0 +1,25 @@
+<root>
+  <template>
+	<data/>
+  </template>
+  <tdt:transformation 
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var assert = require('assert');
+	  var repo = require('repo');
+	  var JSZip = require('jszip');
+	  var zip = new JSZip();
+	  // load expected data
+	  var data = repo.load('wd:/zipped.xml');
+	  // load binary content
+	  var content = repo.load('wd:/zipped.zip', null);
+	  // open zip stream and inflate xml file
+	  zip.load(content);
+	  var unzipped = zip.file('zipped.xml').asText();
+	  // compare the results
+	  assert.strictEqual(data, unzipped);
+    </script>
+  </page>
+</root>

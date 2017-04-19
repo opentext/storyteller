@@ -1,0 +1,91 @@
+<root>
+  <template>
+    <items>
+      <item w="20" h="20"/>
+      <item w="20" h="30"/>
+      <item w="20" h="40"/>
+      <item w="20" h="50"/>
+    </items>
+  </template>
+
+  <tdt:transformation 
+      xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+
+  <story name="main">
+    <style name='Arial' size='20' bold="1"/>
+    <rep xpath="/items/item" name="items">
+      <p>
+        <shape pos='0,0' size='10,10' pen_rgb="0,0,0,0" brush_rgb='100,200,100,0' type='rectangle' wrapping="resourcesapi.WRAPPING_EXACT">
+          <script when="docapi.BEFORE" language="js">
+            var assert = require('assert');
+            var layout = require('layout');
+            var data = require('data');
+            var share = require('share');
+
+            var it = data.js('.').item;
+
+            assert.deepEqual({X: share.x, Y: share.y}, layout.cursor());
+            assert.deepEqual({X: share.px + share.x, Y: share.py + share.y}, layout.cursor(true));
+
+            share.y += +it.h;
+
+            var shape = layout.item();
+            shape.Box.W = it.w;
+            shape.Box.H = it.h;
+          </script>
+        </shape>
+      </p>
+    </rep>
+    <table size='100,100' dim='1,2' name="My Table">
+      <body>
+        <row index='0' name="My Row">
+          <cell><p>cell 1</p></cell>
+          <cell>
+            <p>
+              <shape pos='0,0' size='10,10' pen_rgb="0,0,0,0" brush_rgb='100,200,100,0' type='rectangle' wrapping="resourcesapi.WRAPPING_EXACT">
+                <script when="docapi.BEFORE" language="js">
+                  var layout = require('layout');
+                  //layout.cursor(true);
+                </script>
+              </shape>
+          </p>
+          </cell>
+        </row>
+      </body>
+    </table>
+  </story>
+
+  <page occurrence="docapi.OCC_ONCE_OR_MORE">
+    <text pos='20,20' size='550,50' pen_rgb='255,255,255,0'>
+      <p>
+        <style name='Arial' size='36.0'/>
+        Layout Cursor Demo
+      </p>
+    </text>
+
+    <text pos='20,80' size='550,750' 
+          brush_rgb='225,225,250,255' pen_rgb='100,100,155,255' inner_margins='8,8,8,8' corners='rounded @ 5 5;' 
+          storyref='main'>
+      <script when="docapi.BEFORE" language="js">
+        var assert = require('assert');
+        var layout = require('layout');
+        var item = layout.item();
+        var share = require('share');
+
+        assert.throws( 
+          function () { layout.cursor(); },
+          /Not supported operation 'getLayoutCursor'./ );
+
+        // initial area coordinates (top-left corner including inner margins)
+        share.x = 8;
+        share.y = 8;
+
+        // page coordinates (area positions plus inner margins)
+        share.px = item.Box.X;
+        share.py = item.Box.Y;
+
+        assert.deepEqual({x: 8, y: 8, px: 20, py: 80}, share);
+      </script>
+    </text>
+  </page>
+</root>

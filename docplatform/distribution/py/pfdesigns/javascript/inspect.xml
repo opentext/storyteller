@@ -1,0 +1,15 @@
+<root>  
+  <page>
+    <script when="docapi.BEFORE" language="js">
+	  var util = require('util');
+	  var modules = require('__init__').modules.core;
+	  var lines = [];
+	  Object.keys(modules).forEach(function (name) {
+	    var label = util.format( '%s (%s)', name, modules[name] );
+	    var module = require(name);
+	    lines.push(label, "~".repeat( label.length ), util.inspect(module), '');
+	  });
+	  console.log(lines.join('\n'));
+    </script>
+  </page>
+</root>

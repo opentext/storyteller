@@ -1,0 +1,45 @@
+<root>
+  <page>
+    <script when="docapi.BEFORE" language="js">
+      var assert = require( 'assert' );
+
+      var equation = '\u00bd + \u00bc = \u00be';
+
+      var message = equation + ": " + equation.length + " characters, " 
+	    + Buffer.byteLength(equation, 'utf8') + " bytes";
+
+	  assert.strictEqual( '½ + ¼ = ¾: 9 characters, 12 bytes', message );
+
+	  var buf = new Buffer(256);
+	  var len = buf.write( equation, 0);
+	  assert.strictEqual( '12 bytes: ½ + ¼ = ¾', len + " bytes: " + buf.toString('utf8', 0, len));
+
+	  var buf = new Buffer(4);
+	  buf[0] = 0x3;
+	  buf[1] = 0x4;
+	  buf[2] = 0x23;
+	  buf[3] = 0x42;
+
+	  assert.strictEqual( 0x0304, buf.readUInt16BE(0) );
+	  assert.strictEqual( 0x0403, buf.readUInt16LE(0) );
+	  assert.strictEqual( 0x0423, buf.readUInt16BE(1) );
+	  assert.strictEqual( 0x2304, buf.readUInt16LE(1) );
+	  assert.strictEqual( 0x2342, buf.readUInt16BE(2) );
+	  assert.strictEqual( 0x4223, buf.readUInt16LE(2) );
+
+	  assert.strictEqual( 0x03042342, buf.readUInt32BE(0) );
+	  assert.strictEqual( 0x42230403, buf.readUInt32LE(0) );
+
+	  var buf1 = new Buffer(26);
+	  var buf2 = new Buffer(26);
+
+	  for (var i = 0 ; i &lt; 26 ; i++) {
+	    buf1[i] = i + 97; // 97 is ASCII a
+	    buf2[i] = 33; // ASCII !
+	  }
+	  buf1.copy(buf2, 8, 16, 20);
+
+	  assert.strictEqual( '!!!!!!!!qrst!!!!!!!!!!!!!', buf2.toString('ascii', 0, 25));
+    </script>
+  </page>
+</root>

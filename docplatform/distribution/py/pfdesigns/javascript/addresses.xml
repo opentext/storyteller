@@ -1,0 +1,31 @@
+<root>
+  <story name='main_story'>
+    <style name='Arial' size='10.0'/>
+    <subst type='docapi.SubstitutionTypes.REPOSITORY' uri='nonsense'>
+      <script when="docapi.BEFORE" language="js">
+        var subst = require('layout').item();
+        var repo = require('repo');
+        var Baby = require('babyparse');
+        var Mark = require('markup-js');
+
+        var addresses = repo.load('wd:/addresses.csv');
+        addresses = Baby.parse(addresses, {header: true}).data;
+        var template = repo.load('wd:/addresses.html');
+        var html = '\ufeff' + Mark.up(template, {addresses: addresses.slice(0, 10)});
+        subst.Uri = repo.upload(html);
+      </script>
+    </subst>
+  </story>
+
+  <page occurrence="docapi.OCC_ONCE_OR_MORE">
+    <text pos='20,20' size='550,50' pen_rgb='255,255,255,0'>
+      <p>
+        <style name='Arial' size='36.0'/>
+        CSV Parsing demo
+      </p>
+    </text>
+    <text pos='20,80' size='550,750' 
+          brush_rgb='225,225,250,255' pen_rgb='100,100,155,255' inner_margins='8,8,8,8' corners='rounded @ 5 5;' 
+          storyref='main_story'/>
+  </page>
+</root>
