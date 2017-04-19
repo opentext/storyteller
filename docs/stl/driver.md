@@ -309,8 +309,8 @@ is reflected in page layout XML/HTML:
 
 -   [DocBuilder definition](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/preview/Hierarchy.xml)
 -   [DocDef file](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/preview/HierarchyDD.xml)
--   [Layout XML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/HierarchyXml-py_000-m.layout.xml)
--   [Layout HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/HierarchyHtml-py_000-m.layout.html)
+-   [Layout XML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/HierarchyXml-py-m.layout.xml/stl.xml)
+-   [Layout HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/HierarchyHtml-py-m.layout.html/index.html)
 
 Note that generally there can be an arbitrary hierarchy of `stl:area` and `stl:span` elements:
 
@@ -1073,7 +1073,7 @@ presentation (presumably paginated HTML) the *XSLT* presented here is
 just an example, not the final solution.
 
 For generating HTML presentation we are using the following simple XSLT:
-[preview.xslt](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/preview/preview.xslt)
+[preview.xslt](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/preview/preview.xslt)
 
 The XSLT generates simple HTML presenting highlighted editable areas on
 top of the rasterized page backgrounds:
