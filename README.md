@@ -1,5 +1,6 @@
-# Welcome to StoryTeller documentation and tools repository
+# StoryTeller Development Documentation and Tools
 
-We are migrating our internal development documentation to Github, so more documentation pages will follow soon.
+We are migrating our internal development documentation to Github, so please, be patient.
+More documentation will follow soon.
 
-For current documentation see [this link](https://opentext.github.io/storyteller/index.html).
+See published [StoryTeller Development Documentation](https://opentext.github.io/storyteller/index.html).
