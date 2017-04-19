@@ -1,31 +1,19 @@
-Overview
-========
+# Javascript Extending
 
-This Section describes the motivation and technology behind the
-*DocPlatform Extending by Javascript*. It is the first part of the
-[Javascript Documentation](file:///doc/Dev-Javascript.html).
+This Section describes the motivation and technology behind the *DocPlatform Extending by Javascript*. It is the first part of the
+[Javascript Documentation](index.md).
 
-First we describe the environment used for *DocPlatform* extending, and
-list use cases how can such integration be exploited.
+First we describe the environment used for *DocPlatform* extending, and list use cases how can such integration be exploited.
 
-We will also discuss general conventions how to define the *Javascript
-APIs* and describe the resulting exposed API based on a convention we
-picked.
+We will also discuss general conventions how to define the *Javascript APIs* and describe the resulting exposed API based 
+on a convention we picked.
 
-We will conclude this section with some example implementations of the
-API and proposals how to deploy and integrate them in real world
-scenarios.
+We will conclude this section with some example implementations of the API and proposals how to deploy and integrate them 
+in real world scenarios.
 
-<div class="CENTER">
+![Javascript Extending](extending.png)
 
-\#+CAPTION Javascript Extending
-
-*extending.png*
-
-</div>
-
-Environment
-===========
+## Environment
 
 As an example of *DocPlatform Extending by Javascript* we use popular
 [Node.js platform](https://nodejs.org/). It is a modern framework based
@@ -74,13 +62,13 @@ Here is the comparison of [NginX](http://en.wikipedia.org/wiki/Nginx)
 and [Apache](http://en.wikipedia.org/wiki/Apache_HTTP_Server) HTTP
 servers under a heavy load:
 
-**Throughput (reqs/sec):**
+### Throughput (reqs/sec):
 
-*nginx-apache-reqs-sec.png*
+![NginX vs. Apache - requests/sec](nginx-apache-reqs-sec.png)
 
-**Memory consumption:**
+### Memory consumption:
 
-*nginx-apache-memory.png*
+![NginX vs. Apache - memory](nginx-apache-memory.png)
 
 It is clearly visible that the *NginX* it scales much better than
 traditional (thread based) solutions (like *Apache*). It is especially
@@ -93,14 +81,12 @@ For CPU intensive application the event-loop approach does not work on
 it's own. Such cases are typically solved by multiprocessing. We will
 show a draft of such solution at the end of this section.
 
-Use cases
-=========
+## Use cases
 
 This chapter lists possible use cases how extending *DocPlatform* API to
 *Javascript* can be utilized.
 
-Testing
--------
+### Testing
 
 Right now the main motivation was to prepare a suitable testing
 environment in order to be able to bring *Document Platform* &
@@ -120,8 +106,7 @@ to create more than \~5000 regression tests) and making sure the
 implementation quality is not compromised under a pressure of developing
 heavy load of new features demanded to every release.
 
-Client/Server Applications
---------------------------
+### Client/Server Applications
 
 Another possible use cases include some runtime solutions based on
 *Node.js* platform. With help of *Javascript* there is a potential to
@@ -132,8 +117,7 @@ solution and [Balance the
 Load](http://en.wikipedia.org/wiki/Load_balancing_(computing)) and so
 better utilize the computing power available in contemporary hardware.
 
-Multi-platform Desktop/Mobile applications
-------------------------------------------
+### Multi-platform Desktop/Mobile applications
 
 With modern frameworks like [AppJS](http://appjs.com/) (or alternatively
 [TideSDK](http://www.tidesdk.org/)/[TideKit](https://www.tidekit.com/))
@@ -154,8 +138,7 @@ technologies like this we could possibly have a *StoryTeller Editor*
 and/or *Viewer* deployed to the *Web*, *Desktop* (Windows, Mac OS and
 Linux) and *Mobile* from just a single source code base.
 
-Javascript Interfaces
-=====================
+## Javascript Interfaces
 
 Right now we are using [SWIG Interface generator](http://www.swig.org/)
 for automatic generation of interface wrappers to *Javascript*. With
@@ -182,20 +165,19 @@ possibilities how the whole *DocPlatform Javascript API* could be built
 namely in respect to [Asynchronous method
 invocation](http://en.wikipedia.org/wiki/Asynchronous_method_invocation).
 
-Calling Conventions
--------------------
+### Calling Conventions
 
-### Synchronous API
+#### Synchronous API
 
 The most straightforward calling convention is the plain old
 *Synchronous Call* - passing input arguments and retrieving a result
 directly as a *Return Value*.
 
-*api-method-sync.png*
+![Synchronous API call](api-method-sync.png)
 
 We call a `storage.uploadSync()` API method as follows:
 
-``` {#storage-upload-sync .javascript}
+```javascript
 var fs = require('fs');
 
 funtion uploadXMLFileSync(filepath) {
@@ -211,7 +193,7 @@ console.log(data);
 
 ... and the code above can result in a following output:
 
-``` {.javascript}
+```javascript
 { type: 'application/xml',
   hash: '4fbf890c4cf64a8900afb0589352ed2ef717b906',
   size: 438,
@@ -222,7 +204,7 @@ If there is a chain of operation to be performed, we just do them all
 sequentially (to avoid "naked" loops we can use a helper library like
 [underscore.js](http://underscorejs.org/)):
 
-``` {#storage-upload-sync .javascript}
+```javascript
 var _ = require('underscore');
 var xmlpaths = [ 'file1.xml', 'file2.xml', ... ];
 
@@ -244,23 +226,22 @@ If this was a convention we used for our API then parallelism would be
 achieved only by throwing more and more *processing threads* at the
 problem. Thankfully we can do better than that.
 
-### Asynchronous callback-based API
+#### Asynchronous callback-based API
 
 If we do not want to block the current *processing thread* with a
 (potentially) blocking operation we must somehow leverage a
 [Callback](http://en.wikipedia.org/wiki/Callback_%28computer_programming%29)
 mechanism.
 
-*api-method-callback.png*
+![Asynchronous API call](api-method-callback.png)
 
-Such [Asynchronous
-Operation](http://en.wikipedia.org/wiki/Asynchronous_I/O) is split to
+Such [Asynchronous Operation](http://en.wikipedia.org/wiki/Asynchronous_I/O) is split to
 two phases - the first part just registers a *request* and passes a
 *callback* to be called as part of the *response*.
 
 Such upload operation can look something like this:
 
-``` {#storage-upload-async .javascript}
+```javascript
 funtion uploadXMLFile(filepath, callback) {
   var data = {type: 'application/xml'};
   var instream = fs.createReadStream(xmlpath);
@@ -279,7 +260,7 @@ Very often we want to chain several API calls together.
 It is always possible to simply nest the API calls - in every callback a
 next API request is called:
 
-``` {#storage-upload-async-nested .javascript}
+```javascript
 // upload two files asynchronously, but sequentially - callback nesting
 uploadXMLFile(xmlpath1, function (err, data1) {
   if (err) throw err;
@@ -299,7 +280,7 @@ array and process the whole array in parallel. There exist many utility
 modules to make such operation easier, here we use the
 [async.js](https://github.com/caolan/async) library:
 
-``` {#storage-upload-async-chain .javascript}
+```javascript
 var async = require('async');
 var xmlpaths = ['file1.xml', 'file2.xml', ...];
 // upload all the files in parallel (use async.mapSeries() for serial upload)
@@ -336,14 +317,14 @@ arrives.
 More examples will follow to demonstrate how this approach is composable
 and able to scale up across the *process* and *computer* boundary.
 
-### Asynchronous, promise-based API
+#### Asynchronous, promise-based API
 
 Another alternative, how to implement [Asynchronous
 Calls](http://en.wikipedia.org/wiki/Asynchronous_I/O) (one making
 *asynchronous* calls more syntactically similar to *synchronous* ones)
 is using [Promises](http://en.wikipedia.org/wiki/Futures_and_promises).
 
-*api-method-promise.png*
+![Promise-based API call](api-method-promise.png)
 
 This relatively new approach is gaining popularity and there is even a
 standardization effort to make promises more inter-operable across
@@ -372,7 +353,7 @@ With the *q.js* library it is even possible to convert a
 just a single
 [decorator](http://en.wikipedia.org/wiki/Decorator_pattern) call:
 
-``` {#callback-to-promise-api-decorator .javascript}
+```javascript
 var Q = require('q');
 // convert callback-based interface to promise-based one
 var uploadXMLFile = Q.denodeify(uploadXMLFile);
@@ -382,7 +363,7 @@ Now we are ready to use the *Promise-based API*. The API call returns a
 *promise* and we can attach callback handlers through it's `then`
 method.
 
-``` {#storage-upload-promise .javascript}
+```javascript
 // upload file asynchronously (we get the promise immediately)
 var promise = uploadXMLFile(xmlpath);
 // we can append deferred handlers 
@@ -398,7 +379,7 @@ calls.
 Here we can simply combine an array of *promises* to a single *promise*
 and the rest is exactly like it was with just a single operation.
 
-``` {#storage-upload-promise-chain .javascript}
+```javascript
 var xmlpaths = ['file1.xml', 'file2.xml', ...];
 // create promise representing upload of all files
 var promise = Q.all(_.map(xmlpaths, uploadXMLFile));
@@ -419,8 +400,7 @@ converted back and forth. Just a simple decorator-based adapters
 (`denodeify` and `nodeify`) must be created to interconnect the
 *callback-based* and *promise-based* worlds.
 
-Storage
--------
+## Storage
 
 The first facility we expose to the *Javascript* world is the *Storage*
 service. It simply serves as a [Content Addressable
@@ -468,9 +448,9 @@ returned, namely:
 -   \[...\] ... Other optional data given by client (type, encoding,
     ...)
 
-**Example usage \[callback\]:**
+#### Example usage \[callback\]:
 
-``` {#storage-upload-callback .javascript}
+```javascript
 var fs = require('fs');
 
 var instream = fs.createReadStream(filepath);
@@ -480,9 +460,9 @@ storage.upload(instream, {type: 'application/xml'}, function (err, data) {
 });
 ```
 
-**Example usage \[promise\]:**
+#### Example usage \[promise\]:
 
-``` {#storage-upload-promise .javascript}
+```javascript
 var fs = require('fs');
 
 var instream = fs.createReadStream(filepath);
@@ -490,9 +470,9 @@ storage.upload( instream, {type: 'application/xml'})
   .then(console.log, console.error);
 ```
 
-**Output:**
+#### Output:
 
-``` {.javascript}
+```javascript
 { type: 'application/xml',
   hash: '4fbf890c4cf64a8900afb0589352ed2ef717b906',
   size: 438,
@@ -509,9 +489,9 @@ Caller passes `hash` key representing content and a *callback* to be
 called when the requested *content* is ready. The *content* is
 represented as a *readable stream*.
 
-**Example usage \[callback\]:**
+#### Example usage \[callback\]:
 
-``` {#storage-content-callback .javascript}
+```javascript
 var hash = '4fbf890c4cf64a8900afb0589352ed2ef717b906';
 storage.content(hash, function (err, instream) {
   if (err) throw err;
@@ -519,9 +499,9 @@ storage.content(hash, function (err, instream) {
 });
 ```
 
-**Example usage \[promise\]:**
+#### Example usage \[promise\]:
 
-``` {#storage-content-promise .javascript}
+```javascript
 var hash = '4fbf890c4cf64a8900afb0589352ed2ef717b906';
 storage.content(hash)
   .then(function (instream) {
@@ -548,9 +528,9 @@ Meta-data is a dictionary consisting of the following items:
 -   \[...\] ... Other optional data given by client (type, encoding,
     ...)
 
-**Example usage \[callback\]:**
+#### Example usage \[callback\]:
 
-``` {#storage-info-callback .javascript}
+```javascript
 var hash = '4fbf890c4cf64a8900afb0589352ed2ef717b906';
 storage.info(hash, function (err, data) {
   if (err) throw err;
@@ -558,26 +538,25 @@ storage.info(hash, function (err, data) {
 });
 ```
 
-**Example usage \[promise\]:**
+#### Example usage \[promise\]:
 
-``` {#storage-info-promise .javascript}
+```javascript
 var hash = '4fbf890c4cf64a8900afb0589352ed2ef717b906';
 storage.info(hash)
   .then(console.log)
   .fail(function (err) { throw err; });
 ```
 
-**Output:**
+#### Output:
 
-``` {.javascript}
+```javascript
 { type: 'application/xml',
   hash: '4fbf890c4cf64a8900afb0589352ed2ef717b906',
   size: 438,
   time: Tue Apr 07 2015 10:40:16 GMT+0200 (CEST) }
 ```
 
-Processor
----------
+## Processor
 
 *Processor* represents a collection of *computationally intensive
 services* provided by *DocPlatform* to a client. Right now we expose two
@@ -640,9 +619,9 @@ then the next argument is a `result` dictionary with the following keys:
 -   `inputs` ... Copy of the `inputs` argument
 -   `result` ... Hash of the resulting *XML Data* stream
 
-**Example usage \[callback\]:**
+#### Example usage \[callback\]:
 
-``` {#processor-transform-callback .javascript}
+```javascript
 var files = ["tdt.xml", "message.xml", "template.xml"];
 async.map( 
   files, 
@@ -660,9 +639,9 @@ async.map(
   });
 ```
 
-**Example usage \[promise\]:**
+#### Example usage \[promise\]:
 
-``` {#processor-transform-promise .javascript}
+```javascript
 var files = ["tdt.xml", "message.xml", "template.xml"];
 Q.all(files, uploadXMLFile)
   .then( function ( items ) {
@@ -676,9 +655,9 @@ Q.all(files, uploadXMLFile)
   .done(console.log);
 ```
 
-**Output:**
+#### Output:
 
-``` {.javascript}
+```javascript
 { inputs: 
    { tdt: 'b156ccc9179423371c3cfd7f6e953848a62e58c5',
      src: '2e5477b74bc3ab43fa7aca50141fce595d601d5b',
@@ -728,9 +707,9 @@ then the next argument is a `result` dictionary with the following keys:
 -   `pages` ... Number of pages in resulting document
 -   `result` ... Array of hashes representing output document streams
 
-**Example usage \[callback\]:**
+#### Example usage \[callback\]:
 
-``` {#processor-format-callback .javascript}
+```javascript
 var files = [ "design.ssd", "data.xml" ];
 async.map( 
   files, 
@@ -748,9 +727,9 @@ async.map(
   });
 ```
 
-**Example usage \[promise\]:**
+#### Example usage \[promise\]:
 
-``` {#processor-format-promise .javascript}
+```javascript
 var files = ["design.ssd", "data.xml"];
 Q.all(files, uploadXMLFile)
   .then(function (items) {
@@ -764,9 +743,9 @@ Q.all(files, uploadXMLFile)
   .done(console.log);
 ```
 
-**Output:**
+#### Output:
 
-``` {.javascript}
+```javascript
 { inputs: 
    { format: 'pdf',
      design: '1096961af9eeafbd7b6512c841263dfad7c19a9f',
@@ -780,8 +759,7 @@ The *content* of the resulting *Output Document* (and *meta-data*
 associated with it) can be retrieved via separate calls to the
 associated *Storage*.
 
-REST Interfaces
-===============
+## REST Interfaces
 
 On top of the asynchronous *Javascript interfaces* it is easy to build a
 corresponding *REST interfaces*. That way the whole service becomes
@@ -799,15 +777,14 @@ configuration whether we call the service *locally* (in-process) or
 
 Hopefully the following diagrams clarify the whole concept.
 
-Storage
--------
+### Storage
 
 In this section we describe the higher layers built on top of the basic
 *Storage* implementation. On top of the actual implementation there is a
 *REST interface* wrapper and the *REST client* proxy. All three layers
 are depicted in the following diagram:
 
-*storage-api.png*
+![Storage API](*storage-api.png)
 
 For the *REST server* implementation we use the
 [express.js](http://expressjs.com/) framework (we could probably use
@@ -818,7 +795,7 @@ The REST API wrapper on top of the actual implementation is very simple.
 We just implement all the necessary handlers and register them for
 appropriate REST method URIs:
 
-``` {#storage-rest .javascript}
+```javascript
 var express = require("express");
 var app = express();
 ...
@@ -873,7 +850,7 @@ For *HTTP-REST Client* implementation we use the
 that library the task is really easy. The following code snippet
 represents a complete implementation of the client code:
 
-``` {#storage-http-proxy .javascript}
+```javascript
 exports.create = function (url) {
   var urlbase = (url || 'http://localhost:9000') + '/api/storage';
   var request = require('request');
@@ -924,12 +901,11 @@ top of the *HTTP Client* code. This way all possible clients can use
 exact same constructs regardless of the actual *Storage* implementation
 (local or remote).
 
-Processor
----------
+### Processor
 
 In case of the *Processor* API the situation is quite similar:
 
-*processor-api.png*
+![Processor API](processor-api.png)
 
 We have taken the C++ implementation (a lot of individual interfaces)
 and exposed those interfaces to *Javascript*. On top of those *Internal
@@ -941,21 +917,19 @@ On top of that we created a wrapper providing a *REST interface*.
 Then we provided the identical *Javascript Interface* on top of the
 HTTP/REST client code.
 
-Applications
-============
+## Applications
 
 This section briefly describes the possible applications of the
 infrastructure built so far.
 
-Server Load balancing
----------------------
+### Server Load balancing
 
 With the framework described above it is possible to make scalable
 server solutions using [Load
 Balancing](http://en.wikipedia.org/wiki/Load_balancing_%28computing%29)
 between multiple working processes and possibly even machines.
 
-*load-balancing.png*
+![Load balancing](load-balancing.png)
 
 The *Processor* service is heavily CPU bound and so we create a cluster
 of *Service Workers* to utilize multiple
@@ -967,7 +941,7 @@ For that purpose we are using the
 several instances of *REST server* all listening on a single HTTP port.
 The source code is really simple, it can look something like this:
 
-``` {#rest-server-cluster .javascript}
+```javascript
 function start_server( port ) {
   port = port || 9000;
   var express = require("express");
@@ -1022,8 +996,7 @@ machines then of course some [Data
 Replication](http://en.wikipedia.org/wiki/Replication_%28computing%29)
 strategy would be necessary.
 
-Web Applications
-----------------
+### Web Applications
 
 The following diagram demonstrates a simple
 [Client-Server](http://en.wikipedia.org/wiki/Client%E2%80%93server_model)
@@ -1032,7 +1005,7 @@ communicating with a
 [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer)
 service.
 
-*web-app.png*
+![Web Application](web-app.png)
 
 This way it is possible to easily implement a simple *Document Viewer*
 or *Document Editor* just via utilizing the exact same interfaces as we
@@ -1049,14 +1022,14 @@ demonstrates a possibility to interactively edit content fragments in a
 web browser and see an immediate preview of the resulting document
 formatting by *StoryTeller* formatter.
 
-### Fragment Editor
+#### Fragment Editor
 
 For HTML fragment editing we use the
 [Guardian](http://guardian.github.io/developers/)'s HTML editor called
 [Scribe](https://github.com/guardian/scribe). Code initializing the
 editor (together with its toolbar and several plugins) is really simple:
 
-``` {#client-html-editor .javascript}
+```javascript
 function create_editor(editor_selector, toolbar_selector) {
   var Scribe = require('scribe');
   var scribe = new Scribe(document.querySelector(editor_selector));
@@ -1076,14 +1049,14 @@ The rest of the application application simply leverages *StoryTeller*
 concepts like *Variables*, *Repository Substitutions* and *Repository
 Mounting* to achieve a limited dynamic content processing in real time.
 
-### Client REST Proxy
+#### Client REST Proxy
 
 For REST/HTTP proxy allowing access to the *Storage* and *Processor*
 services discussed in the previous sections we use the
 [rest.js](https://github.com/cujojs/rest) library. The source code of
 the proxy is very simple and looks as follows:
 
-``` {#client-rest-proxy .javascript}
+```javascript
 function create_proxy(server_uri) {
   server_uri = server_uri || '';
   var rest = require('rest/browser');
@@ -1124,7 +1097,7 @@ function create_proxy(server_uri) {
 }
 ```
 
-### Client Formatter
+#### Client Formatter
 
 Higher level of the application is relatively straightforward. Whenever
 user modifies a *Content Fragment*, it's HTML source code is uploaded to
@@ -1143,7 +1116,7 @@ meaningful result.
 
 The code implementing the *Document Formatter* looks as follows:
 
-``` {#client-rest-formatter .javascript}
+```javascript
 function create_formatter(inputs, server_uri) {
   var when = require('when');
   var keys = require('when/keys');
@@ -1198,7 +1171,7 @@ function create_formatter(inputs, server_uri) {
 }
 ```
 
-### Client Event Handler
+#### Client Event Handler
 
 For handling user events and updating DOM there is a relatively
 straightforward class called *Event Handler*. It basically handles three
@@ -1212,7 +1185,7 @@ categories of events:
 
 The implementation looks as follows (shortened for brevity):
 
-``` {#client-event-handler .javascript}
+```javascript
 function event_handler(formatter, fragments, preview_fmt, coalesce_timeframe) {
   preview_fmt = preview_fmt || 'png';
   coalesce_timeframe = coalesce_timeframe || 150;
@@ -1273,12 +1246,12 @@ function event_handler(formatter, fragments, preview_fmt, coalesce_timeframe) {
 }
 ```
 
-### Integration Layer
+#### Integration Layer
 
 Top level integration code just initializes all main components
 (*Formatter*, *Editor* and *Event Handler*) and connects them together:
 
-``` {#client-rest-integration .javascript}
+```javascript
 // initialize formtter with hardcoded fragments, initial design and data
 var fragments = {'$primary': '', '$secondary' : ''};
 var inputs = {design: "/static/ssd/n_areas.ssd", data: "/static/xml/empty.xml"};
@@ -1307,7 +1280,7 @@ handler.window('.docx-output', 'docx');
   editor.trigger('content-changed');
 ```
 
-### User Interface
+#### User Interface
 
 The application consists just of a single full-screen window. On the
 left side of the application are the fragment content related controls:
@@ -1327,7 +1300,7 @@ On the right side there are formatter related controls:
 The HTML markup of the application directly reflects the simple
 structure described above:
 
-``` {#client-html-page .html}
+```html
 <!doctype html>
 <html>
     <head>
@@ -1388,9 +1361,9 @@ structure described above:
 
 Here is a screen-shot of the web viewer/editor application:
 
-*web-editor.png*
+![Web Editor](web-editor.png)
 
-### Network Communication
+#### Network Communication
 
 The application provides interactive preview of the document while user
 write his changes. Simplicity of the design stems from the fact, that
@@ -1412,7 +1385,7 @@ annotated with individual user actions. It is clearly visible how in
 some cases there is no need to fetch an image or it is possible to use a
 cached version:
 
-*network-timeline.png*
+![Network Timeline](network-timeline.png)
 
 If there would be still a concern that the network traffic is too high,
 it is possible to introduce some kind of [delta
@@ -1439,8 +1412,7 @@ usable on both server (*Node.js*) and client (*browser*) side - it is
 another demonstration how great it is to have the same language on both
 sides of the network).
 
-Extending Summary
-=================
+# Extending Summary
 
 The following areas were covered in this section:
 
