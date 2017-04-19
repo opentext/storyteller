@@ -43,7 +43,7 @@ The JIRA user story for javascript embedding is available here:
 The high level architecture of the *StreamServe script* integration to
 *StoryTeller* looks as follows:
 
-*strs-scripting.png*
+![STRS Scripting](strs-scripting.png)
 
 #### StreamServe Script Documentation
 
@@ -407,7 +407,7 @@ To further enhance the quality of javascript source code we optionally
 enabled the [Douglas Crockford](http://www.crockford.com/)'s
 [JSLint](https://github.com/douglascrockford/JSLint) runtime checker for
 all loaded modules. It can be configured in the `jslint` section of the
-[__init__.json](file:///git/docplatform/tree/forsetup/js/__init__.json?h=develop)
+[\_\_init\_\_.json](file:///git/docplatform/tree/forsetup/js/__init__.json?h=develop)
 configuration file.
 
 If the *JSLint* functionality is enabled and you require a *module* with
@@ -549,7 +549,7 @@ ReferenceError: __bindings is not defined
 All the c++ bindings are initialized in the [InterpreterContext
 constructor](file:///git/docplatform/tree/code/interpreters/jsinterpreter/jsscripthandler.cxx?h=develop#n917)
 and passed as a `__bindings` global variable to the bootstrapping script
-- [__init__.js](file:///git/docplatform/tree/forsetup/js/__init__.js?h=develop).
+- [\_\_init\_\_.js](file:///git/docplatform/tree/forsetup/js/__init__.js?h=develop).
 
 ### Module Support
 
@@ -560,23 +560,16 @@ The *Node.js* module system is documented [here](https://nodejs.org/api/modules.
 
 Right now we support *Core modules*, *File modules (.js|.json)* and
 *Folder modules (index.js|index.json)* but support neither the
-[node~modules~ folder
-lookup](https://nodejs.org/api/modules.html#modules_loading_from_node_modules_folders)
-nor the *package.json* manifest for [Folders as
-modules](https://nodejs.org/api/modules.html#modules_folders_as_modules).
+[node_modules folder lookup](https://nodejs.org/api/modules.html#modules_loading_from_node_modules_folders)
+nor the *package.json* manifest for [Folders as modules](https://nodejs.org/api/modules.html#modules_folders_as_modules).
 
-The implementation of the globally available `require( id: string )`
-function is available in the
-[****init****.js](file:///git/docplatform/tree/forsetup/js/__init__.js?h=develop)
-bootstrap script. The list of all currently used *core modules* is
-available in the
-[****init****.json](file:///git/docplatform/tree/forsetup/js/__init__.json?h=develop)
-file.
+The implementation of the globally available `require( id: string )` function is available in the
+[\_\_init\_\_.js](file:///git/docplatform/tree/forsetup/js/__init__.js?h=develop)
+bootstrap script. The list of all currently used *core modules* is available in the
+[\_\_init\_\_.json](file:///git/docplatform/tree/forsetup/js/__init__.json?h=develop) file.
 
-The `require()` implementation uses the
-`__bindings.functions.eval( code: string )` c++ binding which evaluates
-given javascript in given `globals` variable context. It also uses the
-`repo` core module described below.
+The `require()` implementation uses the `__bindings.functions.eval( code: string )` c++ binding which evaluates
+given javascript in given `globals` variable context. It also uses the `repo` core module described below.
 
 Client code then looks as simple as this:
 
@@ -587,15 +580,12 @@ module.foo('bar');
 
 ### Tracing
 
-All tracing is realized through the
-[IInterpreterCallback](file:///git/docplatform/tree/code/common/interfaces/interpreter.h?h=develop#n32)
-*DocPlatform* interface. It has two methods for writing to *Stdout* and
-*Stderr* streams and it's implementation takes care of writing traced
-messages to appropriate destinations (be it process's standard streams,
-storyteller output window, StreamServer log file, or whatever else).
+All tracing is realized through the `IInterpreterCallback` *DocPlatform* interface. 
+It has two methods for writing to *Stdout* and *Stderr* streams and it's implementation takes care of writing traced
+messages to appropriate destinations (be it process's standard streams, storyteller output window, 
+StreamServer log file, or whatever else).
 
-The corresponding c++/javascript binding is available as
-`__binding.process` variable.
+The corresponding c++/javascript binding is available as `__binding.process` variable.
 
 -   `getProp( key: string ) : string`
     -   returns process-level property with given name
@@ -682,26 +672,20 @@ scripts.
 For example the following core modules are available:
 
 -   [assert](https://nodejs.org/api/assert.html)
-    -   used for writing unit tests of applications; can be accessed
-        with `require('assert')`.
+    -   used for writing unit tests of applications; can be accessed with `require('assert')`.
 -   [path](https://nodejs.org/api/path.html)
-    -   utilities for handling and transforming file paths (only string
-        transformations, no FS access), can be accessed with
-        `require('path')`.
+    -   utilities for handling and transforming file paths (only string transformations, no FS access), 
+        can be accessed with `require('path')`.
 -   [url](https://nodejs.org/api/url.html)
     -   utilities for URL resolution and parsing; use `require('url')`.
 -   [querystring](https://nodejs.org/api/querystring.html)
-    -   utilities for dealing with query strings; use
-        `require('querystring')`.
+    -   utilities for dealing with query strings; use `require('querystring')`.
 -   [stream](https://nodejs.org/api/stream.html)
-    -   an abstract interface implemented by various objects with a need
-        to stream data
+    -   an abstract interface implemented by various objects with a need to stream data
 -   ...
 
 The complete list of all currently used *core modules* is available in
-the
-[****init****.json](file:///git/docplatform/tree/forsetup/js/__init__.json?h=develop)
-file.
+the [\_\_init\_\_.json](file:///git/docplatform/tree/forsetup/js/__init__.json?h=develop) file.
 
 Following code shows some of the possibilities:
 
@@ -780,9 +764,7 @@ regression test demonstrates the concept of *shared variables*.
 
 ### StreamServe Variables
 
-Variable access is based on the
-[IGlobalVarAccessor](file:///git/docplatform/tree/code/common/interfaces/interpreter_runtime.h?h=develop#n32)
-*DocPlatform* interface.
+Variable access is based on the `IGlobalVarAccessor` *DocPlatform* interface.
 
 The javascript/c++ binding is available as `__binding.variables`.
 
@@ -868,12 +850,10 @@ guaranteed to be available for users:
     items with given separator
 -   `toString()` method - equivalent to `join(',')` method call
 
-The
-[variables.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/variables.xml?h=develop)
+The [variables.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/variables.xml?h=develop)
 regression test demonstrates the *StreamServe Variable* accessibility.
 
-The following code is possible thanks to the array-like interface
-descrived above:
+The following code is possible thanks to the array-like interface described above:
 
 ```javascript
 vars.set( 'array1d', 'a', [ 0 ] );
@@ -926,12 +906,8 @@ is simply not possible with *Javascript Shared Variables*.
 
 ### Layout Item Property Access
 
-Layout Item Property access is based on the
-[IProperties](file:///git/docplatform/tree/code/common/docmodel/interfaces/properties.h#n17)
-*DocPlatform* interface. The *Item* currently being formatted is
-accessible via the
-[IFormattingContext](file:///git/docplatform/tree/code/common/interfaces/formatting_context.h#n40)
-interface.
+Layout Item Property access is based on the `IProperties` *DocPlatform* interface. The *Item* currently being formatted is
+accessible via the `IFormattingContext` interface.
 
 The javascript/c++ binding is available as `__binding.properties`.
 
@@ -942,7 +918,7 @@ There are following methods available:
 -   `get( key: string ) : string|number`
     -   get a property value from current item
 
-On top of this simple *key* -&gt; *value* interface an object model is built. 
+On top of this simple *key* -> *value* interface an object model is built. 
 The object model is implemented in the [layout](file:///git/docplatform/tree/forsetup/js/core/layout.js?h=develop) core library.
 
 Right now there is following hierarchy of objects:
@@ -1065,7 +1041,7 @@ regression test demonstrates the available functionality.
 ### Repository
 
 Stream access is based on the `IRepository` *DocPlatform* interface. 
-Any constraints regarding what files or streams a tenant can reach depend on underlying ~IRepository~ implementations.
+Any constraints regarding what files or streams a tenant can reach depend on underlying `IRepository` implementations.
 Javascript binding does not address user identity and rights and so does not limit users in any way.
 
 The javascript/c++ binding is available as `__binding.repository`.
@@ -1216,8 +1192,8 @@ from script to currently loaded *Data Instance* as well as current *Data
 Cursor*.
 
 *Data Instance* is typically a product of [TDT Transformation](/storyteller/tdt/index.md) and internally is
-represented as an instance of the ~IDataSourceWrapper~ interface and the current *Data Cursor* is represented inside the
-~IFormattingContext~ interface.
+represented as an instance of the `IDataSourceWrapper` interface and the current *Data Cursor* is represented inside the
+`IFormattingContext` interface.
 
 The javascript/c++ binding is available as `__binding.data`.
 
@@ -1580,9 +1556,7 @@ In order to provide an early feedback to users in design-time we decided
 to implement a syntax check service for javascript (and possibly for
 other scripts as well).
 
-A new simple API was created to provide this functionality - a new
-method of the IViewDebug interface (see [the
-commit](file:///git/docplatform/diff/code/common/docmodel/interfaces/viewdebug.h?id=21545fd)):
+A new simple API was created to provide this functionality - a new method of the `IViewDebug` interface.
 
 ```c++
     class IViewDebug
