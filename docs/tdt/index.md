@@ -407,7 +407,7 @@ follows:
 
 A use case when multiple elements of the same name can be beneficial is
 demonstrated in the 
-[Multiple Elements example](https://github.com/opentext/storyteller/tree/master/docplatform/distribution/py/public/pfi01/xyz/multiple.rst).
+[Multiple Elements example](https://github.com/opentext/storyteller/tree/master/docplatform/distribution/py/public/tdt/pfi01/xyz/multiple.rst).
 
 If there is no *Rule* found in given *Transformation* then the *Element*
 is left as is in the *Data Template*.
@@ -838,7 +838,7 @@ its instance contains a single one of the data driven elements as
 its sub-element.
 
 Such approach is demonstrated in detail in 
-[Data Driven example](https://github.com/opentext/storyteller/tree/master/docplatform/distribution/py/public/pfi01/xyz/datadriven.rst).
+[Data Driven example](https://github.com/opentext/storyteller/tree/master/docplatform/distribution/py/public/tdt/pfi01/xyz/datadriven.rst).
 
 However, there can be cases that such solution does not fit the
 user's needs. If user wants to preserve both the *order* and the
@@ -846,7 +846,7 @@ user's needs. If user wants to preserve both the *order* and the
 would be to use the *union* special form.
 
 Such alternative approach is described in detail in the 
-[Union example](https://github.com/opentext/storyteller/tree/master/docplatform/distribution/py/public/pfi01/xyz/union.rst).
+[Union example](https://github.com/opentext/storyteller/tree/master/docplatform/distribution/py/public/tdt/pfi01/xyz/union.rst).
 
 ### Meta-Rules
 
@@ -877,12 +877,12 @@ The usage of the *recurse* special form looks as follows:
 ```
 
 A demonstration of this functionality is available in the 
-[Recurse example](https://github.com/opentext/storyteller/tree/master/docplatform/distribution/py/public/pfi01/xyz/recurse.rst).
+[Recurse example](https://github.com/opentext/storyteller/tree/master/docplatform/distribution/py/public/tdt/pfi01/xyz/recurse.rst).
 
 If user wants to make some minor changes to the element structure
 then it is still possible to combine such rules with the recurse
 special form. Such situation is described in the [Recurse Change
-example](https://github.com/opentext/storyteller/tree/master/docplatform/distribution/py/public/pfi01/xyz/recurse_change.rst).
+example](https://github.com/opentext/storyteller/tree/master/docplatform/distribution/py/public/tdt/pfi01/xyz/recurse_change.rst).
 
 ####  enumerate
 

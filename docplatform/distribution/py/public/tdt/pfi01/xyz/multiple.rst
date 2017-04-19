@@ -27,16 +27,16 @@ and the second set in ``/data/message/group``.
    :name: source Multiple
 
    <data>
-	 <message>
+     <message>
        <item value="value1">id1</item>
        <item value="value2">id2</item>
        <item value="value3">id3</item>
-	   <group>
-		 <item value="value4">id4</item>
-		 <item value="value5">id5</item>
-		 <item value="value6">id6</item>
-	   </group>
-	 </message>
+       <group>
+         <item value="value4">id4</item>
+         <item value="value5">id5</item>
+         <item value="value6">id6</item>
+       </group>
+     </message>
    </data>
 
 
@@ -50,12 +50,12 @@ In resulting *Data Instance* we expect that all the nodes are concatenated at si
    :name: instance Multiple
 
    <data>
-	 <node id="id1">value1</node>
-	 <node id="id2">value2</node>
-	 <node id="id3">value3</node>
-	 <node id="id4">value4</node>
-	 <node id="id5">value5</node>
-	 <node id="id6">value6</node>
+     <node id="id1">value1</node>
+     <node id="id2">value2</node>
+     <node id="id3">value3</node>
+     <node id="id4">value4</node>
+     <node id="id5">value5</node>
+     <node id="id6">value6</node>
    </data>
 
 
@@ -69,8 +69,8 @@ We create a template containing two elements of the same name and path: ``/data/
    :name: template Multiple
 
    <data>
-	 <node id="?">?</node>
-	 <node id="?">?</node>
+     <node id="?">?</node>
+     <node id="?">?</node>
    </data>
 
 
@@ -85,15 +85,15 @@ and the second for ``/data/node[2]``):
    :name: transformation Multiple
 
    <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
-	 <tdt:rule path="/data/node[1]">
+     <tdt:rule path="/data/node[1]">
        <tdt:value key=".">/data/message/item</tdt:value>
        <tdt:value key="@id">text()</tdt:value>
        <tdt:value key="text()">@value</tdt:value>
-	 </tdt:rule>
-	 <tdt:rule path="/data/node[2]">
+     </tdt:rule>
+     <tdt:rule path="/data/node[2]">
        <tdt:value key=".">/data/message/group/item</tdt:value>
        <tdt:value key="@id">text()</tdt:value>
        <tdt:value key="text()">@value</tdt:value>
-	 </tdt:rule>
+     </tdt:rule>
    </tdt:transformation>
 
