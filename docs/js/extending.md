@@ -209,7 +209,7 @@ console.log(data);
 
 ... and the code above can result in a following output:
 
-```json
+```javascript
 { type: 'application/xml',
   hash: '4fbf890c4cf64a8900afb0589352ed2ef717b906',
   size: 438,
@@ -488,7 +488,7 @@ storage.upload( instream, {type: 'application/xml'})
 
 ##### Output:
 
-```json
+```javascript
 { type: 'application/xml',
   hash: '4fbf890c4cf64a8900afb0589352ed2ef717b906',
   size: 438,
@@ -565,7 +565,7 @@ storage.info(hash)
 
 ##### Output:
 
-```json
+```javascript
 { type: 'application/xml',
   hash: '4fbf890c4cf64a8900afb0589352ed2ef717b906',
   size: 438,
@@ -673,7 +673,7 @@ Q.all(files, uploadXMLFile)
 
 ##### Output:
 
-```json
+```javascript
 { inputs: 
    { tdt: 'b156ccc9179423371c3cfd7f6e953848a62e58c5',
      src: '2e5477b74bc3ab43fa7aca50141fce595d601d5b',
@@ -761,7 +761,7 @@ Q.all(files, uploadXMLFile)
 
 ##### Output:
 
-```json
+```javascript
 { inputs: 
    { format: 'pdf',
      design: '1096961af9eeafbd7b6512c841263dfad7c19a9f',
