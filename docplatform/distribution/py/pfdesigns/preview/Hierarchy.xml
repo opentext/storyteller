@@ -1,0 +1,142 @@
+<root>
+  <template>
+    <data/>
+  </template>
+  <story fmt_mode="docapi.DO_NOT_FIT_ERROR" name="MainStory">
+    <p>
+	  Main story contains paragraph table:
+	  <br/>
+	</p>
+    <p>
+      <table dim="2,2" mode="paragraph" size="459,72" widths="129.5;329.5" pen_rgb="200,200,200,255">
+        <body>
+          <row height="172.0" index="0" >
+            <cell pen_rgb="200,200,200,255">
+              <p>
+				1st row, left cell<br/>(substitution)
+                <subst name="Left" sample="Left" type="docapi.SubstitutionTypes.REPOSITORY" uri="strssec:Left"/>
+			  </p>
+            </cell>
+            <cell pen_rgb="200,200,200,255">
+              <p>1st row, right cell<br/>(nested inline table)</p>
+			  <p>
+				<table dim="1,2" mode="inline" size="300,100" widths="100;100" rot='-10' pen_rgb="200,200,200,255">
+				  <body>
+					<row height="100.0" index="0" >
+					  <cell pen_rgb="200,200,200,255">
+						<p>
+						  Left cell:
+						  <subst name="Left" sample="Left" type="docapi.SubstitutionTypes.REPOSITORY" uri="strssec:Left"/>
+						</p>
+					  </cell>
+					  <cell pen_rgb="200,200,200,255">
+						<p>
+						  Right cell:
+						  <subst name="Right" sample="Right" type="docapi.SubstitutionTypes.REPOSITORY" uri="strssec:Right"/>
+						</p>
+					  </cell>
+					</row>
+				  </body>
+				</table>
+			  </p>
+            </cell>
+		  </row>
+          <row height="72.0" index="1">
+            <cell pen_rgb="200,200,200,255">
+              <p>
+				2nd row, left cell<br/>(substitution)
+                <subst name="Left" sample="Left" type="docapi.SubstitutionTypes.REPOSITORY" uri="strssec:Left"/>
+              </p>
+            </cell>
+            <cell pen_rgb="200,200,200,255">
+              <p>
+				2nd row, right cell<br/>(nested inline text)
+			  </p>
+			  <p>
+				<text size="250,100" rot="-15" pen_rgb="200,200,200,255" inner_margins="5,5,5,5" type="ellipse">
+				  <p>
+					Text split to two balanced columns:
+					<cmd data="balancing=section,tries=3,justification=left,direction=left_to_right:type=column,width=1*;type=spacing,width=16;type=column,width=1*" type="docapi.COMMAND_COLUMN_SECTION"/>
+
+					<subst name="Right" sample="Right" type="docapi.SubstitutionTypes.REPOSITORY" uri="strssec:Right"/>
+				  </p>
+				</text>
+              </p>
+            </cell>
+          </row>
+        </body>
+      </table>
+    </p>
+    <p>
+	  <br/>
+	  ... followed by a plain section:
+	  <br/>
+      <subst mask="" name="Optional" sample="Optional" type="docapi.SubstitutionTypes.REPOSITORY" uri="strssec:Optional"/>
+    </p>
+  </story>
+  <story fmt_mode="docapi.DO_NOT_FIT_ERROR" name="Story1" type="docapi.EXPOSED">
+    <style name="Arial"/>
+    <p>First referenced fragment</p>
+  </story>
+  <story fmt_mode="docapi.DO_NOT_FIT_ERROR" name="Story2" type="docapi.EXPOSED">
+    <style name="Arial"/>
+    <p>Second referenced fragment</p>
+  </story>
+  <story fmt_mode="docapi.DO_NOT_FIT_ERROR" name="Story3" type="docapi.EXPOSED">
+    <style name="Arial"/>
+    <p>Third referenced fragment</p>
+  </story>
+  <story fmt_mode="docapi.DO_NOT_FIT_ERROR" name="Story4" type="docapi.EXPOSED">
+    <style name="Arial"/>
+    <p>Fourth referenced fragment</p>
+  </story>
+  <story fmt_mode="docapi.DO_NOT_FIT_ERROR" name="Story5" type="docapi.EXPOSED">
+    <style name="Arial"/>
+    <p>Fifth referenced fragment</p>
+  </story>
+  <story fmt_mode="docapi.DO_NOT_FIT_ERROR" name="Story6" type="docapi.EXPOSED">
+    <style name="Arial"/>
+    <p alignment="resourcesapi.AL_CENTER">
+	  Sixth referenced fragment start
+	</p>
+	<p>
+      <subst name="Left" sample="Left" type="docapi.SubstitutionTypes.REPOSITORY" uri="strssec:Left"/>
+	</p>
+	<p alignment="resourcesapi.AL_CENTER">
+	  Sixth referenced fragment end
+	</p>
+  </story>
+  <story fmt_mode="docapi.DO_NOT_FIT_ERROR" name="Story7" type="docapi.EXPOSED">
+    <style name="Arial"/>
+    <p alignment="resourcesapi.AL_CENTER">
+	  Seventh referenced fragment start
+	</p>
+	<p>
+      <text alignment_mode="resourcesapi.AM_VERTICAL" size="200,80" rot="-5" pen_rgb="200,200,200,255" inner_margins="0,0,15,15"  type="ellipse">
+		<p>
+		  <subst name="Right" sample="Right" type="docapi.SubstitutionTypes.REPOSITORY" uri="strssec:Right"/>
+		</p>
+	  </text>
+	</p>
+	<p alignment="resourcesapi.AL_CENTER">
+	  Seventh referenced fragment end
+	</p>
+  </story>
+  <page name="Page 1">
+	<group>
+      <text alignment_mode="resourcesapi.AM_VERTICAL" pos="130,-10" size="130,250" rot="-75" pen_rgb="200,200,200,255" inner_margins="15,15,15,15" type="ellipse">
+		<p>
+		  Inline story containing nested section inside a section:
+		  <subst name="GroupedLeft" sample="GroupedLeft" type="docapi.SubstitutionTypes.REPOSITORY" uri="strssec:GroupedLeft"/>
+		</p>
+	  </text>
+      <text alignment_mode="resourcesapi.AM_VERTICAL" pos="350,60" size="200,150" rot="-15" pen_rgb="200,200,200,255">
+		<p>
+		  Inline story containing section with inline text containing another section:
+		  <subst name="GroupedRight" sample="GroupedRight" type="docapi.SubstitutionTypes.REPOSITORY" uri="strssec:GroupedRight"/>
+		</p>
+	  </text>
+	</group>
+    <text alignment_mode="resourcesapi.AM_VERTICAL" pos="30,200" size="500,500" storyindex="0" rot="5" pen_rgb="200,200,200,255"/>
+  </page>
+</root>

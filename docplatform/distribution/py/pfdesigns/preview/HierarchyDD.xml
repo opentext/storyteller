@@ -1,0 +1,48 @@
+<definition name="DocDefSimple" templateVersion="1" templateName="DocDefSimple">
+  <property key="RULETYPE" value="EMBEDDED"/>
+  <property key="leftindent" value="0"/>
+  <property key="spaceafter.unit" value="pt"/>
+  <property key="spacebefore.unit" value="pt"/>
+  <property key="embeddedRuleId" value="8a2f9eec4fd5e07f014fd5e2e71d0013"/>
+  <property key="spacebefore" value="0"/>
+  <property key="leftindent.unit" value="cm"/>
+  <property key="spaceafter" value="14"/>
+  <section id="Left" displayName="Left">
+	<reference id="d7ac7fce-113b8275-0e697d8f-dd14e76e" displayName="Story1" uri="strs://cc/res/1">
+	  <property key="editable" value="false"/>
+	  <property key="deletable" value="true"/>
+	</reference>
+	<reference id="d7ac7fce-113b8275-0e697d8f-dd14e76f" displayName="Story2" uri="strs://cc/res/2">
+	  <property key="editable" value="false"/>
+	  <property key="deletable" value="true"/>
+	</reference>
+  </section>
+  <section id="Right" displayName="Right">
+	<reference id="92250a21-ba1e93d5-b8d0e8af-cffc0c38" displayName="Story3" uri="strs://cc/res/3">
+	  <property key="editable" value="false"/>
+	  <property key="deletable" value="true"/>
+	</reference>
+	<reference id="92250a21-ba1e93d5-b8d0e8af-cffc0c39" displayName="Story4" uri="strs://cc/res/4">
+	  <property key="editable" value="false"/>
+	  <property key="deletable" value="true"/>
+	</reference>
+  </section>
+  <section id="Optional" displayName="Optional">
+	<reference id="fe3663de-1b35631d-d7e4a2c6-542eb6dd" displayName="Story5" uri="strs://cc/res/5">
+	  <property key="editable" value="false"/>
+	  <property key="deletable" value="true"/>
+	</reference>
+  </section>
+  <section id="GroupedLeft" displayName="GroupedLeft">
+	<reference id="fe3663de-1b35631d-d7e4a2c6-542eb6de" displayName="Story6" uri="strs://cc/res/6">
+	  <property key="editable" value="false"/>
+	  <property key="deletable" value="true"/>
+	</reference>
+  </section>
+  <section id="GroupedRight" displayName="GroupedRight">
+	<reference id="fe3663de-1b35631d-d7e4a2c6-542eb6df" displayName="Story7" uri="strs://cc/res/7">
+	  <property key="editable" value="false"/>
+	  <property key="deletable" value="true"/>
+	</reference>
+  </section>
+</definition>

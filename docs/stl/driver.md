@@ -307,10 +307,10 @@ changing the *Page Layout Driver* implementation and doucmentation.
 Here is more advanced example showing how a whole hierarchy of objects
 is reflected in page layout XML/HTML:
 
--   [DocBuilder definition](file:///git/docplatform/plain/distribution/py/pfdesigns/preview/Hierarchy.xml?h=develop)
--   [DocDef file](file:///git/docplatform/plain/distribution/py/pfdesigns/preview/HierarchyDD.xml?h=develop)
--   [Layout XML](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/HierarchyXml-py_000-m.layout.xml?h=develop)
--   [Layout HTML](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/HierarchyHtml-py_000-m.layout.html?h=develop)
+-   [DocBuilder definition](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/preview/Hierarchy.xml)
+-   [DocDef file](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/preview/HierarchyDD.xml)
+-   [Layout XML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/HierarchyXml-py_000-m.layout.xml)
+-   [Layout HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/HierarchyHtml-py_000-m.layout.html)
 
 Note that generally there can be an arbitrary hierarchy of `stl:area` and `stl:span` elements:
 
@@ -424,8 +424,8 @@ elements is generated as in the following example:
 
 See the following links for the full example:
 
--   [Layout XML](file:///git/docplatform/plain/distribution/py/regr_output/vfdesigns/composc/corrman_adhoc_empty-layout-xml-py_000-m.layout.xml?h=develop)
--   [Layout HTML](file:///git/docplatform/plain/distribution/py/regr_output/vfdesigns/composc/corrman_adhoc_empty-layout-html-py_000-m.layout.html?h=develop)
+-   [Layout XML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/vfdesigns/composc/corrman_adhoc_empty-layout-xml-py-m.layout.xml/stl.xml)
+-   [Layout HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/vfdesigns/composc/corrman_adhoc_empty-layout-html-py-m.layout.html/index.html)
 
     If on the other hand a *Client* wants to mimic the *Runtime
     Formatter Behavior* as closely as possible, then he makes sure to
@@ -528,7 +528,7 @@ contains the `stl:doc` sub-tree with layout information.
 Here is a full example of the *Page Layout XML* with no embedded
 resources:
 
--   [WeeklyReport-no-resources-m.xml](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-no-resources-m.xml?h=develop)
+-   [WeeklyReport-no-resources-m.xml](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-no-resources-m.xml)
 
 ### Externally linked resources
 
@@ -577,8 +577,8 @@ each resource then the resulting XML looks as follows:
 Here is a full example of the *Page Layout XML* with hash-based
 resource URLs:
 
--   [WeeklyReport-hash-svg-m.xml](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-hash-svg-m.xml?h=develop)
--   [WeeklyReport-hash-png-m.xml](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-hash-png-m.xml?h=develop)
+-   [WeeklyReport-hash-svg-m.xml](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-hash-svg-m.xml)
+-   [WeeklyReport-hash-png-m.xml](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-hash-png-m.xml)
 
 ####  URL based on a mask
 
@@ -609,8 +609,8 @@ Example:
 Here are full examples of the *Page Layout XML* with mask based
 resource URLs:
 
--   [WeeklyReport-link-svg-m.xml](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-link-svg-m.xml?h=develop)
--   [WeeklyReport-link-png-m.xml](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-link-png-m.xml?h=develop)
+-   [WeeklyReport-link-svg-m.xml](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-link-svg-m.xml)
+-   [WeeklyReport-link-png-m.xml](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-link-png-m.xml)
 
 ### Embedded resources
 
@@ -656,7 +656,7 @@ Example:
 Here is a full example of the *Page Layout XML* with base64 encoded
 binary PNG data:
 
--   [WeeklyReport-embed-png-m.xml](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-embed-png-m.xml?h=develop)
+-   [WeeklyReport-embed-png-m.xml](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-embed-png-m.xml)
 
 ####  Text data
 
@@ -706,7 +706,7 @@ Example:
 
 Here is a full example of the *Page Layout XML* with utf8 encoded text SVG data:
 
--   [WeeklyReport-embed-svg-m.xml](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-embed-svg-m.xml?h=develop)
+-   [WeeklyReport-embed-svg-m.xml](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-embed-svg-m.xml)
 
 ## Rasterizer
 
@@ -1073,7 +1073,7 @@ presentation (presumably paginated HTML) the *XSLT* presented here is
 just an example, not the final solution.
 
 For generating HTML presentation we are using the following simple XSLT:
-[preview.xslt](file:///git/docplatform/plain/distribution/py/pfdesigns/preview/preview.xslt)
+[preview.xslt](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/preview/preview.xslt)
 
 The XSLT generates simple HTML presenting highlighted editable areas on
 top of the rasterized page backgrounds:
@@ -1139,8 +1139,8 @@ Externally linked PNG and SVG pages are used to define background-image style:
 
 Example:
 
--   [WeeklyReport-link-svg-m.html](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-link-svg-m.html)
--   [WeeklyReport-link-png-m.html](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-link-png-m.html)
+-   [WeeklyReport-link-svg-m.html](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-link-svg-m.html)
+-   [WeeklyReport-link-png-m.html](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-link-png-m.html)
 
 ####  Embedded resources
 
@@ -1162,7 +1162,7 @@ Embedded PNG pages (base64 encoded) are used to define background-image style (d
 
 Example:
 
--   [WeeklyReport-embed-png-m.html](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-embed-png-m.html)
+-   [WeeklyReport-embed-png-m.html](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-embed-png-m.html)
 
 Embedded utf8 encoded SVG pages are included directly to the HTML markup:
 
@@ -1198,7 +1198,7 @@ resulting HTML.
 
 Example:
 
--   [WeeklyReport-embed-svg-m.html](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-embed-svg-m.html)
+-   [WeeklyReport-embed-svg-m.html](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-embed-svg-m.html)
 
 ####  Notes
 
