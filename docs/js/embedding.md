@@ -1,4 +1,4 @@
-StoryTeller Javascript Embedding
+# StoryTeller Javascript Embedding
 
 This Section describes the motivation and technology behind the *DocPlatform Javascript Embedding*. It is the second part of the
 [Javascript Documentation](/storyteller/js/index.md).
@@ -35,70 +35,57 @@ The JIRA user story for javascript embedding is available here:
 
 #### Architecture
 
-The high level architecture of the *StreamServe script* integration to
-*StoryTeller* looks as follows:
+The high level architecture of the *StreamServe script* integration to *StoryTeller* looks as follows:
 
 ![STRS Scripting](strs-scripting.png)
 
-#### StreamServe Script Documentation
+#### Documentation
 
-The following list contains some of the areas relevant to *StoryTeller
-Runtime Scripting*. All the listed functionality should be in some form
-available in *Javascript* as well. Most likely the *form* and *syntax*
-will differ significantly, but the *Javascript* approach should be
-similar or better in terms of functionality available to users.
+The following list contains some of the areas relevant to *StoryTeller Runtime Scripting*. 
+All the listed functionality should be in some form available in *Javascript* as well. Most likely the *form* and *syntax*
+will differ significantly, but the *Javascript* approach should be similar or better in terms of functionality available to users.
 
--   Variables
-    ([Scalar](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptLangRef.1.12.html),
+-   Variables 
+    ([Scalar](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptLangRef.1.12.html), 
     [Array](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptLangRef.1.15.html))
 -   Functions
     ([StoryTeller](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptingFunctions.2.037.html),
     [Other](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptingFunctions.2.001.html))
--   Property Access ([String
-    Variants](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptingFunctions.2.417.html),
-    [Pt
-    Variants](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptingFunctions.2.419.html#1981049),
-    [Mm
-    Variants](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptingFunctions.2.418.html#1978070))
+-   Property Access 
+    ([String Variants](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptingFunctions.2.417.html),
+    [Pt Variants](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptingFunctions.2.419.html#1981049),
+    [Mm Variants](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptingFunctions.2.418.html#1978070))
 -   Data Access
     ([StEvalXPath](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptingFunctions.2.408.html#2314162))
--   Modules ([Function
-    Files](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptLangRef.1.36.html#1285195))
+-   Modules 
+    ([Function Files](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptLangRef.1.36.html#1285195))
 
 ### Python/Ruby Script
 
-Besides the [StreamServe
-Script](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptLangRef.1.01.html)
-it is already possible to use
-[Python](http://en.wikipedia.org/wiki/Python_%28programming_language%29)
-scripting and for some time it was possible to use
-[Ruby](http://en.wikipedia.org/wiki/Ruby_%28programming_language%29)
+Besides the [StreamServe Script](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptLangRef.1.01.html) it is already possible to use [Python](http://en.wikipedia.org/wiki/Python_%28programming_language%29)
+scripting and for some time it was possible to use [Ruby](http://en.wikipedia.org/wiki/Ruby_%28programming_language%29)
 scripting as well.
 
-Not only it is possible to associate *Runtime Scripts* with individual
-objects but it is also possible to use the scripting via
-[REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)
-*Python Console* in *Design Time*. User is able to enumerate and even
-modify existing objects as well as create new ones from scratch.
+Not only it is possible to associate *Runtime Scripts* with individual objects but it is also possible to use the scripting via
+[REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) *Python Console* in *Design Time*. 
+User is able to enumerate and even modify existing objects as well as create new ones from scratch.
 
-There is a limited kind of
-[IntelliSense](http://en.wikipedia.org/wiki/Intelligent_code_completion)
+There is a limited kind of [IntelliSense](http://en.wikipedia.org/wiki/Intelligent_code_completion)
 to ease the *Design Time Scripting*.
 
-Similar *Design Time* scripting could be implemented for *Javascript* as
-well but it is out of scope in regards to current requirements.
+Similar *Design Time* scripting could be implemented for *Javascript* as well but it is out of scope 
+in regards to  current requirements.
 
 #### Architecture
 
-The architecture of the Python/Ruby scripting feels too bit complicated
-(probably for some historical reasons) and should probably by
-re-factored before it could be seriously used in production:
+The architecture of the Python/Ruby scripting feels too bit complicated (probably for some historical reasons) 
+and should probably by re-factored before it could be seriously used in production:
 
 ![Dynamic Scripting](dynamic-scripting.png)
 
 # Javascript Scripting Support
 
-## Javascript Hosting Architectures
+## Hosting Architectures
 
 *Javascript* is a very popular programming language and so there are
 many systems using it as an embedded language. Even though the
@@ -159,8 +146,7 @@ with the rules specified by the *Node.js Platform*.
 
 After a careful consideration we decided to partly mimic the *Node.js
 Architecture* in *DocPlatform*. It was one of the reasons we decided to
-integrate the [v8
-engine](http://en.wikipedia.org/wiki/V8_%28JavaScript_engine%29) as a
+integrate the [v8 engine](http://en.wikipedia.org/wiki/V8_%28JavaScript_engine%29) as a
 *Javascript Interpreter*.
 
 At the very bottom of the diagram there are also *Native Services*
@@ -181,50 +167,37 @@ Naturally it is possible to write *Client Code* as well as use suitable
 There are several reasons why we decided to mimic the *Node.js* platform
 architecture:
 
--   The *Node.js* architecture is well established (it was invented
-    in 2009) and carefully designed (if *Node.js* works so well, there
-    is no reason to invent something completely different)
--   There is a [huge
-    amount](https://github.com/joyent/node/wiki/Projects,-Applications,-and-Companies-Using-Node)
-    of 3rd party libraries available for *Node.js* (the more similar our
-    platform is to Node.js the easier is to adopt the available
-    libraries for *DocPlatform*)
--   There are huge amounts of developers in the world who know how to
-    write *Node.js* applications (if *DocPlatform* looks and works
-    similar then it is easier and cheaper to find and bring up
-    *StoryTeller* application developers)
+-   The *Node.js* architecture is well established (it was invented in 2009) and carefully designed 
+    (if *Node.js* works so well, there is no reason to invent something completely different)
+-   There is a [huge amount](https://github.com/joyent/node/wiki/Projects,-Applications,-and-Companies-Using-Node)
+    of 3rd party libraries available for *Node.js* (the more similar our platform is to Node.js the easier is to adopt 
+    available libraries for *DocPlatform*)
+-   There are huge amounts of developers in the world who know how to write *Node.js* applications 
+    (if *DocPlatform* looks and works similar then it is easier and cheaper to find and bring up *StoryTeller* application developers)
 
-Recently there is a trend to write *Javascript Libraries* which can be
-used both in *Browser* and in a *Server* environment like *Node.js*.
-Such kinds of libraries are the obvious candidates for adapting to
-*DocPlatform* as well. The reason is that such libraries rarely depend
-on platform specific services and are mostly written in pure
+Recently there is a trend to write *Javascript Libraries* which can be used both in *Browser* and in a *Server* environment 
+like *Node.js*. Such kinds of libraries are the obvious candidates for adapting to *DocPlatform* as well. 
+The reason is that such libraries rarely depend on platform specific services and are mostly written in pure
 ([VanillaJS](http://vanilla-js.com/)) javascript instead.
 
 ## Language Interpreter
 
 During the design we decided that all Javascript inside *DocPlatform*
-will be executed by the [V8 Javascript
-engine](http://en.wikipedia.org/wiki/V8_%28JavaScript_engine%29). *V8*
-is a part of [Chrome
-Browser](http://en.wikipedia.org/wiki/Google_Chrome) and [Node.js
-framework](http://en.wikipedia.org/wiki/Node.js) and it proved to be a
+will be executed by the [V8 Javascript engine](http://en.wikipedia.org/wiki/V8_%28JavaScript_engine%29). *V8*
+is a part of [Chrome Browser](http://en.wikipedia.org/wiki/Google_Chrome) 
+and [Node.js framework](http://en.wikipedia.org/wiki/Node.js) and it proved to be a
 great solution for *Javascript* both in *Client* and *Server* side.
-There are lots of reasons for this choice, V8's speed is a very
-important factor. Besides speed, another reason for using *V8* is that
-it is platform independent C++ project and Google engineers made a very
-good job in making *V8* relatively easy to integrate into other
-projects.
+There are lots of reasons for this choice, V8's speed is a very important factor. 
+Besides speed, another reason for using *V8* is that it is platform independent C++ project and Google engineers made a very
+good job in making *V8* relatively easy to integrate into other projects.
 
 Following document describes the high level design of the v8 engine:
 
 [V8 Design Elements](https://developers.google.com/v8/design)
 
-Following documentation helps to understand how v8 can be embedded to a
-C++ application:
+Following documentation helps to understand how v8 can be embedded to a C++ application:
 
-[V8 JavaScript Engine Embedder's
-Guide](http://code.google.com/apis/v8/embed.html)
+[V8 JavaScript Engine Embedder's Guide](http://code.google.com/apis/v8/embed.html)
 
 ## Module Support
 
@@ -235,28 +208,21 @@ Boundary*.
 
 ### ECMAScript modules
 
-Unfortunately in the current standardized version of [Javascript
-programming language](http://en.wikipedia.org/wiki/JavaScript)
-([ECMAScript](http://en.wikipedia.org/wiki/ECMAScript) currently in
-version
+Unfortunately in the current standardized version of [Javascript programming language](http://en.wikipedia.org/wiki/JavaScript)
+([ECMAScript](http://en.wikipedia.org/wiki/ECMAScript) currently in version
 [5.1](http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf)
-since June 2011) has no notion of module support at all. Definitely
-there will be a [language based support for
-modules](http://wiki.ecmascript.org/doku.php?id=harmony:modules) in the
-new standard [ECMAScript 6
-(Harmony)](http://en.wikipedia.org/wiki/ECMAScript#Harmony.2C_6th_Edition)
-(approved as fourth edition of the standard these days - June 2015), but
-so far the prevalent *Module Systems* are created inside the language as
-a *library functionality* (thankfully *Javascript* as a language is
-extensible enough that even the library-based module implementations are
-relatively seamless).
+since June 2011) has no notion of module support at all. Definitely there will be a [language based support for
+modules](http://wiki.ecmascript.org/doku.php?id=harmony:modules) in the new standard [ECMAScript 6
+(Harmony)](http://en.wikipedia.org/wiki/ECMAScript#Harmony.2C_6th_Edition) (approved as fourth edition 
+of the standard these days - June 2015), but so far the prevalent *Module Systems* are created inside the language as
+a *library functionality* (thankfully *Javascript* as a language is extensible enough that even the library-based module 
+implementations are relatively seamless).
 
 There evolved two main *Library-based Module Systems* over time:
 
 ### CommonJS Modules
 
-The dominant implementation of this standard is in
-[Node.js](https://nodejs.org/api/modules.html).
+The dominant implementation of this standard is in [Node.js](https://nodejs.org/api/modules.html).
 
 Main characteristics of [CommonJS](http://www.commonjs.org/) are:
 
@@ -266,11 +232,9 @@ Main characteristics of [CommonJS](http://www.commonjs.org/) are:
 
 ### Asynchronous Module Definition (AMD)
 
-The most popular implementation of this standard is
-[RequireJS](http://requirejs.org/).
+The most popular implementation of this standard is [RequireJS](http://requirejs.org/).
 
-Main characteristics of
-[AMD](http://en.wikipedia.org/wiki/Asynchronous_module_definition) are:
+Main characteristics of [AMD](http://en.wikipedia.org/wiki/Asynchronous_module_definition) are:
 
 -   Slightly more complicated syntax (or a compilation step)
 -   Asynchronous module loading
@@ -293,33 +257,26 @@ framework.
 The reasons are mainly the following:
 
 -   The easier the syntax will be for our users, the better
--   There is no significant need of asynchrony for *Embedded Scripts*,
-    all the embedded scripts are run synchronously
--   *DocPlatform* embedding *Javascript* is basically a **server
-    platform**
+-   There is no significant need of asynchrony for *Embedded Scripts*, all the embedded scripts are run synchronously
+-   *DocPlatform* embedding *Javascript* is basically a *server platform*
 
 ## Language Features
 
-In this section we more elaborate about the actual version of javascript
-language used in *DocPlatform*.
+In this section we more elaborate about the actual version of javascript language used in *DocPlatform*.
 
 ### Strict Mode
 
-Starting with *ECMAScript 5*, developers are able to place their code
-into a more constrained form of execution known as *strict mode*.
-*Strict mode* improves JavaScript code by enforcing better programming
-practices and eliminating some of the language’s insecure and
-ill-advised features. *Strict mode* is enabled by adding the following
-directive to your code:
+Starting with *ECMAScript 5*, developers are able to place their code into a more constrained form of execution 
+known as *strict mode*. *Strict mode* improves JavaScript code by enforcing better programming
+practices and eliminating some of the language’s insecure and ill-advised features. 
+*Strict mode* is enabled by adding the following directive to your code:
 
 ```javascript
 "use strict";
 ```
 
-See [this blog
-post](http://cjihrig.com/blog/javascripts-strict-mode-and-why-you-should-use-it/)
-for some arguments, why it is desirable to use *strict mode* whenever
-possible.
+See [this blog post](http://cjihrig.com/blog/javascripts-strict-mode-and-why-you-should-use-it/)
+for some arguments, why it is desirable to use *strict mode* whenever possible.
 
 All inline scripts and modules in *StoryTeller* document are implicitly
 run in *strict mode*. We believe that such decision enhances long term
@@ -342,16 +299,13 @@ SyntaxError: In strict mode code, functions can only be declared at top level
              or immediately within another function.
 ```
 
-The [strict~mode~.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/strict_mode.xml)
-regression test (along with
-[strict~mode~.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/strict_mode.js)
-module) demonstrates how *strict mode* makes javascript a better
-language.
+The [strict~mode~.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/strict_mode.xml) regression test (along with
+[strict_mode.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/strict_mode.js)
+module) demonstrates how *strict mode* makes javascript a better language.
 
 ### ES6 Harmony
 
-The new language standard [ECMAScript 6
-(Harmony)](http://en.wikipedia.org/wiki/ECMAScript#Harmony.2C_6th_Edition)
+The new language standard [ECMAScript 6 (Harmony)](http://en.wikipedia.org/wiki/ECMAScript#Harmony.2C_6th_Edition)
 is designed to allow safer and more efficient code.
 
 Here are the main goals behind the new standard:
@@ -359,11 +313,9 @@ Here are the main goals behind the new standard:
 -   Be a better language
 -   Improve inter-operation (Modules, Classes, ...)
 -   Keep versioning as simple and linear as possible (One Javascript)
--   Support a statically verifiable, secure subset (Strict mode whenever
-    possible)
+-   Support a statically verifiable, secure subset (Strict mode whenever possible)
 
-For more details see the [Exploring ES6 (free on-line
-book)](http://exploringjs.com/).
+For more details see the [Exploring ES6 (free on-line book)](http://exploringjs.com/).
 
 Even though the latest language standard not fully approved yet, the
 Javascript Engine implementations (including *v8*) are already adapting
@@ -378,8 +330,7 @@ Features](https://github.com/joyent/node/wiki/es6-(a.k.a.-harmony)-features-impl
 or [Arrow Functions Coming to Chrome
 45](https://wingolog.org/archives/2015/06/18/arrow-functions-coming-to-chrome-45)).
 
-For the reasons described above we decided to enable some ES6 features
-in *DocPlatform* as well.
+For the reasons described above we decided to enable some ES6 features in *DocPlatform* as well.
 
 So the following is a valid javascript code:
 
@@ -389,23 +340,20 @@ console.log(a.map(s => s.length));
 // [8, 6, 7, 9]
 ```
 
-The
-[harmony.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/harmony.xml)
+The [harmony.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/harmony.xml)
 regression test (along with
 [harmony.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/harmony.js)
 module) demonstrates some of the supported ES6 language features.
 
 ### JSLint
 
-To further enhance the quality of javascript source code we optionally
-enabled the [Douglas Crockford](http://www.crockford.com/)'s
-[JSLint](https://github.com/douglascrockford/JSLint) runtime checker for
-all loaded modules. It can be configured in the `jslint` section of the
+To further enhance the quality of javascript source code we optionally enabled the [Douglas Crockford](http://www.crockford.com/)'s
+[JSLint](https://github.com/douglascrockford/JSLint) runtime checker for all loaded modules. 
+It can be configured in the `jslint` section of the
 [\_\_init\_\_.json](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/__init__.json)
 configuration file.
 
-If the *JSLint* functionality is enabled and you require a *module* with
-the following code:
+If the *JSLint* functionality is enabled and you require a *module* with the following code:
 
 ```javascript
 function find_key( obj, val ) {
@@ -433,8 +381,7 @@ function find_key( obj, val ) {
  wd:/lint-semantics.js:5:25 JSLintError: Unexpected trailing space.
 ```
 
-The *JSLint* hints then may lead to a refined and compliant version of
-the code, which can for example look as follows:
+The *JSLint* hints then may lead to a refined and compliant version of the code, which can for example look as follows:
 
 ```javascript
 function find_key(obj, val) {
@@ -444,41 +391,33 @@ function find_key(obj, val) {
 }
 ```
 
-As you can see the reported warnings are relatively strict, they very
-often reject a perfectly functional javascript, but it is all done in
-order to archive better and more easily maintainable code.
+As you can see the reported warnings are relatively strict, they very often reject a perfectly functional javascript, 
+but it is all done in order to archive better and more easily maintainable code.
 
-*JSLint* applies principles of the [Good
-Parts](http://www.amazon.com/exec/obidos/ASIN/0596517742/wrrrldwideweb):
+*JSLint* applies principles of the [Good Parts](http://www.amazon.com/exec/obidos/ASIN/0596517742/wrrrldwideweb):
 
 > If a feature is sometimes useful and sometimes dangerous and if there
 > is a better option then always use the better option.
 
-For more details see the [JSLint Help
-Page](http://www.jslint.com/help.html).
+For more details see the [JSLint Help Page](http://www.jslint.com/help.html).
 
 The [lint.py](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/lint.py)
 regression test (along with [lint.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/lint.xml)
 definition and [lint-syntax.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/lint-syntax.js)
 +
-[lint-semantics.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/lint-semantics.js)
-modules) demonstrates the *JSLint* behavior.
+[lint-semantics.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/lint-semantics.js) modules) demonstrates the *JSLint* behavior.
 
-It seems that community starts to aggree that naked loops (traditional
-forms of the `for` statement) are considered a bad practice in general
-(such opinion is by no means specific to *javascript*, similar opinions
-are ... formulated by Sean Parent in his inspiring [C++
-Seasoning](https://channel9.msdn.com/Events/GoingNative/2013/Cpp-Seasoning)
-talk).
+It seems that community starts to aggree that naked loops (traditional forms of the `for` statement) 
+are considered a bad practice in general (such opinion is by no means specific to *javascript*, similar opinions are formulated 
+by Sean Parent in his inspiring [C++ Seasoning](https://channel9.msdn.com/Events/GoingNative/2013/Cpp-Seasoning) talk).
 
 > *JSLint* does not recommend use of the for statement. Use array
 > methods like *forEach* instead. The for option will suppress some
 > warnings. The forms of for that accepts are restricted, excluding the
 > new ES6 forms -- Douglas Crockford
 
-The only situation when it is hard to replace `for` statement with an
-array method is a creation of a new array of given `length`. Consider
-the following code:
+The only situation when it is hard to replace `for` statement with an array method is a creation of a new array of given `length`. 
+Consider the following code:
 
 ```javascript
 function createCells(count) {
@@ -497,8 +436,7 @@ It implements a single function
 range( start : number [, end :number, step : number] )
 ```
 
-similar to the python [range built-in
-function](https://docs.python.org/2/library/functions.html#range). With
+similar to the python [range built-in function](https://docs.python.org/2/library/functions.html#range). With
 the `range` tool it is possible to write the previous code as follows:
 
 ```javascript
@@ -509,8 +447,7 @@ function createCells(count) {
 }
 ```
 
-The
-[range.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/range.xml)
+The [range.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/range.xml)
 regression test demonstrates the `range` module functionality.
 
 ## StoryTellerJS Embedding Framework
@@ -520,8 +457,7 @@ provides as a part of the *StoryTeller Javascript Embedding Framework*.
 
 ### Bindings
 
-The most basic *DocPlatform* related functionality is provided in a form
-of javascript/c++ bindings.
+The most basic *DocPlatform* related functionality is provided in a form of javascript/c++ bindings.
 
 Binding interfaces are available via the `__bindings` global javascript
 variable, but that variable is accessible only for core libraries listed
@@ -530,8 +466,7 @@ as all the necessary functionality exposed by the c++ layer is wrapped
 to a higher level constructs implemented in javascript in core
 libraries.
 
-While the following code would be accepted in a *core module* if fails
-in a *user module*:
+While the following code would be accepted in a *core module* if fails in a *user module*:
 
 ```
 __bindings.process.stdout('Hello!');
@@ -631,20 +566,16 @@ console.timeEnd('test');
 ```
 
 The [tracing.py](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/tracing.py)
-regression test (along with [tracing.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/tracing.xml)
-definition) demonstrates the tracing possibilities.
+regression test (along with [tracing.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/tracing.xml) definition) demonstrates the tracing possibilities.
 
 ### Binary Buffer
 
-For representing binary data there is a *Buffer* object, just like it is
-available in *Node.js* framework. It's documentation is available in
-*Node.js* [buffer module](https://nodejs.org/api/buffer.html) page.
+For representing binary data there is a *Buffer* object, just like it is available in *Node.js* framework. 
+It's documentation is available in *Node.js* [buffer module](https://nodejs.org/api/buffer.html) page.
 
-The actual implementation is taken from [this
-project](https://github.com/feross/buffer).
+The actual implementation is taken from [this project](https://github.com/feross/buffer).
 
-The *Buffer* is introduced to global namespace just like it is in the
-*Node.js*, so it is possible to write code like the following:
+The *Buffer* is introduced to global namespace just like it is in the *Node.js*, so it is possible to write code like the following:
 
 ```javascript
 var str = '\u00bd + \u00bc = \u00be';
@@ -659,8 +590,7 @@ regression test demonstrates the available functionality.
 ### Helper Modules
 
 There are several more modules we have adopted from *Node.js* framework.
-Such modules should help user's convenience when writing his user
-scripts.
+Such modules should help user's convenience when writing his user scripts.
 
 For example the following core modules are available:
 
@@ -718,8 +648,7 @@ In *Node.js* there is a `global` variable representing all variables
 visible in top level scope. Making some variable global may seem like a
 handy shortcut, however using `global` variable goes against the modular
 design, kills maintainability in the long term and so generally is
-considered as a [bad
-practice](http://stackoverflow.com/questions/4246284/why-are-globals-bad).
+considered as a [bad practice](http://stackoverflow.com/questions/4246284/why-are-globals-bad).
 After careful consideration we decided not to provide the `global`
 variable even though it may make porting of some libraries more
 difficult.
@@ -733,8 +662,7 @@ convention) there is a core module `share` created for that purpose.
 In any case it is user's responsibility to avoid any name collisions
 between individual scripts of the particular *StoryTeller Design*.
 
-The following design structure shows how two scripts can share a single
-variable:
+The following design structure shows how two scripts can share a single variable:
 
 ```xml
 <page>
