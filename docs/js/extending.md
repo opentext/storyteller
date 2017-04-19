@@ -58,9 +58,8 @@ The *Node.js* event-based architecture is quite similar to the one of
 the [NginX](http://nginx.org/) HTTP server (serving more than \~21% of
 busiest web sites in March 2015).
 
-Here is the comparison of [NginX](http://en.wikipedia.org/wiki/Nginx)
-and [Apache](http://en.wikipedia.org/wiki/Apache_HTTP_Server) HTTP
-servers under a heavy load:
+Here is the comparison of [NginX](http://en.wikipedia.org/wiki/Nginx) and [Apache](http://en.wikipedia.org/wiki/Apache_HTTP_Server) 
+HTTP servers under a heavy load (see [this blog post](https://blog.webfaction.com/2008/12/a-little-holiday-present-10000-reqssec-with-nginx-2/) for more detailed description):
 
 ### Throughput (reqs/sec):
 
@@ -193,7 +192,7 @@ console.log(data);
 
 ... and the code above can result in a following output:
 
-```javascript
+```json
 { type: 'application/xml',
   hash: '4fbf890c4cf64a8900afb0589352ed2ef717b906',
   size: 438,
@@ -472,7 +471,7 @@ storage.upload( instream, {type: 'application/xml'})
 
 #### Output:
 
-```javascript
+```json
 { type: 'application/xml',
   hash: '4fbf890c4cf64a8900afb0589352ed2ef717b906',
   size: 438,
@@ -549,7 +548,7 @@ storage.info(hash)
 
 #### Output:
 
-```javascript
+```json
 { type: 'application/xml',
   hash: '4fbf890c4cf64a8900afb0589352ed2ef717b906',
   size: 438,
@@ -657,7 +656,7 @@ Q.all(files, uploadXMLFile)
 
 #### Output:
 
-```javascript
+```json
 { inputs: 
    { tdt: 'b156ccc9179423371c3cfd7f6e953848a62e58c5',
      src: '2e5477b74bc3ab43fa7aca50141fce595d601d5b',
@@ -745,7 +744,7 @@ Q.all(files, uploadXMLFile)
 
 #### Output:
 
-```javascript
+```json
 { inputs: 
    { format: 'pdf',
      design: '1096961af9eeafbd7b6512c841263dfad7c19a9f',
@@ -784,7 +783,7 @@ In this section we describe the higher layers built on top of the basic
 *REST interface* wrapper and the *REST client* proxy. All three layers
 are depicted in the following diagram:
 
-![Storage API](*storage-api.png)
+![Storage API](storage-api.png)
 
 For the *REST server* implementation we use the
 [express.js](http://expressjs.com/) framework (we could probably use
