@@ -58,8 +58,7 @@ The generated XML hierarchy consists basically of two parts:
 -   Layout Info Hierarchy
 -   Associated Resources
 
-The following figure demonstrates the surface pipeline created in order
-to generate both *Page Layout Info* and *Rasterized Pages*:
+The following figure demonstrates the surface pipeline created in order to generate both *Page Layout Info* and *Rasterized Pages*:
 
 ![Page Layout Pipeline](page-layout-pipeline.png)
 
@@ -126,8 +125,7 @@ it is very likely that we will rename `stl:doc` to `stl:document` in future.
 
 ### Pages
 
-Individual *pages* are represented as `stl:page` elements. Each
-`stl:page` contains following attributes:
+Individual *pages* are represented as `stl:page` elements. Each `stl:page` contains following attributes:
 
 -   `id` ... unique identifier of associated resource (image
     representing rasterized page)
@@ -149,10 +147,8 @@ Example:
 
 ### Areas
 
-There is a hierarchy of *area* elements in the *Page Layout XML*. *Area*
-elements represent *Story Frames*, *Text Boxes*, *Table Cells* and
-possibly *Column Sections* and *Columns* into which a story *content*
-gets formatted.
+There is a hierarchy of *area* elements in the *Page Layout XML*. *Area* elements represent *Story Frames*, 
+*Text Boxes*, *Table Cells* and possibly *Column Sections* and *Columns* into which a story *content* gets formatted.
 
 In *StoryTeller* it is possible to define a *Story* as a continuous
 content sequence and let it flow through various *Story Frames* and
@@ -160,9 +156,8 @@ possibly split content to several *Columns*. Therefore a single
 *Section* and even a *Fragment* do not have to be necessarily continuous
 on a *Page*, but can be split across several *Areas* instead.
 
-Right now only *areas* containing any *editable fragments* are included,
-but in principle any *StoryTeller* area can be included if there is a
-use case for it.
+Right now only *areas* containing any *editable fragments* are included, but in principle any *StoryTeller* area 
+can be included if there is a use case for it.
 
 *Areas* are stored to the XML as `stl:area` elements containing the
 following attributes:
@@ -207,12 +202,10 @@ It is very likely that we will rename `stl:doc` to `stl:document` in future.
 
 ### Spans
 
-For *editable entities* the *Page Layout Driver* produces another kind
-of hierarchical elements: `stl:span`.
+For *editable entities* the *Page Layout Driver* produces another kind of hierarchical elements: `stl:span`.
 
-`std:span` elements form a *content span* hierarchies inside *areas* and
-currently correspond to two StoryTeller entities: *Sections* and
-*Fragments*.
+`std:span` elements form a *content span* hierarchies inside *areas* and currently correspond to two StoryTeller entities: 
+*Sections* and *Fragments*.
 
 *Sections* correspond to *StoryTeller Substitutions* introducing one or
 more editable *Fragments* to a *Story* flow. Resulting XML structure
@@ -220,8 +213,8 @@ corresponding to a *Section* forms a hierarchy of nested `stl:span`
 elements, each carrying its associated *data* and *bounding box*
 resulting from its content formatting inside a particular *area*.
 
-So *Sections* and *Fragments* generate `stl:span` elementes in resulting
-XML. Each `stl:span` element contains following attributes:
+So *Sections* and *Fragments* generate `stl:span` elementes in resulting XML. 
+Each `stl:span` element contains following attributes:
 
 -   `data` ... section or fragment data string provided by an *External Content Provider*
 -   `x`, `y`, `w`, `h` ... *bounding box* relative to superior
@@ -322,8 +315,7 @@ Note that generally there can be an arbitrary hierarchy of `stl:area` and `stl:s
     -   *Areas* containing *Fragments*
     -   as well as *Fragments* containing *Areas*.
 
-All described combinations are supported by the new version of the *Page
-Layout Driver* and are visible in the example above.
+All described combinations are supported by the new version of the *Page Layout Driver* and are visible in the example above.
 
 :exclamation: 
 Note that the `stl:span` element has a very different meaning in *DocBuilder's* XML.
@@ -400,8 +392,7 @@ user request).
 retained even in case of *Page Suppress* rules - they behave exactly
 like there **was** some actual *Content* in the *Section*.
 
-In the page layout XML the corresponding hierarchy of `stl:span`
-elements is generated as in the following example:
+In the page layout XML the corresponding hierarchy of `stl:span` elements is generated as in the following example:
 
 ```xml
 <stl:root xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
@@ -428,36 +419,28 @@ See the following links for the full example:
 -   [Layout XML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/vfdesigns/composc/corrman_adhoc_empty-layout-xml-py-m.layout.xml/stl.xml)
 -   [Layout HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/vfdesigns/composc/corrman_adhoc_empty-layout-html-py-m.layout.html/index.html)
 
-    If on the other hand a *Client* wants to mimic the *Runtime
-    Formatter Behavior* as closely as possible, then he makes sure to
-    avoid using *Placeholder Content* to make an *Empty Section*
-    actually empty. It could be either a separate *Preview Mode* or the
-    behavior could be changed just for a specific *Section*.
+If on the other hand a *Client* wants to mimic the *Runtime Formatter Behavior* as closely as possible, 
+then he makes sure to avoid using *Placeholder Content* to make an *Empty Section* actually empty. 
+It could be either a separate *Preview Mode* or the behavior could be changed just for a specific *Section*.
 
 ### IDs
 
-From the *Page Layout* driver standpoint the *IDs* of individual
-*Sections* and *Fragments* are completely transparent - those are just
-strings carried from the *IDocSurface* pipeline to the output XML.
+From the *Page Layout* driver standpoint the *IDs* of individual *Sections* and *Fragments* are completely 
+transparent - those are just strings carried from the *IDocSurface* pipeline to the output XML.
 
-There must be some kind of a contract between *External Content
-Providers* and *Consumer* in order to give the IDs some meaning.
+There must be some kind of a contract between *External Content Providers* and *Consumer* in order to give the IDs some meaning.
 
 ## Resources
 
-*Resources* represent mainly rasterized data - it can be rasterized
-*Pages* or alternatively more fine-grained structures like *Areas*. All
-*Resources* are kept under the `stl:resources` element and
-`stl:resource` element represents individual resources.
+*Resources* represent mainly rasterized data - it can be rasterized *Pages* or alternatively more fine-grained 
+structures like *Areas*. All *Resources* are kept under the `stl:resources` element and `stl:resource` element 
+represents individual resources.
 
-In current version *Resources* just represent rasterized page
-backgrounds, so right now there is a one-to-one correspondence between
-`stl:page` and `stl:resource` elements. Resources could in principle be
-embedded directly under the `stl=page` element, but we chose to kept
-them separately from *Layout* hierarchy.
+In current version *Resources* just represent rasterized page backgrounds, so right now there is a one-to-one correspondence between
+`stl:page` and `stl:resource` elements. Resources could in principle be embedded directly under the `stl:page` element, 
+but we chose to kept them separately from *Layout* hierarchy.
 
-There are several reasons why we decided to keep them separate in the
-XML structure:
+There are several reasons why we decided to keep them separate in the XML structure:
 
 -   *Readability* - it is more human readable if we do not mix the layout hierachy information with raw image data
 -   *Flexibility* - there is a possibility to request just *layout info* without any raster. 
@@ -468,15 +451,13 @@ XML structure:
     collects the layout information sequentially and also *Page
     Rasterizer* creates the image rasters - both doing their job in
     parallel. It is easier to keep image data separate from page
-    layout - that way it is possible to create the XML sequentially (I
-    am using sequential output stream, no random access needed for
-    writing).
+    layout - that way it is possible to create the XML sequentially 
+    (we are using sequential output stream, no random access needed for writing).
 
 Example:
 
-The indirection of the resources is realized via automatically generated
-*Resource IDs* used to define the correspondence between `stl:page` and
-`stl:resource` elements. The resulting XML looks as follows:
+The indirection of the resources is realized via automatically generated *Resource IDs* used to define 
+the correspondence between `stl:page` and `stl:resource` elements. The resulting XML looks as follows:
 
 ```xml
 <stl:root ...>
@@ -495,8 +476,7 @@ The indirection of the resources is realized via automatically generated
 </stl:root>
 ```
 
-This way the page layout structure is uniform and resources may or may
-not be included.
+This way the page layout structure is uniform and resources may or may not be included.
 
 There are many variants how to actually include the resources:
 
@@ -523,8 +503,7 @@ are available in which *Areas* of which *Pages*.
 In such case it is not necessary to rasterize the document and it is
 enough to just collect and generate *Layout Info*.
 
-The resulting XML does not contain the `stl:resources` sub-tree, it just
-contains the `stl:doc` sub-tree with layout information.
+The resulting XML does not contain the `stl:resources` sub-tree, it just contains the `stl:doc` sub-tree with layout information.
 
 Here is a full example of the *Page Layout XML* with no embedded
 resources:
@@ -533,8 +512,7 @@ resources:
 
 ### Externally linked resources
 
-Typical clients will be probably interested in rasterized page
-backgrounds as well as in page layout information.
+Typical clients will be probably interested in rasterized page backgrounds as well as in page layout information.
 
 If a hosting platform is able to serve individual resources individally
 then most efficient way is to keep resources separate and include only
@@ -562,8 +540,7 @@ URL).
 
 Example:
 
-If we upload resources to *DocPlatform BlobManager* and get
-corresponding [SHA-1 hash](https://en.wikipedia.org/wiki/SHA-1) for
+If we upload resources to *DocPlatform BlobManager* and get corresponding [SHA-1 hash](https://en.wikipedia.org/wiki/SHA-1) for
 each resource then the resulting XML looks as follows:
 
 ```xml
@@ -575,8 +552,7 @@ each resource then the resulting XML looks as follows:
 </stl:root>
 ```
 
-Here is a full example of the *Page Layout XML* with hash-based
-resource URLs:
+Here is a full example of the *Page Layout XML* with hash-based resource URLs:
 
 -   [WeeklyReport-hash-svg-m.xml](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-hash-svg-m.xml)
 -   [WeeklyReport-hash-png-m.xml](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-hash-png-m.xml)
@@ -607,8 +583,7 @@ Example:
 </stl:root>
 ```
 
-Here are full examples of the *Page Layout XML* with mask based
-resource URLs:
+Here are full examples of the *Page Layout XML* with mask based resource URLs:
 
 -   [WeeklyReport-link-svg-m.xml](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-link-svg-m.xml)
 -   [WeeklyReport-link-png-m.xml](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-link-png-m.xml)
@@ -627,8 +602,7 @@ There is no caching implemented in browsers for embedded resources. Also
 some additional encoding is necessary for binary data which further
 increases the size of the data to be transferred.
 
-It depends on the actual resource format how the particular resource is
-embedded to the resulting XML:
+It depends on the actual resource format how the particular resource is embedded to the resulting XML:
 
 ####  Binary data
 
@@ -668,13 +642,10 @@ re-encoding is necessary.
 
 Two kinds of changes were necessary in Cairo generated SVG files:
 
-1.  For easy embedding to the hosting XML we strip the xml header
-    automatically generated by Cairo.
+1.  For easy embedding to the hosting XML we strip the xml header automatically generated by Cairo.
 
-2.  In order to be able to easily embed the resulting SVG directly
-    to HTML markup we needed to unify all IDs used to identify SVG
-    entities. That is why we prefix all the IDs with `p${page}-`
-    prefix.
+2.  In order to be able to easily embed the resulting SVG directly to HTML markup we needed to unify all IDs used to identify SVG
+    entities. That is why we prefix all the IDs with `p${page}-` prefix.
 
 Example:
 
@@ -711,12 +682,9 @@ Here is a full example of the *Page Layout XML* with utf8 encoded text SVG data:
 
 ## Rasterizer
 
-For page background rasterization we are using our
-[Cairo](http://cairographics.org/) based *IDocSurface* driver
-implementation.
+For page background rasterization we are using our [Cairo](http://cairographics.org/) based *IDocSurface* driver implementation.
 
-The cairo library itself is capable of generating output in various
-formats, namely:
+The cairo library itself is capable of generating output in various formats, namely:
 
 -   PNG
 -   SVG
@@ -737,17 +705,14 @@ succesfully for several years both for regression testing (5000+
 regression tests) and in production (rasterizer for HTML driver,
 ...).
 
-So from this point of view using the PNG output is a preferred and
-safest strategy.
+So from this point of view using the PNG output is a preferred and safest strategy.
 
 ####  SVG
 
-SVG is not that well tested in our environment, so there may be some
-surprises along the way.
+SVG is not that well tested in our environment, so there may be some surprises along the way.
 
 Web team declared that SVG would be their preferred format. Of
-course a great advantage is that SVG is a [vector
-graphics](https://en.wikipedia.org/wiki/Vector_graphics) format so
+course a great advantage is that SVG is a [vector graphics](https://en.wikipedia.org/wiki/Vector_graphics) format so
 there is no pixelation involved when zooming the image.
 
 One concern could be a portability (not all browsers support this
@@ -765,8 +730,7 @@ As was described in the previous chapter - clients choose the resource
 format (PNG or SVG) and a corresponding encoding is picked
 automatically.
 
-One interesting remark regarding resource file sizes (PNG generated for
-96 DPI):
+One interesting remark regarding resource file sizes (PNG generated for 96 DPI):
 
 |  Description                                    | Total size (bytes)   | Ratio        |
 |  ---------------------------------------------- | -------------------- |------------- |
@@ -778,11 +742,9 @@ One interesting remark regarding resource file sizes (PNG generated for
 |  Gzipped HTML (embedding 2 utf8 encoded SVG)    | 217,989              | 81% decrease |
                                                                        
 
-... so it is obvious that while SVG is much bigger than PNG, it has
-certainly one more advantage:
+... so it is obvious that while SVG is much bigger than PNG, it has certainly one more advantage:
 
--   it is suitable for embedding and extremely GZIP friendly (in
-    comparison to base64 encoded binary data).
+-   it is suitable for embedding and extremely GZIP friendly (in comparison to base64 encoded binary data).
 
 ### ID normalization
 
@@ -791,8 +753,7 @@ used to represent resources inside the SVG file are generated in a
 non-deterministic way.
 
 There is used a global variable representing a seed for resource ID
-generator (see [while
-cairo-surface.c](http://cgit.freedesktop.org/cairo/tree/src/cairo-surface.c?id=b1192beac7#n264)
+generator (see [while cairo-surface.c](http://cgit.freedesktop.org/cairo/tree/src/cairo-surface.c?id=b1192beac7#n264)
 for more context):
 
 ```c
