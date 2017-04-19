@@ -1,7 +1,7 @@
 # StoryTeller Javascript Embedding
 
 This Section describes the motivation and technology behind the *DocPlatform Javascript Embedding*. It is the second part of the
-[Javascript Documentation](/storyteller/js/index.md).
+[Javascript Documentation](/storyteller/js/index.html).
 
 -   First we describe the scripting support currently implemented in *StoryTeller*.
 -   Then we will compare some existing *Javascript Hosting Platforms* as a source of inspiration.
@@ -299,7 +299,7 @@ SyntaxError: In strict mode code, functions can only be declared at top level
              or immediately within another function.
 ```
 
-The [strict~mode~.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/strict_mode.xml) regression test (along with
+The [strict_mode.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/strict_mode.xml) regression test (along with
 [strict_mode.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/strict_mode.js)
 module) demonstrates how *strict mode* makes javascript a better language.
 
@@ -956,7 +956,7 @@ var layout = require('layout');
 assert.deepEqual({X:20, Y:25}, layout.cursor());
 ```
 
-The [layout~cursor~.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/layout_cursor.xml)
+The [layout_cursor.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/javascript/layout_cursor.xml)
 regression test demonstrates the available functionality.
 
 ### Repository
@@ -1022,35 +1022,31 @@ regression test demonstrates the available functionality.
 
 ### Streams
 
-In order to unify *String Data*, *Binary Data* or *URI* in our API we
-introduced a concept of *Streams*. A *stream* is an object representing
-some *readable* or *writable* buffer optionally associated with an URI.
+In order to unify *String Data*, *Binary Data* or *URI* in our API we introduced a concept of *Streams*. 
+A *stream* is an object representing some *readable* or *writable* buffer optionally associated with an URI.
+Stream concept is implemented in the 
+[streams](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/core/streams.js) core module. 
 
 This is the *Javascript API* for *Stream* creation:
 
 -   `streams.stream( [uri : string] ): stream`
-    -   this function creates a *Stream* optionally associated with
-        given `uri`.
+    -   this function creates a *Stream* optionally associated with given `uri`.
 -   `util.isStream( obj ): boolean`
-    -   this function determines whether the given argument is a
-        *Stream* instance.
+    -   this function determines whether the given argument is a *Stream* instance.
 
 *Stream* instance has the followign methods:
 
 -   `stream.uri: string|null`
-    -   set/get URI to associate it with the *stream* (null for *memory
-        streams*)
+    -   set/get URI to associate it with the *stream* (`null` for *memory streams*)
 -   `stream.stat(): { type: string, size?: number, uri?: string }`
-    -   returns the `stats` (`type`, `size` and `uri`) info associated
-        with the *stream*
+    -   returns the `stats` (`type`, `size` and `uri`) info associated with the *stream*
 -   `stream.read( [encoding : string|null] ): string|Buffer`
     -   read *stream* content data (decode it based on given `encoding`)
 -   `stream.write( data: string|Buffer [, encoding : string|null] ) : stream`
-    -   write given data to the *stream* (encode it based on given
-        `encoding`) and return self
+    -   write given data to the *stream* (encode it based on given `encoding`) and return self
 
-It is recommended to use the described *Stream API* for any repository
-related operations (reading or writing from/to an URI) and much more.
+It is recommended to use the described *Stream API* for any repository related operations 
+(reading or writing from/to an URI) and much more.
 
 Here are some usage examples:
 
@@ -1112,7 +1108,7 @@ To full-fill some of the use cases it is necessary to provide access
 from script to currently loaded *Data Instance* as well as current *Data
 Cursor*.
 
-*Data Instance* is typically a product of [TDT Transformation](/storyteller/tdt/index.md) and internally is
+*Data Instance* is typically a product of [TDT Transformation](/storyteller/tdt/index.html) and internally is
 represented as an instance of the `IDataSourceWrapper` interface and the current *Data Cursor* is represented inside the
 `IFormattingContext` interface.
 
@@ -1314,7 +1310,7 @@ regression test demonstrates the available functionality.
 
 ####  TDT
 
-Thanks to Javascript API it is now possible to call [TDT Transformation](/storyteller/tdt/index.md) in runtime
+Thanks to Javascript API it is now possible to call [TDT Transformation](/storyteller/tdt/index.html) in runtime
 directly from *StoryTeller* runtime script or a *JSFilter* implementation.
 
 -   `services.tdt( template: stream, rules: stream [, mode: integral] ): service`
