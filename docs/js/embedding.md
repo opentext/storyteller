@@ -1,3 +1,20 @@
+Table of Contents
+=================
+
+   * [Current Scripting Support](#current-scripting-support)
+   * [Javascript Scripting Support](#javascript-scripting-support)
+      * [Hosting Architectures](#hosting-architectures)
+      * [Language Interpreter](#language-interpreter)
+      * [Module Support](#module-support)
+      * [Language Features](#language-features)
+      * [StoryTellerJS Embedding Framework](#storytellerjs-embedding-framework)
+      * [Syntax Check](#syntax-check)
+      * [Runtime Scripts In StoryTeller](#runtime-scripts-in-storyteller)
+      * [JSFilter framework](#jsfilter-framework)
+   * [Use Cases](#use-cases)
+   * [3rd Party Libraries](#3rd-party-libraries-1)
+   * [Summary](#embedding-summary)
+
 # StoryTeller Javascript Embedding
 
 This Section describes the motivation and technology behind the *DocPlatform Javascript Embedding*. It is the second part of the
@@ -1611,10 +1628,10 @@ module.exports = function setup(cfg) {
 };
 ```
 
-This approach also much better integrates with *services API*. The
-following example shows how to implement a polymorfic XML transformer in
-javascript. Such filter can perform either an *XSLT* or *TDT*
-transformation based on user configuration:
+This approach also much better integrates with *services API*. The following example shows how to implement 
+a polymorfic XML transformer in javascript. Such filter can perform either 
+an [XSLT Transformation](https://en.wikipedia.org/wiki/XSLT) or [TDT Transformation](/storyteller/tdt/index.html)
+based on user configuration:
 
 ```javascript
 var services = require('services');

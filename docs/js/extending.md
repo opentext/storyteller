@@ -1,3 +1,20 @@
+Table of Contents
+=================
+
+   * [Environment](#environment)
+   * [Use cases](#use-cases)
+   * [Javascript Interfaces](#javascript-interfaces)
+      * [Calling Conventions](#calling-conventions)
+      * [Storage](#storage)
+      * [Processor](#processor)
+   * [REST Interfaces](#rest-interfaces)
+      * [Storage](#storage-1)
+      * [Processor](#processor-1)
+   * [Applications](#applications)
+      * [Server Load balancing](#server-load-balancing)
+      * [Web Applications](#web-applications)
+   * [Summary](#extending-summary)
+
 # StoryTeller Javascript Extending
 
 This Section describes the motivation and technology behind the *DocPlatform Extending by Javascript*. It is the first part of the
@@ -399,7 +416,7 @@ converted back and forth. Just a simple decorator-based adapters
 (`denodeify` and `nodeify`) must be created to interconnect the
 *callback-based* and *promise-based* worlds.
 
-## Storage
+### Storage
 
 The first facility we expose to the *Javascript* world is the *Storage*
 service. It simply serves as a [Content Addressable
@@ -429,7 +446,7 @@ whose first argument represents possible method call error. The
 *promise* convention always returns a *promise*. Usage examples using
 either convention are provided for each interface method.
 
-### storage.upload()
+#### storage.upload()
 
 `storage.upload( input: instream, data? : {...} ) : { hash: hash, size: number, ... }`
 
@@ -447,7 +464,7 @@ returned, namely:
 -   \[...\] ... Other optional data given by client (type, encoding,
     ...)
 
-#### Example usage \[callback\]:
+##### Example usage \[callback\]:
 
 ```javascript
 var fs = require('fs');
@@ -459,7 +476,7 @@ storage.upload(instream, {type: 'application/xml'}, function (err, data) {
 });
 ```
 
-#### Example usage \[promise\]:
+##### Example usage \[promise\]:
 
 ```javascript
 var fs = require('fs');
@@ -469,7 +486,7 @@ storage.upload( instream, {type: 'application/xml'})
   .then(console.log, console.error);
 ```
 
-#### Output:
+##### Output:
 
 ```json
 { type: 'application/xml',
@@ -478,7 +495,7 @@ storage.upload( instream, {type: 'application/xml'})
   time: Tue Apr 07 2015 10:40:16 GMT+0200 (CEST) }
 ```
 
-### storage.content()
+#### storage.content()
 
 `storage.content( hash: hash ) : instream`
 
@@ -488,7 +505,7 @@ Caller passes `hash` key representing content and a *callback* to be
 called when the requested *content* is ready. The *content* is
 represented as a *readable stream*.
 
-#### Example usage \[callback\]:
+##### Example usage \[callback\]:
 
 ```javascript
 var hash = '4fbf890c4cf64a8900afb0589352ed2ef717b906';
@@ -498,7 +515,7 @@ storage.content(hash, function (err, instream) {
 });
 ```
 
-#### Example usage \[promise\]:
+##### Example usage \[promise\]:
 
 ```javascript
 var hash = '4fbf890c4cf64a8900afb0589352ed2ef717b906';
@@ -509,7 +526,7 @@ storage.content(hash)
   .done();
 ```
 
-### storage.info()
+#### storage.info()
 
 `storage.info( hash : hash ) : { hash: hash, size: number, ... }`
 
@@ -527,7 +544,7 @@ Meta-data is a dictionary consisting of the following items:
 -   \[...\] ... Other optional data given by client (type, encoding,
     ...)
 
-#### Example usage \[callback\]:
+##### Example usage \[callback\]:
 
 ```javascript
 var hash = '4fbf890c4cf64a8900afb0589352ed2ef717b906';
@@ -537,7 +554,7 @@ storage.info(hash, function (err, data) {
 });
 ```
 
-#### Example usage \[promise\]:
+##### Example usage \[promise\]:
 
 ```javascript
 var hash = '4fbf890c4cf64a8900afb0589352ed2ef717b906';
@@ -546,7 +563,7 @@ storage.info(hash)
   .fail(function (err) { throw err; });
 ```
 
-#### Output:
+##### Output:
 
 ```json
 { type: 'application/xml',
@@ -555,7 +572,7 @@ storage.info(hash)
   time: Tue Apr 07 2015 10:40:16 GMT+0200 (CEST) }
 ```
 
-## Processor
+### Processor
 
 *Processor* represents a collection of *computationally intensive
 services* provided by *DocPlatform* to a client. Right now we expose two
@@ -584,7 +601,7 @@ argument represents possible method call error. The *promise* convention
 always returns a *promise*. Usage examples using either convention are
 provided for each interface method.
 
-### processor.transform()
+#### processor.transform()
 
 `processor.transform( inputs : { ... } ) : { inputs: {...}, result: hash }`
 
@@ -618,7 +635,7 @@ then the next argument is a `result` dictionary with the following keys:
 -   `inputs` ... Copy of the `inputs` argument
 -   `result` ... Hash of the resulting *XML Data* stream
 
-#### Example usage \[callback\]:
+##### Example usage \[callback\]:
 
 ```javascript
 var files = ["tdt.xml", "message.xml", "template.xml"];
@@ -638,7 +655,7 @@ async.map(
   });
 ```
 
-#### Example usage \[promise\]:
+##### Example usage \[promise\]:
 
 ```javascript
 var files = ["tdt.xml", "message.xml", "template.xml"];
@@ -654,7 +671,7 @@ Q.all(files, uploadXMLFile)
   .done(console.log);
 ```
 
-#### Output:
+##### Output:
 
 ```json
 { inputs: 
@@ -668,7 +685,7 @@ The *content* of the resulting *XML Data* (and *meta-data* associated
 with it) can be retrieved via separate calls to the associated
 *Storage*.
 
-### processor.format()
+#### processor.format()
 
 `processor.format( inputs: { ... } ) : { inputs: {...}, pages: number, result: hash }`
 
@@ -706,7 +723,7 @@ then the next argument is a `result` dictionary with the following keys:
 -   `pages` ... Number of pages in resulting document
 -   `result` ... Array of hashes representing output document streams
 
-#### Example usage \[callback\]:
+##### Example usage \[callback\]:
 
 ```javascript
 var files = [ "design.ssd", "data.xml" ];
@@ -726,7 +743,7 @@ async.map(
   });
 ```
 
-#### Example usage \[promise\]:
+##### Example usage \[promise\]:
 
 ```javascript
 var files = ["design.ssd", "data.xml"];
@@ -742,7 +759,7 @@ Q.all(files, uploadXMLFile)
   .done(console.log);
 ```
 
-#### Output:
+##### Output:
 
 ```json
 { inputs: 
