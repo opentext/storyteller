@@ -21,12 +21,17 @@ and a *document*.
 
 # STL Root
 
-One of the *DocBuilder++* design goals was to unify its XML structure with the output format 
-of the *Page Layout Driver*. While *Page Layout Driver.* output represents a *paginated rendered 
-form of a document* and on the other hand the *DocBuilder++* format represents a *document
-design structure* we still believe that it is possible to unify both formats to a single logical structure.
+One of the *DocBuilder++* design goals was to unify its XML structure with the output format of the [Page Layout Driver](driver.md). 
 
-It means that the root of the XML structure looks as follows:
+:exclamation: Note that the driver was implemented before we started the *DocBuilder++* design, 
+so there are some notable differences in syntax. Also the fact is that *Page Layout Driver* output 
+represents a *paginated/rendered form of a document* while the *DocBuilder++* format represents 
+a *document design structure* so they have many high-level and low-level differences. 
+That being said we still believe that it is possible to unify both formats to a single common syntax, which will ultimately 
+cover all the existing usecases and even will generate new ones. 
+
+It means that we reused the `http://developer.opentext.com/schemas/storyteller/layout` XML namespace and `stl` alias 
+(but renamed `root` element to `stl`) and so the root of the XML structure looks as follows:
 
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
@@ -37,8 +42,7 @@ This is a full example of an empty document definition:
 
 -   [Empty STL Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empty.xml)
 
-There are three optional sub-elements under the `stl:stl` element, we
-will :
+There are three optional sub-elements under the `stl:stl` element, we will:
 
 -   `stl:fixtures` ... contains linked or embedded data streams (see
     `xp:fixture` in preprocessing)

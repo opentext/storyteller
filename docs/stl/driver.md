@@ -52,14 +52,11 @@ to generate both *Page Layout Info* and *Rasterized Pages*:
 
 ## Page Layout XML
 
-As the *Page Layout XML* can be potentiall embedded to a superior XML
-structure we use a unique XML namespace
-`http://developer.opentext.com/schemas/storyteller/layout` mapped to
-prefix `stl` (`stl` prefix stands for *StoryTeller Layout*).
+As the *Page Layout XML* can be potentially embedded to a superior XML structure we use a unique XML namespace
+`http://developer.opentext.com/schemas/storyteller/layout` mapped to prefix `stl` (`stl` prefix stands for *StoryTeller Layout*).
 
-The `stl:root` element provides a `version` attribute in order to be
-able to change the XML format in future while keeping existing XSLT
-transformations backward compatible.
+The `stl:root` element provides a `version` attribute in order to be able to change the XML format in future while keeping 
+existing XSLT transformations backward compatible.
 
 Example:
 
@@ -68,6 +65,9 @@ Example:
   ...
 </stl:root>
 ```
+
+:exclamation: Note that the root element is called `stl:stl` in *DocBuilder's* XML and it is very likely that we will
+rename `stl:root` to `stl:stl` in future.
 
 ## Layout Hierarchy
 
@@ -105,6 +105,9 @@ Example:
   </stl:doc>
 </stl:root>
 ```
+
+:exclamation: Note that the `stl:doc` element is called `stl:document` in *DocBuilder's* XML and 
+it is very likely that we will rename `stl:doc` to `stl:document` in future.
 
 ### Pages
 
@@ -181,7 +184,9 @@ So the `stl:area` above gets simplified as follows:
   </stl:area>
 </stl:page>
 ...
-```
+
+:exclamation: Note that instead of a `@mtx` attribute there is a `@transform` attribute used in *DocBuilder's* XML.
+It is very likely that we will rename `stl:doc` to `stl:document` in future.
 
 ### Spans
 
@@ -302,6 +307,9 @@ Note that generally there can be an arbitrary hierarchy of `stl:area` and `stl:s
 
 All described combinations are supported by the new version of the *Page
 Layout Driver* and are visible in the example above.
+
+:exclamation: Note that the `stl:span` element has a very different meaning in *DocBuilder's* XML.
+It is very likely that we will address this conflict somehow in future.
 
 ### Empty Sections
 
@@ -483,6 +491,9 @@ temporary solution, I believe that you and server team will agree on a
 different transfer of raster images soon enough and the XML will contain
 just IDs, URIs, hashes (you name it)
 
+:exclamation: Note that semantics of the `stl:resources` element is very similar do *DocBuilder's* `stl:fixtures` 
+and it is very likely that we'll rename `stl:resources` to `stl:fixtures` in future.
+
 ### No resources
 
 Let's say a client is interested just in layout information. He needs to
@@ -627,7 +638,7 @@ Example:
 Here is a full example of the *Page Layout XML* with base64 encoded
 binary PNG data:
 
-    -   [WeeklyReport-embed-png-m.xml](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-embed-png-m.xml?h=develop)
+-   [WeeklyReport-embed-png-m.xml](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/preview/WeeklyReport-embed-png-m.xml?h=develop)
 
 ####  Text data
 
