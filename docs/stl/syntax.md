@@ -1,7 +1,6 @@
 Table of Contents
 =================
 
-   * [STL definition syntax](#stl-definition-syntax)
    * [STL Root](#stl-root)
    * [Whitespace handling](#whitespace-handling)
    * [Styling](#styling)

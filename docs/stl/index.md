@@ -84,7 +84,7 @@ to hide the implementation details).
 
 # More details
 
--   STL Use cases
+-   [STL Use cases](usecases.md)
 -   [STL Syntax](syntax.md)
 -   DocBuilder++
 -   DocWriter++
