@@ -1,4 +1,4 @@
-# Javascript Extending
+# StoryTeller Javascript Extending
 
 This Section describes the motivation and technology behind the *DocPlatform Extending by Javascript*. It is the first part of the
 [Javascript Documentation](index.md).

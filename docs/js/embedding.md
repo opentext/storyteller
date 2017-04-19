@@ -1,5 +1,4 @@
-Overview
-========
+StoryTeller Javascript Embedding
 
 This Section describes the motivation and technology behind the
 *DocPlatform Javascript Embedding*. It is the second part of the
@@ -16,19 +15,11 @@ This Section describes the motivation and technology behind the
     exposed *DocPlatform* services and also *3rd Party Javascript
     Libraries* as well as external *On-line Services*.
 
-<div class="CENTER">
+![Javascript Embedding](embedding.png)
 
-\#+CAPTION Javascript Embedding
+## Current Scripting Support
 
-*embedding.png*
-
-</div>
-
-Current Scripting Support
-=========================
-
-StreamServe Script
-------------------
+### StreamServe Script
 
 So far the only scripting language officially supported in *StoryTeller*
 is the [StreamServe scripting
@@ -47,14 +38,14 @@ script*.
 The JIRA user story for javascript embedding is available here:
 [STRSER-5932](https://jira.opentext.com/browse/STRSER-5932)
 
-### Architecture
+#### Architecture
 
 The high level architecture of the *StreamServe script* integration to
 *StoryTeller* looks as follows:
 
 *strs-scripting.png*
 
-### StreamServe Script Documentation
+#### StreamServe Script Documentation
 
 The following list contains some of the areas relevant to *StoryTeller
 Runtime Scripting*. All the listed functionality should be in some form
@@ -79,8 +70,7 @@ similar or better in terms of functionality available to users.
 -   Modules ([Function
     Files](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptLangRef.1.36.html#1285195))
 
-Python/Ruby Script
-------------------
+### Python/Ruby Script
 
 Besides the [StreamServe
 Script](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptLangRef.1.01.html)
@@ -103,19 +93,17 @@ to ease the *Design Time Scripting*.
 Similar *Design Time* scripting could be implemented for *Javascript* as
 well but it is out of scope in regards to current requirements.
 
-### Architecture
+#### Architecture
 
 The architecture of the Python/Ruby scripting feels too bit complicated
 (probably for some historical reasons) and should probably by
 re-factored before it could be seriously used in production:
 
-*dynamic-scripting.png*
+![Dynamic Scripting](dynamic-scripting.png)
 
-Javascript Scripting Support
-============================
+# Javascript Scripting Support
 
-Javascript Hosting Architectures
---------------------------------
+## Javascript Hosting Architectures
 
 *Javascript* is a very popular programming language and so there are
 many systems using it as an embedded language. Even though the
@@ -145,7 +133,7 @@ System](http://addyosmani.com/writing-modular-js/) it desires.
 systems like [RequireJS](http://requirejs.org/) are popular for browser
 code.
 
-*architecture-chromium.png*
+![Chromium Architecture](architecture-chromium.png)
 
 ### Node.js Server
 
@@ -170,7 +158,7 @@ Applications](http://en.wikipedia.org/wiki/Comparison_of_server-side_JavaScript_
 what *Module System* they pick; each such application must play well
 with the rules specified by the *Node.js Platform*.
 
-*architecture-nodejs.png*
+![Node.js Architecture](architecture-nodejs.png)
 
 ### StoryTeller
 
@@ -194,7 +182,7 @@ to the one used in *Node.js*.
 Naturally it is possible to write *Client Code* as well as use suitable
 *3rd Party Libraries* on top of the provided *Core Modules*.
 
-*architecture-docplatform.png*
+![StoryTeller Architecture](architecture-docplatform.png)
 
 There are several reasons why we decided to mimic the *Node.js* platform
 architecture:
@@ -219,8 +207,7 @@ Such kinds of libraries are the obvious candidates for adapting to
 on platform specific services and are mostly written in pure
 ([VanillaJS](http://vanilla-js.com/)) javascript instead.
 
-Language Interpreter
---------------------
+## Language Interpreter
 
 During the design we decided that all Javascript inside *DocPlatform*
 will be executed by the [V8 Javascript
@@ -245,8 +232,7 @@ C++ application:
 [V8 JavaScript Engine Embedder's
 Guide](http://code.google.com/apis/v8/embed.html)
 
-Module Support
---------------
+## Module Support
 
 Modularity of *Computer Programs* is a key to make the code more
 *correct*, *maintainable* and *reusable*. *Modules* divide programs into
@@ -318,8 +304,7 @@ The reasons are mainly the following:
 -   *DocPlatform* embedding *Javascript* is basically a **server
     platform**
 
-Language Features
------------------
+## Language Features
 
 In this section we more elaborate about the actual version of javascript
 language used in *DocPlatform*.
@@ -333,7 +318,7 @@ practices and eliminating some of the language’s insecure and
 ill-advised features. *Strict mode* is enabled by adding the following
 directive to your code:
 
-``` {.javascript}
+```javascript
 "use strict";
 ```
 
@@ -358,13 +343,12 @@ two functions defined in a nested block so it was really easy to move
 them to a top of corresponding function scope), the descriptive error
 message really helped in this regard:
 
-``` {.example}
+```
 SyntaxError: In strict mode code, functions can only be declared at top level 
              or immediately within another function.
 ```
 
-The
-[strict~mode~.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/strict_mode.xml?h=develop)
+The [strict~mode~.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/strict_mode.xml?h=develop)
 regression test (along with
 [strict~mode~.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/strict_mode.js?h=develop)
 module) demonstrates how *strict mode* makes javascript a better
@@ -405,7 +389,7 @@ in *DocPlatform* as well.
 
 So the following is a valid javascript code:
 
-``` {.javascript}
+```javascript
 const a = ["Hydrogen", "Helium", "Lithium", "Beryllium"];
 console.log(a.map(s => s.length));
 // [8, 6, 7, 9]
@@ -423,13 +407,13 @@ To further enhance the quality of javascript source code we optionally
 enabled the [Douglas Crockford](http://www.crockford.com/)'s
 [JSLint](https://github.com/douglascrockford/JSLint) runtime checker for
 all loaded modules. It can be configured in the `jslint` section of the
-[****init****.json](file:///git/docplatform/tree/forsetup/js/__init__.json?h=develop)
+[__init__.json](file:///git/docplatform/tree/forsetup/js/__init__.json?h=develop)
 configuration file.
 
 If the *JSLint* functionality is enabled and you require a *module* with
 the following code:
 
-``` {.javascript}
+```javascript
 function find_key( obj, val ) {
   var key;
   for( key in obj ) {
@@ -442,7 +426,7 @@ function find_key( obj, val ) {
 
 ... you get the following errors:
 
-``` {.example}
+```
  wd:/lint-semantics.js:1:9 JSLintError: Unused 'find_key'.
  wd:/lint-semantics.js:1:19 JSLintError: Unexpected space between '(' and 'obj'.
  wd:/lint-semantics.js:1:28 JSLintError: Unexpected space between 'val' and ')'.
@@ -458,7 +442,7 @@ function find_key( obj, val ) {
 The *JSLint* hints then may lead to a refined and compliant version of
 the code, which can for example look as follows:
 
-``` {.javascript}
+```javascript
 function find_key(obj, val) {
   return Object.keys(obj).filter(function (key) {
     return obj[key] === val;
@@ -479,12 +463,9 @@ Parts](http://www.amazon.com/exec/obidos/ASIN/0596517742/wrrrldwideweb):
 For more details see the [JSLint Help
 Page](http://www.jslint.com/help.html).
 
-The
-[lint.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/lint.py?h=develop)
-regression test (along with
-[lint.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/lint.xml?h=develop)
-definition and
-[lint-syntax.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/lint-syntax.js?h=develop)
+The [lint.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/lint.py?h=develop)
+regression test (along with [lint.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/lint.xml?h=develop)
+definition and [lint-syntax.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/lint-syntax.js?h=develop)
 +
 [lint-semantics.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/lint-semantics.js?h=develop)
 modules) demonstrates the *JSLint* behavior.
@@ -505,7 +486,7 @@ The only situation when it is hard to replace `for` statement with an
 array method is a creation of a new array of given `length`. Consider
 the following code:
 
-``` {.javascript}
+```javascript
 function createCells(count) {
   var cells = [];
   for (var i = 0; i < count; i += 1) {
@@ -515,19 +496,18 @@ function createCells(count) {
 }
 ```
 
-For such cases there is a helper module called
-[range](file:///git/docplatform/tree/forsetup/js/core/range.js?h=develop).
+For such cases there is a helper module called [range](file:///git/docplatform/tree/forsetup/js/core/range.js?h=develop).
 It implements a single function
 
-``` {.example}
-~range( start : number [, end :number, step : number] )~ 
+```
+range( start : number [, end :number, step : number] )
 ```
 
 similar to the python [range built-in
 function](https://docs.python.org/2/library/functions.html#range). With
 the `range` tool it is possible to write the previous code as follows:
 
-``` {.javascript}
+```javascript
 var range = require('range');
 ...
 function createCells(count) {
@@ -539,8 +519,7 @@ The
 [range.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/range.xml?h=develop)
 regression test demonstrates the `range` module functionality.
 
-StoryTellerJS Embedding Framework
----------------------------------
+## StoryTellerJS Embedding Framework
 
 This section describes the available *C++ Bindings* and *Core Modules*
 provides as a part of the *StoryTeller Javascript Embedding Framework*.
@@ -560,7 +539,7 @@ libraries.
 While the following code would be accepted in a *core module* if fails
 in a *user module*:
 
-``` {.example}
+```
 __bindings.process.stdout('Hello!');
 ^
 ReferenceError: __bindings is not defined
@@ -570,17 +549,14 @@ ReferenceError: __bindings is not defined
 All the c++ bindings are initialized in the [InterpreterContext
 constructor](file:///git/docplatform/tree/code/interpreters/jsinterpreter/jsscripthandler.cxx?h=develop#n917)
 and passed as a `__bindings` global variable to the bootstrapping script
--
-[****init****.js](file:///git/docplatform/tree/forsetup/js/__init__.js?h=develop).
+- [__init__.js](file:///git/docplatform/tree/forsetup/js/__init__.js?h=develop).
 
 ### Module Support
 
-In *DocPlatform* we decided to implement the
-[CommonJS](http://www.commonjs.org/) based module system, we basically
+In *DocPlatform* we decided to implement the [CommonJS](http://www.commonjs.org/) based module system, we basically
 mimic a *subset* of module system used in *Node.js*.
 
-The *Node.js* module system is documented
-[here](https://nodejs.org/api/modules.html).
+The *Node.js* module system is documented [here](https://nodejs.org/api/modules.html).
 
 Right now we support *Core modules*, *File modules (.js|.json)* and
 *Folder modules (index.js|index.json)* but support neither the
@@ -604,7 +580,7 @@ given javascript in given `globals` variable context. It also uses the
 
 Client code then looks as simple as this:
 
-``` {.javascript}
+```javascript
 var module = require('./module');
 module.foo('bar');
 ```
@@ -650,10 +626,8 @@ There are following additional properties and methods available:
 Thanks to the fact that the process javascript module mimics the
 *Node.js* [process module](https://nodejs.org/api/process.html), it is
 very easy to provide users with other core libraries for user
-convenience - the
-[console](file:///git/docplatform/tree/forsetup/js/core/node/console.js?h=develop)
-and
-[util](file:///git/docplatform/tree/forsetup/js/core/node/util.js?h=develop).
+convenience - the [console](file:///git/docplatform/tree/forsetup/js/core/node/console.js?h=develop)
+and [util](file:///git/docplatform/tree/forsetup/js/core/node/util.js?h=develop).
 The implementation of both modules is taken from *Node.js* and works as
 it is (with no necessary porting or other kinds of changes).
 
@@ -664,7 +638,7 @@ The documentation of both modules is available here:
 
 Following code demonstrates some of the `console` functionality:
 
-``` {.javascript}
+```javascript
 console.time('test');
 var abc = {a:1, b:2, c:3};
 console.log(abc);
@@ -673,10 +647,8 @@ console.timeEnd('test');
 // test: 6ms
 ```
 
-The
-[tracing.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/tracing.py?h=develop)
-regression test (along with
-[tracing.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/tracing.xml?h=develop)
+The [tracing.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/tracing.py?h=develop)
+regression test (along with [tracing.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/tracing.xml?h=develop)
 definition) demonstrates the tracing possibilities.
 
 ### Binary Buffer
@@ -691,15 +663,14 @@ project](https://github.com/feross/buffer).
 The *Buffer* is introduced to global namespace just like it is in the
 *Node.js*, so it is possible to write code like the following:
 
-``` {.javascript}
+```javascript
 var str = '\u00bd + \u00bc = \u00be';
 console.log(str + ": " + str.length + " characters, " 
             + Buffer.byteLength(str, 'utf8') + " bytes");
 // 1/2 + 1/4 = 3/4: 9 characters, 12 bytes
 ```
 
-The
-[buffer.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/buffer.xml?h=develop)
+The [buffer.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/buffer.xml?h=develop)
 regression test demonstrates the available functionality.
 
 ### Helper Modules
@@ -734,7 +705,7 @@ file.
 
 Following code shows some of the possibilities:
 
-``` {.javascript}
+```javascript
 var assert = require('assert');
 var path = require('path');
 var url = require('url');
@@ -762,7 +733,7 @@ same *StoryTeller Design*. In *strict mode* it is not even possible to
 use implicitly declared global variables the following exception is
 thrown:
 
-``` {.example}
+```
 ReferenceError: <var> is not defined
 ```
 
@@ -788,7 +759,7 @@ between individual scripts of the particular *StoryTeller Design*.
 The following design structure shows how two scripts can share a single
 variable:
 
-``` {.xml}
+```xml
 <page>
   <script when="docapi.BEFORE" language="js">
     var share = require('share');
@@ -804,8 +775,7 @@ variable:
 </page>
 ```
 
-The
-[share.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/share.xml?h=develop)
+The [share.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/share.xml?h=develop)
 regression test demonstrates the concept of *shared variables*.
 
 ### StreamServe Variables
@@ -829,8 +799,7 @@ There are following methods available:
 -   `list() : string[]`
     -   list all variable names
 
-For client code there is the
-[vars](file:///git/docplatform/tree/forsetup/js/core/vars.js?h=develop)
+For client code there is the [vars](file:///git/docplatform/tree/forsetup/js/core/vars.js?h=develop)
 core library available. It is built in javascript on top of the
 `__binding.variables` c++ bindings.
 
@@ -843,7 +812,7 @@ For user convenience it implements the following methods:
     -   proxy object providing direct read and write access to all
         variables
 
-``` {.javascript}
+```javascript
 var vars = require('vars');
 // scalar variable
 vars.set('scalar', 10);
@@ -869,7 +838,7 @@ of it.
 
 The following code is possible thanks to the convenience syntax sugar:
 
-``` {.javascript}
+```javascript
 var vars = require('vars').all;
 // we can set existing and new scalar variables
 vars.scalar = 10;
@@ -906,7 +875,7 @@ regression test demonstrates the *StreamServe Variable* accessibility.
 The following code is possible thanks to the array-like interface
 descrived above:
 
-``` {.javascript}
+```javascript
 vars.set( 'array1d', 'a', [ 0 ] );
 var arr = vars.all.array1d;
 console.log( arr.length );     // 1
@@ -920,8 +889,7 @@ arr.length = 10;
 // Error: Array enlargement not supported.
 ```
 
-The
-[array.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/array.xml?h=develop)
+The [array.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/array.xml?h=develop)
 regression test demonstrates the *StreamServe Variable* array
 accessibility.
 
@@ -930,7 +898,7 @@ variable can never be fully deleted. (This is a limitation of the
 current *StreamServe Variable* back-end implementation and javascript
 binding can do nothing about it).
 
-``` {.javascript}
+```javascript
 vars.array1d = null;
 vars.scalar = null;
 console.log(vars.dump());
@@ -974,10 +942,8 @@ There are following methods available:
 -   `get( key: string ) : string|number`
     -   get a property value from current item
 
-On top of this simple *key* -&gt; *value* interface an object model is
-built. The object model is implemented in the
-[layout](file:///git/docplatform/tree/forsetup/js/core/layout.js?h=develop)
-core library.
+On top of this simple *key* -&gt; *value* interface an object model is built. 
+The object model is implemented in the [layout](file:///git/docplatform/tree/forsetup/js/core/layout.js?h=develop) core library.
 
 Right now there is following hierarchy of objects:
 
@@ -1007,35 +973,29 @@ Right now there is following hierarchy of objects:
 
 User can get the proxy of the current item with following code:
 
-``` {.javascript}
+```javascript
 var item = require('layout').item();
 ```
 
 Then he is ready to read and write the individual properties as follows:
 
-``` {.javascript}
+```javascript
 console.log(item);     // {Text "My Text"}
 console.log(item.Box); // {Box [20, 25, 50, 15]}
 item.Box.X += 10;
 item.Name = 'Right-Shifted Text';
 ```
 
-The
-[layout~item~.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/layout_item.xml?h=develop)
+The [layout_item.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/layout_item.xml?h=develop)
 regression test demonstrates the available possibilities.
 
-DocPlatform works internally in 72 DPI and so its internal units
-correspond to typographic [Point
-units](http://en.wikipedia.org/wiki/Point_%28typography%29). However
-sometimes it is more convenient for user to work in different units
-(like millimeters).
+DocPlatform works internally in 72 DPI and so its internal units correspond to typographic 
+[Point units](http://en.wikipedia.org/wiki/Point_%28typography%29). However sometimes it is more convenient 
+for user to work in different units (like millimeters).
 
-In *StreamServe Script* this problem is solved by duplicating all the
-functions returning numeric properties (there are
-[Pt](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptingFunctions.2.419.html#1981049)
-and
-[Mm](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptingFunctions.2.418.html#1978070)
-suffices for all corresponding property getters). Such design not only
+In *StreamServe Script* this problem is solved by duplicating all the functions returning numeric properties (there are
+[Pt](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptingFunctions.2.419.html#1981049) and
+[Mm](http://onlinehelp.streamserve.com/5.6.2/en/wwhelp/wwhimpl/js/html/wwhelp.htm#href=Scripting%20reference/ScriptingFunctions.2.418.html#1978070) suffices for all corresponding property getters). Such design not only
 pollutes the namespace with many redundant functions and loads
 unnecessary maintenance burden on developers but also fails to be
 scalable enough for future extensions. What options do we have if an
@@ -1045,10 +1005,8 @@ additional unit (e.g. *centimeter*, *meter*, *inch*, *feet*, *pica*,
 The proper solution is to provide a separate unit conversion module and
 let users to make conversions explicitly.
 
-The
-[units](file:///git/docplatform/tree/forsetup/js/core/units.js?h=develop)
-core module is such a library - right now it contains just two helper
-functions:
+The [units](file:///git/docplatform/tree/forsetup/js/core/units.js?h=develop)
+core module is such a library - right now it contains just two helper functions:
 
 -   `pt2mm( points: number ) : number`
     -   converts numeric value in *points* to *millimeters*
@@ -1063,10 +1021,9 @@ functions:
 -   `in2mm( inches: number ) : number`
     -   converts numeric value in *inches* to *millimeters*
 
-Unit conversion of layout item properties represented in typographic
-points to millimeters looks as follows:
+Unit conversion of layout item properties represented in typographic points to millimeters looks as follows:
 
-``` {.javascript}
+```javascript
 var units = require('units');
 console.log(item.Box.W + 'pt -> ' + units.pt2mm(item.Box.W) + 'mm');
 // 50pt -> 17.63888888888889mm
@@ -1074,20 +1031,16 @@ console.log(item.Box.H + 'pt -> ' + units.pt2mm(item.Box.H) + 'mm');
 // 15pt -> 5.291666666666667mm
 ```
 
-The
-[units.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/units.xml?h=develop)
+The [units.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/units.xml?h=develop)
 regression test demonstrates the available functionality.
 
 We could probably use some 3rd party library for unit conversion, like
-[math.js](http://mathjs.org/docs/datatypes/units.html), or
-[convert-units](https://github.com/ben-ng/convert-units).
+[math.js](http://mathjs.org/docs/datatypes/units.html), or [convert-units](https://github.com/ben-ng/convert-units).
 
 ### Layout Cursor Access
 
-User can access layout cursor of the paragraph currently formatted via
-the
-[layout](file:///git/docplatform/tree/forsetup/js/core/layout.js?h=develop)
-core library.
+User can access layout cursor of the paragraph currently formatted via the
+[layout](file:///git/docplatform/tree/forsetup/js/core/layout.js?h=develop) core library.
 
 The following function is available:
 
@@ -1100,21 +1053,20 @@ If this function is called outside an area then an exception is thrown.
 
 Following code make sure the layout cursor has expected values:
 
-``` {.javascript}
+```javascript
 var assert = require('assert');
 var layout = require('layout');
 assert.deepEqual({X:20, Y:25}, layout.cursor());
 ```
 
-The
-[layout~cursor~.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/layout_cursor.xml?h=develop)
+The [layout~cursor~.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/layout_cursor.xml?h=develop)
 regression test demonstrates the available functionality.
 
 ### Repository
 
-Stream access is based on the
-[IRepository](file:///git/docplatform/tree/code/common/repository/interfaces/repository.h#n198)
-*DocPlatform* interface. Any constraints where user can reach
+Stream access is based on the `IRepository` *DocPlatform* interface. 
+Any constraints regarding what files or streams a tenant can reach depend on underlying ~IRepository~ implementations.
+Javascript binding does not address user identity and rights and so does not limit users in any way.
 
 The javascript/c++ binding is available as `__binding.repository`.
 
@@ -1132,11 +1084,10 @@ The `load` method returns either a *String* or a *Buffer* based on the
 `binary` argument. The `save` method accepts either a *String* or a
 *Buffer* and optional `uri`.
 
-On top of this binding we created the
-[repo](file:///git/docplatform/tree/forsetup/js/core/repo.js?h=develop)
+On top of this binding we created the [repo](file:///git/docplatform/tree/forsetup/js/core/repo.js?h=develop)
 core module. This module adds functionality for `encoding` and returns
 *Node.js* like *Buffer* instead of Uint8Array for binary data. It also
-provides a *Stream aPI* described in the following section.
+provides a *Stream API* described in the following section.
 
 There are following URI related methods available for users:
 
@@ -1154,7 +1105,7 @@ There are following URI related methods available for users:
 Default `encoding` is `utf8`, `null` encoding means no encoding - data
 is interpreted as *binary*
 
-``` {.javascript}
+```javascript
 var data = 'test data';
 var uri = repo.upload(data);
 console.log(uri);
@@ -1169,8 +1120,7 @@ console.log(repo.load(uri, 'base64'));
 // dGVzdCBkYXRh
 ```
 
-The
-[repo.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/repo.xml?h=develop)
+The [repo.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/repo.xml?h=develop)
 regression test demonstrates the available functionality.
 
 ### Streams
@@ -1209,37 +1159,36 @@ Here are some usage examples:
 
 Copy local files:
 
-``` {.javascript}
+```javascript
 var src = streams.stream('wd:/input.dat');
 var dst = streams.stream('wd:/output.dat').write(src.read());
 ```
 
 Cache some remote data to local file system:
 
-``` {.javascript}
+```javascript
 var src = streams.stream('http://www.example.com/static/data.xml');
 var dst = streams.stream('file:///tmp/data.xml').write(src.read());
 ```
 
-Upload data to *blob manager*:
+Upload data to *Blob Manager*:
 
-``` {.javascript}
+```javascript
 var blob = streams.stream('local:').write(data.dump('/data/svg'));
 fragment.Uri = blob.uri;
 ```
 
-Encode data as [Data URI
-scheme](https://en.wikipedia.org/wiki/Data_URI_scheme):
+Encode data as [Data URI scheme](https://en.wikipedia.org/wiki/Data_URI_scheme):
 
-``` {.javascript}
+```javascript
 var src = streams.stream('https://upload.wikimedia.org/wikipedia/commons/7/7f/Wikipedia-logo-en.png');
 var encoder = streams.stream('data:').write(src.read());
 image.Uri = blob.uri;
 ```
 
-Reading from standard input and writing to standard output:
+Read from *standard input* and write to *standard output*:
 
-``` {.javascript}
+```javascript
 var stdin = streams.stream('stdin:');
 var stdout = streams.stream('stdout:').write(stdin.read());
 ```
@@ -1248,7 +1197,7 @@ Note, that previous example uses *sequential streams* - you cannot read
 same data twice from standard input. However, it is possible to create a
 *memory stream*, "cache" data to it and use it many times:
 
-``` {.javascript}
+```javascript
 var stdin = streams.stream('stdin:');
 var stdout = streams.stream('stdout:');
 var cache = streams.stream().write(stdin.read());
@@ -1257,8 +1206,7 @@ if (validate_data(cache)) {
 }
 ```
 
-The
-[stream.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/stream.xml?h=develop)
+The [stream.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/stream.xml?h=develop)
 regression test demonstrates some of the available functionality.
 
 ### Data Access
@@ -1267,168 +1215,162 @@ To full-fill some of the use cases it is necessary to provide access
 from script to currently loaded *Data Instance* as well as current *Data
 Cursor*.
 
-*Data Instance* is typically a product of [TDT
-Transformation](file:///doc/Dev-Transformation.html) and internally is
-represented as an instance of the
-[IDataSourceWrapper](file:///git/docplatform/tree/code/common/docmodel/interfaces/domwrappers.h#n299)
-interface and the current *Data Cursor* is represented inside the
-[IFormattingContext](file:///git/docplatform/tree/code/common/interfaces/formatting_context.h#n40)
-interface.
+*Data Instance* is typically a product of [TDT Transformation](/storyteller/tdt/index.md) and internally is
+represented as an instance of the ~IDataSourceWrapper~ interface and the current *Data Cursor* is represented inside the
+~IFormattingContext~ interface.
 
 The javascript/c++ binding is available as `__binding.data`.
 
-1.  XML Data Selection
+#### XML Data Selection
 
-    There is a low level `select` method wrapped to the following public
-    method available:
+There is a low level `select` method wrapped to the following public
+method available:
 
-    -   `data.dump( xpath: string ): string`
-        -   evaluates given xpath relatively to the current data cursor
-            and dumps the result
+-   `data.dump( xpath: string ): string`
+    -   evaluates given xpath relatively to the current data cursor
+        and dumps the result
 
-    Given `xpath` can be either relative - it is then evaluated
-    relatively to current *Data Cursor* - or absolute - then even whole
-    data tree can be retrieved.
+Given `xpath` can be either relative - it is then evaluated
+relatively to current *Data Cursor* - or absolute - then even whole
+data tree can be retrieved.
 
-    Resulting value is can be a *number*, *boolean* or a *string*
-    containing various kinds of data:
+Resulting value is can be a *number*, *boolean* or a *string*
+containing various kinds of data:
 
-    -   Whole *Data Instance Tree* ... the full XML is serialized
-    -   A *nodeset* ... an artificial element `<tdt:root>` is created as
-        a common parent of all nodes
-    -   A *single string value* ... it is simply stringized
+-   Whole *Data Instance Tree* ... the full XML is serialized
+-   A *nodeset* ... an artificial element `<tdt:root>` is created as
+    a common parent of all nodes
+-   A *single string value* ... it is simply stringized
 
-    For example with the following *Data Instance*:
+For example with the following *Data Instance*:
 
-    ``` {.xml}
-    <items>
-      <item>1</item>
-      <item>
-        <subitem>2a</subitem>
-        <subitem>2b</subitem>
-      </item>
-    </items>
-    ```
+```xml
+<items>
+  <item>1</item>
+  <item>
+    <subitem>2a</subitem>
+    <subitem>2b</subitem>
+  </item>
+</items>
+```
 
-    User gets the following results:
+User gets the following results:
 
-    ``` {.javascript}
-    var data = require('data');
-    console.log(data.dump('/'));
-    // '<?xml version="1.0" encoding="UTF-8"?>
-    // <items><item>1</item><item><subitem>2a</subitem>\
-    //  <subitem>2b</subitem></item></items>'
-    console.log(data.dump('//subitem'));
-    // '<?xml version="1.0" encoding="UTF-8"?>
-    // <tdt:root xmlns:tdt="http://.../storyteller/transformation/tdt">\
-    //  <subitem>2a</subitem><subitem>2b</subitem></tdt:root>'
-    console.log(data.dump('string(//subitem[1])'));
-    // '2a'
-    console.log(data.dump('count(//subitem)'));
-    // 2 
-    console.log(data.dump('position(//subitem[1])=1'));
-    // true
-    ```
+```javascript
+var data = require('data');
+console.log(data.dump('/'));
+// '<?xml version="1.0" encoding="UTF-8"?>
+// <items><item>1</item><item><subitem>2a</subitem>\
+//  <subitem>2b</subitem></item></items>'
+console.log(data.dump('//subitem'));
+// '<?xml version="1.0" encoding="UTF-8"?>
+// <tdt:root xmlns:tdt="http://.../storyteller/transformation/tdt">\
+//  <subitem>2a</subitem><subitem>2b</subitem></tdt:root>'
+console.log(data.dump('string(//subitem[1])'));
+// '2a'
+console.log(data.dump('count(//subitem)'));
+// 2 
+console.log(data.dump('position(//subitem[1])=1'));
+// true
+```
 
-    It is important to understand that right now there is no way to
-    modify current *Data Instance*. All data access is read-only. The
-    reason is that it is not a good idea to modify data during its
-    enumeration - it is a special kind of [Self-modifying
-    code](https://en.wikipedia.org/wiki/Self-modifying_code#Disadvantages),
-    or [Mutating collection while
-    enumeration](http://ronnqvist.tumblr.com/post/20784881504/modifying-while-enumerating-done-right)
-    which complicates the maintenance and is often considered as a bad
-    practice. If there were requirements for modifying data from
-    javascript then it would be reasonable to introduce a separate
-    processing phase (like TDT) or possibly extend the TDT toolset to
-    embed javascript routines.
+It is important to understand that right now there is no way to
+modify current *Data Instance*. All data access is read-only. The
+reason is that it is not a good idea to modify data during its
+enumeration - it is a special kind of [Self-modifying
+code](https://en.wikipedia.org/wiki/Self-modifying_code#Disadvantages),
+or [Mutating collection while
+enumeration](http://ronnqvist.tumblr.com/post/20784881504/modifying-while-enumerating-done-right)
+which complicates the maintenance and is often considered as a bad
+practice. If there were requirements for modifying data from
+javascript then it would be reasonable to introduce a separate
+processing phase (like TDT) or possibly extend the TDT toolset to
+embed javascript routines.
 
-    On top of the raw data access functionality the
-    [data](file:///git/docplatform/tree/forsetup/js/core/data.js?h=develop)
-    core module implements another layer for improved user convenience:
+On top of the raw data access functionality the
+[data](file:///git/docplatform/tree/forsetup/js/core/data.js?h=develop)
+core module implements another layer for improved user convenience:
 
-2.  XML2JS Data Conversion
+####  XML2JS Data Conversion
 
-    With help of the
-    [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) 3rd party
-    library it is possible to convert the retrieved string data to a
-    corresponding hierarchy of javascript objects if user explicitly
-    asks for it.
+With help of the
+[xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) 3rd party
+library it is possible to convert the retrieved string data to a
+corresponding hierarchy of javascript objects if user explicitly
+asks for it.
 
-    -   `data.xml2js( xml: string [, options : {...}] ): object`
-        -   converts xml data to a corresponding hierarchy of Javascript
-            objects
-    -   `data.js( xpath: string [, options : {...}] ): object`
-        -   shortcut method roughly corresponnding to the
-            `data.xml2js(data.dump(xpath), options)` call
+-   `data.xml2js( xml: string [, options : {...}] ): object`
+    -   converts xml data to a corresponding hierarchy of Javascript
+        objects
+-   `data.js( xpath: string [, options : {...}] ): object`
+    -   shortcut method roughly corresponnding to the
+        `data.xml2js(data.dump(xpath), options)` call
 
-    So it is possible to do the following:
+So it is possible to do the following:
 
-    ``` {.javascript}
-    console.log(util.inspect(data.js('/'), false, 10));
-    // { item: [ '1', { subitem: [ '2a', '2b' ] } ] }
-    console.log(data.js('//subitem'));
-    // {'xmlns:tdt':'http://.../storyteller/transformation/tdt', subitem:['2a','2b']}
-    console.log(data.js( 'string(//subitem[1])'));
-    // 2a
-    console.log(data.js('/').item[1].subitem[1]);
-    // 2b
-    console.log(data.js('//subitem').subitem[1]);
-    // 2b   
-    ```
+```javascript
+console.log(util.inspect(data.js('/'), false, 10));
+// { item: [ '1', { subitem: [ '2a', '2b' ] } ] }
+console.log(data.js('//subitem'));
+// {'xmlns:tdt':'http://.../storyteller/transformation/tdt', subitem:['2a','2b']}
+console.log(data.js( 'string(//subitem[1])'));
+// 2a
+console.log(data.js('/').item[1].subitem[1]);
+// 2b
+console.log(data.js('//subitem').subitem[1]);
+// 2b   
+```
 
-    That way it is really easy to traverse the retrieved data and
-    utilize selected results in any way. Many options are available for
-    fine tuning how the *XML -&gt; JS* conversion is performed, for
-    example:
+That way it is really easy to traverse the retrieved data and
+utilize selected results in any way. Many options are available for
+fine tuning how the *XML -&gt; JS* conversion is performed, for
+example:
 
-    ``` {.javascript}
-    console.log(data.js('//subitem', {explicitRoot: true, ignoreAttrs: true }));
-    // { 'tdt:root': { subitem: [ '2a', '2b' ] } }
-    ```
+```javascript
+console.log(data.js('//subitem', {explicitRoot: true, ignoreAttrs: true }));
+// { 'tdt:root': { subitem: [ '2a', '2b' ] } }
+```
 
-    For more details about the available options consult the
-    [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) library
-    documentation.
+For more details about the available options consult the
+[xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) library
+documentation.
 
-3.  XMLDOM Data Conversion
+####  XMLDOM Data Conversion
 
-    With help of the [xmldom](https://github.com/jindw/xmldom) and
-    [xpath.js](https://github.com/yaronn/xpath.js) 3rd party libraries
-    it is possible to convert the retrieved string data to a W3C
-    compliant DOM and apply *XPath* based selections on it.
+With help of the [xmldom](https://github.com/jindw/xmldom) and
+[xpath.js](https://github.com/yaronn/xpath.js) 3rd party libraries
+it is possible to convert the retrieved string data to a W3C
+compliant DOM and apply *XPath* based selections on it.
 
-    -   `data.xml2dom( xml: string ): object`
-        -   converts xml data to a corresponding DOM
-    -   `data.dom( xpath: string ): object`
-        -   shortcut method corresponding to the
-            `data.xml2dom(data.dump(xpath))` call
+-   `data.xml2dom( xml: string ): object`
+    -   converts xml data to a corresponding DOM
+-   `data.dom( xpath: string ): object`
+    -   shortcut method corresponding to the
+        `data.xml2dom(data.dump(xpath))` call
 
-    So if user prefers the *XPath* based data access then he can do for
-    example the following (DOM calls can be nested):
+So if user prefers the *XPath* based data access then he can do for
+example the following (DOM calls can be nested):
 
-    ``` {.javascript}
-    var items = data.dom('//item');
-    var subitems = items.dom('item/subitem');
+```javascript
+var items = data.dom('//item');
+var subitems = items.dom('item/subitem');
 
-    console.log(items.dump('count(item)'));
-    // 2
-    console.log(subitems.length);
-    // 2
-    console.log(subitems[0].dump('string(.)'));
-    // 2a
-    console.log(subitems[1].dom('text()').node.data);
-    // 2b   
-    ```
+console.log(items.dump('count(item)'));
+// 2
+console.log(subitems.length);
+// 2
+console.log(subitems[0].dump('string(.)'));
+// 2a
+console.log(subitems[1].dom('text()').node.data);
+// 2b   
+```
 
-    The
-    [data.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/data.xml?h=develop)
-    regression test demonstrates most of the available functionality.
+The [data.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/data.xml?h=develop)
+regression test demonstrates most of the available functionality.
 
 ### Runtime Services
 
-We are going to expose some services provided by our platform for usage
-from javascript.
+We are going to expose some services provided by our platform for usage from javascript.
 
 Examples of such services could be:
 
@@ -1439,206 +1381,170 @@ Examples of such services could be:
 -   StoryTeller formatting
 -   ...
 
-The javascript/c++ binding for services is available as
-`__binding.services` and exposed via `services` javascript module.
+The javascript/c++ binding for services is available as `__binding.services` and exposed via `services` javascript module.
 
-1.  XML Processor
+####  XML Processor
 
-    Thanks to Javascript API it is now possible to call [XML
-    Processor](file:///doc/Dev-XMLParsing.html) in runtime directly from
-    *StoryTeller* runtime script or a *JSFilter* implementation.
+Thanks to Javascript API it is now possible to call [XML
+Processor](file:///doc/Dev-XMLParsing.html) in runtime directly from
+*StoryTeller* runtime script or a *JSFilter* implementation.
 
-    -   `services.xp(): service`
-        -   this function instantiates a *XML Processor* instance.
+-   `services.xp(): service`
+    -   this function instantiates a *XML Processor* instance.
 
-    The `service` instance can be called (once or many times) with
-    following signature:
+The `service` instance can be called (once or many times) with
+following signature:
 
-    -   `service( src: stream, dst: stream ) : stream`
-        -   this method processes given `src` and produces processed XML
-            to given `dst`
-        -   `src` is a `stream` containing an *Input XML* markup
-            containing directives like `xp:fixture` or `xp:include`
-        -   `dst` is a `stream` to represent resulting *XML output* -
-            product of XML processing
-        -   function also returns the given `dst` stream instance for
-            convenience
+-   `service( src: stream, dst: stream ) : stream`
+    -   this method processes given `src` and produces processed XML to given `dst`
+    -   `src` is a `stream` containing an *Input XML* markup containing directives like `xp:fixture` or `xp:include`
+    -   `dst` is a `stream` to represent resulting *XML output* - product of XML processing
+    -   function also returns the given `dst` stream instance for convenience
 
-    Following example demonstrates usage of the described API:
+Following example demonstrates usage of the described API:
 
-    ``` {.javascript}
-    var streams = require('streams');
-    var services = require('services');   
+```javascript
+var streams = require('streams');
+var services = require('services');   
 
-    var src = streams.stream('wd:/include.xml');
-    var dst = streams.stream();
-    var xp = services.xp();
-    xp(src, dst);
-    ```
+var src = streams.stream('wd:/include.xml');
+var dst = streams.stream();
+var xp = services.xp();
+xp(src, dst);
+```
 
-    The
-    [xp.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services/xp.xml?h=develop)
-    regression test demonstrates the available functionality.
+The [xp.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services/xp.xml?h=develop)
+regression test demonstrates the available functionality.
 
-2.  TDT
+####  TDT
 
-    Thanks to Javascript API it is now possible to call [TDT
-    Transformation](file:///doc/Dev-Transformation.html) in runtime
-    directly from *StoryTeller* runtime script or a *JSFilter*
-    implementation.
+Thanks to Javascript API it is now possible to call [TDT Transformation](/storyteller/tdt/index.md) in runtime
+directly from *StoryTeller* runtime script or a *JSFilter* implementation.
 
-    -   `services.tdt( template: stream, rules: stream [, mode: integral] ): service`
-        -   this function creates a *TDT processor* instance for given
-            `rules` and `template`
-        -   `template` is a `stream` containing XML markup representing
-            *TDT template*
-        -   `rules` is a `stream` containing XML persistence of *TDT
-            rules*
-        -   `mode` is an optional parameter specifying *TDT compilation
-            mode*
-        -   `service` is ready to execute one or more *TDT
-            transformations* each for given `data` and `params`
+-   `services.tdt( template: stream, rules: stream [, mode: integral] ): service`
+    -   this function creates a *TDT processor* instance for given `rules` and `template`
+    -   `template` is a `stream` containing XML markup representing *TDT template*
+    -   `rules` is a `stream` containing XML persistence of *TDT rules*
+    -   `mode` is an optional parameter specifying *TDT compilation mode*
+    -   `service` is ready to execute one or more *TDT transformations* each for given `data` and `params`
 
-    The `service` instance can be called (once or many times) with
-    following signature:
+The `service` instance can be called (once or many times) with
+following signature:
 
-    -   `service( src: stream, dst: stream [, params: object] ) : stream`
-        -   this method transforms given `src` and `params` (according
-            to processor's `rules` and `template`)
-        -   `src` is a `stream` containing XML markup representing *XML
-            input data*
-        -   `dst` is a `stream` to represent resulting *XML output* -
-            product of TDT transformation
-        -   `params` is an optional `object` containing any number of
-            *variable names* with corresponding (`string|number|bool`)
-            values
-        -   function also returns the given `dst` stream instance for
-            convenience
+-   `service( src: stream, dst: stream [, params: object] ) : stream`
+    -   this method transforms given `src` and `params` (according to processor's `rules` and `template`)
+    -   `src` is a `stream` containing XML markup representing *XML input data*
+    -   `dst` is a `stream` to represent resulting *XML output* - product of TDT transformation
+    -   `params` is an optional `object` containing any number of *variable names* with corresponding (`string|number|bool`) values
+    -   function also returns the given `dst` stream instance for convenience
 
-    Following example demonstrates usage of the described API:
+Following example demonstrates usage of the described API:
 
-    ``` {.javascript}
-    var streams = require('streams');
-    var data = require('data');   
-    var services = require('services');   
-    var item = require('layout').item();
+```javascript
+var streams = require('streams');
+var data = require('data');   
+var services = require('services');   
+var item = require('layout').item();
 
-    // load SVG template and TDT rules
-    var template = streams.stream('wd:/clock.svg');
-    var rules = streams.stream('wd:/clock-tdt.xml');
-    // instantiate TDT processor
-    var tdt = services.tdt(template, rules);
-    // prepare data and params
-    var params = {time: new Date().toLocaleTimeString()};
-    var src = streams.stream().write(data.dump('/data/svg_related_data'));
-    var dst = streams.stream('local:');
+// load SVG template and TDT rules
+var template = streams.stream('wd:/clock.svg');
+var rules = streams.stream('wd:/clock-tdt.xml');
+// instantiate TDT processor
+var tdt = services.tdt(template, rules);
+// prepare data and params
+var params = {time: new Date().toLocaleTimeString()};
+var src = streams.stream().write(data.dump('/data/svg_related_data'));
+var dst = streams.stream('local:');
 
-    // perform TDT transformation
-    tdt(src, dst);
+// perform TDT transformation
+tdt(src, dst);
 
-    // update fragment Uri with local: uri representing dynamically generated SVG markup
-    item.Uri = dst.uri;
-    ```
+// update fragment Uri with local: uri representing dynamically generated SVG markup
+item.Uri = dst.uri;
+```
 
-    The previous example demonstrates a possibility to use *TDT* in
-    runtime to dynamically modify an SVG and use it as a *dynamic
-    fragment*.
+The previous example demonstrates a possibility to use *TDT* in
+runtime to dynamically modify an SVG and use it as a *dynamic fragment*.
 
-    The
-    [tdtjs.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services/tdtjs.xml?h=develop)
-    regression test demonstrates the available functionality.
+The [tdtjs.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services/tdtjs.xml?h=develop)
+regression test demonstrates the available functionality.
 
-3.  XSLT
+####  XSLT
 
-    We can also call [XSLT
-    Transformation](https://en.wikipedia.org/wiki/XSLT) in runtime
-    directly from *StoryTeller* runtime script or a *JSFilter*
-    implementation.
+We can also call [XSLT Transformation](https://en.wikipedia.org/wiki/XSLT) in runtime
+directly from *StoryTeller* runtime script or a *JSFilter* implementation.
 
-    -   `services.xslt( template: stream ): service`
-        -   this function creates an *XSLT processor* instance for given
-            XSLT `template`
-        -   `template` is a `stream` containing XML markup representing
-            *TDT template*
-        -   `service` is ready to execute one or more *XSLT
-            transformations* each for given `data` and `params`
+-   `services.xslt( template: stream ): service`
+    -   this function creates an *XSLT processor* instance for given
+        XSLT `template`
+    -   `template` is a `stream` containing XML markup representing
+        *TDT template*
+    -   `service` is ready to execute one or more *XSLT
+        transformations* each for given `data` and `params`
 
-    The `service` instance can be called (once or many times) with
-    following signature:
+The `service` instance can be called (once or many times) with
+following signature:
 
-    -   `service( src: stream, dst: stream [, params: object] )`
-        -   this method transforms given `src` and `params` (according
-            to processor's XSLT `template`)
-        -   `src` is a `stream` containing XML markup representing *XML
-            input data*
-        -   `dst` is a `stream` to represent resulting *XML output* -
-            product of TDT transformation
-        -   `params` is an optional `object` containing any number of
-            *variable names* with corresponding (`string|number|bool`)
-            values
-        -   function also returns the given `dst` stream instance for
-            convenience
+-   `service( src: stream, dst: stream [, params: object] )`
+    -   this method transforms given `src` and `params` (according to processor's XSLT `template`)
+    -   `src` is a `stream` containing XML markup representing *XML input data*
+    -   `dst` is a `stream` to represent resulting *XML output* - product of TDT transformation
+    -   `params` is an optional `object` containing any number of *variable names* with corresponding (`string|number|bool`) values
+    -   function also returns the given `dst` stream instance for
+        convenience
 
-    Following example demonstrates usage of the described API:
+Following example demonstrates usage of the described API:
 
-    ``` {.javascript}
-    var assert = require('assert');
-    var streams = require('streams');
-    var services = require('services');   
+```javascript
+var assert = require('assert');
+var streams = require('streams');
+var services = require('services');   
 
-    // instantiate XSLT processor with given template stream
-    var xslt = services.xslt(streams.stream('wd:/cdcatalog.xslt'));
-    var src = streams.stream('wd:/cdcatalog.xml');
-    var expected = streams.stream('wd:/cdcatalog.html');
-    var dst = streams.stream();
-    // perform XSLT transformation
-    xslt(src, dst);
-    ```
+// instantiate XSLT processor with given template stream
+var xslt = services.xslt(streams.stream('wd:/cdcatalog.xslt'));
+var src = streams.stream('wd:/cdcatalog.xml');
+var expected = streams.stream('wd:/cdcatalog.html');
+var dst = streams.stream();
+// perform XSLT transformation
+xslt(src, dst);
+```
 
-    The
-    [xslt.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services/xslt.xml?h=develop)
-    regression test demonstrates the available functionality.
+The [xslt.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services/xslt.xml?h=develop)
+regression test demonstrates the available functionality.
 
-4.  XSD Validation
+####  XSD Validation
 
-    Thanks to Javascript API it is now possible to call [XSD
-    Validation](https://en.wikipedia.org/wiki/XML_Schema_(W3C)) in
-    runtime directly from *StoryTeller* runtime script or a *JSFilter*
-    implementation.
+Thanks to Javascript API it is now possible to call [XSD Validation](https://en.wikipedia.org/wiki/XML_Schema_(W3C)) in
+runtime directly from *StoryTeller* runtime script or a *JSFilter* implementation.
 
-    -   `services.xsd( uri : string ): service`
-        -   this function creates an *XSD Validator* instance for given
-            `uri`
-        -   `uri` is an URI representing XSD schema for validation
+-   `services.xsd( uri : string ): service`
+    -   this function creates an *XSD Validator* instance for given `uri`
+    -   `uri` is an URI representing XSD schema for validation
 
-    The `service` instance can be called (once or many times) with
-    following signature:
+The `service` instance can be called (once or many times) with
+following signature:
 
-    -   `service( src: stream )`
-        -   this method validates given `src`
-        -   `src` is a `stream` containing a *XML markup* to be
-            validated.
+-   `service( src: stream )`
+    -   this method validates given `src`
+    -   `src` is a `stream` containing a *XML markup* to be validated.
 
-    Following example demonstrates usage of the described API:
+Following example demonstrates usage of the described API:
 
-    ``` {.javascript}
-    var streams = require('streams');
-    var services = require('services');   
+```javascript
+var streams = require('streams');
+var services = require('services');   
 
-    var xsd = services.xsd('stinst:/js/docbuilder/xmlschema/stl.xsd');
-    var stl = streams.stream('wd:/stl.xml');
-    xsd(stl);
-    ```
+var xsd = services.xsd('stinst:/js/docbuilder/xmlschema/stl.xsd');
+var stl = streams.stream('wd:/stl.xml');
+xsd(stl);
+```
 
-    The
-    [xsd.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services/xsd.xml?h=develop)
-    regression test demonstrates the available functionality.
+The [xsd.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services/xsd.xml?h=develop)
+regression test demonstrates the available functionality.
 
 ### Processing Properties
 
-The retrieval of the *Processing Properties* is realized via the
-[IPropAccessor](file:///git/docplatform/tree/code/common/interfaces/prop_accessor.h#n30)
-interface.
+The retrieval of the *Processing Properties* is realized via the `IPropAccessor` interface.
 
 The javascript/c++ binding is available as `__binding.process`.
 
@@ -1649,29 +1555,22 @@ There is the following method available:
 
 ### Language Lookup
 
-The lookup is realized via the
-[ILookupProvider](file:///git/docplatform/tree/code/common/docmodel/interfaces/lookup_provider.h#n40)
-interface.
+The lookup is realized via the `ILookupProvider` interface.
 
 The javascript/c++ binding is available as `__binding.function`.
 
 There is the following method available:
 
 -   `translate( key: string, language: string ): string`
-    -   use the configured *Language Lookup Tables* to translate given
-        `key` to given `language`
+    -   use the configured *Language Lookup Tables* to translate given `key` to given `language`
 
-On top of the raw lookup functionality there is the
-[i18n](file:///git/docplatform/tree/forsetup/js/core/i18n.js?h=develop)
-core module implementing another layer for improved user convenience.
-Right now it does not do much, it just makes the `language` argument
-optional - in such case a *default language* (retrieved via the
+On top of the raw lookup functionality there is the [i18n](file:///git/docplatform/tree/forsetup/js/core/i18n.js?h=develop)
+core module implementing another layer for improved user convenience. Right now it does not do much, 
+it just makes the `language` argument optional - in such case a *default language* (retrieved via the
 `__binding.process.get('language')` call) is used for lookup.
 
-The
-[translate.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/translate.py?h=develop)
-regression test (along with
-[translate.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/translate.xml?h=develop)
+The [translate.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/translate.py?h=develop)
+regression test (along with [translate.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/translate.xml?h=develop)
 definition) demonstrates the available functionality.
 
 Syntax Check
@@ -1685,12 +1584,14 @@ A new simple API was created to provide this functionality - a new
 method of the IViewDebug interface (see [the
 commit](file:///git/docplatform/diff/code/common/docmodel/interfaces/viewdebug.h?id=21545fd)):
 
+```c++
     class IViewDebug
     {
     public:
       virtual APIString CheckSyntax( ScriptSpec const& spec ) = 0;
       ...
     };
+```
 
 Client passes a reference to a `ScriptSpec` (it is not necessary to
 upload it to `ScriptManager`, holding a instance as automatic stack
@@ -1706,20 +1607,20 @@ order to get better error location:
 
 For example:
 
+```c++
     ScriptSpec spec( "js", "return 42", "TEST" );
     std::cout << view.ViewDebug().CheckSyntax(spec) << std::endl;
     // TEST:1: SyntaxError: Illegal return statement
     // return 42
     // ^^^^^^
     // SyntaxError: Illegal return statement
+```
 
-There is also a new regression test
-pfdesigns/javascript/check~syntax~.py available testing this new
-functionality from python
+There is also a new regression test pfdesigns/javascript/check~syntax~.py available testing this new
+functionality from python 
 ([pfdesigns/javascript/check~syntax~.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/check_syntax.py)).
 
-Runtime Scripts In StoryTeller
-------------------------------
+## Runtime Scripts In StoryTeller
 
 The possibilities to attach individual *Runtime Scripts* to
 *StoryTeller* objects have not changed in comparison to *StreamServe
@@ -1730,7 +1631,7 @@ It is possible to attach *Before Scripts* to individual *Items* and also
 
 Following python code snippet demonstrates such possibility:
 
-``` {.python}
+```python
 text = factory.Text( 72, 72, 72, 72 )
 text.setName( "My Text" );
 script = text.Script( docapi.BEFORE );
@@ -1748,8 +1649,7 @@ Right now the individual script fragments can be uploaded to a
 *Language* tag specifying a *Scripting Language* the script is written
 in (it may be `strs`, `py`, `js`, ...).
 
-The
-[programmatic.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/programmatic.py?h=develop)
+The [programmatic.py](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/programmatic.py?h=develop)
 regression test demonstrates the possibility to attach a *Script* to a
 *Layout Item* programmatically via *DocPlatform API*.
 
@@ -1757,7 +1657,7 @@ It is possible to use the *DocBuilder Declarative Syntax* for script
 definitions as well. User can combine several scripting languages in a
 single *Document*.
 
-``` {.xml}
+```xml
 <text pos='72,72' size='72,72' name="My Text">
   <script when="docapi.BEFORE" language="js">
     console.log( 'Hello from javascript!' );
@@ -1765,14 +1665,12 @@ single *Document*.
 </text>
 ```
 
-The
-[multilang.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/multilang.xml?h=develop)
+The [multilang.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/multilang.xml?h=develop)
 regression test demonstrates how such a declarative definition can look
 like and how one can combine scripts in different languages to a single
 *Document Design*.
 
-JSFilter framework
-------------------
+## JSFilter framework
 
 It is now possible to implement pipeline filters in javascript.
 
@@ -1782,7 +1680,7 @@ The original implementation used two 'magic' repository methods:
 `repo.loadInput()` and `repo.saveOutput()`. Back then the filter code
 could look as follows:
 
-``` {.javascript}
+```javascript
 var repo = require('repo');
 var input = repo.loadInput();
 // make all image uris absolute
@@ -1812,7 +1710,7 @@ better job implementing generic and reusable filters.
 For example we can rewrite the previous *replace-image-uris* filter with
 the following general-purpose *search-and-replace* filter:
 
-``` {.javascript}
+```javascript
 module.exports = function setup(cfg) {
   var search = new RegExp(cfg.search, cfg.options || 'g');
   var replace = cfg.replace;
@@ -1828,7 +1726,7 @@ following example shows how to implement a polymorfic XML transformer in
 javascript. Such filter can perform either an *XSLT* or *TDT*
 transformation based on user configuration:
 
-``` {.javascript}
+```javascript
 var services = require('services');
 var streams = require('streams');
 
@@ -1852,7 +1750,7 @@ data*, injects resulting data island to DOM and serializes the DOM to
 *output stream*. It means that the actual conversion is performed only
 once even though there can be thousands of `invoke` calls.
 
-``` {.javascript}
+```javascript
 module.exports = function (config) {
   // perform complete STL -> cheerio DOM conversion
   var ctx = convert_design(config);
@@ -1877,14 +1775,12 @@ module.exports = function (config) {
 A full experimental implementation of such filter can be seen here:
 [stl2html.js](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/stl2html/stl2html.js?h=develop).
 
-Use Cases
-=========
+# Use Cases
 
 This section demonstrates various use case which can be fulfilled with
 help of the available infrastucture and 3rd party libraries.
 
-3rd Party Libraries
--------------------
+## 3rd Party Libraries
 
 ### Underscore
 
@@ -1896,10 +1792,9 @@ post](http://code.tutsplus.com/tutorials/getting-cozy-with-underscorejs--net-245
 for some examples how dramatically can such a library change the user
 code.
 
-If user downloads the library source code locally, then he can
-`require()` it like this:
+If user downloads the library source code locally, then he can `require()` it like this:
 
-``` {.javascript}
+```javascript
 var _ = require('wd:/lib/underscore');
 ```
 
@@ -1908,7 +1803,7 @@ to `require()` a remote library (e.g. the
 [underscore-min.js](http://underscorejs.org/underscore-min.js)) directly
 like this (not that is is considered a good practice for production):
 
-``` {.javascript}
+```javascript
 var _ = require('http://underscorejs.org/underscore-min.js');
 ```
 
@@ -1922,7 +1817,7 @@ proper data presentation and internationalization.
 
 Let's say we have the following XML data:
 
-``` {.xml}
+```xml
 <people>
   <person>
     <name>Deron Eriksson</name>
@@ -1957,12 +1852,12 @@ corresponding RGB triplets.
 
 As a result we get the following table:
 
-*locales.png*
+![Locales](locales.png)
 
 The code attached to each *Table Row* looks roughly as follows; first we
 fetch person's data:
 
-``` {.javascript}
+```javascript
 // retrieve data corresponding to current person
 var person = require('data').js('.').person;
 console.log(person);
@@ -1975,7 +1870,7 @@ console.log(person);
 
 The code transforming individual person's data items looks as follows:
 
-``` {.javascript}
+```javascript
 var vars = require('vars').all;
 // format birth date for person's locale
 var locales = require('./locales');
@@ -1990,10 +1885,9 @@ var color = require('onecolor');
 vars.color = color(person.eyes).css();
 ```
 
-Library function `reformat_date()` implementation is roughly the
-following:
+Library function `reformat_date()` implementation is roughly the following:
 
-``` {.javascript}
+```javascript
 var moment = require('moment');
 
 exports.reformat_date = function (value, locale, from, to) {
@@ -2003,10 +1897,9 @@ exports.reformat_date = function (value, locale, from, to) {
 }; 
 ```
 
-And here is remaining `reformat_money()` library function
-implementation:
+And here is remaining `reformat_money()` library function implementation:
 
-``` {.javascript}
+```javascript
 var money = require('money');
 var accounting = require('accounting');
 ...
@@ -2042,18 +1935,17 @@ The following 3rd party libraries are used:
     [money.js](http://openexchangerates.github.io/money.js/) +
     [accounting.js](http://openexchangerates.github.io/accounting.js/)
 
-And here is the [Resulting
-PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/javascript/locales-xml-m.c.pdf?h=develop).
+And here is the 
+[Resulting PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/javascript/locales-xml-m.c.pdf?h=develop).
 
 ### CSV parsing
 
-Imagine that we get input data in o form of [CSV
-file](https://en.wikipedia.org/wiki/Comma-separated_values).
+Imagine that we get input data in o form of [CSV file](https://en.wikipedia.org/wiki/Comma-separated_values).
 
 The content of the file can look as follows (full example data available
 [here](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/addresses.csv?h=develop)):
 
-``` {.javascript}
+```javascript
 "first_name","last_name","company_name","address","city","county","state","zip"...
 "James","Butt","Benton, John B Jr","6649 N Blue Gum St","New Orleans","Orleans"...
 "Josephine","Darakjy","Chanay, Jeffrey A Esq","4 B Blue Ridge Blvd","Brighton",...
@@ -2066,22 +1958,21 @@ The content of the file can look as follows (full example data available
 
 And we want to present given data as follows:
 
-*addresses.png*
+![Addresses](addresses.png)
 
-Thanks to a 3rd party library called
-[papaparse.js](http://papaparse.com/) implementing *CSV Parser & Writer*
+Thanks to a 3rd party library called [papaparse.js](http://papaparse.com/) implementing *CSV Parser & Writer*
 it is really easy to handle such data:
 
-``` {.javascript}
+```javascript
 var repo = require('repo');
 var Papa = require('babyparse');
 addresses = Papa.parse('wd:/addresses.csv', {header: true }).data;
 ```
 
-The result of the `Papa.parse()` call is a hierarchy of javascript
-objects. For example we can inspect it as follows:
+The result of the `Papa.parse()` call is a hierarchy of javascript objects. 
+For example we can inspect it as follows:
 
-``` {.javascript}
+```javascript
 console.log(addresses.slice(0, 2));
 // [ { first_name: 'James',
 //     last_name: 'Butt',
@@ -2112,14 +2003,13 @@ console.log(addresses.slice(0, 2));
 Let's say we want to format data in a form of a table. The easiest way
 to do it is to create a HTML and feed it to a *Repository Substitution*.
 
-As a first step we create the HTML markup. For that purpose we can
-utilize a *Template Engine* like
+As a first step we create the HTML markup. For that purpose we can utilize a *Template Engine* like
 [Markup.js](https://github.com/adammark/Markup.js/).
 
 So we create the following HTML template:
 [addresses.html](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/addresses.html?h=develop)
 
-``` {.html}
+```html
 <html>
   ...
   <body>
@@ -2149,7 +2039,7 @@ retrieve the resuting HTML markup (we use the U+FEFF
 the internal HTML driver interprets the content properly as Unicode
 input):
 
-``` {.javascript}
+```javascript
 var Mark = require('markup-js');
 var template = repo.load('wd:/addresses.html');
 var html = '\ufeff' + Mark.up(template, {addresses: addresses.data});
@@ -2158,7 +2048,7 @@ var html = '\ufeff' + Mark.up(template, {addresses: addresses.data});
 Then we upload the markup to *Blob Manager* and set the resulting (hash
 based) URI to the *Repository Substitution*:
 
-``` {.javascript}
+```javascript
 var subst = require('layout').item();
 subst.Uri = repo.upload(html);
 ```
@@ -2186,7 +2076,7 @@ blog](http://what-if.xkcd.com).
 Let's say we have the following data representing a simple configuration
 specific for each user:
 
-``` {.xml}
+```xml
 <client>
   <settings>
     <comics>
@@ -2204,21 +2094,20 @@ In the XML structure above each user can specify how many recent comics
 and how many articles he wants to include to the generated output
 document:
 
-*scraping.png*
+![Scraping](scraping.png)
 
 The top level script on a *Substitution* object calls the
 `scraping.xkcd( settings : {...} ) : string` helper function, uploads
 the resulting HTML to the *Blob Manager* and sets the resulting *local
 URL* to the *Substitution*:
 
-``` {.javascript}
+```javascript
 var settings = data.js('//settings/*');
 var html = scraping.xkcd({ /* settings */ });
 subst.Uri = repo.upload(html);
 ```
 
-In the
-[scraping.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/scraping.js?h=develop)
+In the [scraping.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/scraping.js?h=develop)
 helper module there is a `xkcd( settings ) : string` method generating a
 *HTML fragment* configured by given `settings`.
 
@@ -2247,8 +2136,7 @@ Full source code of this example is available here:
 And here is the [Resulting
 PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/javascript/xkcd-xml-m.c.pdf?h=develop).
 
-On-line Services
-----------------
+## On-line Services
 
 Thanks to *DocPlatform Repository* we have an access to HTTP/FTP streams
 available. One possibility how to utilize that is to integrate with
@@ -2261,7 +2149,7 @@ looking diagrams - the [yUML.me](http://yuml.me) on-line service.
 
 Let's say we have the following XML data representing a *Book Catalog*:
 
-``` {.xml}
+```xml
 <catalog>
   <book id="bk102">
     <author>Ralls, Kim</author>
@@ -2292,13 +2180,13 @@ Let's say we have the following XML data representing a *Book Catalog*:
 Let's say we want to create a nice looking diagram showing a relation
 between *Genres*, individual *Books* and their *Authors*:
 
-*diagram.png*
+![Diagram](diagram.png)
 
 First we must create to create a yUML markup from the *Catalog Data*. So
 we make a simple *XPath* query to get data in a form of javascript
 objects:
 
-``` {.javascript}
+```javascript
 // retrieve all books and modify book author names
 var books = data.js('/catalog/book').book;
 books.forEach(function (book) {
@@ -2309,7 +2197,7 @@ books.forEach(function (book) {
 We can inspect the retrieved (and slightly transformed) javascript
 objects and get the following listing:
 
-``` {.javascript}
+```javascript
 console.log( books );
 // [ { id: 'bk102',
 //     author: 'Kim Ralls',
@@ -2331,14 +2219,13 @@ console.log( books );
 
 Now we need to create a yUML markup corresponding to our data.
 
-To avoid laborious and error-prone text manipulation we can utilize a
-great Template Engine -
+To avoid laborious and error-prone text manipulation we can utilize a great Template Engine -
 [Markup.js](https://github.com/adammark/Markup.js/).
 
 It has support repeating, substitutions and all the great stuff, so we
 can just let it process the array of javascript objects directly:
 
-``` {.javascript}
+```javascript
 // use markup template processor to create yUML markup
 var template = '{{books}}[{{author}}] - ({{title}}), '
              + '({{title}})<({{genre}}),\n{{/books}}';
@@ -2348,7 +2235,7 @@ var yuml = Mark.up(template, {books: books });
 We can inspect the result and see that the yUML markup was created as
 expected:
 
-``` {.javascript}
+```javascript
 console.log( yuml );
 // [Kim Ralls] - (Midnight Rain), (Midnight Rain)<(Fantasy), 
 // [Eva Corets] - (Oberon's Legacy), (Oberon's Legacy)<(Fantasy), 
@@ -2358,13 +2245,12 @@ console.log( yuml );
 
 Let's now send the created markup to the on-line service. To encapsuate
 on-line service URI creation we have created a separate javascript
-module -
-[services.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services.js?h=develop).
+module - [services.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services.js?h=develop).
 
 There is a `diagram()` method accepting `yuml` and `options` arguments.
-It' implementation is relatively simple and looks roughly like this:
+It's implementation is relatively simple and looks roughly like this:
 
-``` {.javascript}
+```javascript
 // Simple UML diagrams on-line (see http://yuml.me/)
 exports.diagram = function (yuml, options) {
   options = options || {};
@@ -2379,15 +2265,14 @@ exports.diagram = function (yuml, options) {
 
 So it is clear that the `diagram()` method just constructs an *URI*
 based on given *markup* and *options* and that's it. When some other
-client code fetches data from such *URI* then it gets an image like this
-[On-line
-Diagram](http://yuml.me/diagram/scruffy;scale:200/usecase/%5BKim%20Ralls%5D%20-%20%28Midnight%20Rain%29,%20%28Midnight%20Rain%29%3C%28Fantasy%29,%20%5BEva%20Corets%5D%20-%20%28Maeve%20Ascendant%29,%20%28Maeve%20Ascendant%29%3C%28Fantasy%29,%20%5BEva%20Corets%5D%20-%20%28Oberon's%20Legacy%29,%20%28Oberon's%20Legacy%29%3C%28Fantasy%29,%20%5BEva%20Corets%5D%20-%20%28The%20Sundered%20Grail%29,%20%28The%20Sundered%20Grail%29%3C%28Fantasy%29,%20%5BCynthia%20Randall%5D%20-%20%28Lover%20Birds%29,%20%28Lover%20Birds%29%3C%28Romance%29,%20%5BPaula%20Thurman%5D%20-%20%28Splish%20Splash%29,%20%28Splish%20Splash%29%3C%28Romance%29,%20%5BStefan%20Knorr%5D%20-%20%28Creepy%20Crawlies%29,%20%28Creepy%20Crawlies%29%3C%28Horror%29,%20%5BPeter%20Kress%5D%20-%20%28Paradox%20Lost%29,%20%28Paradox%20Lost%29%3C%28Science%20Fiction%29,%20%5BAndrei%20Alexandrescu%5D%20-%20%28My%20First%20Scifi%29,%20%28My%20First%20Scifi%29%3C%28Science%20Fiction%29,%20%5BAndrei%20Alexandrescu%5D%20-%20%28Modern%20C++%20Design%29,%20%28Modern%20C++%20Design%29%3C%28Computer%29,%20%5BTim%20O'Brien%5D%20-%20%28Microsoft%20.NET:%20The%20Programming%20Bible%29,%20%28Microsoft%20.NET:%20The%20Programming%20Bible%29%3C%28Computer%29,%20%5BTim%20O'Brien%5D%20-%20%28MSXML3:%20A%20Comprehensive%20Guide%29,%20%28MSXML3:%20A%20Comprehensive%20Guide%29%3C%28Computer%29,%20%5BMike%20Galos%5D%20-%20%28Visual%20Studio%207:%20A%20Comprehensive%20Guide%29,%20%28Visual%20Studio%207:%20A%20Comprehensive%20Guide%29%3C%28Computer%29,%20%5BMatthew%20Gambardella%5D%20-%20%28XML%20Developer's%20Guide%29,%20%28XML%20Developer's%20Guide%29%3C%28Computer%29).
+client code fetches data from such *URI* then it gets an image like this 
+[On-line Diagram](http://yuml.me/diagram/scruffy;scale:200/usecase/%5BKim%20Ralls%5D%20-%20%28Midnight%20Rain%29,%20%28Midnight%20Rain%29%3C%28Fantasy%29,%20%5BEva%20Corets%5D%20-%20%28Maeve%20Ascendant%29,%20%28Maeve%20Ascendant%29%3C%28Fantasy%29,%20%5BEva%20Corets%5D%20-%20%28Oberon's%20Legacy%29,%20%28Oberon's%20Legacy%29%3C%28Fantasy%29,%20%5BEva%20Corets%5D%20-%20%28The%20Sundered%20Grail%29,%20%28The%20Sundered%20Grail%29%3C%28Fantasy%29,%20%5BCynthia%20Randall%5D%20-%20%28Lover%20Birds%29,%20%28Lover%20Birds%29%3C%28Romance%29,%20%5BPaula%20Thurman%5D%20-%20%28Splish%20Splash%29,%20%28Splish%20Splash%29%3C%28Romance%29,%20%5BStefan%20Knorr%5D%20-%20%28Creepy%20Crawlies%29,%20%28Creepy%20Crawlies%29%3C%28Horror%29,%20%5BPeter%20Kress%5D%20-%20%28Paradox%20Lost%29,%20%28Paradox%20Lost%29%3C%28Science%20Fiction%29,%20%5BAndrei%20Alexandrescu%5D%20-%20%28My%20First%20Scifi%29,%20%28My%20First%20Scifi%29%3C%28Science%20Fiction%29,%20%5BAndrei%20Alexandrescu%5D%20-%20%28Modern%20C++%20Design%29,%20%28Modern%20C++%20Design%29%3C%28Computer%29,%20%5BTim%20O'Brien%5D%20-%20%28Microsoft%20.NET:%20The%20Programming%20Bible%29,%20%28Microsoft%20.NET:%20The%20Programming%20Bible%29%3C%28Computer%29,%20%5BTim%20O'Brien%5D%20-%20%28MSXML3:%20A%20Comprehensive%20Guide%29,%20%28MSXML3:%20A%20Comprehensive%20Guide%29%3C%28Computer%29,%20%5BMike%20Galos%5D%20-%20%28Visual%20Studio%207:%20A%20Comprehensive%20Guide%29,%20%28Visual%20Studio%207:%20A%20Comprehensive%20Guide%29%3C%28Computer%29,%20%5BMatthew%20Gambardella%5D%20-%20%28XML%20Developer's%20Guide%29,%20%28XML%20Developer's%20Guide%29%3C%28Computer%29).
 
 So the remaining code is really simple - we just set the *URI* to the
 current *Image Item* and let the *Document Formatter* to fetch the
 corresponding diagram image for us:
 
-``` {.javascript}
+```javascript
 // use on-line service to rasterize the diagram
 image.Uri = services.diagram(yuml, {type:'usecase', style:'scruffy', scale:200});
 ```
@@ -2404,13 +2289,13 @@ Another example quite similar to the one above is using [On-line
 Service](http://latex.codecogs.com/) for editing and rendering LaTeX
 based Formulas & Equations:
 
-*formulas.png*
+![Formulas](formulas.png)
 
 Let's say we need to create a paragraph of text containing some inline
 formulas. For that purpose we can prepare following simple data
 structure with interleaving *text* and *formula* fragments:
 
-``` {.xml}
+```xml
 <fragments>
   <text>This is the first formula: </text>
   <formula>$x=\frac{1+y}{1+2z^2}$</formula>
@@ -2432,7 +2317,7 @@ From current *data cursor* it retrieves the LaTeX markup representing
 current equation and passes it the `services.formula()` helper function
 to retrieve a corresponding *URL*.
 
-``` {.javascript}
+```javascript
 var dpi = 300;
 var formula = data.dump('string(.)');
 var uri = services.formula(formula, {dpi: dpi, format: 'png'});
@@ -2443,7 +2328,7 @@ rasterized in requested DPI.
 
 For example the following equation markup:
 
-``` {.latex}
+```latex
 $$
 \frac{1}{\displaystyle 1+
 \frac{1}{\displaystyle 2+
@@ -2464,7 +2349,7 @@ So we fetch the PNG binary data right in the script and parse it with
 help of the [png.js](https://github.com/devongovett/png.js/) 3rd party
 library:
 
-``` {.javascript}
+```javascript
 var data = repo.load(uri, null);
 var header = png.PNG(data);
 image.Uri = uri;
@@ -2482,18 +2367,17 @@ If user wants to be sure to use the *local* stream instead of the
 *remote* one, then he can always do the caching on his own - upload the
 data to *blob manager* and use the `local:` (hash based) URI instead:
 
-``` {.javascript}
+```javascript
 image.Uri = repo.upload(data, null);
 ```
 
 The last piece to the puzzle is the `services.formula( latex, options )`
 helper function.
 
-It is implemented in the
-[services.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services.js?h=develop)
+It is implemented in the [services.js](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/services.js?h=develop)
 helper module and it's code looks as follows:
 
-``` {.javascript}
+```javascript
 // LaTeX formulas (see http://latex.codecogs.com/)
 exports.formula = function (latex, options) {
   var qs = require('querystring');
@@ -2519,8 +2403,8 @@ exports.formula = function (latex, options) {
 The whole test implementation is available here:
 [formulas.xml](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/formulas.xml?h=develop).
 
-Here is the [Resulting
-PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/javascript/formulas-xml-m.c.pdf?h=develop).
+Here is the 
+[Resulting PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/javascript/formulas-xml-m.c.pdf?h=develop).
 
 ### Google Charts
 
@@ -2533,13 +2417,13 @@ native StoryTeller charts. This example demonstrates that with a
 reasonable effort it is possible to integrate with an alternative
 charting service providing the following chart design:
 
-*charts.png*
+[Charts](charts.png)
 
 The heart of such integration is the `services.chart( data ): string`
 helper function responsible for constructing an *URI* for given data
 structure describing a chart.
 
-``` {.javascript}
+```javascript
 var chart_types = {
     map: 'map',
     qr: 'qr',
@@ -2584,7 +2468,7 @@ With such a function we have a flexible way to represent *chart
 definition* and we can hold such chart representations in a persistent
 way in XML form:
 
-``` {.xml}
+```xml
 <charts>
   <chart label="QR Code">
     <type>qr</type>
@@ -2598,7 +2482,7 @@ way in XML form:
 It is obvious that data structure varies considerable for various chart
 types. Let's look at data structure for a *Line Chart*:
 
-``` {.xml}
+```xml
 <chart label="Line Chart">
   <title>Line Chart</title>
   <type>sparkline</type>
@@ -2626,7 +2510,7 @@ We can then iterate over such *chart definitions* via *repeater* and
 convert individual chart representations to a corresponding image URI
 like this:
 
-``` {.javascript}
+```javascript
 var chart = data.js('.', {ignoreAttrs : true}).chart;
 image.Uri = services.chart(chart); 
 ```
@@ -2646,7 +2530,7 @@ This example is a variation of the previous one - it uses the [Google
 Image Charts](https://developers.google.com/chart/image/) service to
 generate thumbnails for all world countries:
 
-*countries.png*
+![Countries](countries.png)
 
 Initially we download and parse a JSON file containing all countries in
 the world:
@@ -2655,7 +2539,7 @@ the world:
 (downloaded from [this
 address](http://data.okfn.org/data/core/country-codes/r/country-codes.json))
 
-``` {.javascript}
+```javascript
 var countries = JSON.parse(repo.load("wd:/countries.json"));
 ```
 
@@ -2667,7 +2551,7 @@ map thumbnail like [this
 one](http://chart.googleapis.com/chart?cht=map&chs=200x200&chco=676767%7CFF0000%7C0000BB&chld=AF))
 and also add a link to *Wikipedia* article corresponding to the country:
 
-``` {.javascript}
+```javascript
 var countries = JSON.parse(repo.load("wd:/countries.json"));
 
 countries.forEach(function (country) {
@@ -2685,7 +2569,7 @@ countries.forEach(function (country) {
 Then we use the [Markup.js](https://github.com/adammark/Markup.js/)
 *Template Engine* once again to create the resulting HTML table:
 
-``` {.javascript}
+```javascript
 var template = repo.load("wd:/countries.html");
 var html = '\ufeff' + Mark.up(template, {countries : countries});
 ```
@@ -2694,7 +2578,7 @@ We use the following HTML template for that purpose:
 
 [countries.html](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/countries.html?h=develop)
 
-``` {.html}
+```html
 <html>
   ...
   <body>
@@ -2720,7 +2604,7 @@ We use the following HTML template for that purpose:
 The resulting HTML is then uploaded to *Blob Manager* and local (hash
 based) URL is set to the *Substitution Item*:
 
-``` {.javascript}
+```javascript
 subst.Uri = repo.upload(html);
 ```
 
@@ -2730,8 +2614,7 @@ The whole implementation is visible here:
 Here is the [Resulting
 PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/javascript/countries-xml-m.c.pdf?h=develop).
 
-HTML Post-Processing
---------------------
+## HTML Post-Processing
 
 In this section we demonstrate the possibility to post-process the HTML
 generated by *StoryTeller HTML Driver*. Right now it is not possible to
@@ -2786,34 +2669,32 @@ on its presentation.
 This particular *Post-Processing Script* namely does the following
 transformations:
 
-**(1) Change the label on the top of the page**
+#### (1) Change the label on the top of the page
 
-``` {.javascript}
+```javascript
 var label = $('body > div > div > span').first();
 label.text('Static Postprocessing of ' + label.text());
 ```
 
-**(2) Change the with settings to percentage to make the table layout
-responsive**
+#### (2) Change the with settings to percentage to make the table layout responsive
 
-``` {.javascript}
+```javascript
 $('table').each(function () {
   $(this).css('width', '100%');
 });
 ```
 
-**(3) Change the cell background color (create a "zebra" effect for the
-table)**
+#### (3) Change the cell background color (create a "zebra" effect for the table)
 
-``` {.javascript}
+```javascript
 $('tr').filter(i => i%2).children('td').each(function () {
   $(this).css('background-color', 'white');
 });
 ```
 
-**(4) Fetch data and prepare aligned columns of currency items**
+#### (4) Fetch data and prepare aligned columns of currency items
 
-``` {.javascript}
+```javascript
 var accounting = require('accounting');
 var items = data.js('/data/message/details/item').item;
 // format currencies to columns
@@ -2821,9 +2702,9 @@ var amounts = accounting.formatColumn(items.map(i => +(i.amount)), options);
 var balances = accounting.formatColumn(items.map(i => +(i.balance)), options);
 ```
 
-**(5) Iterate over all table body rows:**
+#### (5) Iterate over all table body rows:
 
-``` {.javascript}
+```javascript
 var bodyrows = $('table tr').filter(i => i!==0);
 assert.equal(items.length, bodyrows.length);
 // update all table body rows
@@ -2833,11 +2714,11 @@ bodyrows.each(function (row_index) {
 });
 ```
 
-**(6) Modify each row:**
+#### (6) Modify each row:
 
-**(6.1) Completely replace & re-format the dates in each row**
+##### (6.1) Completely replace & re-format the dates in each row
 
-``` {.javascript}
+```javascript
  var booking = cells.first().find('div span');
  var date = cells.eq(1).find('div span');
 
@@ -2849,11 +2730,11 @@ diff = diff ? (diff === 1 ? 'a day later' : diff + ' days later') : 'same day';
 date.text(cm.format('dddd') + ' (' + diff + ')');
 ```
 
-**(6.2) Add hyperlinks to *Receiver* texts (use
+##### (6.2) Add hyperlinks to *Receiver* texts (use
 [html-table-lookup.json](file:///git/docplatform/tree/distribution/py/pfdesigns/javascript/html-table-lookup.json?h=develop)
-table for that purpose)**
+table for that purpose)
 
-``` {.javascript}
+```javascript
 function make_link(link, label) { return '<a href="'+link+'">'+label+'</a>'; }
 ...
 var link = cells.eq(3).find('div span');
@@ -2865,17 +2746,17 @@ if (link.text() in lookup.urls) {
 }
 ```
 
-**(6.3) Change the text color - makes the negative balances red**
+##### (6.3) Change the text color - makes the negative balances red
 
-``` {.javascript}
+```javascript
 var balance = cells.last().find('div span');
 if (+(items[row_index].balance) < 0) 
   balance.css('color', 'red');
 ```
 
-**(6.4) Completely re-format currency items**
+##### (6.4) Completely re-format currency items
 
-``` {.javascript}
+```javascript
 function make_pre(str) { return '<pre style="margin:0px;">' + str + '</pre>'; }
 ...
 var amount = cells.eq(4).find('div span');
@@ -2920,7 +2801,7 @@ possibilities available.
 
 First we create jqGrid options:
 
-``` {.javascript}
+```javascript
 var options = {
   height: 'auto',
   autowidth: true,
@@ -2946,7 +2827,7 @@ var options = {
 Then we are ready fetch data and inject grid to the HTML document
 skeleton:
 
-``` {.javascript}
+```javascript
 var data = require('data');
 var pp = require('./postprocessor');
 // load HTML markup to postprocessor
@@ -2972,8 +2853,7 @@ Two possible variants of resulting documents can be reached here:
 [Sorting](file:///git/docplatform/plain/distribution/py/pfdesigns/javascript/html-table-post-dynamic.html?h=develop),
 [Grouping](file:///git/docplatform/plain/distribution/py/pfdesigns/javascript/html-table-post-dynamic-grouping.html?h=develop)
 
-3rd Party Libraries
-===================
+# 3rd Party Libraries
 
 In core modules as well as in use cases demonstrated above several 3rd
 party libraries were used. Most of them have MIT license and so any kind
@@ -2982,8 +2862,7 @@ authors). Still the legal department should look at this list and
 consider if this kind or usage is ok from legal perspective. The same
 measures should be taken as in case of C/C++ libraries.
 
-Libraries used in core modules
-------------------------------
+## Libraries used in core modules
 
 -   Node.js Core Modules:
     [console](https://nodejs.org/api/console.html),
@@ -3007,8 +2886,7 @@ Libraries used in core modules
 -   XML to Javascript Converter ...
     [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js)
 
-Libraries used in use cases presented in this section
------------------------------------------------------
+## Libraries used in use cases presented in this section
 
 -   Template Engine ...
     [Markup.js](https://github.com/adammark/Markup.js/)
@@ -3038,11 +2916,9 @@ Libraries used in use cases presented in this section
     [lodash](https://github.com/lodash/lodash))
 -   ...
 
-Embedding Summary
-=================
+# Embedding Summary
 
-Great Power is potentially available
-------------------------------------
+## Great Power is potentially available
 
 The following areas were covered in this section:
 
@@ -3078,8 +2954,7 @@ The following areas were covered in this section:
 
 ... Do we really want to give such a great power to our users?
 
-Open Questions
---------------
+## Open Questions
 
 -   3rd party libraries - how to handle it?
     -   a\) Let users handle it themselves
