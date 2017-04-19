@@ -79,7 +79,8 @@ Example:
 </stl:root>
 ```
 
-:exclamation: Note that the root element is called `stl:stl` in *DocBuilder's* XML and it is very likely that we will
+:exclamation:
+Note that the root element is called `stl:stl` in *DocBuilder's* XML and it is very likely that we will
 rename `stl:root` to `stl:stl` in future.
 
 ## Layout Hierarchy
@@ -119,7 +120,8 @@ Example:
 </stl:root>
 ```
 
-:exclamation: Note that the `stl:doc` element is called `stl:document` in *DocBuilder's* XML and 
+:exclamation: 
+Note that the `stl:doc` element is called `stl:document` in *DocBuilder's* XML and 
 it is very likely that we will rename `stl:doc` to `stl:document` in future.
 
 ### Pages
@@ -198,7 +200,8 @@ So the `stl:area` above gets simplified as follows:
 </stl:page>
 ...
 
-:exclamation: Note that instead of a `@mtx` attribute there is a `@transform` attribute used in *DocBuilder's* XML.
+:exclamation: 
+Note that instead of a `@mtx` attribute there is a `@transform` attribute used in *DocBuilder's* XML.
 It is very likely that we will rename `stl:doc` to `stl:document` in future.
 
 ### Spans
@@ -321,7 +324,8 @@ Note that generally there can be an arbitrary hierarchy of `stl:area` and `stl:s
 All described combinations are supported by the new version of the *Page
 Layout Driver* and are visible in the example above.
 
-:exclamation: Note that the `stl:span` element has a very different meaning in *DocBuilder's* XML.
+:exclamation: 
+Note that the `stl:span` element has a very different meaning in *DocBuilder's* XML.
 It is very likely that we will address this conflict somehow in future.
 
 ### Empty Sections
@@ -504,7 +508,8 @@ temporary solution, I believe that you and server team will agree on a
 different transfer of raster images soon enough and the XML will contain
 just IDs, URIs, hashes (you name it)
 
-:exclamation: Note that semantics of the `stl:resources` element is very similar do *DocBuilder's* `stl:fixtures` 
+:exclamation: 
+Note that semantics of the `stl:resources` element is very similar do *DocBuilder's* `stl:fixtures` 
 and it is very likely that we'll rename `stl:resources` to `stl:fixtures` in future.
 
 ### No resources

@@ -23,7 +23,8 @@ and a *document*.
 
 One of the *DocBuilder++* design goals was to unify its XML structure with the output format of the [Page Layout Driver](driver.md). 
 
-:exclamation: Note that the driver was implemented before we started the *DocBuilder++* design, 
+:exclamation: 
+Note that the driver was implemented before we started the *DocBuilder++* design, 
 so there are some notable differences in syntax. Also the fact is that *Page Layout Driver* output 
 represents a *paginated/rendered form of a document* while the *DocBuilder++* format represents 
 a *document design structure* so they have many high-level and low-level differences. 
