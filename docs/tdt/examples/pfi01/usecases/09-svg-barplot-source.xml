@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <root>
+      <values>
+        <record index="1" val="100"/>
+        <record index="1" val="-50"/>
+        <record index="2" val="20"/>
+        <record index="2" val="-100"/>
+        <record index="3" val="130"/>
+        <record index="4" val="150"/>
+        <record index="4" val="-90"/>
+        <record index="5" val="170"/>
+        <record index="6" val="-90"/>
+        <record index="7" val="140"/>
+        <record index="7" val="-130"/>
+        <record index="8" val="130"/>
+        <record index="9" val="60"/>
+        <record index="11" val="130"/>
+        <record index="12" val="160"/>
+        <record index="13" val="130"/>
+        <record index="14" val="150"/>
+        <record index="14" val="-150"/>
+      </values>
+    </root>

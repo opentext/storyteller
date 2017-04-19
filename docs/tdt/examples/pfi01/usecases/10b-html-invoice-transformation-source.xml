@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <metatrans>
+      <!-- customer-info -->
+      <rule path="/html/head/title" key="text()">
+	    concat(tdt:template()//title, ' ', $customer/tel/text(), ", ", $period )
+	  </rule>
+      <rule path="//span[@class='tel']" key="text()">$customer/tel/text()</rule>
+      <group path="//div[@class='cust-info']/table/tbody">
+        <rule path="tr[2]/td" key="text()">$customer/@code</rule>
+        <rule path="tr[3]/td" key="text()">$customer/tarif/text()</rule>
+      </group>
+      <rule path="//div[@class='account-info']" key="text()">
+	    concat(tdt:template()//div[@class='account-info'], ' ', $period )
+	  </rule>
+      <!-- "credits" table -->
+      <group path="//table[@class='credits']">
+        <rule key=".">$transactions/credits[item]</rule>
+        <rule path="tbody/tr" key=".">item</rule>
+        <group path="tbody/tr">
+          <rule path="td[1]" key="text()">label/text()</rule>
+          <rule path="td[2]" key="text()">type/text()</rule>
+          <rule path="td[3]" key="text()">duration/text()</rule>
+          <rule path="td[4]" key="text()">val/text()</rule>
+          <rule path="td[5]" key="text()">tax/text()</rule>
+          <rule path="td[6]" key="text()">final/text()</rule>
+        </group>
+        <rule path="tfoot/tr/td[1]" key="text()">string(@sum)</rule>
+      </group>
+      <!-- "fixed-fees" table -->
+      <group path="//table[@class='fixed-fees']">
+        <rule path="tbody/tr" key=".">$fixed-fees/item</rule>
+        <group path="tbody/tr">
+          <rule path="td[1]" key="text()">label/text()</rule>
+          <rule path="td[2]" key="text()">duration/text()</rule>
+          <rule path="td[3]" key="text()">count/text()</rule>
+          <rule path="td[4]" key="text()">val/text()</rule>
+          <rule path="td[5]" key="text()">tax/text()</rule>
+          <rule path="td[6]" key="text()">final/text()</rule>
+        </group>
+        <rule path="tfoot/tr/td[1]" key="text()">string($fixed-fees/@sum)</rule>
+      </group>
+      <!-- "connection-fees" table -->
+      <group path="//table[@class='connection-fees']">
+        <group path="tbody">
+          <rule key=".">$connection-fees/group</rule>
+          <rule path="tr[@class='section-header']/th[1]" key="text()">label/text()</rule>
+          <rule path="tr[@class='section-footer']/td[2]" key="text()">sum/text()</rule>
+          <group path="tr[@class='section-data']">
+            <rule key=".">item</rule>
+            <rule path="td[1]" key="text()">label/text()</rule>
+            <rule path="td[2]" key="text()">count/text()</rule>
+            <rule path="td[3]" key="text()">period/text()</rule>
+            <rule path="td[4]" key="text()">amount/text()</rule>
+            <rule path="td[5]" key="text()">free-units/text()</rule>
+            <rule path="td[6]" key="text()">price/text()</rule>
+            <rule path="td[7]" key="text()">tax/text()</rule>
+            <rule path="td[8]" key="text()">final/text()</rule>
+          </group>
+        </group>
+        <rule path="tfoot/tr/td[1]" key="text()">string($connection-fees/@sum)</rule>
+      </group>
+      <!-- total -->
+      <rule path="//table[@class='total']//td[@class='sum']" key="text()">$transactions/@sum</rule>
+    </metatrans>

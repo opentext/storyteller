@@ -1,0 +1,12 @@
+01-flatten-html.rst
+02-beautify.rst
+03a-radio-cro.rst
+03b-radio-bbc.rst
+04-interactive-items.rst
+#05-rest-client.rst                  # http access disabled
+#06-google-distance-matrix.rst       # http access disabled
+#07-translations.rst                 # http access disabled
+#08-svg-data-mining.rst              # http access disabled
+#09-svg-barplot.rst                  # anonymous namespace not supported by docbuilder
+#10a-html-invoice.rst                # metarules not supported
+#10b-html-invoice-transformation.rst # metarules not supported

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <data>
+	 <message>
+       <phrases xml:lang="en" translation="cs">
+		 <phrase>Dear</phrase>
+		 <phrase>Good bye</phrase>
+		 <phrase>Sender</phrase>
+		 <phrase>Street</phrase>
+		 <phrase>Town</phrase>
+		 <phrase>State</phrase>
+       </phrases>
+	 </message>
+   </data>
