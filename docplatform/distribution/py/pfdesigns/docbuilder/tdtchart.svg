@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" class="ct-chart-bar ct-horizontal-bars" style="width: 100%; height: 100%;">
+  <g class="ct-grids">
+	<line y1="428.53125" y2="428.53125" x1="80" x2="735" class="ct-grid ct-vertical"/>
+	<line y1="369.45535714285717" y2="369.45535714285717" x1="80" x2="735" class="ct-grid ct-vertical"/>
+	<line y1="310.3794642857143" y2="310.3794642857143" x1="80" x2="735" class="ct-grid ct-vertical"/>
+	<line y1="251.30357142857144" y2="251.30357142857144" x1="80" x2="735" class="ct-grid ct-vertical"/>
+	<line y1="192.22767857142858" y2="192.22767857142858" x1="80" x2="735" class="ct-grid ct-vertical"/>
+	<line y1="133.15178571428572" y2="133.15178571428572" x1="80" x2="735" class="ct-grid ct-vertical"/>
+	<line y1="74.07589285714289" y2="74.07589285714289" x1="80" x2="735" class="ct-grid ct-vertical"/>
+	<line x1="80" x2="80" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="120.9375" x2="120.9375" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="161.875" x2="161.875" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="202.8125" x2="202.8125" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="243.75" x2="243.75" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="284.6875" x2="284.6875" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="325.625" x2="325.625" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="366.5625" x2="366.5625" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="407.5" x2="407.5" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="448.4375" x2="448.4375" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="489.375" x2="489.375" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="530.3125" x2="530.3125" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="571.25" x2="571.25" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="612.1875" x2="612.1875" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="653.125" x2="653.125" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="694.0625" x2="694.0625" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+	<line x1="735" x2="735" y1="15" y2="428.53125" class="ct-grid ct-horizontal"/>
+  </g>
+  <g>
+	<g class="ct-series ct-series-a">
+	  <line y1="403.99330357142856" y2="403.99330357142856" x1="80" x2="342" class="ct-bar" value="4"/>
+	  <line y1="344.9174107142857" y2="344.9174107142857" x1="80" x2="473" class="ct-bar" value="6"/>
+	  <line y1="285.84151785714283" y2="285.84151785714283" x1="80" x2="342" class="ct-bar" value="4"/>
+	  <line y1="226.76562500000003" y2="226.76562500000003" x1="80" x2="407.5" class="ct-bar" value="5"/>
+	  <line y1="167.68973214285717" y2="167.68973214285717" x1="80" x2="669.5" class="ct-bar" value="9"/>
+	  <line y1="108.61383928571429" y2="108.61383928571429" x1="80" x2="211" class="ct-bar" value="2"/>
+	  <line y1="49.53794642857146" y2="49.53794642857146" x1="80" x2="276.5" class="ct-bar" value="3"/>
+	</g>
+	<g class="ct-series ct-series-b">
+	  <line y1="393.99330357142856" y2="393.99330357142856" x1="80" x2="276.5" class="ct-bar" value="3"/>
+	  <line y1="334.9174107142857" y2="334.9174107142857" x1="80" x2="735" class="ct-bar" value="10"/>
+	  <line y1="275.84151785714283" y2="275.84151785714283" x1="80" x2="407.5" class="ct-bar" value="5"/>
+	  <line y1="216.76562500000003" y2="216.76562500000003" x1="80" x2="538.5" class="ct-bar" value="7"/>
+	  <line y1="157.68973214285717" y2="157.68973214285717" x1="80" x2="276.5" class="ct-bar" value="3"/>
+	  <line y1="98.61383928571429" y2="98.61383928571429" x1="80" x2="342" class="ct-bar" value="4"/>
+	  <line y1="39.53794642857146" y2="39.53794642857146" x1="80" x2="407.5" class="ct-bar" value="5"/>
+	</g>
+  </g>
+  <g class="ct-labels">
+	<foreignObject style="overflow: visible;" y="369.45535714285717" x="10" height="59.075892857142854" width="60">
+	  <span class="ct-label ct-vertical ct-start" style="height: 59px; width: 60px">Sunday</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" y="310.37946428571433" x="10" height="59.075892857142854" width="60">
+	  <span class="ct-label ct-vertical ct-start" style="height: 59px; width: 60px">Saturday</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" y="251.30357142857144" x="10" height="59.07589285714285" width="60">
+	  <span class="ct-label ct-vertical ct-start" style="height: 59px; width: 60px">Friday</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" y="192.22767857142858" x="10" height="59.07589285714286" width="60">
+	  <span class="ct-label ct-vertical ct-start" style="height: 59px; width: 60px">Thursday</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" y="133.15178571428572" x="10" height="59.07589285714286" width="60">
+	  <span class="ct-label ct-vertical ct-start" style="height: 59px; width: 60px">Wednesday</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" y="74.07589285714289" x="10" height="59.07589285714283" width="60">
+	  <span class="ct-label ct-vertical ct-start" style="height: 59px; width: 60px">Tuesday</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" y="15" x="10" height="59.07589285714289" width="60">
+	  <span class="ct-label ct-vertical ct-start" style="height: 59px; width: 60px">Monday</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="80" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">0</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="120.9375" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">0.625</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="161.875" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">1.25</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="202.8125" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">1.875</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="243.75" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">2.5</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="284.6875" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">3.125</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="325.625" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">3.75</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="366.5625" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">4.375</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="407.5" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">5</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="448.4375" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">5.625</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="489.375" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">6.25</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="530.3125" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">6.875</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="571.25" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">7.5</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="612.1875" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">8.125</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="653.125" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">8.75</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="694.0625" y="433.53125" width="40.9375" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 41px; height: 20px">9.375</span>
+	</foreignObject>
+	<foreignObject style="overflow: visible;" x="735" y="433.53125" width="30" height="20">
+	  <span class="ct-label ct-horizontal ct-end" style="width: 30px; height: 20px">10</span>
+	</foreignObject>
+  </g>
+</svg>

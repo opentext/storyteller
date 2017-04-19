@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="750pt" height="400pt" class="nvd3-svg">
+  <g class="nvd3 nv-wrap nv-stackedAreaChart" transform="translate(60,30)">
+    <g>
+      <g class="nv-focus">
+        <g class="nv-y nv-axis nvd3-svg" transform="translate(590,0)" style="opacity: 1;">
+          <g class="nvd3 nv-wrap nv-axis" style="opacity: 1;">
+            <g>
+              <g class="tick" style="opacity: 1;" transform="translate(0,8.104194203103994)" opacity="0">
+                <line x2="-590" y2="0" style="fill: none; stroke: #e5e5e5;"/>
+                <text dy=".32em" style="font: normal 12px Arial; text-anchor: start;" x="3" opacity="0" y="0">120.00</text>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

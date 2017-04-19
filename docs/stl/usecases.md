@@ -1,7 +1,7 @@
 # STL Use cases
 
-This document shows some of the usecases we can use *STL definition*
-for. It is a part of the *STL Framework Documentation*.
+This document shows some of the usecases we can use *STL definition* for. 
+It is a part of the [STL Framework Documentation](index.md).
 
 ## Automated layout conversion
 
@@ -41,12 +41,12 @@ The following table lists individual
 
 Consider the following (real world) example:
 
--   [Expected Output (PDF)](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/Platts/Platts-expected.pdf?h=pfi01/develop/docbuilder)
--   [Source Data (XML)](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/Platts/Platts2-big.xml?h=pfi01/develop/docbuilder)
--   [Design Transformation (XSLT)](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/Platts/Platts.xslt?h=pfi01/develop/docbuilder)
--   [Load-time Stylesheet (CSS)](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/Platts/Platts.css?h=pfi01/develop/docbuilder)
--   [Generated Design (STL)](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/Platts/Platts.xml?h=pfi01/develop/docbuilder)
--   [Formatted Output (PDF)](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/Platts/Platts-py.pdf?h=pfi01/develop/docbuilder)
+-   [Expected Output (PDF)](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/Platts/Platts-expected.pdf)
+-   [Source Data (XML)](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/Platts/Platts2-big.xml)
+-   [Design Transformation (XSLT)](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/Platts/Platts.xslt)
+-   [Load-time Stylesheet (CSS)](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/Platts/Platts.css)
+-   [Generated Design (STL)](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/Platts/Platts.xml)
+-   [Formatted Output (PDF)](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/Platts/Platts-py.pdf)
 
 ## Generated Fragments
 
@@ -102,11 +102,11 @@ repository and resulting URI is set to the content substitution. System
 automatically detects the STL syntax and uses DocBuilder to create
 StoryTeller content fragment.
 
--   [Host Design (STL)](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/clock.xml?h=pfi01/develop/docbuilder)
--   [Dynamic Addresses (CSV)](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/addresses.csv?h=pfi01/develop/docbuilder)
--   [Content template (STL + Markup.js)](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/addresses-template.xml?h=pfi01/develop/docbuilder)
--   [Clock fragment (SVG)](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/clock.svg?h=pfi01/develop/docbuilder)
--   [Formatted Output (PDF)](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/clock-xml-m.c.pdf?h=pfi01/develop/docbuilder)
+-   [Host Design (STL)](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/clock.xml)
+-   [Dynamic Addresses (CSV)](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/addresses.csv)
+-   [Content template (STL + Markup.js)](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/addresses-template.xml)
+-   [Clock fragment (SVG)](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/clock.svg)
+-   [Formatted Output (PDF)](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/clock-xml-m.c.pdf)
 
 While we understand STL format as an alternative format for maintaining
 StoryTeller documents at the same time we plan to utilize STL in
@@ -138,10 +138,10 @@ Transformation Definition* and so can be easily edited and maintained
 with a specialized *HTML Editor* (as far as references from associated
 TDT remain valid).
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/data-html.xml?h=pfi01/develop/docbuilder)
--   [Data Source](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/invoice-data.xml?h=pfi01/develop/docbuilder)
--   [HTML Template](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/invoice-template.html?h=pfi01/develop/docbuilder)
--   [HTML Data Instance](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/data-html-xml-m.data.html?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/data-html.xml)
+-   [Data Source](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/invoice-data.xml)
+-   [HTML Template](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/invoice-template.html)
+-   [HTML Data Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-html-xml-m.data.html)
 
 ### SVG Chart
 
@@ -156,9 +156,9 @@ Transformation Definition* and so can be easily edited and maintained
 with a specialized *SVG Editor* (as far as references from associated
 TDT remain valid).
 
--   [STL](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/data-svg.xml?h=pfi01/develop/docbuilder)
--   [SVG Template](file:///git/docplatform/plain/distribution/py/pfdesigns/docbuilder/chart-template.svg?h=pfi01/develop/docbuilder)
--   [SVG Data Instance](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/data-svg-xml-m.data.svg?h=pfi01/develop/docbuilder)
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/data-svg.xml)
+-   [SVG Template](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/chart-template.svg)
+-   [SVG Data Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-svg-xml-m.data.svg)
 
 ## Dynamic HTML
 
@@ -189,14 +189,14 @@ following diagram:
 
 Consider the following example demonstrating the dual approach:
 
--   [Design (STL)](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/stl2html/stl2html.xml?h=pfi01/develop/docbuilder)
--   [StoryTeller generated PDF](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/stl2html/stl2html-xml-m.c.pdf?h=pfi01/develop/docbuilder)
--   [StoryTeller generated HTML](file:///docs/stl2html.xml-m-html/index.html)
--   [StoryTeller generated Layout HTML](file:///git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/stl2html/stl2html-xml-m.layout.html/index.html?h=pfi01/develop/docbuilder)
--   [Design Transformation (XSLT)](file:///git/docplatform/tree/distribution/py/pfdesigns/docbuilder/stl2html/stl2html.xslt?h=pfi01/develop/docbuilder)
--   [Directly generated HTML](file:///docs/stl2html/stl2html.html)
+-   [Design (STL)](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/stl2html/stl2html.xml)
+-   [StoryTeller generated PDF](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/stl2html/stl2html-xml-m.c.pdf)
+-   [StoryTeller generated HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/stl2html/stl2html.xml-m-html/index.html)
+-   [StoryTeller generated Layout HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/stl2html/stl2html-xml-m.layout.html/index.html)
+-   [Design Transformation (XSLT)](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/stl2html/stl2html.xslt)
+-   [Directly generated HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/stl2html/stl2html.html)
 
-More Detailed diagrams demonstrate both approaches (quite similar to an old diagram of [Dynamic HTML](file:///docs/DynamicHTML.pdf)):
+More Detailed diagrams demonstrate both approaches (quite similar to an old diagram of [Dynamic HTML](DynamicHTML.pdf)):
 
 Conversion to PDF:
 

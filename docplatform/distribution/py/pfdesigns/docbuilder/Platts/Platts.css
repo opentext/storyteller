@@ -1,0 +1,208 @@
+.Head, .Title {
+	text-align: left;
+	font-family: Arial;
+	font-size: 14pt;
+	font-weight: bold;
+	margin-top: 8pt;
+	margin-bottom: 6pt;
+	page-break-after: avoid;
+	widows: 2;
+	orphans: 2;
+}
+
+.BodyFirst {
+	text-align: left;
+	font-family: Arial;
+	font-size: 10pt;
+	font-weight: bold;
+	margin-bottom: 8pt;
+	page-break-after: avoid;
+	widows: 2;
+	orphans: 2;
+}
+
+.Subhead {
+	text-align: left;
+	font-family: Arial;
+	font-size: 9.5pt;
+	font-weight: bold;
+	margin-bottom: 8pt;
+	page-break-after: avoid;
+	widows: 2;
+	orphans: 2;
+}
+
+.Body, .BodyLast {
+	text-align: left;
+	font-family: Arial;
+	font-size: 8.5pt;
+	text-indent:18pt;
+	widows: 2;
+	orphans: 2;
+}
+
+.BodyLast {
+	margin-bottom: 8pt;
+}
+
+.List {
+	color: dodgerblue;
+}
+
+.ListStart {
+	margin-top: 8pt;
+	margin-bottom: 4pt;
+	page-break-after: avoid;
+}
+
+.ListEnd {
+	margin-top: 6pt;
+	margin-bottom: 8pt;
+}
+
+.ListSeparator {
+	stroke: dodgerblue;
+}
+
+.Bullet {
+	text-align: left;
+	font-family: Arial;
+	font-size: 8.5pt;
+	text-indent:-9pt;
+	margin-left: 9pt;
+	page-break-after: avoid;
+	widows: 2;
+	orphans: 2;
+}
+
+.ColumnHead {
+	font-family: Arial;
+	font-size:7pt; 
+	font-weight:bold; 
+	text-align:right;
+}
+
+.Underline {
+	color:dodgerblue;
+	font-family: Arial;
+	font-size:7pt; 
+	font-weight:bold; 
+	text-align:left;
+	border-bottom:1pt solid dodgerblue;
+}
+
+.Row {
+	font-family: Arial;
+	font-size: 7pt;
+	text-align: right;
+	border-bottom: 0.5pt solid gray;
+}
+
+.Note, .Source {
+	font-family: Arial;
+	font-size: 7pt;
+}
+
+.doc-heading {
+	font-family:Arial;
+	font-size: 42pt;
+	font-weight: bold;
+	color: dodgerblue;
+}
+
+.doc-coverdate {
+	font-family:Arial;
+	font-size: 10pt;
+	font-weight: bold;
+	color: dodgerblue;
+}
+
+.header-footer-separator {
+	stroke: dodgerblue;
+}
+
+.header-left {
+	font-family: Arial;
+	font-size: 7pt;
+}
+
+.header-right {
+	font-family: Arial;
+	font-size: 7pt;
+}
+
+.footer-copyright {
+	font-family: Arial;
+	font-size: 6pt;
+}
+
+.footer-url {
+	font-family: Arial;
+	font-weight: bold;
+	font-size: 8pt;
+	color: dodgerblue;
+}
+
+.footer-page-number {
+	font-family: Arial;
+	font-weight: bold;
+	font-size: 10pt;
+}
+
+.toc-frame {
+	padding: 5pt;
+	fill:azure;
+}
+
+.toc-heading {
+	font-family:Arial;
+	font-size: 12pt;
+	font-weight: bold;
+	color: dodgerblue;
+	page-break-after: avoid;
+	margin-top: 12pt;
+}
+
+.toc-subhead {
+	font-family:Arial;
+	font-size: 10pt;
+	font-weight: bold;
+	text-decoration: underline;
+	color: dodgerblue;
+	page-break-after: avoid;
+/*	margin-top: 8pt;*/
+	margin-bottom: 5pt;
+}
+
+.toc-line {
+	font-family:Arial;
+	font-size: 7pt;
+	color: dodgerblue; 
+	page-break-after: avoid;
+}
+
+.col-Consolas {
+	font-family:Lucida Console; 
+	color:dodgerblue;
+}
+
+.col-first {
+	text-align:left;
+}
+
+.col-underline {
+	text-decoration: underline;
+	text-align:center;
+}
+
+.col-red {
+	color:red;
+}
+
+.col-green {
+	color:green;
+}
+
+.col-orange {
+	color:orange;
+}
