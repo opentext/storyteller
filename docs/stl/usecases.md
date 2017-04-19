@@ -30,14 +30,14 @@ for an optimal solution for every problem at hand.
 
 The following table lists individual
 
-  Operation      Conversion-time          Preprocessor   TDT runtime   Formatter runtime
-  -------------- ------------------------ -------------- ------------- -------------------
-  Variables      `xsl:variable`           -              `$variable`   `require('vars')`
-  Repeating      `xsl:for-each`           -              `tdt:value`   `stl:repeater`
-  Switch         `xsl:choose`, `xsl:if`   -              `tdt:value`   `stl:switch`
-  Substitution   `xsl:value-of`           `xp:include`   `tdt:value`   `stl:datasource`
-  Reuse          `xsl:call-template`      `xp:include`   -             `stl:fragment`
-                 ...                      ...            ...           ...
+|  Operation      | Conversion-time          | Preprocessor   | TDT runtime   | Formatter runtime   |
+|  -------------- | ------------------------ | -------------- | ------------- | ------------------- |
+|  Variables      | `xsl:variable`           | -              | `$variable`   | `require('vars')`   |
+|  Repeating      | `xsl:for-each`           | -              | `tdt:value`   | `stl:repeater`      |
+|  Switch         | `xsl:choose`, `xsl:if`   | -              | `tdt:value`   | `stl:switch`        |
+|  Substitution   | `xsl:value-of`           | `xp:include`   | `tdt:value`   | `stl:datasource`    |
+|  Reuse          | `xsl:call-template`      | `xp:include`   | -             | `stl:fragment`      |
+|                 | ...                      | ...            | ...           | ...                 |
 
 Consider the following (real world) example:
 
@@ -215,9 +215,9 @@ web browser).
 
 The following table demonstrates two independent dimension - *engine* and *processing time*:
 
-  Time vs Engine   StoryTeller Formatter   HTML DOM Formatter
-  ---------------- ----------------------- -------------------------
-  Server-side      ST batch production     Responsive HTML (email)
-  Client-side      ST Preview (REST API)   Dynamic HTML
+| Time vs Engine  | StoryTeller Formatter  |  HTML DOM Formatter       |
+| --------------- | ---------------------- | ------------------------- |
+| Server-side     | ST batch production    |  Responsive HTML (email)  |
+| Client-side     | ST Preview (REST API)  |  Dynamic HTML             |
 
 

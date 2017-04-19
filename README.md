@@ -1,11 +1,5 @@
-# Welcome to StoryTeller documentation
+# Welcome to StoryTeller documentation and tools repository
 
 We are migrating our internal development documentation to Github, so more documentation pages will follow soon.
 
-### STL Framework
-
-- [StoryTeller STL Framework](docs/docbuilder/STL.md)
-
-### TDT
-
-### Javascript
+For current documentation see [this link](https://opentext.github.io/storyteller/index.html).
