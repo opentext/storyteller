@@ -1,0 +1,11 @@
+<svg height="140" width="300" xmlns="http://www.w3.org/2000/svg" version="1.0">
+  <g fill="none" stroke="black" stroke-width="4">
+    <path stroke-dasharray="" d="M5 20 l215 0" />
+    <path stroke-dasharray="5,0" d="M5 40 l215 0" />
+    <path stroke-dasharray="5,5" d="M5 60 l215 0" />
+    <path stroke-dasharray="10,6" d="M5 80 l215 0" />
+    <path stroke-dasharray="20,10,5,5" d="M5 100 l215 0" />
+    <path stroke-dasharray="20,10,5,5,5,10" d="M5 120 l215 0" />
+  </g>
+  <!-- Sorry, your browser does not support inline SVG. -->
+</svg>

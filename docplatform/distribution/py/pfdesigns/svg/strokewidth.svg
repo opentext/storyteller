@@ -1,0 +1,8 @@
+<svg height="80" width="300" xmlns="http://www.w3.org/2000/svg" version="1.0">
+  <g fill="none" stroke="black">
+    <path stroke="red" stroke-width="2" d="M5 20 l215 0" />
+    <path stroke="green" stroke-width="4" d="M5 40 l215 0" />
+    <path stroke="blue" stroke-width="6" d="M5 60 l215 0" />
+  </g>
+  <!-- Sorry, your browser does not support inline SVG. -->
+</svg>
