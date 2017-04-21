@@ -482,7 +482,7 @@ Following example demonstrates various `xp:inlcude` variants and compares it wit
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/include.xml)
 -   [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/include-xml_000-m.png)
 
-![Include ecample](/git/docplatform/plain/distribution/py/regr_output/pfdesigns/docbuilder/include-xml_000-m.png)
+![Include example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/include-xml_000-m.png)
 
 ##### Advanced example
 
@@ -527,9 +527,8 @@ function createProxy(storage, processor, doc_id) {
 }
 ```
 
-... and whenever anything (even a single bit of the definition)
-changes, then we have to re-upload the whole definition and refresh
-the view:
+... and whenever anything (even a single bit of the definition) changes, then we have to re-upload 
+the whole definition and refresh the view:
 
 ```javascript
 // initialization
@@ -568,9 +567,8 @@ function createProxy(storage, processor, doc_id) {
 }
 ```
 
-Now client can utilize the `xp:include` directive and create a well
-structured definition composed of several lower level *STL
-sub-definition files* like for example the following:
+Now client can utilize the `xp:include` directive and create a well structured definition composed of several 
+lower level *STL sub-definition files* like for example the following:
 
 ```xml
 <stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" 
@@ -628,6 +626,5 @@ fractions.forEach( function(fraction) {
 proxy.update( modifiedFractions );
 ```
 
-Hopefully the example above demonstrated how this approach helps to
-keep the whole document definition at much finer granularity and
-optimizes necessary data transfers for partial definition changes.
+Hopefully the example above demonstrated how this approach helps to keep the whole document definition 
+at much finer granularity and optimizes necessary data transfers for partial definition changes.
