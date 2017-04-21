@@ -6,7 +6,7 @@ It means that current SVG Support is by no means complete and we believe it will
 ## Examples of currently supported SVGs
 
 | Original (SVG)  | Render (PNG) | Source (URL) |	
-| --------------- | ------------ | ------------ |
+|:---------------:|:------------:| ------------ |
 | ![skull.svg](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/svg/skull.svg) | ![skull](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/svg/skull-svg_000-m.png) | [source](https://upload.wikimedia.org/wikipedia/commons/5/53/Skull_and_crossbones.svg) |
 | ![clock.svg](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/svg/clock.svg) | ![clock](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/svg/clock-svg_000-m.png) | [source](https://upload.wikimedia.org/wikipedia/commons/4/4d/Swiss_railway_clock.svg) |
 | ![tiger.svg](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/svg/tiger.svg) | ![tiger](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/svg/tiger-svg_000-m.png) | [source](https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg) |
