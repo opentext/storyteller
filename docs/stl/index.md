@@ -87,6 +87,7 @@ to hide the implementation details).
 -   [STL Use cases](usecases.md)
 -   [STL Syntax](syntax.md)
 -   [STL Surface Driver](driver.md)
+-   [XML Parsing Framework](parse.md)
 -   [XML Processor](xp.md)
 -   DocBuilder++
 -   DocWriter++
