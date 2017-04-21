@@ -10,9 +10,8 @@ Following enhancements were made on top of existing ([expat](http://expat.source
 -   Namespace support
 -   Preprocessing
 
-There are many components implemented to support concepts listed above.
-Now it is possible to build various pipelines to supporting variety of
-high-level tasks like:
+There are many components implemented to support concepts listed above. Now it is possible to build various pipelines 
+to supporting variety of high-level tasks like:
 
 -   XML preprocessor for arbitrary XML structure
 -   XHTML SAX parsing
@@ -52,16 +51,16 @@ We also added support for XML comments as such information can be valuable in so
 So after the described extensions the interface looks as follows:
 
 ```c++
-    class IInputHandler 
-        : public NonCopyable
-    {
-    public:
-        virtual void start( APIStringView tag ) = 0;
-        virtual void attr( APIStringView name, APIStringView value ) = 0;
-        virtual bool end( APIStringView tag ) = 0;
-        virtual void data( APIStringView data ) = 0;
-        virtual void comment( APIStringView data ) = 0;
-    };
+// interface representing a SAX handler (low-level)
+class IInputHandler : public NonCopyable
+{
+public:
+    virtual void start( APIStringView tag ) = 0;
+    virtual void attr( APIStringView name, APIStringView value ) = 0;
+    virtual bool end( APIStringView tag ) = 0;
+    virtual void data( APIStringView data ) = 0;
+    virtual void comment( APIStringView data ) = 0;
+};
 ```
 
 ## Attribute accumulation
@@ -71,21 +70,21 @@ So when we update the XML Parser side (namely the `ExpatAPI::start_element_callb
 would seem that we are mostly done:
 
 ```c++
-    void ExpatAPI::start_element_callback(void *userData, const XML_Char* name, const XML_Char** atts)
+void ExpatAPI::start_element_callback(void *userData, const XML_Char* name, const XML_Char** atts)
+{
+    ExpatAPI* userData_( reinterpret_cast<ExpatAPI*>(userData) );
+    IInputHandler& handler = userData_->m_handler;
     {
-        ExpatAPI* userData_( reinterpret_cast<ExpatAPI*>(userData) );
-        IInputHandler& handler = userData_->m_handler;
-        {
-            auto const& tag = local_convert( userData_->m_name, name );
-            handler.start( tag );
-        }
-        for( ; *atts; atts += 2 )  
-        {
-            auto const& id = local_convert( userData_->m_name, atts[0] );
-            auto const& value = local_convert( userData_->m_value, atts[1] );
-            handler.attr( id, value );
-        }
+        auto const& tag = local_convert( userData_->m_name, name );
+        handler.start( tag );
     }
+    for( ; *atts; atts += 2 )  
+    {
+        auto const& id = local_convert( userData_->m_name, atts[0] );
+        auto const& value = local_convert( userData_->m_value, atts[1] );
+        handler.attr( id, value );
+    }
+}
 ```
 
 ## Handler dispatch mechanism
@@ -109,29 +108,41 @@ delegating individual events to appropriate handlers.
 So we introduced a completely new interface `IInputHandlerDispatch` to address the described issues:
 
 ```c++
+// XML namespace specification pair of (non-owning) string views
 struct NamespaceSpec
 {
-	APIStringView prefix;
-	APIStringView uri;
+	APIStringView prefix; // namespace prefix (alias)
+	APIStringView uri;    // namespace (URI)
 };
 
+// stack of XML namespace specifications (used for prefix <--> uri lookup)
 typedef std::vector<NamespaceSpec> NamespaceStack;
 
+// a name with associated namespace (used for element and attribute names) 
 struct NamespacedName
 {
 	APICharCPtr name;
 	NamespaceSpec ns;
 };
 
-typedef std::pair<NamespacedName, APICharCPtr> NamespacedAttribute;
+// structure representing XML attribute (both name and value)
+struct NamespacedAttribute
+{
+    NamespacedName name;
+    APICharCPtr value;
+};
+
+// collection of attributes of a single XML element
 typedef std::vector<NamespacedAttribute> NamespacedAttributes;
 
-class IInputHandlerDispatch
-	: public NonCopyable
+// interface representing a SAX handler (high-level)
+class IInputHandlerDispatch : public NonCopyable
 {
 public:
-	virtual std::unique_ptr<IInputHandlerDispatch> start( NamespacedName const& name, NamespacedAttributes const& attrs ) = 0;
-	virtual void end( NamespacedName const& name, NamespacedAttributes const& attrs ) = 0;
+	virtual std::unique_ptr<IInputHandlerDispatch> start( 
+        NamespacedName const& name, NamespacedAttributes const& attrs ) = 0;
+	virtual void end( 
+        NamespacedName const& name, NamespacedAttributes const& attrs ) = 0;
 	virtual void data( APIStringView data ) = 0;
 	virtual void comment( APIStringView data ) = 0;
 
@@ -145,12 +156,13 @@ with following responsibilities:
 -   Handling `xmlns` namespace declarations and maintaining namespace map
 -   Map aliased tag names to `NamespacesName` structures
 -   Accumulate incoming attributes and map their aliased names to NamespacedAttributes
--   Optionally accumulate subsequent `IInputHandler::data()` call;s to a single `IInputHandlerDispatch::data()` call 
+-   Optionally accumulate subsequent `IInputHandler::data()` calls to a single `IInputHandlerDispatch::data()` call 
 -   Maintain a stack of `IInputHandlerDispatcher` instances and delegate calls to a current one 
 
 Following factory function creates the `IInputHandler` -> `IInputHandlerDispatch` adapter:
 
 ```c++
+// creates instance of IInputHandler -> IInputHandlerDispatch adapter
 std::shared_ptr<IInputHandler> create_input_handler_dispatch_adapter(
 	std::shared_ptr<IInputHandlerDispatch> dispatch,
 	NamespaceStack namespaces = {},
@@ -196,16 +208,14 @@ Following directives are handled during preprocessing phase and so the namespace
 
 You can see various combinations of XML namespaces inside a single definition file in this example:
 
--   [Namespace Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/namespaces.xml?h=pfi01/develop/docbuilder)
+-   [Namespace Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/namespaces.xml)
 
 # XHTMLParser
 
-For clients creating document definition based on an XHTML content
-template it can be very convenient to have a possibility to include
-blocks of XHTML content directly into the *STL definition file* without
-a possibility to create a *Content Substitution* (such indirection in a
-form of a substitution would be an unnecessary overkill because such
-clients actually do not need any dynamic runtime behavior, they just
+For clients creating document definition based on an XHTML content template it can be very convenient 
+to have a possibility to include blocks of XHTML content directly into the *STL definition file* without
+a possibility to create a *Content Substitution* (such indirection in a form of a substitution would be 
+an unnecessary overkill because such clients actually do not need any dynamic runtime behavior, they just
 need a convenient way to include a content in non-native format).
 
 The only problem was that *XHTMLParser* was not suitable for this task. It was able to process a stream containing XHTML markup, 
@@ -214,8 +224,7 @@ but it was not possible to integrate it in a running XML parsing session.
 So we have refactored the existing `XHTMLHandler` to implement the `IInputHandlerDispatch` interface and so be usable 
 as a SAX handler for our (Expat based) XMLParser.
 
-Then we also extended the `IDocModelFilter` interface to provide the
-handler interface. Any *DocModel* filter now implements the
+Then we also extended the `IDocModelFilter` interface to provide the handler interface. Any *DocModel* filter now implements the
 `GetInputHandler` method with following signature:
 
 ```c++
@@ -258,13 +267,11 @@ So now we have following *Base64* related *Stream Adapters*:
 
 ## DocBuilder++
 
-As the parsing of a document format like *STL* is relatively complex
-task, it would be very hard to implement with a single SAX Handler
-implementation.
+As the parsing of a document format like *STL* is relatively complex task, it would be very hard to implement 
+with a single SAX Handler implementation.
 
-To make it more distributed and maintainable we are using a Handler
-dispatch mechanism described above and implementing a variety of
-handlers.
+To make it more distributed and maintainable we are using a Handler dispatch mechanism described above 
+and implementing a variety of handlers.
 
 The list of handlers (builders) consists of:
 
@@ -278,21 +285,17 @@ The list of handlers (builders) consists of:
 
 ## STL2HTML
 
-As a proof of concept of interactive HTML document we are experimenting
-with a conversion of STL definition directly to interactive and dynamic
-HTML.
+As a proof of concept of interactive HTML document we are experimenting with a conversion of STL definition 
+directly to interactive and dynamic HTML.
 
 For business graphics we use [d3](https://d3js.org/) and [NVD3](http://nvd3.org/) libraries to produce interactive charts.
 
 # SVG image parsing
 
-As the chart libraries used for interactive and dynamic HTML document
-are all using SVG image format, we had to add (at least a limited)
-support for SVG-based images in *StoryTeller*.
+As the chart libraries used for interactive and dynamic HTML document are all using SVG image format, we had to add 
+(at least a limited) support for SVG-based images in *StoryTeller*.
 
-The SVG support is still a work-in-progress, but we are already
-supporting enough SVG features to visualize NVD3-generated charts in
-pring output line PDF.
+The SVG support is still a work-in-progress, but we are already supporting enough SVG features to visualize NVD3-generated 
+charts in print output line PDF.
 
-We are implementing a hierarchy of handlers and naturally we are using
-the XML Parsing framework described in this document.
+We are implementing a hierarchy of handlers and naturally we are using the XML Parsing framework described in this document.
