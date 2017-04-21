@@ -1,6 +1,18 @@
+Table of Contents
+=================
+
+   * [Overview](#overview)
+   * [STL Preprocessing](#stl-preprocessing)
+      * [Fixtures](#fixtures)
+      * [Include](#include)
+         * [Include a complete XML](#include-a-complete-xml)
+         * [Include a text](#include-a-text)
+         * [Include a XML subset](#include-a-xml-subset)
+         * [Implementation notes](#implementation-notes)
+
 # XML Processor
 
-## Overview
+# Overview
 
 During the development of *DocBuilder++* we identified a necessity of embedding various streams
 to a single STL definition file. STL definition can reference external streams, but sometimes it 
@@ -17,7 +29,7 @@ The described functionality became the part of the *DocBuilder++* and proved to 
 realized that it is not at all *DocBuilder++* specific, but can be beneficial in another contexts as well.
 So we separated the implementation and introduced a new generally available service - *XML Processor*.
 
-## STL Preprocessing
+# STL Preprocessing
 
 Before an *STL definition* file gets processed by *DocBuilder++* (or other kind of handler) it can be 
 (and typically is) pre-processed.
@@ -81,7 +93,7 @@ definition file*:
 </tdt:transformation>
 ```
 
-### Fixtures
+## Fixtures
 
 Thanks to `xp:fixture` directive it is now possible to embed arbitrary
 content inside the *STL File* (or more generally to arbitrary XML file),
@@ -186,7 +198,7 @@ resources used throughout the STL:
 </stl:stl>
 ```
 
-#### Example
+### Example
 
 Folowing example demonstrates linked as well as embedded (plain and encoded) fixtures:
 
@@ -195,7 +207,7 @@ Folowing example demonstrates linked as well as embedded (plain and encoded) fix
 
 ![Fixtures example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/fixtures-xml_000-m.png)
 
-### XML Include
+## Include
 
 To provide users with a choice to organize their *STL* files in appropriate granularity there is a possibility 
 to *include* another XML file via an `xp:include` directive.
@@ -212,7 +224,7 @@ The `xp:include` directive is similar to [xi:include](https://www.w3.org/TR/xinc
 -   It does not support content negotiation (`accept` and
     `accept-language` attributes)
 
-#### Include a complete file
+### Include a complete XML
 
 There is a `src` attribute specifying an URI of the stream to be included.
 
@@ -307,7 +319,7 @@ Note how that is different from the following code creating an *External Content
 </stl:text>
 ```
 
-#### Include text content
+### Include a text
 
 The included content is interpreted as an XML markup by default. The
 parsing method is specified by a value of the `parse` attribute. It is
@@ -331,7 +343,7 @@ necessary to escape all XML significant characters (`<`, `>`, `&`):
 </stl:text>
 ```
 
-#### Include a file subset
+### Include a XML subset
 
 The previous examples included a whole XML file, but there is also a
 possibility to narrow the selection with given `xpath` attribute. In
@@ -440,14 +452,14 @@ time and do not change with every message. For such cases the
 maybe we could extend the concept with loading time *conditions*,
 *repeaters* and *switches* in future.
 
-#### Implementation notes
+### Implementation notes
 
-#####  SAX parsing
+####  SAX parsing
 
 Whole file include (without hte `xpath` attribute) is realized via SAX stream parsing and so a whole XML document is never held in
 memory.
 
-#####  DOM parsing
+####  DOM parsing
 
 Partial file include (with `xpath` attribute) on the other hand is
 realized via DOM document instance (`IDataSourceWraper` interface
@@ -457,7 +469,7 @@ kept in a cache during whole document design creation and so if
 there are several `xp:include` directives sharing the same URI then
 the document is loaded and parsed only once.
 
-#####  Infinite recursion
+####  Infinite recursion
 
 With such powerfull tool it would be really easy to cause an infinite recursion.
 
@@ -475,7 +487,7 @@ Such seemingly innocent file would be able to cause a *stack overflow* or more l
 
 To avoid such cases we introduced a maximum inclusion depth limit. Right now the limit is set to 20.
 
-#####  Simple example
+###  Simple example
 
 Following example demonstrates various `xp:inlcude` variants and compares it with their runtime alternatives:
 
@@ -484,7 +496,7 @@ Following example demonstrates various `xp:inlcude` variants and compares it wit
 
 ![Include example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/include-xml_000-m.png)
 
-##### Advanced example
+### Advanced example
 
 User can also split an existing *STL File* to several parts and so make an application more efficient. 
 That can be seen in following example:
@@ -495,7 +507,7 @@ containing all necessary information, then anytime user changes a single
 bit of it's content then the whole document must be reuploaded in order
 to reformat the document and refresh the editor's views.
 
-######  Naive approach
+####  Naive approach
 
 For example let's imagine a very simple client-side formatting proxy implementation:
 
@@ -545,7 +557,7 @@ proxy.update( definition );
 
 ... as you can imagine - this is far from effective solution of the problem.
 
-######  Efficient approach
+####  Efficient approach
 
 An alternative approach is to generalize the `upload` method implementation as follows:
 
