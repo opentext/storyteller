@@ -1,0 +1,119 @@
+{
+    "bootstrap":  {
+        "operatingsystem":  "windows",
+        "BOOTSTRAPDIR":  "C:\\Bootstrap-16.2.0",
+        "jre_home":  "C:\\Program Files\\Java\\jre1.8.0_102",
+        "multitenantconfig":  "multitenantconfig.postgres.json",
+        "strs":  {
+            "STRSBUILD":  "16.2.0_ALPHA_2017-04-05_Build_250",
+            "STRSINSTALLDIR":  "C:\\Program Files\\OpenText\\Exstream",
+            "STRSVERSION":  "16.2.0",
+            "mgw":  {
+                "mgwhost":  "localhost",
+                "virtualhost":  "",
+                "mgwport":  "28500",
+                "mgwroot":  "C:\\ManagementGateway",
+                "mgwcert":  "",
+                "mgwtimeout":  "300000"
+            }
+        },
+        "bootstrapsteps":  [
+            {
+                "step":  "installdb",
+                "config":  "mssql.json",
+                "description":  "Installs local MSSQL database software",
+                "enabled":  "no",
+                "status":  ""
+            },
+            {
+                "step":  "installstrs",
+                "config":  "bootstrap.json",
+                "description":  "Installs local CCM 16 SW",
+                "enabled":  "yes",
+                "status":  "completed"
+            },
+            {
+                "step":  "installpostgres",
+                "config":  "postgres.json",
+                "description":  "Installs local postgres database software",
+                "enabled":  "yes",
+                "status":  "completed"
+            },
+            {
+                "step":  "installtomcat",
+                "config":  "tomcat.json",
+                "description":  "Installs local Tomcat",
+                "enabled":  "yes",
+                "status":  "completed"
+            },
+            {
+                "step":  "setvirtualhost",
+                "config":  "tomcat.json",
+                "description":  "Sets virtualhost in local tomcat and strs files",
+                "enabled":  "yes",
+                "status":  "completed"
+            },
+            {
+                "step":  "installotds",
+                "config":  "otds.json",
+                "tomcatconfig":  "tomcat.json",
+                "description":  "Install local OTDS software",
+                "enabled":  "yes",
+                "status":  "completed"
+            },
+            {
+                "step":  "deploywebapps",
+                "config":  "tomcat.json",
+                "description":  "Copies the CCM web applications to local Tomcat",
+                "enabled":  "yes",
+                "status":  "completed"
+            },
+            {
+                "step":  "configuremtaotds",
+                "config":  "dsvmtaotds.json",
+                "description":  "Creates multitenant user, groups and resource in OTDS",
+                "enabled":  "yes",
+                "status":  "completed"
+            },
+            {
+                "step":  "configuretenantotds",
+                "config":  "dsvtenantotds.cce.json",
+                "description":  "Creates tenant user, groups and resource in OTDS",
+                "tenant":  "cce",
+                "enabled":  "yes",
+                "status":  "completed"
+            },
+            {
+                "step":  "configuremgw",
+                "config":  "multitenantconfig.postgres.json",
+                "description":  "Configures MGW, creates multitenant connection profiles and db",
+                "enabled":  "yes",
+                "status":  "completed"
+            },
+            {
+                "step":  "createtenant",
+                "config":  "tenantconfig.distributed.postgres.json",
+                "description":  "Creates tenant connection profiles and tenant db",
+                "tenant":  "cce",
+                "enabled":  "yes",
+                "status":  "completed"
+            },
+            {
+                "step":  "injectmodel",
+                "config":  "tenantconfig.distributed.postgres.json",
+                "description":  "Imports an initial metamodel snapshot to an EMPTY MODEL ONLY!!",
+                "tenant":  "cce",
+                "enabled":  "yes",
+                "status":  "completed"
+            },
+            {
+                "step":  "setuptenant",
+                "config":  "tenantconfig.distributed.postgres.json",
+                "description":  "Creates application domain and all logical repositories",
+                "tenant":  "cce",
+                "enabled":  "yes",
+                "status":  "completed"
+            }
+        ]
+    }
+}

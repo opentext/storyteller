@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>CSS Integration JSON Editor Example</title>
+    
+    <!-- Foundation CSS framework (Bootstrap and jQueryUI also supported) -->
+    <link rel='stylesheet' href='//cdn.jsdelivr.net/foundation/5.0.2/css/foundation.min.css'>
+    <!-- Font Awesome icons (Bootstrap, Foundation, and jQueryUI also supported) -->
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
+    
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://rawgit.com/adammark/Markup.js/master/src/markup.min.js"></script>
+    <script src="https://rawgit.com/jdorn/json-editor/master/dist/jsoneditor.min.js"></script>
+    
+    <script>
+    // Set the default CSS theme and icon library globally
+    JSONEditor.defaults.theme = 'foundation5';
+    JSONEditor.defaults.iconlib = 'fontawesome4';
+    </script>
+  </head>
+  <body>
+    <div class='row'>
+      <div class='medium-12 columns'>
+        <h1>Bootstrap configurator</h1>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='medium-12-columns'>
+        <button id='submit' class='tiny'>Download bootstrap.json</button>
+        <span id='valid_indicator' class='label'></span>
+      </div>
+    </div>
+    <div class='row'>
+      <div id='editor_holder' class='medium-12 columns'></div>
+    </div>
+    
+    <script>
+	  JSONEditor.defaults.options.template = 'markup';
+	  Mark.pipes.lookup_step = function(step, key) {
+	    var map = {
+          installdb: { title: "Install DB", desc: "Installs local MSSQL database software" },
+          installstrs: { title: "Install STRS", desc: "Installs local CCM 16 SW" },
+          installpostgres: { title: "Install PostgreSQL", desc: "Installs local postgres database software" },
+          installtomcat: { title: "Install Tomcat", desc: "Installs local Tomcat" },
+          setvirtualhost: { title: "Setup Virtual Host", desc: "Sets virtualhost in local tomcat and strs files" },
+          installotds: { title: "Install OTDS", desc: "Install local OTDS software" },
+          deploywebapps: { title: "Deploy Web Apps", desc: "Copies the CCM web applications to local Tomcat" },
+          configuremtaotds: { title: "Config multitenant OTDS", desc: "Creates multitenant user, groups and resource in OTDS" },
+          configuretenantotds: { title: "Config tenant OTDS", desc: "Creates tenant user, groups and resource in OTDS" },
+          configuremgw: { title: "Config MGW", desc: "Configures MGW, creates multitenant connection profiles and db" },
+          createtenant: { title: "Create tenant", desc: "Creates tenant connection profiles and tenant db" },
+          setuptenant: { title: "Setup tenant", desc: "Creates application domain and all logical repositories" },
+          injectmodel: { title: "Inject model", desc: "Imports an initial metamodel snapshot to an EMPTY MODEL ONLY!!" },
+	    };
+	    console.log(step, key, map[step][key]);
+        return map[step][key] || step;
+      };
+
+      function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+      }
+
+      // Initialize the editor
+      var editor = new JSONEditor(document.getElementById('editor_holder'),{
+        // Enable fetching schemas via ajax
+        ajax: true,
+        
+        // The schema for the editor
+        schema: {
+          $ref: "schema.json",
+          format: "grid"
+        },
+	    disable_properties: true,
+      });
+
+	  $.getJSON( "bootstrap.json", function( data ) {
+	    editor.setValue(data.bootstrap);
+	  });
+      
+      // Hook up the submit button to log to the console
+      document.getElementById('submit').addEventListener('click',function() {
+        // Get the value from the editor
+        var bootstrap = {bootstrap: editor.getValue()};
+        // let user download the generated JSON markup
+        download("bootstrap.json", JSON.stringify(bootstrap, null, 2));
+      });
+      
+      // Hook up the validation indicator to update its 
+      // status whenever the editor changes
+      editor.on('change',function() {
+        // Get an array of errors from the validator
+        var errors = editor.validate();
+        
+        var indicator = document.getElementById('valid_indicator');
+        
+        // Not valid
+        if(errors.length) {
+          indicator.className = 'label alert';
+          indicator.textContent = 'not valid';
+        }
+        // Valid
+        else {
+          indicator.className = 'label success';
+          indicator.textContent = 'valid';
+        }
+      });
+    </script>
+  </body>
+</html>

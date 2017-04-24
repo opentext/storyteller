@@ -1,0 +1,140 @@
+{
+    "title": "Configuration",
+    "type": "object",
+    "id": "bootstrap",
+    "properties": {
+        "operatingsystem": {
+            "type": "string",
+            "title": "Operating system",
+            "enum": [
+                "windows",
+                "linux"
+            ]
+        },
+        "BOOTSTRAPDIR": {
+            "type": "string",
+            "title": "Bootstrap directory"
+        },
+        "jre_home": {
+            "type": "string",
+            "title": "Java Runtime Envorinment home directory"
+        },
+        "multitenantconfig":  {
+            "type": "string",
+            "title": "Multitenant configuration file"
+        },
+        "strs": {
+            "type": "object",
+            "title": "Streamserve environment",
+            "properties" : {
+                "STRSVERSION": {
+                    "type": "string",
+                    "title": "Version"
+                },
+                "STRSBUILD":  {
+                    "type": "string",
+                    "title": "Build identifier"
+                },
+                "STRSINSTALLDIR":  {
+                    "type": "string",
+                    "title": "Installation directory"
+                },
+                "mgw": {
+                    "type": "object",
+                    "title": "Management gateway",
+                    "options": {
+                        "collapsed": true
+                    },
+                    "properties": {
+                        "mgwhost": {
+                            "type": "string",
+                            "title": "Host"
+                        },
+                        "virtualhost": {
+                            "type": "string",
+                            "title": "Virtual Host"
+                        },
+                        "mgwport": {
+                            "type": "integer",
+                            "title": "Port"
+                        },
+                        "mgwroot": {
+                            "type": "string",
+                            "title": "MGW directory"
+                        },
+                        "mgwcert": {
+                            "type": "string",
+                            "title": "Certificate"
+                        },
+                        "mgwtimeout": {
+                            "type": "integer",
+                            "title": "Timeout"
+                        }
+                    }
+                }
+            }
+        },
+        "bootstrapsteps": {
+            "title": "Bootstrapping steps",
+            "type": "array",
+            "format": "tabs",
+            "items": {
+                "type": "object",
+                "headerTemplate": "{{i1}}) {{self.step|lookup_step>title}}",
+                "description": "This is a description for the step: {{self.step}}",
+                "properties": {
+                    "step":  {
+                        "type": "string",
+                        "title": "Step",
+                        "uniqueItems": true,
+                        "enumSource": [{
+                            "source": [
+                                "installdb",
+                                "installstrs",
+                                "installpostgres",
+                                "installtomcat",
+                                "setvirtualhost",
+                                "installotds",
+                                "deploywebapps",
+                                "configuremtaotds",
+                                "configuretenantotds",
+                                "configuremgw",
+                                "createtenant",
+                                "setuptenant",
+                                "injectmodel"
+                            ],
+                            "title": "{{item|lookup_step>title}}",
+                            "value": "{{item}}"
+                        }]
+                    },
+                    "description": {
+                        "type": "string",
+                        "template": "{{step|lookup_step>desc}}",
+                        "watch": {
+                            "step": "step"
+                        }
+                    },
+                    "config": {
+                        "type": "string",
+                        "title": "Configuration file"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "enabled": {
+                        "type": "string", 
+                        "format": "checkbox",
+                        "title": "Enabled",
+                        "enum": ["yes", "no"]
+                    },
+                    "status": {
+                        "type": "string",
+                        "title": "Status",
+                        "enum": ["", "completed"]
+                    }
+                }
+            }
+        }
+    }
+}
