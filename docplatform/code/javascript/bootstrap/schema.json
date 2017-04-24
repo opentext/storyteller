@@ -81,7 +81,6 @@
             "items": {
                 "type": "object",
                 "headerTemplate": "{{i1}}) {{self.step|lookup_step>title}}",
-                "description": "This is a description for the step: {{self.step}}",
                 "properties": {
                     "step":  {
                         "type": "string",
@@ -105,33 +104,27 @@
                             ],
                             "title": "{{item|lookup_step>title}}",
                             "value": "{{item}}"
-                        }]
+                        }],
+                        "readOnly": true
                     },
                     "description": {
                         "type": "string",
-                        "template": "{{step|lookup_step>desc}}",
-                        "watch": {
-                            "step": "step"
-                        }
+                        "title": "Description",
+                        "readOnly": true
                     },
                     "config": {
                         "type": "string",
                         "title": "Configuration file"
                     },
-                    "description": {
-                        "type": "string",
-                        "title": "Description"
-                    },
                     "enabled": {
                         "type": "string", 
-                        "format": "checkbox",
                         "title": "Enabled",
                         "enum": ["yes", "no"]
                     },
                     "status": {
                         "type": "string",
                         "title": "Status",
-                        "enum": ["", "completed"]
+                        "readOnly": true
                     }
                 }
             }
