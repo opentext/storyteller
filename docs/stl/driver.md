@@ -1290,7 +1290,7 @@ If in current release the *Page Layout Driver* produces following XML:
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
          xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
          version="0.1">
-  <stl:document dpi="96 96">
+  <stl:document>
     <stl:page index="0" w="100px" h="100px" background="link:/background/page000.svg">
       <stl:box class="area" w="100px" h="100px" transform="matrix(2 0 0 2 20 20)">
         <stl:box class="span" y="10px" w="100px" h="80px" data="s;Main">
