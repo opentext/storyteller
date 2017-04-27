@@ -1267,14 +1267,19 @@ If in current release the *Page Layout Driver* produces following XML:
     <stl:page id="page000" index="0" w="100" h="100">
       <stl:area x="0" y="0" w="100" h="100" mtx="2 0 0 2 20 20">
         <stl:span x="0" y="10" w="100" h="80" data="s;Main">
-          <stl:span x="0" y="0" w="100" h="80" data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd"/>
+          <stl:span x="0" y="0" w="100" h="80" 
+                    data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd"/>
         </stl:span>
       </stl:area>
     </stl:page>
   </stl:doc>
   <stl:resources>
-    <stl:resource id='page000' mimetype='image/xml+svg' type='uri'>local:abcdef</stl:resource>
-    <stl:resource id='page001' mimetype='image/png' type='data' encoding='base64'>AACiHWAoA ... RK5CYII=</stl:resource>
+    <stl:resource id='page000' mimetype='image/xml+svg' type='uri'>
+      local:abcdef
+    </stl:resource>
+    <stl:resource id='page001' mimetype='image/png' type='data' encoding='base64'>
+      AACiHWAoA ... RK5CYII=
+    </stl:resource>
   </stl:resources>
 </stl:root>
 ```
@@ -1283,20 +1288,23 @@ If in current release the *Page Layout Driver* produces following XML:
 
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
-		 xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
-		 version="0.1">
+         xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
+         version="0.1">
   <stl:document dpi="96 96">
     <stl:page index="0" w="100px" h="100px" background="link:/background/page000.svg">
       <stl:box class="area" w="100px" h="100px" transform="matrix(2 0 0 2 20 20)">
         <stl:box class="span" y="10px" w="100px" h="80px" data="s;Main">
-          <stl:box class="span" w="100px" h="80px" data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd"/>
+          <stl:box class="span" w="100px" h="80px" 
+                   data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd"/>
         </stl:box>
       </stl:box>
     </stl:page>
   </stl:document>
   <stl:fixtures>
     <xp:fixture key='link:/background/page000.svg' type='image/xml+svg' src='local:abcdef'/>
-    <xp:fixture key='link:/background/page001.png' type='image/png' encoding='base64'>AACiHWAoA ... RK5CYII=</xp:fixture>
+    <xp:fixture key='link:/background/page001.png' type='image/png' encoding='base64'>
+      AACiHWAoA ... RK5CYII=
+    </xp:fixture>
   </stl:fixtures>
 </stl:stl>
 ```
