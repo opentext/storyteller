@@ -9,6 +9,7 @@ Table of Contents
       * [Partial Rendering](#partial-rendering)
       * [Partial Rasterization](#partial-rasterization)
    * [Filter front-end](#filter-front-end)
+   * [Syntax unification](#syntax-unification)
 
 
 # STL Surface Driver
@@ -1252,3 +1253,50 @@ know best what exact HTML presentation fits their needs. Most likely
 such production ready XSLTs will look very different from the one
 presented here, but right now the goal is just to get an idea how the
 front-end filter could look like.
+
+# Syntax unification
+
+For the following release we are working on a unification between *PageLayout driver* 
+output XML and *DocBuilder++* XML. Both formats should follow the STL definition syntax.
+
+If in current release the *Page Layout Driver* produces following XML:
+
+```xml
+<stl:root xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:doc dpi="96 96">
+    <stl:page id="page000" index="0" w="100" h="100">
+      <stl:area x="0" y="0" w="100" h="100" mtx="2 0 0 2 20 20">
+        <stl:span x="0" y="10" w="100" h="80" data="s;Main">
+          <stl:span x="0" y="0" w="100" h="80" data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd"/>
+        </stl:span>
+      </stl:area>
+    </stl:page>
+  </stl:doc>
+  <stl:resources>
+    <stl:resource id='page000' mimetype='image/xml+svg' type='uri'>local:abcdef</stl:resource>
+    <stl:resource id='page001' mimetype='image/png' type='data' encoding='base64'>AACiHWAoA ... RK5CYII=</stl:resource>
+  </stl:resources>
+</stl:root>
+```
+
+... it will produce the following XML (meaning the same thing but with little different syntax):
+
+```xml
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
+		 xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
+		 version="0.1">
+  <stl:document dpi="96 96">
+    <stl:page index="0" w="100px" h="100px" background="link:/background/page000.svg">
+      <stl:box class="area" w="100px" h="100px" transform="matrix(2 0 0 2 20 20)">
+        <stl:box class="span" y="10px" w="100px" h="80px" data="s;Main">
+          <stl:box class="span" w="100px" h="80px" data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd"/>
+        </stl:box>
+      </stl:box>
+    </stl:page>
+  </stl:document>
+  <stl:fixtures>
+    <xp:fixture key='link:/background/page000.svg' type='image/xml+svg' src='local:abcdef'/>
+    <xp:fixture key='link:/background/page001.png' type='image/png' encoding='base64'>AACiHWAoA ... RK5CYII=</xp:fixture>
+  </stl:fixtures>
+</stl:stl>
+```
