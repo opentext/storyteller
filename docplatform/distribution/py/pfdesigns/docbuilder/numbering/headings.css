@@ -1,0 +1,33 @@
+body {
+    counter-reset: counter-0;
+}
+
+.h1 {
+    counter-reset: counter-1;
+    counter-increment: counter-0;
+}
+
+.h1::before {
+    color: red;
+    content: counter(counter-0, upper-roman) ". ";
+}
+
+.h2 {
+    counter-reset: counter-2;
+    counter-increment: counter-1;
+}
+
+.h2::before {
+    color: red;
+    content: counter(counter-0, upper-roman) "." counter(counter-1) " ";
+}
+
+.h3 {
+    counter-reset: counter-3;
+    counter-increment: counter-2;
+}
+
+.h3::before {
+    color: red;
+    content: counter(counter-0, upper-roman) "." counter(counter-1) " " counter(counter-2, lower-alpha) ") ";
+}

@@ -1,0 +1,42 @@
+ol {
+    counter-reset: counter-0;
+}
+
+ol ol {
+    counter-reset: none;
+}
+
+ol li {
+    list-style-type: none;
+}
+
+ol .item {
+    counter-increment: counter-0;
+    counter-reset: counter-1;
+}
+
+ol .item::before {
+    color: red;
+    content: counter(counter-0, upper-roman) ". ";
+}
+
+ol ol .item {
+    counter-increment: counter-1;
+    counter-reset: counter-2;
+}
+
+ol ol .item::before {
+    color: red;
+    content: counter(counter-0, upper-roman) "." counter(counter-1) " ";
+}
+
+ol ol ol .item {
+    counter-increment: counter-2;
+    counter-reset: counter-3;
+}
+
+ol ol ol .item::before {
+    color: red;
+    content: counter(counter-0, upper-roman) "." counter(counter-1) " " counter(counter-2, lower-alpha) ") ";
+}
+
