@@ -1,4 +1,4 @@
-# STL bullets & numbering
+# STL Bullets & Numbering
 
 This document describes a proposal for *bullets & numbering* definition in STL markup.
 
