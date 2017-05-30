@@ -176,7 +176,7 @@ dynamically generated *marker content*):
     }
     .h1::marker, .h2::marker, .h3::marker {
       color: red;
-	}
+    }
 ```
 
 This form of `-stl-counter` definition associates just with a particular *level* of a *multi-dimensional counter* 
