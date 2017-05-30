@@ -31,7 +31,7 @@ For example if we use a formatting mask `"%0!R.%1!1 %2!a) "` then formatter conv
 
 ### HTML
 
-While there is also a possibility to represent multidimensional counters in *HTML/CSS*
+While there is also a possibility to represent multi-dimensional counters in *HTML/CSS*
 (see [this example](https://www.w3schools.com/css/tryit.asp?filename=trycss_counters3)), 
 unfortunately *counter dimensions* are tightly connected to hierarchy of corresponding *HTML elements* 
 (e. g. `<ol>` or `<li>`) and also it's formatting is limited compared to *StoryTeller*:
@@ -167,12 +167,12 @@ dynamically generated *marker content*):
 	}
 ```
 
-This form of `-stl-counter` definition associates just with a single level of a *multidimensional counter* 
+This form of `-stl-counter` definition associates just with a particular *level* of a *multi-dimensional counter* 
 and so has the following format:
 
 -   `-stl-counter: <counter> <level> <mask>`
     - `counter` ... `identifier` representing numbering vector counter
-    - `level` ... `integer` representing a level (an index representing single slot of the `counter`)
+    - `level` ... `integer` representing a level (an *index* representing single slot inside the *counter*)
     - `mask` ... a string used for marker content formatting
 
 (compare it with the "multi-level" form of the same property described in the previous section).
@@ -244,7 +244,7 @@ While the proposed approach has some disadvantages:
   - The *STL2HTML* route relies on modern web browsers
   - ...
 
-... we are relatively happy with this proposal, as it has some nice properties:
+... we are relatively happy with this proposal, as it has many nice properties:
 
   - Conversion to both destination formats is relatively straightforward
   - Supports both *explicit* & *implicit* hierarchies
