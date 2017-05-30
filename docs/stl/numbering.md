@@ -30,6 +30,8 @@ Following STL markup:
 
 <script async src="//jsfiddle.net/filodej/ksshewmL/embed/result,html,css/"></script>
 
-####Source Code
+#### Other tests
 
 <script src="http://gist-it.appspot.com/github/raspberrypi-aa/raspberrypi-aa/blob/master/servoblaster.py"></script>
+
+<script src="https://gist.github.com/timyates/6126218.js"></script>
