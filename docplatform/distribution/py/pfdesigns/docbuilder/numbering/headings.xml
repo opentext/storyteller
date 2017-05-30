@@ -14,7 +14,7 @@
 
     .h1::marker, .h2::marker, .h3::marker {
       color: red;
-	}
+    }
   </stl:style>
   <stl:document>
     <stl:story>
