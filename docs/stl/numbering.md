@@ -60,21 +60,22 @@ corresponding CSS [content definition][(https://www.w3schools.com/cssref/pr_gen_
 
 Whenever a user wants to present a numbering, he has to define 
 a [vendor prefixed](https://developer.mozilla.org/en-US/docs/Glossary/Vendor_Prefix) CSS property 
-`-stl-counter`. The property associates the correponding element with a numbering *counter* and also specifies 
-a format mask how the counter should be formatted to the marker content.
+`-stl-counter`. The property associates the correponding *element* with a numbering *counter* and 
+also defines a *format mask* specifying how the *counter* should be formatted to dynamic *marker content*.
 
-Optionally it is also possible to modify formatting style of the numbering marker, if user wants it different
-from the current paragraph style. That can be done through a special `::marker` pseudo-element in the CSS
+Optionally it is also possible to modify *formatting style* of the *numbering marker*, if user wants it different
+from the current *paragraph style*. That can be done through a special `::marker` pseudo-element in the CSS
 stylesheet. This approach is inspired by the experimental 
 [CSS marker](https://developer.mozilla.org/en-US/docs/Web/CSS/::marker) technology. 
 
-There are basically two numbering scenarios which differ in a way how markup maps to a numbering hierarchy:
+There are basically two numbering scenarios which differ in a way how *document markup* maps to a *numbering counter*:
 
 ### Explicit hierarchy
 
-In this scenario a numbering hierarchy directly maps to a corresponding hierarchy of same XML (or HTML) elements.
+In this scenario a *numbering counter* directly maps to a corresponding *markup hierarchy* 
+of XML (or HTML) elements.
 
-It means that we need to map a multi-level numbering to hierarchy of lists, like:
+It means that we need to map a *multi-level counter* to a *multi-level list*, like:
 
 ```xml
       <stl:list>
