@@ -10,7 +10,7 @@
 
 Following STL markup:
 
-<script async src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/headings.xml"></script>
+<script src="http://gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/headings.xml"></script>
 
 ... gets converted to the following HTML:
 
@@ -24,10 +24,12 @@ Following STL markup:
 
 Following STL markup:
 
-<script async src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/lists.xml"></script>
+<script src="http://gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/lists.xml"></script>
 
 ... gets converted to the following HTML:
 
 <script async src="//jsfiddle.net/filodej/ksshewmL/embed/result,html,css/"></script>
 
+####Source Code
 
+<script src="http://gist-it.appspot.com/github/raspberrypi-aa/raspberrypi-aa/blob/master/servoblaster.py"></script>
