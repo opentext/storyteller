@@ -32,20 +32,29 @@ For example if we use a formatting mask `"%0!R.%1!1 %2!a) "` then formatter conv
 ### HTML
 
 While there is also a possibility to represent multidimensional counters in *HTML/CSS*
-(see [this example](https://www.w3schools.com/css/tryit.asp?filename=trycss_counters3) ), 
-unfortunately the *counter dimensions* are tightly connected to hierarchy of *HTML elements* 
-(e. g. `<ol>` or `<li>`) and also it's formatting is limited compared to *StoryTeller* (all levels 
-of a multi-level counter are formatted in a single format, e.g. [4, 1, 2] transforms to `"4.1.2"` if we use  
-`counters(my-counter, ".", decimal)` or `"IV.I.II"` if we use counters(my-counter, ".", upper-roman)`).
+(see [this example](https://www.w3schools.com/css/tryit.asp?filename=trycss_counters3)), 
+unfortunately *counter dimensions* are tightly connected to hierarchy of corresponding *HTML elements* 
+(e. g. `<ol>` or `<li>`) and also it's formatting is limited compared to *StoryTeller*:
 
-So to avoid these limitations we decided to transform a single vector counter definition to several 
-corresponding scalar counters. 
+  - All levels of a multi-level counter are formatted in a single format
+    - e.g. `[4, 1, 2]` transforms to `"4.1.2"` if we use `counters(my-counter, ".", decimal)` 
+    - or `"IV.I.II"` if we use `counters(my-counter, ".", upper-roman)`
 
-For example when user defines a signe vector counter called `my-counter` in `STL2HTML` we convert it 
-to a set of corresponding counters: `my-counter-0`, `my-counter-1`, `my-counter-2`, ... and
-this way we can convert a mask `"%0!R.%1!1 %2!a) "` to following corresponding content:
+So to avoid these limitations we decided to transform a single *vector counter* definition to several 
+corresponding *scalar counters*. 
+
+For example when user defines a single *vector counter* called `my-counter` then the `STL2HTML` 
+component converts it to a set of corresponding counters:
+
+  - `my-counter-0`
+  - `my-counter-1`
+  - `my-counter-2` 
+  - ... 
+
+and this way we can convert a sophisticated mask like  `"%0!R.%1!1 %2!a) "` to the following 
+corresponding CSS [content definition][(https://www.w3schools.com/cssref/pr_gen_content.asp):
+
 `counter(my-counter-0, upper-roman) "." counter(my-counter-1) " " counter(my-counter-2, lower-alpha) ") "`. 
-
 
 ## Markup
 
