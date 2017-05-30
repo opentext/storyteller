@@ -1,14 +1,14 @@
 Table of Contents
 =================
 
-    * [Implementation](#implementation)
-       * [StoryTeller](#storyteller)
-       * [HTML](#html)
-    * [Markup](#markup)
-       * [Explicit hierarchy](#explicit-hierarchy)
-       * [Implicit hierarchy](#implicit-hierarchy)
-       * [Bullets](#bullets)
-    * [Conclusion](#conclusion)
+  * [Implementation](#implementation)
+     * [StoryTeller](#storyteller)
+     * [HTML](#html)
+  * [Markup](#markup)
+     * [Explicit hierarchy](#explicit-hierarchy)
+     * [Implicit hierarchy](#implicit-hierarchy)
+     * [Bullets](#bullets)
+  * [Conclusion](#conclusion)
 
 # STL Bullets & Numbering
 
