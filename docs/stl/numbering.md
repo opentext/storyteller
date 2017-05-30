@@ -32,6 +32,6 @@ Following STL markup:
 
 #### Other tests
 
-<script src="http://gist-it.appspot.com/github/raspberrypi-aa/raspberrypi-aa/blob/master/servoblaster.py"></script>
+<script src="https://gist-it.appspot.com/github/raspberrypi-aa/raspberrypi-aa/blob/master/servoblaster.py"></script>
 
 <script src="https://gist.github.com/timyates/6126218.js"></script>
