@@ -1,8 +1,10 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:style>
+    .item {
+      -stl-counter: counter "%0!R. " "%0!R.%1!1 " "%0!R.%1!1 %2!a) ";
+    }
     .item::marker {
       color: red;
-      -stl-counter: counter "%0!R. " "%0!R.%1!1 " "%0!R.%1!1 %2!a) ";
     }
   </stl:style>
   <stl:document>

@@ -1,19 +1,20 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:style>
-    .h1::marker {
-      color: red;
+    .h1 {
       -stl-counter: counter 0 "%0!R. ";
     }
 
-    .h2::marker {
-      color: red;
+    .h2 {
       -stl-counter: counter 1 "%0!R.%1!1 ";
     }
 
-    .h3::marker {
-      color: red;
+    .h3 {
       -stl-counter: counter 2 "%0!R.%1!1 %2!a) ";
     }
+
+    .h1::marker, .h2::marker, .h3::marker {
+      color: red;
+	}
   </stl:style>
   <stl:document>
     <stl:story>
