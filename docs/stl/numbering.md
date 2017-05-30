@@ -64,7 +64,7 @@ component converts it to a set of corresponding counters:
   - ... 
 
 and this way we can convert a sophisticated mask like  `"%0!R.%1!1 %2!a) "` to the following 
-corresponding CSS [content definition][(https://www.w3schools.com/cssref/pr_gen_content.asp):
+corresponding CSS [content definition](https://www.w3schools.com/cssref/pr_gen_content.asp):
 
 `counter(my-counter-0, upper-roman) "." counter(my-counter-1) " " counter(my-counter-2, lower-alpha) ") "`. 
 
