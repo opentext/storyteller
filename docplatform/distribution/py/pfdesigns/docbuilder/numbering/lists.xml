@@ -1,40 +1,40 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:style>
-	.item::marker {
+    .item::marker {
       color: red;
       -stl-counter: counter "%0!R. " "%0!R.%1!1 " "%0!R.%1!1 %2!a) ";
-	}
+    }
   </stl:style>
   <stl:document>
     <stl:story>
-	  <stl:list>
-		<stl:p class="item">Category</stl:p>
-		<stl:list>
-		  <stl:p class="item">Item</stl:p>
-		  <stl:p class="item">Item</stl:p>
-		  <stl:list>
-			<stl:p class="item">Subitem</stl:p>
-			<stl:p class="item">Subitem</stl:p>
-			<stl:p class="item">Subitem</stl:p>
-		  </stl:list>
-		  <stl:p class="item">Item</stl:p>
-		  <stl:list>
-			<stl:p class="item">Subitem</stl:p>
-			<stl:p class="item">Subitem</stl:p>
-		  </stl:list>
-		  <stl:p class="item">Item</stl:p>
-		</stl:list>
-		<stl:p class="item">Category</stl:p>
-		<stl:list>
-		  <stl:p class="item">Item</stl:p>
-		  <stl:p class="item">Item</stl:p>
-		</stl:list>
-	  </stl:list>
-	  <stl:list>
-		<stl:p class="item">Category</stl:p>
-		<stl:p class="item">Category</stl:p>
-		<stl:p class="item">Category</stl:p>
-	  </stl:list>
-	</stl:story>
+      <stl:list>
+        <stl:p class="item">Category</stl:p>
+        <stl:list>
+          <stl:p class="item">Item</stl:p>
+          <stl:p class="item">Item</stl:p>
+          <stl:list>
+            <stl:p class="item">Subitem</stl:p>
+            <stl:p class="item">Subitem</stl:p>
+            <stl:p class="item">Subitem</stl:p>
+          </stl:list>
+          <stl:p class="item">Item</stl:p>
+          <stl:list>
+            <stl:p class="item">Subitem</stl:p>
+            <stl:p class="item">Subitem</stl:p>
+          </stl:list>
+          <stl:p class="item">Item</stl:p>
+        </stl:list>
+        <stl:p class="item">Category</stl:p>
+        <stl:list>
+          <stl:p class="item">Item</stl:p>
+          <stl:p class="item">Item</stl:p>
+        </stl:list>
+      </stl:list>
+      <stl:list>
+        <stl:p class="item">Category</stl:p>
+        <stl:p class="item">Category</stl:p>
+        <stl:p class="item">Category</stl:p>
+      </stl:list>
+    </stl:story>
   </stl:document>
 </stl:stl>
