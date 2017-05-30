@@ -94,9 +94,8 @@ It means that we need to map a *multi-level counter* to a *multi-level list*, li
 In HTML it roughly corresponds to [this example](https://www.w3schools.com/css/tryit.asp?filename=trycss_counters3).
 
 In order to associate such hierarchy of `<stl:p>` elements we can define a CSS class 
-(e.g. `item`) with specified `-stl-counter` property as follows
-(we can optionally add a `::marker` pseudo-element and change the style of the dynamically 
-generated *marker content*):
+(e.g. `item`) with a specified `-stl-counter` property as follows (we can optionally add a `::marker` pseudo-element 
+and change the style of the dynamically generated *marker content*):
 
 ```css
     .item {
@@ -110,12 +109,12 @@ generated *marker content*):
 The `-stl-counter` definition has the following format:
 
 -   `-stl-counter: <counter> <mask-level1> <mask-level2> <mask-level3> ...`
-    - `counter` ... `identifier` representing numbering vector counter
-    - `mask-level?` ... a sequence of formatting masks for individual numbering levels
+    - `counter` ... `identifier` representing numbering *vector counter*
+    - `mask-level?` ... a sequence of *formatting masks* for individual *numbering levels*
 
 We believe that with some changes in *Document platform* it will be possible to convert such definition 
 to *StoryTeller document definition* (it will also mean a significant effort in *DocBuilder++* implementation, 
-CSS parsing framework and *DocWriter* component).
+*CSS parser* framework and *DocWriter* component).
 
 At the same time we believe that it is possible to reasonably and directly convert the definition to corresponding 
 HTML/CSS definition which behaves according to definition.
@@ -130,9 +129,9 @@ The idea is that the following STL markup:
 
 ### Implicit hierarchy
 
-In this scenario a numbering hierarchy maps to an implicit hierarchy of XML (or HTML) elements.
-By implicit we mean some kind of rather semantic (as opposed to syntactic) rules, like a "hierarchy"
-of `<h1>`, `<h2>`, `<h3>`, ... elements in HTML.
+In this scenario a *numbering counter* maps to an *implicit hierarchy* of XML (or HTML) elements.
+By *implicit* we mean some kind of rather *semantic* (as opposed to *syntactic*) rules, like 
+a "hierarchy" of `<h1>`, `<h2>`, `<h3>`, ... elements in HTML.
 
 In STL such hierarchy can be formed for example as follows:
  
@@ -178,14 +177,14 @@ and so has the following format:
 
 (compare it with the "multi-level" form of the same property described in the previous section).
 
-Again we believe that it is possible to reasonably and directly convert the definition to corresponding 
-HTML/CSS definition which behaves according to definition.
+Again we believe that it is possible to reasonably and directly convert the *STL definition* 
+to corresponding *HTML/CSS definition* which behaves according to definition.
 
 It means that the following STL markup:
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/headings.xml?footer=minimal"></script>
 
-... will be converted to the following HTML in STL2HTML component:
+... will be converted to the following HTML markup in the *STL2HTML* component:
 
 <script async src="//jsfiddle.net/filodej/186t94Lx/embed/result,html,css/"></script>
 
@@ -248,7 +247,7 @@ While the proposed approach has some disadvantages:
 
   - Conversion to both destination formats is relatively straightforward
   - Supports both *explicit* & *implicit* hierarchies
-  - Is releatively easy for users
+  - It is releatively user friendly
     - Provides a helpful indirection for centralized numbering definition
     - For simple cases (no custom marker styling) supports inline definition inside `style` attribute
   - STL markup gets simplified
