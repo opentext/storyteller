@@ -208,7 +208,7 @@ So for the name of the counter user can use a special keyword `none` as follows:
 
 ```css
     .item {
-      -stl-counter: none "♥ " "♣ " "♦ " "♣ ";
+      -stl-counter: none "♥ " "♠ " "♦ " "♣ ";
     }
 ```
 
@@ -219,7 +219,7 @@ So for the name of the counter user can use a special keyword `none` as follows:
       -stl-counter: counter 0 "♥ ";
     }
     .h2 {
-      -stl-counter: counter 1 "♣ ";
+      -stl-counter: counter 1 "♠ ";
     }
     ...
 ```
