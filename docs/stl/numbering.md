@@ -253,4 +253,5 @@ While the proposed approach has some disadvantages:
   - STL markup gets simplified
     - `list-class` and `list-style` attributes no longer necessary (replaced with `::marker` pseudo-element)
     - `<stl:li>` element no longer necessary (`<stl:p>` is good enough)
-
+  - Is not STL specific (same approach can be used for HTML filter fragments)
+  - ...
