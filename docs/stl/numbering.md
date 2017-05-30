@@ -43,7 +43,7 @@ unfortunately *counter dimensions* are tightly connected to hierarchy of corresp
 So to avoid these limitations we decided to transform a single *vector counter* definition to several 
 corresponding *scalar counters*. 
 
-For example when user defines a single *vector counter* called `my-counter` then the `STL2HTML` 
+For example when user defines a single *vector counter* called `my-counter` then the *STL2HTML* 
 component converts it to a set of corresponding counters:
 
   - `my-counter-0`
@@ -123,7 +123,7 @@ The idea is that the following STL markup:
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/lists.xml?footer=minimal"></script>
 
-... will be converted to the following HTML in STL2HTML component:
+... will be converted to the following HTML in *STL2HTML* component:
 
 <script async src="//jsfiddle.net/filodej/ksshewmL/embed/result,html,css/"></script>
 
