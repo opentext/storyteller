@@ -241,6 +241,7 @@ we had a hard time to reach an acceptable solution.
 While the proposed approach has some disadvantages:
 
   - Vendor specific proprietary CSS property
+  - The *STL2HTML* route relies on modern web browsers
   - ...
 
 ... we are relatively happy with this proposal, as it has some nice properties:
