@@ -1,40 +1,41 @@
 # STL bullets & numbering
 
-This document describes a proposal for bullets & numbering definition in STL markup.
+This document describes a proposal for *bullets & numbering* definition in STL markup.
 
 A primary design goal is to provide users with declarative and relatively friendly way to define
-bullets and numbering in STL markup which is relatively easily convertible to *StoryTeller Document* 
-(in *DocBuilder++* component), but also directly convertible to HTML via *STL2HTML* component.
+*bullets & numbering* in *STL definition markup* which would be relatively easily convertible 
+to *StoryTeller Document* (in *DocBuilder++* component), but also directly convertible 
+to HTML (via the *STL2HTML* component).
 
-As there are notable differences between *StoryTeller* implementation and *HTML implementation* 
-of bullets & numbering it soon became clear that meating the goals would not be easy. While we 
-originally tried to find a standard CSS definition we quickly realized that such approach would make 
-it very hard to convert to StoryTeller definition. Similarly a StoryTeller-like definition would be 
-nearly impossible to convert to HTML/CSS. After some initial experiments we decided to look for 
-a middle ground - try to define a markup which is proprietary, but relatively easily convertible 
-to both destination formats.   
+As there are notable differences between *StoryTeller implementation* and *HTML implementation* 
+of *bullets & numbering* it soon became clear that meating the goals stated above would not be easy. 
+While we originally tried to find a standard CSS definition we unfortunately quickly realized that 
+such approach would make it very hard to convert to *StoryTeller definition*. 
+Similarly a *StoryTeller-like* definition would be nearly impossible to convert to HTML/CSS. 
+After some initial experiments we decided to look for a middle ground - try to define a markup 
+which is proprietary, but relatively easily convertible to both destination formats.   
 
 ## Implementation
 
-For advanced (multi-level) numbering there is always a set of integer counters representing
+For advanced (multi-level) numbering there is always a set of *integer counters* representing
 a current state of the numbering hierarchy. 
 
 ### StoryTeller
 
-In *Storyteller* we represent the state as a vector of integers and call it `NumberingRegistry`. 
-It is then possible to define 
-a *numbering mask* - a string specifying how a current `NumberingRegistry` transforms 
-to a presentation string.
+In *Storyteller* we represent the state as a *vector of integers* and call it `NumberingRegistry`. 
+It is then possible to define a *numbering mask* - a string specifying how a current `NumberingRegistry` 
+transforms to a presentation string.
 
 For example if we use a formatting mask `"%0!R.%1!1 %2!a) "` then formatter converts a 
-`NumberingRegistry [4, 1, 2]` to the `"IV.1 b) "` presentation string.
+`NumberingRegistry` equal to `[4, 1, 2]` to the `"IV.1 b) "` presentation string.
 
 ### HTML
 
-While there is also a possibility to represent multidimensional counters in HTML/CSS, 
-unfortunately it's dimensions are tightly connected to hierarchy of HTML elements (e. g. `ol`)
-and also it's formatting is limited compared to StoryTeller (all levels of the counter 
-are formatted in a single format, e.g. [4, 1, 2] transforms to `"4.1.2"` if we use 
+While there is also a possibility to represent multidimensional counters in *HTML/CSS*
+(see [this example](https://www.w3schools.com/css/tryit.asp?filename=trycss_counters3) ), 
+unfortunately the *counter dimensions* are tightly connected to hierarchy of *HTML elements* 
+(e. g. `<ol>` or `<li>`) and also it's formatting is limited compared to *StoryTeller* (all levels 
+of a multi-level counter are formatted in a single format, e.g. [4, 1, 2] transforms to `"4.1.2"` if we use  
 `counters(my-counter, ".", decimal)` or `"IV.I.II"` if we use counters(my-counter, ".", upper-roman)`).
 
 So to avoid these limitations we decided to transform a single vector counter definition to several 
@@ -79,6 +80,8 @@ It means that we need to map a multi-level numbering to hierarchy of lists, like
         </stl:list>
       </stl:list>
 ```
+
+In HTML it roughly corresponds to [this example](https://www.w3schools.com/css/tryit.asp?filename=trycss_counters3).
 
 In order to associate such hierarchy of `<stl:p>` elements we can define a CSS class 
 (e.g. `item`) with specified `-stl-counter` property as follows
@@ -132,6 +135,9 @@ In STL such hierarchy can be formed for example as follows:
       <stl:p class="h1">Chapter</stl:p>
       <stl:p class="h2">Section</stl:p>
 ```
+
+In HTML it roughly corresponds to [this example](https://www.w3schools.com/css/tryit.asp?filename=trycss_counters2).
+
 In order to associate such hierarchy of `<stl:p>` elements we can define a set of CSS classes 
 (e.g. `h1`, `h2`, `h3`, ...) and specify corresponding `-stl-counter` properties 
 as follows (we can optionally define `::marker` pseudo-element selectors and change style of 
