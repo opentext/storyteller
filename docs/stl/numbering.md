@@ -121,8 +121,8 @@ and change the style of the dynamically generated *marker content*):
 
 The `-stl-list` definitions have the following meaning:
 
- - `-stl-list-counter` ... `identifier` representing numbering *vector counter*
- - `-stl-list-mask` ... a sequence of *formatting masks* for individual *numbering levels*
+ - `-stl-list-counter` ... an *identifier* representing numbering *vector counter*
+ - `-stl-list-mask` ... a sequence of string *formatting masks* for individual *numbering levels*
 
 We believe that with some changes in *Document platform* it will be possible to convert such definition 
 to *StoryTeller document definition* (it will also mean a significant effort in *DocBuilder++* implementation, 
@@ -188,9 +188,9 @@ dynamically generated *marker content*):
 This form of `-stl-list-...` definitions associate just with a particular *level* of a *multi-dimensional counter* 
 and so have the following meaning:
 
-  - `-stl-list-counter` ... `identifier` representing numbering vector counter
-  - `-stl-list-level` ... `integer` representing a level (an *index* representing single slot inside the *counter*)
-  - `-stl-list-mask` ... a string used for marker content formatting
+  - `-stl-list-counter` ... an *identifier* representing numbering vector counter
+  - `-stl-list-level` ... an *integer* representing a level (an *index* representing single slot inside the *counter*)
+  - `-stl-list-mask` ... a *string* used for marker content formatting
 
 (compare it with the "multi-level" form of the same property described in the previous section).
 
