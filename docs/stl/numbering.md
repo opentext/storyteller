@@ -71,9 +71,9 @@ corresponding CSS [content definition](https://www.w3schools.com/cssref/pr_gen_c
 ## Markup
 
 Whenever a user wants to present a numbering, he has to define 
-a [vendor prefixed](https://developer.mozilla.org/en-US/docs/Glossary/Vendor_Prefix) CSS property 
-`-stl-counter`. The property associates the correponding *element* with a numbering *counter* and 
-also defines a *format mask* specifying how the *counter* should be formatted to dynamic *marker content*.
+a [vendor prefixed](https://developer.mozilla.org/en-US/docs/Glossary/Vendor_Prefix) set of CSS properties 
+`-stl-list-...`. The properties associate the correponding *element* with a numbering *counter* and 
+also define a *format mask* specifying how the *counter* should be formatted to dynamic *marker content*.
 
 Optionally it is also possible to modify *formatting style* of the *numbering marker*, if user wants it different
 from the current *paragraph style*. That can be done through a special `::marker` pseudo-element in the CSS
@@ -106,23 +106,23 @@ It means that we need to map a *multi-level counter* to a *multi-level list*, li
 In HTML it roughly corresponds to [this example](https://www.w3schools.com/css/tryit.asp?filename=trycss_counters3).
 
 In order to associate such hierarchy of `<stl:p>` elements we can define a CSS class 
-(e.g. `item`) with a specified `-stl-counter` property as follows (we can optionally add a `::marker` pseudo-element 
+(e.g. `item`) with a specified `-stl-list` property as follows (we can optionally add a `::marker` pseudo-element 
 and change the style of the dynamically generated *marker content*):
 
 ```css
     .item {
-      -stl-counter: counter "%0!R. " "%0!R.%1!1 " "%0!R.%1!1 %2!a) ";
+      -stl-list-counter: counter;
+      -stl-list-mask: "%0!R. " "%0!R.%1!1 " "%0!R.%1!1 %2!a) ";
     }
     .item::marker {
       color: red;
     }
 ``` 
 
-The `-stl-counter` definition has the following format:
+The `-stl-list` definitions have the following meaning:
 
--   `-stl-counter: <counter> <mask-level1> <mask-level2> <mask-level3> ...`
-    - `counter` ... `identifier` representing numbering *vector counter*
-    - `mask-level?` ... a sequence of *formatting masks* for individual *numbering levels*
+ - `-stl-list-counter` ... `identifier` representing numbering *vector counter*
+ - `-stl-list-mask` ... a sequence of *formatting masks* for individual *numbering levels*
 
 We believe that with some changes in *Document platform* it will be possible to convert such definition 
 to *StoryTeller document definition* (it will also mean a significant effort in *DocBuilder++* implementation, 
@@ -160,32 +160,37 @@ In STL such hierarchy can be formed for example as follows:
 In HTML it roughly corresponds to [this example](https://www.w3schools.com/css/tryit.asp?filename=trycss_counters2).
 
 In order to associate such hierarchy of `<stl:p>` elements we can define a set of CSS classes 
-(e.g. `h1`, `h2`, `h3`, ...) and specify corresponding `-stl-counter` properties 
+(e.g. `h1`, `h2`, `h3`, ...) and specify corresponding `-stl-list-...` properties 
 as follows (we can optionally define `::marker` pseudo-element selectors and change style of 
 dynamically generated *marker content*):
 
 ```css
     .h1 {
-      -stl-counter: counter 0 "%0!R. ";
+      -stl-list-counter: counter;
+      -stl-list-level: 0;
+      -stl-list-mask: "%0!R. ";
     }
     .h2 {
-      -stl-counter: counter 1 "%0!R.%1!1 ";
+      -stl-list-counter: counter;
+      -stl-list-level: 1;
+      -stl-list-mask: "%0!R.%1!1 ";
     }
     .h3 {
-      -stl-counter: counter 2 "%0!R.%1!1 %2!a) ";
+      -stl-list-counter: counter;
+      -stl-list-level: 2;
+      -stl-list-mask: "%0!R.%1!1 %2!a) ";
     }
     .h1::marker, .h2::marker, .h3::marker {
       color: red;
     }
 ```
 
-This form of `-stl-counter` definition associates just with a particular *level* of a *multi-dimensional counter* 
-and so has the following format:
+This form of `-stl-list-...` definitions associate just with a particular *level* of a *multi-dimensional counter* 
+and so have the following meaning:
 
--   `-stl-counter: <counter> <level> <mask>`
-    - `counter` ... `identifier` representing numbering vector counter
-    - `level` ... `integer` representing a level (an *index* representing single slot inside the *counter*)
-    - `mask` ... a string used for marker content formatting
+  - `-stl-list-counter` ... `identifier` representing numbering vector counter
+  - `-stl-list-level` ... `integer` representing a level (an *index* representing single slot inside the *counter*)
+  - `-stl-list-mask` ... a string used for marker content formatting
 
 (compare it with the "multi-level" form of the same property described in the previous section).
 
@@ -204,11 +209,11 @@ It means that the following STL markup:
 
 Bullets are specified in a very similar way, except in this case we do not need a `counter` associated.
 
-So for the name of the counter user can use a special keyword `none` as follows:
+So there is no `-stl-list-counter` specified:
 
 ```css
     .item {
-      -stl-counter: none "♥ " "♠ " "♦ " "♣ ";
+      -stl-list-mask: "♥ " "♠ " "♦ " "♣ ";
     }
 ```
 
@@ -216,10 +221,12 @@ So for the name of the counter user can use a special keyword `none` as follows:
 
 ```css
     .h1 {
-      -stl-counter: none 0 "♥ ";
+      -stl-list-level: 0;
+      -stl-list-mask: "♥ ";
     }
     .h2 {
-      -stl-counter: none 1 "♠ ";
+      -stl-list-level: 1;
+      -stl-list-mask: "♠ ";
     }
     ...
 ```
@@ -229,7 +236,7 @@ which could be utilized as follows:
 
 ```css
     .item {
-      -stl-counter: none default;
+      -stl-list-mask: default;
     }
 ```
 
@@ -237,10 +244,12 @@ which could be utilized as follows:
 
 ```css
     .h1 {
-      -stl-counter: none 0 default;
+      -stl-list-level: 0;
+      -stl-list-mask: default;
     }
     .h2 {
-      -stl-counter: none 1 default;
+      -stl-list-level: 1;
+      -stl-list-mask: default;
     }
     ...
 ```
