@@ -171,17 +171,17 @@ dynamically generated *marker content*):
 ```css
     .h1 {
       -stl-list-counter: counter;
-      -stl-list-level: 0;
+      -stl-list-level: 1;
       -stl-list-mask: "%0!R. ";
     }
     .h2 {
       -stl-list-counter: counter;
-      -stl-list-level: 1;
+      -stl-list-level: 2;
       -stl-list-mask: "%0!R.%1!1 ";
     }
     .h3 {
       -stl-list-counter: counter;
-      -stl-list-level: 2;
+      -stl-list-level: 3;
       -stl-list-mask: "%0!R.%1!1 %2!a) ";
     }
     .h1::marker, .h2::marker, .h3::marker {
