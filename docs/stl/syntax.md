@@ -1085,7 +1085,8 @@ lists. *DocBuilder++ Engine* supports the `stl:list` element for that
 purpose.
 
 :exclamation: 
-Note taht Bullets & Numbering are a subject of significant change in STL syntax.
+
+Note that *Bullets & Numbering* are a subject of significant change in *STL syntax*.
 While this section describes the current syntax, users can teke a look at 
 the future syntax in a separate [Numbering Documentation](numbering.html).
 

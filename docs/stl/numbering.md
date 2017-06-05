@@ -135,7 +135,11 @@ The idea is that the following STL markup:
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/lists.xml?footer=minimal"></script>
 
-... will be converted to the following HTML in *STL2HTML* component:
+... will be formatted by StoryTeller formatter as follows:
+
+![Explicit hierarchy](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/lists-xml_000-m.png)
+
+... and will be converted to the following HTML in *STL2HTML* component:
 
 <script async src="//jsfiddle.net/filodej/ksshewmL/embed/result,html,css/"></script>
 
@@ -201,7 +205,11 @@ It means that the following STL markup:
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/headings.xml?footer=minimal"></script>
 
-... will be converted to the following HTML markup in the *STL2HTML* component:
+... will be formatted by StoryTeller formatter as follows:
+
+![Explicit hierarchy](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/headings-xml_000-m.png)
+
+... and will be converted to the following HTML markup in the *STL2HTML* component:
 
 <script async src="//jsfiddle.net/filodej/186t94Lx/embed/result,html,css/"></script>
 
