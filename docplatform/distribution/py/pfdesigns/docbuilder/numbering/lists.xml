@@ -9,7 +9,7 @@
     }
   </stl:style>
   <stl:document>
-    <stl:story>
+    <stl:story name="Main">
       <stl:list>
         <stl:p class="item">Category</stl:p>
         <stl:list>
@@ -39,5 +39,8 @@
         <stl:p class="item">Category</stl:p>
       </stl:list>
     </stl:story>
+    <stl:page w="300pt" h="300pt">
+      <stl:text x="20pt" y="20pt" w="260pt" h="260pt" story="Main"/>
+    </stl:page>
   </stl:document>
 </stl:stl>

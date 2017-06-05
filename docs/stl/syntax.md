@@ -1084,6 +1084,11 @@ A relatively frequent use-case is to create a bulleted or numbered
 lists. *DocBuilder++ Engine* supports the `stl:list` element for that
 purpose.
 
+:exclamation: 
+Note taht Bullets & Numbering are a subject of significant change in STL syntax.
+While this section describes the current syntax, users can teke a look at 
+the future syntax in a separate [Numbering Documentation](numbering.html).
+
 The fact is that there is no *List* object implemented in *StoryTeller
 Document Model* (list definitions are internally represented as
 *ListStyleSpec* resources and referenced from individual paragraphs),
@@ -1214,9 +1219,12 @@ override the values for specific paragraph if necessary).
 
 This example demonstrates the usage of a *Span*:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/list.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png)
+- Current syntax
+  -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/list.xml)
+  -   [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png)
+- Future syntax
+  -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/kitchen-sink.xml)
+  -   [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/kitchen-sink-xml_000-m.png)
 
 ![List example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png)
 

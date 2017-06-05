@@ -1,13 +1,10 @@
+body {
+  counter-reset: counter-0;
+}
+
 ol {
-    counter-reset: counter-0;
-}
-
-ol ol {
-    counter-reset: none;
-}
-
-ol li {
-    list-style-type: none;
+  list-style-type: none;
+  padding-left: 1em;
 }
 
 ol .item {
@@ -39,4 +36,5 @@ ol ol ol .item::before {
     color: red;
     content: counter(counter-0, upper-roman) "." counter(counter-1) " " counter(counter-2, lower-alpha) ") ";
 }
+
 
