@@ -139,7 +139,7 @@ The idea is that the following STL markup:
 
 ![Explicit hierarchy](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/lists-xml_000-m.png)
 
-... and will be converted to the following HTML in *STL2HTML* component:
+... and converted to the corresponding HTML markup by the *STL2HTML* component:
 
 <script async src="//jsfiddle.net/filodej/ksshewmL/embed/result,html,css/"></script>
 
@@ -209,7 +209,7 @@ It means that the following STL markup:
 
 ![Explicit hierarchy](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/headings-xml_000-m.png)
 
-... and will be converted to the following HTML markup in the *STL2HTML* component:
+... and converted to the corresponding HTML markup by the *STL2HTML* component:
 
 <script async src="//jsfiddle.net/filodej/186t94Lx/embed/result,html,css/"></script>
 
@@ -282,7 +282,7 @@ It means that the following STL markup:
 
 ![Explicit hierarchy](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/bullets-xml_000-m.png)
 
-... and will be converted to the following HTML markup in the *STL2HTML* component:
+... and converted to the corresponding HTML markup by the *STL2HTML* component:
 
 <script async src="//jsfiddle.net/filodej/qr6x9dwr/embed/result,html,css/"></script>
 
