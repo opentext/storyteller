@@ -55,18 +55,18 @@ unfortunately *counter dimensions* are tightly connected to hierarchy of corresp
 So to avoid these limitations we decided to transform a single *vector counter* definition to several 
 corresponding *scalar counters*. 
 
-For example when user defines a single *vector counter* called `my-counter` then the *STL2HTML* 
+For example when user defines a single *vector counter* called `counter` then the *STL2HTML* 
 component converts it to a set of corresponding counters:
 
-  - `my-counter-0`
-  - `my-counter-1`
-  - `my-counter-2` 
+  - `counter-0`
+  - `counter-1`
+  - `counter-2` 
   - ... 
 
 and this way we can convert a sophisticated mask like  `"%0!R.%1!1 %2!a) "` to the following 
 corresponding CSS [content definition](https://www.w3schools.com/cssref/pr_gen_content.asp):
 
-`counter(my-counter-0,upper-roman) "." counter(my-counter-1) " " counter(my-counter-2,lower-alpha) ") "`
+`counter(counter-0,upper-roman) "." counter(counter-1) " " counter(counter-2,lower-alpha) ") "`
 
 ## Markup
 
