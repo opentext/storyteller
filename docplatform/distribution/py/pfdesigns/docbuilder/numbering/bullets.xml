@@ -1,10 +1,18 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:style>
     .item {
-      -stl-list-counter: counter;
-      -stl-list-mask: "%0!R. " "%0!R.%1!1 " "%0!R.%1!1 %2!a) ";
+      -stl-list-mask: "♥ " "♠ " "♦ " "♣ ";
     }
-    .item::marker {
+    .h1 {
+      -stl-list-level: 0;
+    }
+    .h2 {
+      -stl-list-level: 1;
+    }
+    .h3 {
+      -stl-list-level: 2;
+    }
+    .list::marker, .h1::marker, .h2::marker, .h3::marker {
       color: red;
     }
   </stl:style>
@@ -14,9 +22,7 @@
         <stl:p class="item">Category</stl:p>
         <stl:list>
           <stl:p class="item">Item</stl:p>
-          <stl:p class="item">Item</stl:p>
           <stl:list>
-            <stl:p class="item">Subitem</stl:p>
             <stl:p class="item">Subitem</stl:p>
             <stl:p class="item">Subitem</stl:p>
           </stl:list>
@@ -24,13 +30,13 @@
           <stl:list>
             <stl:p class="item">Subitem</stl:p>
           </stl:list>
-          <stl:p class="item">Item</stl:p>
         </stl:list>
       </stl:list>
-      <stl:list>
-        <stl:p class="item">Category</stl:p>
-        <stl:p class="item">Category</stl:p>
-      </stl:list>
+      <stl:p class="h1">Chapter</stl:p>
+      <stl:p class="h2">Section</stl:p>
+      <stl:p class="h3">Subsection</stl:p>
+      <stl:p class="h2">Section</stl:p>
+      <stl:p class="h3">Subsection</stl:p>
     </stl:story>
     <stl:page w="300pt" h="200pt">
       <stl:text x="20pt" y="20pt" w="260pt" h="160pt" story="Main"/>

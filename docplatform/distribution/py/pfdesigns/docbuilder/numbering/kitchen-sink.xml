@@ -38,7 +38,7 @@
 	  font-weight:bold;
 	  -stl-list-counter: headings;
 	  -stl-list-mask: "%0!1. ";
-	  -stl-list-level: 1;
+	  -stl-list-level: 0;
     }
 	.section {
 	  margin-top:2pt;
@@ -47,7 +47,7 @@
 	  font-weight:bold;
 	  -stl-list-counter: headings;
 	  -stl-list-mask: "%1!R. ";
-	  -stl-list-level: 2;
+	  -stl-list-level: 1;
     }
   </stl:style>
   <stl:document>

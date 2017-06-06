@@ -171,17 +171,17 @@ dynamically generated *marker content*):
 ```css
     .h1 {
       -stl-list-counter: counter;
-      -stl-list-level: 1;
+      -stl-list-level: 0;
       -stl-list-mask: "%0!R. ";
     }
     .h2 {
       -stl-list-counter: counter;
-      -stl-list-level: 2;
+      -stl-list-level: 1;
       -stl-list-mask: "%0!R.%1!1 ";
     }
     .h3 {
       -stl-list-counter: counter;
-      -stl-list-level: 3;
+      -stl-list-level: 2;
       -stl-list-mask: "%0!R.%1!1 %2!a) ";
     }
     .h1::marker, .h2::marker, .h3::marker {
@@ -261,6 +261,30 @@ which could be utilized as follows:
     }
     ...
 ```
+
+... or even more simplified version:
+
+```css
+    .h1 {
+      -stl-list-level: 0;
+    }
+    .h2 {
+      -stl-list-level: 1;
+    }
+    ...
+```
+
+It means that the following STL markup:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/bullets.xml?footer=minimal"></script>
+
+... will be formatted by StoryTeller formatter as follows:
+
+![Explicit hierarchy](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/bullets-xml_000-m.png)
+
+... and will be converted to the following HTML markup in the *STL2HTML* component:
+
+<script async src="//jsfiddle.net/filodej/qr6x9dwr/embed/result,html,css/"></script>
 
 ## Conclusion
 

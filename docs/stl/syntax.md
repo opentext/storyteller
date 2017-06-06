@@ -23,13 +23,13 @@ and a *document*.
 
 One of the *DocBuilder++* design goals was to unify its XML structure with the output format of the [Page Layout Driver](driver.md). 
 
-:exclamation: 
-Note that the driver was implemented before we started the *DocBuilder++* design, 
-so there are some notable differences in syntax. Also the fact is that *Page Layout Driver* output 
-represents a *paginated/rendered form of a document* while the *DocBuilder++* format represents 
-a *document design structure* so they have many high-level and low-level differences. 
-That being said we still believe that it is possible to unify both formats to a single common syntax, which will ultimately 
-cover all the existing usecases and even will generate new ones. 
+> :exclamation: 
+> Note that the driver was implemented before we started the *DocBuilder++* design, 
+> so there are some notable differences in syntax. Also the fact is that *Page Layout Driver* output 
+> represents a *paginated/rendered form of a document* while the *DocBuilder++* format represents 
+> a *document design structure* so they have many high-level and low-level differences. 
+> That being said we still believe that it is possible to unify both formats to a single common syntax, which will ultimately 
+> cover all the existing usecases and even will generate new ones. 
 
 It means that we reused the `http://developer.opentext.com/schemas/storyteller/layout` XML namespace and `stl` alias 
 (but renamed `root` element to `stl`) and so the root of the XML structure looks as follows:
@@ -1084,11 +1084,10 @@ A relatively frequent use-case is to create a bulleted or numbered
 lists. *DocBuilder++ Engine* supports the `stl:list` element for that
 purpose.
 
-:exclamation: 
-
-Note that *Bullets & Numbering* are a subject of significant change in *STL syntax*.
-While this section describes the current syntax, users can teke a look at 
-the future syntax in a separate [Numbering Documentation](numbering.html).
+> :exclamation: 
+> Note that *Bullets & Numbering* are a subject of significant change in *STL syntax*.
+> While this section describes the current syntax, users can take a look at 
+> the future syntax in a separate [Numbering Documentation](numbering.html).
 
 The fact is that there is no *List* object implemented in *StoryTeller
 Document Model* (list definitions are internally represented as
