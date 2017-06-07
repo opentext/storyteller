@@ -76,7 +76,7 @@ a [vendor prefixed](https://developer.mozilla.org/en-US/docs/Glossary/Vendor_Pre
 also define a *format mask* specifying how the *counter* should be formatted to dynamic *marker content*.
 
 Optionally it is also possible to modify *formatting style* of the *numbering marker*, if user wants it different
-from the current *paragraph style*. That can be done through a special `::marker` pseudo-element in the CSS
+from the current *character style*. That can be done through a special `::marker` pseudo-element in the CSS
 stylesheet. This approach is inspired by the experimental 
 [CSS marker](https://developer.mozilla.org/en-US/docs/Web/CSS/::marker) technology. 
 
