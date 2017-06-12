@@ -127,18 +127,28 @@ The `-stl-list` definitions have the following meaning:
 As most of the numbering masks are cummulative (each level contains also all the previous levels)
 we introduce a shorthand form of the mask. Instead of the following mask sequence:
 
-   `-stl-list-mask: "%0!R. " "%0!R.%1!1 " "%0!R.%1!1 %2!a) "`
+{% raw %}
+	-stl-list-mask: "%0!R. " "%0!R.%1!1 " "%0!R.%1!1 %2!a) ";
+{% endraw %}
 
 ... user can use the following shorthand notation:
 
-	`-stl-list-mask: "{\%0!R.}{\%1!1}{ %2!a)} "`
+{% raw %}
+	-stl-list-mask: "{%0!R.}{%1!1}{ %2!a)} ";
+{% endraw %}
 
 The idea is that the mask definition gets preprocessed for each numbering level and each part 
 of the mask enclosed in curly braces disappears if it's index is higher than current numbering 
-level. It means that the "{\%0!R.}{\%1!1}{ %2!a)} " definition generates "%0!R. " for numbering 
-level 0, "%0!R.%1!1 " for level 1 and "%0!R.%1!1 %2!a) " for all remaining levels. Users can 
-use backslash character for escaping in case they want to use curly braces inside a mask 
-formatting string (e.g. "{\%0!R.}{\%1!1}{ \{\%2!a\}} ".
+level. 
+
+It means that the {% raw %}"{%0!R.}{%1!1}{ %2!a)} "{% endraw %} definition generates:
+
+  - "%0!R. " for numbering level 0
+  - "%0!R.%1!1 " for numbering level 1
+  - "%0!R.%1!1 %2!a) " for all remaining levels. 
+
+Users can use backslash character for escaping in case they want to use curly braces inside a mask 
+formatting string (e.g. {% raw %}"{%0!R.}{%1!1}{ \{%2!a\}} "{% endraw %}.
 
 We believe that with some changes in *Document platform* it will be possible to convert such definition 
 to *StoryTeller document definition* (it will also mean a significant effort in *DocBuilder++* implementation, 
