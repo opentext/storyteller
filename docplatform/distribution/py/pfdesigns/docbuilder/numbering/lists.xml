@@ -2,7 +2,7 @@
   <stl:style>
     .item {
       -stl-list-counter: counter;
-      -stl-list-mask: "%0!R. " "%0!R.%1!1 " "%0!R.%1!1 %2!a) ";
+      -stl-list-mask: "{%0!R.}{%1!1}{ %2!a)} ";
     }
     .item::marker {
       color: red;

@@ -12,7 +12,7 @@
     .h3 {
       -stl-list-level: 2;
     }
-    .list::marker, .h1::marker, .h2::marker, .h3::marker {
+    .item::marker, .h1::marker, .h2::marker, .h3::marker {
       color: red;
     }
   </stl:style>
