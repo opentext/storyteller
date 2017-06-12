@@ -141,14 +141,14 @@ The idea is that the mask definition gets preprocessed for each numbering level 
 of the mask enclosed in curly braces disappears if it's index is higher than current numbering 
 level. 
 
-It means that the {% raw %}"{%0!R.}{%1!1}{ %2!a)} "{% endraw %} definition generates:
+It means that the `{% raw %}"{%0!R.}{%1!1}{ %2!a)} "{% endraw %}` definition generates:
 
-  - "%0!R. " for numbering level 0
-  - "%0!R.%1!1 " for numbering level 1
-  - "%0!R.%1!1 %2!a) " for all remaining levels. 
+  - `"%0!R. "` for numbering level 0
+  - `"%0!R.%1!1 "` for numbering level 1
+  - `"%0!R.%1!1 %2!a) "` for all remaining levels. 
 
 Users can use backslash character for escaping in case they want to use curly braces inside a mask 
-formatting string (e.g. {% raw %}"{%0!R.}{%1!1}{ \{%2!a\}} "{% endraw %}.
+formatting string (e.g. `{% raw %}"{%0!R.}{%1!1}{ \{%2!a\}} "{% endraw %}`).
 
 We believe that with some changes in *Document platform* it will be possible to convert such definition 
 to *StoryTeller document definition* (it will also mean a significant effort in *DocBuilder++* implementation, 
