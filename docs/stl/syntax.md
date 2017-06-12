@@ -2645,7 +2645,7 @@ Following chart specific attributes are supported:
       <scd:axis_x logical_x_position ="0" logical_y_position ="0" draw_behind="true"/>
       <scd:axis_y label="kWh" label_alignment="left" label_v_position="top" label_placement="end" logical_x_position ="0" logical_y_position ="0" draw_behind="true"/>
       <scd:support_lines logical_x_position ="0" logical_y_position ="0" logical_step ="100" label_placement="start" label_v_position="center" label_alignment="left" logical_width="2" draw_behind="true" mask="num.integer{}" style="font-family:Arial;font-size: 7pt;stroke-width: 0.57pt"/>
-      <scd:layer type="line" xpath="//ddi:tabledata[@id='table1']" labels_offset="5" node_type="dot" node_size="2" line="stroke:rgba(0,0,0,1);stroke-width: 0.57pt;">
+      <scd:layer type="line" xpath="//tabledata[@id='table1']" labels_offset="5" node_type="dot" node_size="2" line="stroke:rgba(0,0,0,1);stroke-width: 0.57pt;">
     <scd:series y_column="1" x_column="2" label_column="3"/>
       </scd:layer>
    </scd:scd>
@@ -2796,7 +2796,7 @@ Attributes:
 Data structure must be defined to use charts
 
 ```xml
- <ddi:tabledata id="table1" default_style="font-family:Arial">
+ <tabledata id="table1" default_style="font-family:Arial">
     <ddi:header>
    <ddi:cell data_type="number" data_style="fill:#ff0000;stroke:#ff0000">Value</ddi:cell>
        <ddi:cell data_type="number">X</ddi:cell>
@@ -2807,7 +2807,7 @@ Data structure must be defined to use charts
    <ddi:cell>7.6</ddi:cell>
    <ddi:cell label_rotation="45" label_h_position="center" data_style="font-size: 7pt;">jan-12</ddi:cell>
     </ddi:row>
-</ddi:tabledata>
+</tabledata>
 ```
 
 Main element of chart data can have `default_style` attribute that
