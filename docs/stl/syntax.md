@@ -1080,13 +1080,14 @@ This example demonstrates the usage of a *Span*:
 
 ## List
 
-A relatively frequent use-case is to create a bulleted or numbered lists. 
-*DocBuilder++ Engine* supports the `stl:list` element for that purpose.
+A relatively frequent use-case is to create a bulleted or numbered list. 
+STL definition provides an `stl:list` element for that purpose.
 
 The fact is that there is no *List* object implemented in *StoryTeller Document Model* 
 (list definitions are internally represented as *ListStyleSpec* resources and referenced 
 from individual paragraphs), but we believe that supporting more HTML-like list creation 
-is more user-friendly than exposing the internal representation.
+is more user-friendly than exposing the internal *StoryTeller* representation (such approach
+also simplifies a direct STL -> HTML conversion).
 
 It means that users can generally create an arbitrary hierarchy of
 nested `stl:list` elements (each element representing a definition of
@@ -1096,7 +1097,7 @@ paragraph with no bullet/numbering).
 
 > :exclamation: 
 > Note that *Bullets & Numbering* are a subject of significant change in *STL syntax*.
-> Since version 16.2 Update 1 there are significant changes in list definition:
+> Since version 16.2 Update 1 there are significant changes in the definition.
 
 ### Since 16.2 Update 1
 
@@ -1109,7 +1110,7 @@ This example demonstrates the usage of *Lists*:
 -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/kitchen-sink.xml)
 -   [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/kitchen-sink-xml_000-m.png)
 
-![List example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/kitchen-sink-xml_000-m.png)
+![List example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/kitchen-sink-xml_000-m.png)
 
 ### Pre 16.2 Update 1
 
