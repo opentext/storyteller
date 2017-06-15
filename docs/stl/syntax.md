@@ -2802,14 +2802,14 @@ Data structure must be defined to use charts.
 ```xml
  <tabledata id="table1" default_style="font-family:Arial">
     <ddi:header>
-	   <ddi:cell data_type="number" data_style="fill:#ff0000;stroke:#ff0000">Value</ddi:cell>
+       <ddi:cell data_type="number" data_style="fill:#ff0000;stroke:#ff0000">Value</ddi:cell>
        <ddi:cell data_type="number">X</ddi:cell>
-	   <ddi:cell>Description</ddi:cell>
+       <ddi:cell>Description</ddi:cell>
     </ddi:header>
     <ddi:row>
        <ddi:cell data_style="fill:rgb(212,113,28); stroke:rgb(212,113,28); stroke-width:1.42;stroke-dasharray:1, 2">0</ddi:cell>
-	   <ddi:cell>7.6</ddi:cell>
-	   <ddi:cell label_rotation="45" label_position_h="center" data_style="font-size: 7pt;">jan-12</ddi:cell>
+       <ddi:cell>7.6</ddi:cell>
+       <ddi:cell label_rotation="45" label_position_h="center" data_style="font-size: 7pt;">jan-12</ddi:cell>
     </ddi:row>
 </tabledata>
 ```
