@@ -1080,26 +1080,38 @@ This example demonstrates the usage of a *Span*:
 
 ## List
 
-A relatively frequent use-case is to create a bulleted or numbered
-lists. *DocBuilder++ Engine* supports the `stl:list` element for that
-purpose.
+A relatively frequent use-case is to create a bulleted or numbered lists. 
+*DocBuilder++ Engine* supports the `stl:list` element for that purpose.
 
-> :exclamation: 
-> Note that *Bullets & Numbering* are a subject of significant change in *STL syntax*.
-> While this section describes the current syntax, users can take a look at 
-> the future syntax in a separate [Numbering Documentation](numbering.html).
-
-The fact is that there is no *List* object implemented in *StoryTeller
-Document Model* (list definitions are internally represented as
-*ListStyleSpec* resources and referenced from individual paragraphs),
-but we believe that supporting more HTML-like list creation is more
-user-friendly than exposing the internal representation.
+The fact is that there is no *List* object implemented in *StoryTeller Document Model* 
+(list definitions are internally represented as *ListStyleSpec* resources and referenced 
+from individual paragraphs), but we believe that supporting more HTML-like list creation 
+is more user-friendly than exposing the internal representation.
 
 It means that users can generally create an arbitrary hierarchy of
 nested `stl:list` elements (each element representing a definition of
-the whole list) containing `stl:li` sub-elements (each sub-element
-representing a single list item) and `stl:p` elements (plain paragraphs
-with no bullet/numbering).
+the whole list) containing `stl:p` sub-elements with or without associated bullet/numbering 
+style definition (each sub-element represents either a single list item or it is a plain 
+paragraph with no bullet/numbering).
+
+> :exclamation: 
+> Note that *Bullets & Numbering* are a subject of significant change in *STL syntax*.
+> Since version 16.2 Update 1 there are significant changes in list definition:
+
+### Since 16.2 Update 1
+
+The new bullets & numbering syntax is described in a [separate document](numbering.html).
+
+#### Example
+
+This example demonstrates the usage of *Lists*:
+
+-   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/kitchen-sink.xml)
+-   [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/kitchen-sink-xml_000-m.png)
+
+![List example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/kitchen-sink-xml_000-m.png)
+
+### Pre 16.2 Update 1
 
 Following (list-specific) attributes are supported for `stl:list`:
 
@@ -1199,34 +1211,17 @@ inside a single `stl:list`:
 ...
 ```
 
-### Paragraph and Span attributes
+For the bullet/numbering part of the paragraph a current `stl:span` style is used unless 
+it is changed explicitly. So user can associate any *character style* attribute with 
+a `stl:list` element and the resulting properties apply just for the bullet/numbering 
+part of the list (so it is possible for example make the bullet/numbering part `bold` 
+regardless of the paragraph content styling).
 
-For the bullet/numbering part of the paragraph a current `stl:span`
-style is used unless it is changed explicitly. So user can associate any
-*character style* attribute with a `stl:list` element and the resulting
-properties apply just for the bullet/numbering part of the list (so it
-is possible for example make the bullet/numbering part `bold` regardless
-of the paragraph content styling).
-
-User can also associate any *paragraph style* attribute with the
-`stl:list` element and such properties are propagated to any nested
-paragraph (either `stl:li` or `stl:p`) unless they are explicitly
-overriden (so it is for example possible to set `left-indent`,
-`space-before` and `space-after` globally for the whole list and
-override the values for specific paragraph if necessary).
-
-#### Example
-
-This example demonstrates the usage of a *Span*:
-
-- Current syntax
-  -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/list.xml)
-  -   [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png)
-- Future syntax
-  -   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/kitchen-sink.xml)
-  -   [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/kitchen-sink-xml_000-m.png)
-
-![List example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/list-xml_000-m.png)
+User can also associate any *paragraph style* attribute with the `stl:list` element 
+and such properties are propagated to any nested paragraph (either `stl:li` or `stl:p`) 
+unless they are explicitly overriden (so it is for example possible to set `left-indent`,
+`space-before` and `space-after` globally for the whole list and override the values 
+for specific paragraph if necessary).
 
 ## Breaks
 

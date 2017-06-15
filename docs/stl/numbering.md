@@ -87,6 +87,8 @@ There are basically two numbering scenarios which differ in a way how *document 
 In this scenario a *numbering counter* directly maps to a corresponding *markup hierarchy* 
 of XML (or HTML) elements.
 
+#### Markup
+
 It means that we need to map a *multi-level counter* to a *multi-level list*, like:
 
 ```xml
@@ -104,6 +106,15 @@ It means that we need to map a *multi-level counter* to a *multi-level list*, li
 ```
 
 In HTML it roughly corresponds to [this example](https://www.w3schools.com/css/tryit.asp?filename=trycss_counters3).
+
+It is visible that in STL the multi-level list structure is formed by a hierarchy of `stl:list` elements.
+In *DocBuilder++* each nested `stl:list` elements automatically increments the internal *list-level* variable.
+It means that there is no need to specify `-stl-list-level` property explicitly, it is implicitly defined by 
+the nesting depth inside the hierarchy (however it can be explicitly overriden, if user needs to alter the default 
+behavior). Also the current `padding-left` property is incremented by `1em` value in order to make /DocBuilder++/ 
+behavior similar to HTML.
+
+#### Style
 
 In order to associate such hierarchy of `<stl:p>` elements we can define a CSS class 
 (e.g. `item`) with a specified `-stl-list` property as follows (we can optionally add a `::marker` pseudo-element 
@@ -150,6 +161,8 @@ It means that the `{% raw %}"{%0!R.}{%1!1}{ %2!a)} "{% endraw %}` definition gen
 Users can use backslash character for escaping in case they want to use curly braces inside a mask 
 formatting string (e.g. `{% raw %}"{%0!R.}{%1!1}{ \{%2!a\}} "{% endraw %}`).
 
+#### Example
+
 We believe that with some changes in *Document platform* it will be possible to convert such definition 
 to *StoryTeller document definition* (it will also mean a significant effort in *DocBuilder++* implementation, 
 *CSS parser* framework and *DocWriter* component).
@@ -175,6 +188,8 @@ In this scenario a *numbering counter* maps to an *implicit hierarchy* of XML (o
 By *implicit* we mean some kind of rather *semantic* (as opposed to *syntactic*) rules, like 
 a "hierarchy" of `<h1>`, `<h2>`, `<h3>`, ... elements in HTML.
 
+#### Markup
+
 In STL such hierarchy can be formed for example as follows:
  
 ```xml
@@ -188,6 +203,8 @@ In STL such hierarchy can be formed for example as follows:
 ```
 
 In HTML it roughly corresponds to [this example](https://www.w3schools.com/css/tryit.asp?filename=trycss_counters2).
+
+#### Style
 
 In order to associate such hierarchy of `<stl:p>` elements we can define a set of CSS classes 
 (e.g. `h1`, `h2`, `h3`, ...) and specify corresponding `-stl-list-...` properties 
@@ -224,6 +241,8 @@ and so have the following meaning:
 
 (compare it with the "multi-level" form of the same property described in the previous section).
 
+#### Example 
+
 Again we believe that it is possible to reasonably and directly convert the *STL definition* 
 to corresponding *HTML/CSS definition* which behaves according to definition.
 
@@ -242,6 +261,8 @@ It means that the following STL markup:
 ### Bullets
 
 Bullets are specified in a very similar way, except in this case we do not need a `counter` associated.
+
+#### Style
 
 So there is no `-stl-list-counter` specified:
 
@@ -299,6 +320,8 @@ which could be utilized as follows:
     }
     ...
 ```
+
+#### Example
 
 It means that the following STL markup:
 
