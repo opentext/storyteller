@@ -2816,7 +2816,7 @@ Data structure must be defined to use charts.
 
 Main element of chart data can have `default_style` attribute that defines default text style for data labels.
 
-Predefined elements uses ddi namespace defined already for rigid data of interactive items: *xmlns:ddi="http://developer.opentext.com/schemas/storyteller/layout/ddi/v1"*.
+Predefined elements use ddi namespace defined already for rigid data of interactive items: *xmlns:ddi="http://developer.opentext.com/schemas/storyteller/layout/ddi/v1"*.
 
 Elements:
 
