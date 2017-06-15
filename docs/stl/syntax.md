@@ -2632,17 +2632,19 @@ inline chart.
 
 Following chart specific attributes are supported:
 
--   `style` ... default style for the chart
+-   `modern` ... defines what charting library is used.  
+		- "false" - use StreamServe library (default)
+		- "true" - creates svg charts using NVD3 javascript library. Some settings are limited.
 
 ```xml
  <stl:chart w="311.81pt" h="99.54pt" modern="false">
-   <scd:scd style="font-family:Arial;font-size: 7pt;">
+   <scd:scd xmlns:scd="http://developer.opentext.com/schemas/storyteller/chart/definition" style="font-family:Arial;font-size: 7pt;">
       <scd:plot left_offset="28.35pt" right_offset="14.17pt" top_offset="14.17pt" bottom_offset="28.35pt" logical_x_low="0" logical_x_high="100" logical_y_low="0" logical_y_high="1000"/>
       <scd:axis_x logical_x_position ="0" logical_y_position ="0" draw_behind="true"/>
       <scd:axis_y label="kWh" label_alignment="left" label_v_position="top" label_placement="end" logical_x_position ="0" logical_y_position ="0" draw_behind="true"/>
       <scd:support_lines logical_x_position ="0" logical_y_position ="0" logical_step ="100" label_placement="start" label_v_position="center" label_alignment="left" logical_width="2" draw_behind="true" mask="num.integer{}" style="font-family:Arial;font-size: 7pt;stroke-width: 0.57pt"/>
       <scd:layer type="line" xpath="//tabledata[@id='table1']" labels_offset="5" node_type="dot" node_size="2" line="stroke:rgba(0,0,0,1);stroke-width: 0.57pt;">
-    <scd:series y_column="1" x_column="2" label_column="3"/>
+	    <scd:series y_column="1" x_column="2" label_column="3"/>
       </scd:layer>
    </scd:scd>
 </stl:chart>   
@@ -2665,9 +2667,9 @@ Users can specify the chart parts elements:
 -   `scd:title` ... title of chart
 -   `scd:legend` ... legend of chart
 -   `scd:plot` ... position, size and low/high logical coordinates for chart drawing
--   `scd:axis_x` ... x axis, more than one x axis can be defined
--   `scd:axis_y` ... y axis, more than one x axis can be defined
--   `scd:support_lines` ... support lines to allow better view of chart values
+-   `scd:axis_x` ... x axis, more than one x axis can be defined (limited when used for svg charts)
+-   `scd:axis_y` ... y axis, more than one x axis can be defined (limited when used for svg charts)
+-   `scd:support_lines` ... support lines to allow better view of chart values (limited when used for svg charts)
 -   `scd:layer` ... layer definition, more than one layer can be defined, order of defintion defines z-order
 
 ##### scd:title
@@ -2717,6 +2719,8 @@ Users can specify following attributes
 
 -   `draw_behind` ... axis should be drawn behind the chart
 
+If no attribute is specified the axis x/y is created with default settings.
+
 #####  scd:support_lines
 
 Users can specify following attributes
@@ -2739,14 +2743,17 @@ Users can specify following attributes
 -   `mask` ... format mask of values
 -   `style` ... style of labels and lines
 
+If no attribute is specified the support lines are created with default settings.
+
 #####  scd:layer
 
 Users can specify following attributes
 
--   `type` ... type of chart (line/bar/pie)
+-   `type` ... type of chart (line/bar/pie), modern types includes also (stackedAreaChart, multiBarHorizontalChart)
 -   `xpath` ... xpath to data for chart
 -   `labels_offset` ... offset of labels from axis in points
--   `label_line` ... style of lines connection to labels
+-   `line` ... default style of lines around chart segments (for 16.2 just for pie chart)
+-   `labels_line` ... style of lines connection to labels (for 16.2 just for bar/line charts)
 
 Attributes for a pie chart
 
@@ -2758,6 +2765,7 @@ Attributes for a pie chart
 -   `clockwise` ... logical coord. x of center
 -   `height3d` ... height of 3D chart in logical coord.
 -   `xyratio` ... inclination of of chart (0..1)
+-   `donut_ratio` ... ratio of radius for donut hole (0..1), 0 means no hole, 1 - hole has the same radius as pie chart
 -   `line` ... style of lines in a pie chart
 -   `labels_connection` ... type of connection between labels and a pie chart (none/normal/level/radial/underlined/aligned)
 
@@ -2765,8 +2773,8 @@ Attributes for a line chart
 
 -   `node_type` ... type of data values nodes (none/dot/square)
 -   `node_size` ... data values nodes size
--   `connected_axis_x` ... index (from 0) of axis x used for showing labels and getting logical coordinates
--   `connected_axis_y` ... index (from 0) of axis y used for showing labels and getting logical coordinates
+-   `connected_axis_x` ... index (from 1) of axis x used for showing labels and getting logical coordinates
+-   `connected_axis_y` ... index (from 1) of axis y used for showing labels and getting logical coordinates
 -   `area` ... color of area under line
 
 Attributes for a bar chart
@@ -2775,39 +2783,40 @@ Attributes for a bar chart
 -   `offset_right` ... right offset of the first bar (in logical coordinates)
 -   `bar_width` ... width of bars (in logical coordinates)
 -   `gap` ... gap between bars (in logical coordinates)
--   `connected_axis_x` ... index (from 0) of axis x used for showing labels and getting logical coordinates
--   `connected_axis_y` ... index (from 0) of axis y used for showing labels and getting logical coordinates
+-   `connected_axis_x` ... index (from 1) of axis x used for showing labels and getting logical coordinates
+-   `connected_axis_y` ... index (from 1) of axis y used for showing labels and getting logical coordinates
 
 Subelement `scd:series` for data definition
 
 Attributes:
 
--   `col_x` - index of column (started from 0) in data table for x values
--   `col_y` - index of column (started from 0) in data table for y values
--   `col_label` - index of column (started from 0) in data table for labels
--   `col_legend` - index of column (started from 0) in data table for legend
+-   `col_x` - index of column (started from 1) in data table for x values
+-   `col_y` - index of column (started from 1) in data table for y values
+-   `col_label` - index of column (started from 1) in data table for labels
+-   `col_legend` - index of column (started from 1) in data table for legend
 
 ### Chart data
 
-Data structure must be defined to use charts
+Data structure must be defined to use charts. 
 
 ```xml
  <tabledata id="table1" default_style="font-family:Arial">
     <ddi:header>
-   <ddi:cell data_type="number" data_style="fill:#ff0000;stroke:#ff0000">Value</ddi:cell>
+	   <ddi:cell data_type="number" data_style="fill:#ff0000;stroke:#ff0000">Value</ddi:cell>
        <ddi:cell data_type="number">X</ddi:cell>
-   <ddi:cell>Description</ddi:cell>
+	   <ddi:cell>Description</ddi:cell>
     </ddi:header>
     <ddi:row>
        <ddi:cell data_style="fill:rgb(212,113,28); stroke:rgb(212,113,28); stroke-width:1.42;stroke-dasharray:1, 2">0</ddi:cell>
-   <ddi:cell>7.6</ddi:cell>
-   <ddi:cell label_rotation="45" label_h_position="center" data_style="font-size: 7pt;">jan-12</ddi:cell>
+	   <ddi:cell>7.6</ddi:cell>
+	   <ddi:cell label_rotation="45" label_position_h="center" data_style="font-size: 7pt;">jan-12</ddi:cell>
     </ddi:row>
 </tabledata>
 ```
 
-Main element of chart data can have `default_style` attribute that
-defines default text style for data labels.
+Main element of chart data can have `default_style` attribute that defines default text style for data labels.
+
+Predefined elements uses ddi namespace defined already for rigid data of interactive items: *xmlns:ddi="http://developer.opentext.com/schemas/storyteller/layout/ddi/v1"*.
 
 Elements:
 
@@ -2833,8 +2842,8 @@ Attributes:
 -   `data_style` ... style used for the chart elements and their labels
 -   `exploded` ... part of pie chart that should be exploded (burst) (true/false)
 -   `label_rotation` ... rotation of label in degrees
--   `label_h_position` ... horizontal position of label (left/center/right), default is center
--   `label_v_position` ... vertical position of label (top/center/bottom), default is bottom
+-   `label_position_h` ... horizontal position of label (left/center/right), default is center
+-   `label_position_v` ... vertical position of label (top/center/bottom), default is bottom
 
 # Runtime Behavior
 
