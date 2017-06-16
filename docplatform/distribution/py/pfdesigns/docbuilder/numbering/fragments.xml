@@ -1,0 +1,96 @@
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
+		 xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" version="0.1">
+  <stl:fixtures>
+	<xp:fixture key="link:/stylesheet.css">
+    .section, .chapter, .body {
+	  font-family: Arial;
+      margin-top: 4pt;
+	}
+    .section {
+	  font-size: 14pt;
+	  font-weight: bold;
+      -stl-list-counter: counter;
+      -stl-list-level: 0;
+      -stl-list-mask: "%0!R. ";
+    }
+    .chapter {
+	  font-weight: bold;
+      -stl-list-counter: counter;
+      -stl-list-level: 1;
+      -stl-list-mask: "%0!R.%1!1 ";
+    }
+    .section::marker, .chapter::marker {
+      color: red;
+    }
+	</xp:fixture>
+	<xp:fixture key="link:/template.xml">
+	  <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+		<stl:style src="link:/stylesheet.css"/>
+		<stl:document>
+          <stl:story>
+			<stl:p class="section">{{id}}</stl:p>
+		    {{chapter}}
+			<stl:p class="chapter">{{name}}</stl:p>
+		    {{paragraph}}
+			<stl:p class="body">{{.}}</stl:p>
+		    {{/paragraph}}
+		    {{/chapter}}
+          </stl:story>
+		</stl:document>
+	  </stl:stl>
+	</xp:fixture>
+  </stl:fixtures>
+  <stl:data>
+	<stl:source>
+	  <book>
+		<section id="Introduction to Biology">
+		  <chapter name="Getting Started">
+			<paragraph>First paragraph</paragraph>
+			<paragraph>Second paragraph</paragraph>
+		  </chapter>
+		  <chapter name="Introduction">
+			<paragraph>Single paragraph</paragraph>
+		  </chapter>
+		  <chapter name="Next Steps">
+			<paragraph>Single paragraph</paragraph>
+		  </chapter>
+		</section>
+		<section id="More advanced stuff">
+		  <chapter name="Diving deep">
+			<paragraph>Single paragraph</paragraph>
+		  </chapter>
+		  <chapter name="Diving even deeper">
+			<paragraph>First paragraph</paragraph>
+			<paragraph>Second paragraph</paragraph>
+		  </chapter>
+		</section>
+	  </book>
+	</stl:source>
+  </stl:data>
+  <stl:document>
+    <stl:story name="Main">
+	  <stl:repeater xpath="/book/section">
+		<stl:story>
+		  <stl:p>
+			<stl:content uri="link:/empty.xml">
+			  <stl:script language="js">
+				'use strict';
+				var item = require('layout').item();
+				var repo = require('repo');
+				var data = require( 'data' );
+				var Mark = require('markup-js');
+				var section = data.js('.').section;
+				var template = repo.load("link:/template.xml");
+				var stl = Mark.up(template, section);
+				item.Uri = repo.upload(stl);
+			  </stl:script>
+			</stl:content>
+		  </stl:p>
+		</stl:story>
+	  </stl:repeater>
+    </stl:story>
+    <stl:page w="300pt" h="300pt">
+      <stl:text x="20pt" y="20pt" w="260pt" h="260pt" story="Main"/>
+    </stl:page>
+  </stl:document>
+</stl:stl>
