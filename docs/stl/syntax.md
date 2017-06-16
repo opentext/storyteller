@@ -1078,7 +1078,7 @@ This example demonstrates the usage of a *Span*:
 
 ![Span example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png)
 
-## List
+## Lists
 
 A relatively frequent use-case is to create a bulleted or numbered list. 
 STL definition provides an `stl:list` element for that purpose.

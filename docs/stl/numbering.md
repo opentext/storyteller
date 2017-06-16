@@ -241,7 +241,7 @@ and so have the following meaning:
 
 (compare it with the "multi-level" form of the same property described in the previous section).
 
-#### Example 
+#### Basic Example 
 
 Again we believe that it is possible to reasonably and directly convert the *STL definition* 
 to corresponding *HTML/CSS definition* which behaves according to definition.
@@ -257,6 +257,103 @@ It means that the following STL markup:
 ... and converted to the corresponding HTML markup by the *STL2HTML* component:
 
 <script async src="//jsfiddle.net/filodej/186t94Lx/embed/result,html,css/"></script>
+
+#### Fragments example
+
+There is a frequent use case when users create many fragments and want to share 
+a single numbering sequence throughout the whole story (across all the fragments' 
+content).
+
+It can be solved in a user friendly manner if we share a single CSS definition 
+of an implicit numbering hierarchy among all the fragments. We can even generate 
+fragments dynamically based on input data and still follow a single numbering
+sequence.
+
+In the following example we define a single CSS stylesheet:
+
+```css
+    .section, .chapter, .body {
+      font-family: Arial;
+      margin-top: 4pt;
+    }
+    .section {
+      font-size: 14pt;
+      font-weight: bold;
+      -stl-list-counter: counter;
+      -stl-list-level: 0;
+      -stl-list-mask: "%0!R. ";
+    }
+    .chapter {
+      font-weight: bold;
+      -stl-list-counter: counter;
+      -stl-list-level: 1;
+      -stl-list-mask: "%0!R.%1!1 ";
+    }
+    .section::marker, .chapter::marker {
+      color: red;
+    }
+``` 
+
+... and define a single fragment template:
+
+```xml
+    <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+      <stl:style src="link:/stylesheet.css"/>
+      <stl:document>
+        <stl:story>
+          <stl:p class="section">{{id}}</stl:p>
+          {{chapter}}
+          <stl:p class="chapter">{{name}}</stl:p>
+          {{paragraph}}
+          <stl:p class="body">{{.}}</stl:p>
+          {{/paragraph}}
+          {{/chapter}}
+        </stl:story>
+      </stl:document>
+    </stl:stl>
+```
+
+We have the following sample data:
+
+```xml
+      <book>
+        <section id="Introduction to Biology">
+          <chapter name="Getting Started">
+            <paragraph>First paragraph</paragraph>
+            <paragraph>Second paragraph</paragraph>
+          </chapter>
+          <chapter name="Introduction">
+            <paragraph>Single paragraph</paragraph>
+          </chapter>
+          ...
+        </section>
+        <section id="More advanced stuff">
+          ...
+        </section>
+      </book>
+```
+... and use the following script to convert each section to an STL fragment:
+
+```js
+    var item = require('layout').item();
+    var repo = require('repo');
+    var data = require( 'data' );
+    var Mark = require('markup-js');
+    var section = data.js('.').section;
+    var template = repo.load("link:/template.xml");
+    var stl = Mark.up(template, section);
+    item.Uri = repo.upload(stl);
+``` 
+
+Here is the full STL definition:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/bullets.xml?footer=minimal"></script>
+
+Which gets converted to following document:
+
+![Dynamic fragments](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/fragments-xml_000-m.png)
+
+As you can see, all the generated fragments share single numbering sequence as desired.
 
 ### Bullets
 
