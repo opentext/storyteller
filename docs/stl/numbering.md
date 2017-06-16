@@ -349,7 +349,7 @@ We have the following sample data:
 
 Here is the full STL definition:
 
-<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/bullets.xml?footer=minimal"></script>
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/fragments.xml?footer=minimal"></script>
 
 Which gets converted to following document:
 
