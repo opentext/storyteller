@@ -269,7 +269,7 @@ of an implicit numbering hierarchy among all the fragments. We can even generate
 fragments dynamically based on input data and still follow a single numbering
 sequence.
 
-In the following example we define a single CSS stylesheet:
+In the following example we define a single CSS stylesheet (`link:/stylesheet.css`):
 
 ```css
     .section, .chapter, .body {
@@ -294,7 +294,7 @@ In the following example we define a single CSS stylesheet:
     }
 ``` 
 
-... and define a single fragment template:
+... and define a single fragment template (`link:/template.xml`):
 
 ```xml
 {% raw %}
