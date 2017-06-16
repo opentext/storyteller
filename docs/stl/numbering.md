@@ -297,6 +297,7 @@ In the following example we define a single CSS stylesheet:
 ... and define a single fragment template:
 
 ```xml
+{% raw %}
     <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
       <stl:style src="link:/stylesheet.css"/>
       <stl:document>
@@ -311,6 +312,7 @@ In the following example we define a single CSS stylesheet:
         </stl:story>
       </stl:document>
     </stl:stl>
+{% endraw %}
 ```
 
 We have the following sample data:
