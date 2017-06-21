@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" xmlns:arc="http://www.platts.org/model/plattsArticle/1.0" xmlns:aid="http://ns.adobe.com/AdobeInDesign/4.0/" version="0.1">
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="0.1">
   <stl:data>
     <stl:source>
       <data>
@@ -139,7 +139,7 @@
           </stl:p>
           <stl:repeater xpath="story">
             <stl:story>
-              <stl:li class="toc-line" tabs="10pt:250pt;decimal;.">
+              <stl:p class="toc-line" tabs="10pt:250pt;decimal;.">
                 <stl:field xpath="."/>
                 <stl:tab/>
                 <stl:fragment w="10pt" h=".5em" category="postprocessing" src="link:/toc-line.xml!/item[1]/item[1]">
@@ -151,7 +151,7 @@
 					fragment.Transformation.Parameters = { index: index, type: "'"+type+"'" };
 				  </stl:script>
                 </stl:fragment>
-              </stl:li>
+              </stl:p>
             </stl:story>
           </stl:repeater>
         </stl:story>
@@ -161,12 +161,12 @@
       <stl:p class="Head"><stl:field xpath="''"><stl:script language="js">require('share').toc_register("News");</stl:script></stl:field>Norway talks gear up as countdown ticks to strike</stl:p>
       <stl:p class="BodyFirst">Talks geared up Friday on the second and final day of make-or-break talks between Norwegian oil and gas producers and key unions over wages and conditions, which if they fail could mean a 6% cut in the country's oil and gas production, companies said.</stl:p>
       <stl:span column-count="3">
-        <stl:list list-mask="■&#9;" list-class="List">
+        <stl:list>
           <stl:p class="ListStart">
             <stl:line x2="100%" y2="0pt" class="ListSeparator"/>
           </stl:p>
-          <stl:li class="Bullet">6% Norwegian output under threat</stl:li>
-          <stl:li class="Bullet">Deadline is midnight Friday Norwegian time</stl:li>
+          <stl:p class="Bullet">6% Norwegian output under threat</stl:p>
+          <stl:p class="Bullet">Deadline is midnight Friday Norwegian time</stl:p>
           <stl:p class="ListEnd">
             <stl:line x2="100%" y2="0pt" class="ListSeparator"/>
           </stl:p>
@@ -408,12 +408,12 @@
       <stl:p class="Head"><stl:field xpath="''"><stl:script language="js">require('share').toc_register("News");</stl:script></stl:field>Norway talks gear up as countdown ticks to strike</stl:p>
       <stl:p class="BodyFirst">Talks geared up Friday on the second and final day of make-or-break talks between Norwegian oil and gas producers and key unions over wages and conditions, which if they fail could mean a 6% cut in the country's oil and gas production, companies said.</stl:p>
       <stl:span column-count="3">
-        <stl:list list-mask="■&#9;" list-class="List">
+        <stl:list>
           <stl:p class="ListStart">
             <stl:line x2="100%" y2="0pt" class="ListSeparator"/>
           </stl:p>
-          <stl:li class="Bullet">6% Norwegian output under threat</stl:li>
-          <stl:li class="Bullet">Deadline is midnight Friday Norwegian time</stl:li>
+          <stl:p class="Bullet">6% Norwegian output under threat</stl:p>
+          <stl:p class="Bullet">Deadline is midnight Friday Norwegian time</stl:p>
           <stl:p class="ListEnd">
             <stl:line x2="100%" y2="0pt" class="ListSeparator"/>
           </stl:p>
@@ -487,12 +487,12 @@
       <stl:p class="Head"><stl:field xpath="''"><stl:script language="js">require('share').toc_register("News");</stl:script></stl:field>Russian condensate boom set to take breather</stl:p>
       <stl:p class="BodyFirst">Russia's gas condensate production growth, a key driver of the country's recent liquids output increase, is expected to fade away this year as sources plateau and no new major condensate fields come on stream in the next couple of years.</stl:p>
       <stl:span column-count="3">
-        <stl:list list-mask="■&#9;" list-class="List">
+        <stl:list>
           <stl:p class="ListStart">
             <stl:line x2="100%" y2="0pt" class="ListSeparator"/>
           </stl:p>
-          <stl:li class="Bullet">Output could reach 1 million b/d by 2025</stl:li>
-          <stl:li class="Bullet">More condensate sent to domestic refineries</stl:li>
+          <stl:p class="Bullet">Output could reach 1 million b/d by 2025</stl:p>
+          <stl:p class="Bullet">More condensate sent to domestic refineries</stl:p>
           <stl:p class="ListEnd">
             <stl:line x2="100%" y2="0pt" class="ListSeparator"/>
           </stl:p>
@@ -28758,15 +28758,15 @@
       <stl:p class="Head"><stl:field xpath="''"><stl:script language="js">require('share').toc_register("Brief");</stl:script></stl:field>Refinery updates</stl:p>
       <stl:span column-count="3">
         <stl:p class="Body"/>
-        <stl:list list-mask="■&#9;" list-class="List">
+        <stl:list>
           <stl:p class="ListStart">
             <stl:line x2="100%" y2="0pt" class="ListSeparator"/>
           </stl:p>
-          <stl:li class="Bullet">Owner: CNOOC</stl:li>
-          <stl:li class="Bullet">Overall capacity: 4.5 million mt/year (90,000 b/d)</stl:li>
-          <stl:li class="Bullet">Units affected: 10 new processing units</stl:li>
-          <stl:li class="Bullet">Units capacity: 10 new processing units, including a 3 million mt/year (60,000 b/d) CDU</stl:li>
-          <stl:li class="Bullet">Duration: Restarted early June</stl:li>
+          <stl:p class="Bullet">Owner: CNOOC</stl:p>
+          <stl:p class="Bullet">Overall capacity: 4.5 million mt/year (90,000 b/d)</stl:p>
+          <stl:p class="Bullet">Units affected: 10 new processing units</stl:p>
+          <stl:p class="Bullet">Units capacity: 10 new processing units, including a 3 million mt/year (60,000 b/d) CDU</stl:p>
+          <stl:p class="Bullet">Duration: Restarted early June</stl:p>
           <stl:p class="ListEnd">
             <stl:line x2="100%" y2="0pt" class="ListSeparator"/>
           </stl:p>

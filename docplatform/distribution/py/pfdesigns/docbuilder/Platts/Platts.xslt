@@ -6,6 +6,7 @@
 	xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt"
 	xmlns:arc="http://www.platts.org/model/plattsArticle/1.0"
 	xmlns:aid="http://ns.adobe.com/AdobeInDesign/4.0/"
+	exclude-result-prefixes="arc aid"
 	version="1.0">
 
 	<xsl:output method="xml" encoding="utf-8" indent="yes"/>
@@ -117,7 +118,7 @@
 		  <stl:p class="toc-subhead"><stl:field xpath="@type"/></stl:p>
 		  <stl:repeater xpath="story">
 			<stl:story>
-			  <stl:li class="toc-line" tabs="10pt:250pt;decimal;.">
+			  <stl:p class="toc-line" tabs="10pt:250pt;decimal;.">
 				<stl:field xpath="."/>
 				<stl:tab/>
 				<stl:fragment w="10pt" h=".5em" category="postprocessing" 
@@ -130,7 +131,7 @@
 					fragment.Transformation.Parameters = { index: index, type: "'"+type+"'" };
 				  </stl:script>
 				</stl:fragment>
-			  </stl:li>
+			  </stl:p>
 			</stl:story>
 		  </stl:repeater>
 		</stl:story>
@@ -370,7 +371,7 @@
 	<xsl:template match="p">
 	  <xsl:choose>
 		<xsl:when test="@class='listWrapper'">
-		  <stl:list list-mask="■&#9;" list-class="List">
+		  <stl:list>
 			<stl:p class="ListStart">
 			  <stl:line x2="100%" y2="0pt" class="ListSeparator"/>
 			</stl:p>
@@ -404,9 +405,9 @@
 	</xsl:template>
 
 	<xsl:template match="li">
-	  <stl:li class="Bullet">
+	  <stl:p class="Bullet">
 		<xsl:value-of select="normalize-space(text())"/>
-	  </stl:li>
+	  </stl:p>
 	</xsl:template>
 
 </xsl:stylesheet>

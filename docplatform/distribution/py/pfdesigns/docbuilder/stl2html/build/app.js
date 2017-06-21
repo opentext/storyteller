@@ -14738,9 +14738,57 @@ window.onload = function() {
 
 },{"./data_context":162,"./processor":167}],164:[function(require,module,exports){
 var util = require('util');
+var xmldom = require('xmldom');
 var data = require('./data');
 var repo = require('../core/repo');
 var layout = require('./layout');
+
+var g_scd_ns = "http://developer.opentext.com/schemas/storyteller/chart/definition";
+
+function namespace_stack() {
+    var aliases = [];
+    var uris = [];
+
+    function push(attrs) {
+        for (var i = 0; i < attrs.length; i++) {
+            var key = attrs[i].name;
+            if (key === 'xmlns' || key.startsWith('xmlns:')) {
+                // prepend uri and alias
+                aliases.unshift(key.substring(6));
+                uris.unshift(attrs[i].nodeValue);
+            }
+        }
+    }
+
+    function pop(attrs) {
+        for (var i = 0; i < attrs.length; i++) {
+            var key = attrs[i].name;
+            if (key === 'xmlns' || key.startsWith('xmlns:')) {
+                if (key.substring(6) !== aliases[0] || attrs[i].nodeValue != uris[0])
+                    throw new Error("Inconsistent namespaces");
+                aliases.shift();
+                uris.shift();
+            }
+        }
+    }
+
+    function lookup(alias) {
+        var i = aliases.indexOf(alias);
+        if (i === -1)
+            return null;
+        return uris[i];
+    }
+
+    function current() {
+        var result = {};
+        aliases.forEach( function(alias, index) {
+            result[alias] = uris[index];
+        } );
+        return result;
+    }
+
+    return { push: push, pop: pop, lookup: lookup, current: current };
+}
 
 function process_option(key, option) {
     if ( ( key === 'x' || key === 'y' ) && util.isString(option) ) {
@@ -14773,47 +14821,653 @@ function process_options( chart, options ) {
     }
 }
 
-function process_data(type, series) {
+function process_data(series, what) {
     series.forEach( function(serie) {
-        if (util.isString(serie.values))
-            serie.values = [].slice.call( data.nodes(serie.values) );
+        if (util.isString(serie[what]))
+            serie[what] = [].slice.call( data.nodes(serie[what]) );
     });
-    if ( type === 'pieChart' )
-        return series[0].values;
     return series;
 }
 
-function d3chart( type, series, options ) {
-    if (type === 'xml') {
-        console.log('xml chart definition:', repo.load(series));
-        return;
+function is_valid(obj){
+    return (typeof obj !== "undefined" && obj !== null);
+}
+
+function get_value(node){
+    if(is_valid(node) && is_valid(node.singleNodeValue))
+        return node.singleNodeValue.textContent;
+
+    return '';
+}
+
+function get_value_x(type, cell_x, cell_label){
+    if (type == 'pieChart' || type == 'discreteBarChart' || type == 'multiBarHorizontalChart') 
+        return get_value(cell_label)
+
+    return get_value(cell_x);
+}
+
+function prepare_data(chart_object) {
+     var type = chart_object.type;
+     var data_series = chart_object.data_series;
+     var series_columns = chart_object.columns;
+
+    var chart_data = [];
+
+    for( var c = 0; c < series_columns.length; c++){
+        var chart_series = [];
+
+        for (var i = 0; i < data_series[0].values.length; i++) {
+            var cell_label = data.get_node("cell[" + series_columns[c].label + "]", data_series[0].values[i]);
+            if (chart_object.axisX.length == 0) {
+                chart_object.axisX.push({});
+            }
+
+            chart_object.axisX[0].rotate = get_attribute_value_from_node(cell_label, "label_rotation");
+
+            cell_x= data.get_node("cell[" + series_columns[c].x + "]", data_series[0].values[i]);
+            cell_y= data.get_node("cell[" + series_columns[c].y + "]", data_series[0].values[i]);
+            var fill_color = get_style_property_from_node(cell_y, "data_style", "fill");
+            var chart_series_item = { color: fill_color, x: get_value_x(type, cell_x, cell_label), y: Number(get_value(cell_y)), label: get_value(cell_label) };
+            chart_series.push(chart_series_item);
+        }
+
+        if( type == 'pieChart' )
+            return chart_series;
+
+        header_y= data.get_node("cell[" + series_columns[c].y + "]", data_series[0].key[0]);
+        var stroke_color = get_style_property_from_node(header_y, "data_style", "stroke");
+
+        chart_data_item = { key:header_y.singleNodeValue.textContent, color: stroke_color, values: chart_series};
+        chart_data_item.area = is_valid(chart_object.area);
+
+        chart_data.push(chart_data_item);
     }
 
+    return chart_data;
+}
+
+function get_style_property(style, property, default_value) {
+    var dummy = document.createElement('div');
+    if( default_value != null )
+        dummy.style[property] = default_value;
+
+    if( style != "" )
+        dummy.style.cssText += style;
+
+    return dummy.style[property];
+}
+
+function get_style_property_from_node(node, attribute, property, default_value){
+    var value = default_value;
+    if( is_valid(node.singleNodeValue.attributes[attribute]) )
+    {
+        value = get_style_property(node.singleNodeValue.attributes[attribute].nodeValue, property, value);
+    }
+
+    return value;
+}
+
+function get_attribute_value_from_node(node, attribute) {
+    if (is_valid(node.singleNodeValue) && is_valid(node.singleNodeValue.attributes) && is_valid(node.singleNodeValue.attributes[attribute]))
+        return node.singleNodeValue.attributes[attribute].nodeValue;
+
+    return null;
+}
+
+function set_svg_text_style( text, style){
+    text.style['fill'] = style.fill;
+    text.style['font-family'] = style.font_family;
+    text.style['font-style'] = style.font_style;
+    text.style['font-weight'] = style.font_weight;
+    text.style['font-size'] = style.font_size;
+}
+
+function get_svg_text_style( text_style, default_style){
+    var ret = {};
+    ret.fill = get_style_property(text_style, "color", default_style.fill);
+    ret.font_family = get_style_property(text_style, "font-family", default_style.font_family);
+    ret.font_style = get_style_property(text_style, "font-style", default_style.font_style);
+    ret.font_weight = get_style_property(text_style, "font-weight", default_style.font_weight);
+    ret.font_size = get_style_property(text_style, "font-size", default_style.font_size);
+
+    return ret;
+}
+
+function get_default_text_style(chart_object){
+    return get_svg_text_style(chart_object.default_style, {});
+}
+
+function set_text_style(svg, chart_object, values, text_style){
+    d3.select(svg).selectAll('.nv-label text')
+          .each(function(d,i){
+              var cell_label = data.get_node("cell[" + chart_object.columns[0].label + "]", values[i]);
+
+              var label_style = {
+                  fill: get_style_property_from_node(cell_label, "data_style", "color", text_style.fill),
+                  font_family: get_style_property_from_node(cell_label, "data_style", "font-family", text_style.font_family),
+                  font_style: get_style_property_from_node(cell_label, "data_style", "font-style", text_style.font_style),
+                  font_weight: get_style_property_from_node(cell_label, "data_style", "font-weight", text_style.font_weight),
+                  font_size: get_style_property_from_node(cell_label, "data_style", "font-size", text_style.font_size)
+              }
+              set_svg_text_style( d3.select(this).node(), label_style );
+          });
+
+    text_style = get_svg_text_style(chart_object.legend_style, text_style);
+
+    d3.select(svg).selectAll('.nv-legend-text')
+          .each(function(d,i){
+              set_svg_text_style( d3.select(this).node(), text_style )
+          });
+}
+
+function set_legend_style(svg, chart_object, values, default_style) {
+    var text_style = get_svg_text_style(chart_object.legend_style, default_style);
+
+    d3.select(svg).selectAll('.nv-legend-text')
+          .each(function (d, i) {
+              var legend_text = d3.select(this);
+              set_svg_text_style(legend_text.node(), text_style)
+              });
+
+    return text_style;
+}
+
+function remove_support_lines(svg) {
+    d3.select(svg).selectAll('.nv-axis .tick line')
+          .each(function (d, i) {
+              var tick = d3.select(this);
+              tick.node().setAttribute("style", "display:none");
+          });
+
+}
+
+function add_title(svg, chart_object) {
+    if (chart_object.title == "")
+        return;
+
+    var text_style = get_svg_text_style(chart_object.title_style, get_svg_text_style(chart_object.default_style, {}));
+
+    var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+
+    var offset_y = parseInt(text_style.font_size, 10);
+    if (chart_object.title_position == "bottom")
+        offset_y = svg.clientHeight;
+    //else
+    //    offset_y = 0;
+
+    text.setAttributeNS(null, "transform", "translate(" + svg.clientWidth / 2 + ", " + offset_y + ")");
+    text.setAttributeNS(null, "text-anchor", "middle");
+
+    set_svg_text_style(text, text_style);
+
+    var text_node = document.createTextNode(chart_object.title);
+    text.appendChild(text_node);
+    svg.appendChild(text);
+}
+
+function chart_update(svg, chart_object) {
+    if( chart_object.title_position === "top" ){
+        d3.select(svg).selectAll('.nv-pieChart')
+                .attr("transform", "translate(0,40)");
+    }
+}
+
+function get_label(data_series, x){
+    var i, j;
+    var len = data_series.length;
+    for( i = 0; i < len; i++){
+        var values_len = data_series[i].values.length;
+        for( j = 0; j < values_len; j++){
+            if( data_series[i].values[j].x == x ){
+                return data_series[i].values[j].label;
+            }
+        }
+    }
+}
+
+function stl2nvd3_chart(chart_object) {
     var elem = layout.item();
     var svg = elem.firstChild;
-    var creator = nv.models[type];
-    if (!creator)
-        throw new Error("Invalid chart type: ", options.type);
-    var chart = creator()
-        .width(svg.offsetWidth)
-        .height(svg.offsetHeight)
-    ;
-    process_options( chart, options );
 
-    nv.addGraph(function() {
+    var header_xpath = '/data' + chart_object.xpath + '/header';
+    var data_xpath = '/data' + chart_object.xpath + '/row';
+    var data_series = [{ key: header_xpath, values: data_xpath }];
+
+    chart_object.data_series = process_data(process_data(data_series, "values"), "key");
+
+    var chart_data = prepare_data(chart_object);
+
+    nv.addGraph(function () {        
+        var creator = nv.models[chart_object.type];
+        if (!creator)
+            throw new Error("Invalid chart type: ", chart_object.type);
+        var chart = creator()
+                .width(svg.clientWidth)
+                .height(svg.clientHeight);
+
+        process_options(chart, chart_object.options);
+        process_chart_object(chart, chart_object, chart_data);
+
+        //if (chart_object.type == "lineChart") {
+        //    chart.xAxis.tickFormat(function(d) {
+        //        // do all you stuff and return an array
+        //        return get_label(chart_data, d);
+        //    });
+        //}
         d3.select(svg)
-            .datum(process_data(type, series))
+            .datum(chart_data)
             .call(chart);
-        nv.utils.windowResize(chart.update);
+
+        nv.utils.windowResize(function(){
+            chart.update();
+            chart_update(svg, chart_object);
+        });
+
+        post_process_chart_object(svg, chart, chart_object);
+
+        //if (chart_object.type == 'pieChart')
+        //    set_text_style(svg, chart_object, data_series[0].values);
+        //else
+        //    set_text_style(svg, chart_object, data_series);
+
+        //add_title(svg, chart_object);
+        chart.update();
+        chart_update(svg, chart_object);
+       
         return chart;
     });
 }
 
-module.exports = d3chart;
+function split_and_check(tag, nsmap) {
+    if (tag == '#text')
+        return null;
+
+    var split = tag.split(':',2);
+    var alias = split.length === 1 ? '' : split[0];
+
+    var ns = nsmap.lookup(alias);
+
+    if (ns !== g_scd_ns)
+        throw new Error("Unsupported namespace in element: " + tag);
+    return split[split.length-1];
+}
+
+function forEachElement(ns, node_list, element_parser) {
+    for (var i = 0; i < node_list.length; i++) {
+        var node = node_list[i];
+        var key = split_and_check(node.nodeName, ns) + '_';
+        var handler = element_parser[key];
+        if (is_valid(handler))
+            handler(node);
+    }
+}
+
+function process_chart_object(chart, chart_object, series) {
+    if (chart_object == null)
+        return;
+
+    if (chart_object.type === "discreteBarChart") {
+        if (chart_object.options.showYAxis === false)
+            chart.showValues(true);
+    }
+    if (chart_object.type === "multiBarHorizontalChart") {
+        chart.showValues(true);
+    }
+    if (chart_object.type === "lineChart" || chart_object.type === "multiBarChart") {
+        chart.xAxis.tickFormat(function (d) {
+            return get_label(series, d);
+        });
+    }
+
+    if (chart_object.type !== "linePlusBarChart") {
+        if (chart_object.axisY.length > 0 && is_valid(chart_object.axisY[0].label)) {
+            chart.yAxis.axisLabel(chart_object.axisY[0].label);
+        }
+        if (chart_object.axisY.length > 0 && is_valid(chart_object.axisY[0].mask)) {
+            chart.yAxis.tickFormat(d3.format(chart_object.axisY[0].mask));
+        }
+        if (chart_object.axisX.length > 0 && is_valid(chart_object.axisX[0].label)) {
+            chart.xAxis.axisLabel(chart_object.axisX[0].label);
+        }
+        if (chart_object.axisX.length > 0 && is_valid(chart_object.axisX[0].rotate)) {
+            chart.xAxis.rotateLabels(chart_object.axisX[0].rotate);
+        }
+    }
+
+    if (chart_object.stacked) {
+        chart.stacked(true);
+    }
+}
+
+function post_process_chart_object(svg, chart, chart_object) {
+    if (chart_object == null)
+        return;
+
+    var default_style = get_default_text_style(chart_object);
+    set_text_style(svg, chart_object, chart_object.data_series[0].values, default_style);
+    var legend_style = set_legend_style(svg, chart_object, chart_object.data_series[0].values, default_style);
+
+    add_title(svg, chart_object);
+    chart.update();
+    if(!chart_object.showSupportLines)
+        remove_support_lines(svg);
+
+    // temporary transformation due to bug with margins and legend in pie charts
+    if (chart_object.title_position === "top" && chart_object.type === "pieChart") {
+        d3.select(svg).selectAll('.nv-pieChart')
+            .attr("transform", "translate(0,40)");
+    }
+
+    // set color
+    if (legend_style.fill.length > 0) {
+        d3.select(svg).selectAll('.nv-legend-text')
+            .attr("fill", legend_style.fill);
+    }
+}
+
+function layer_parser(columns) {
+
+
+    attribute_handlers = {
+        'col_x': function (column_series, value) { column_series.x = value; },
+        'col_y': function (column_series, value) { column_series.y = value; },
+        'col_label': function (column_series, value) { column_series.label = value; },
+        'col_legend': function (column_series, value) { column_series.legend = value; }
+    };
+
+    function series_(node) {
+        var column_series = {};
+        for (var i = 0; i < node.attributes.length; i++) {
+            attr_handler = attribute_handlers[node.attributes[i].name];
+            if (is_valid(attr_handler))
+                attr_handler(column_series, node.attributes[i].value);
+        }
+        columns.push(column_series);
+    }
+
+    return {
+        'series_': series_,
+    };
+}
+
+function chart_parser(ns, chart_object) {
+    var chart_types = {
+        "pie": "pieChart",
+        "bar": "discreteBarChart",
+        "line": "lineChart",
+        "stackedBar": "multiBarChart"
+    };
+
+    function get_chart_type(value, columns_series) {
+        var type = chart_types[value];
+        if (!is_valid(type))
+            return value;
+        if( value === "bar" && columns_series.length > 1 )
+            return "multiBarChart";
+
+        return type;
+    }
+
+    function get_chart_margin(style) {
+        var margin = {}
+
+        margin.left = parseInt(get_style_property(style, "margin-left", 0));
+        margin.right = parseInt(get_style_property(style, "margin-right", 0));
+        margin.top = parseInt(get_style_property(style, "margin-top", 0));
+        margin.bottom = parseInt(get_style_property(style, "margin-bottom", 0));
+
+        return margin;
+    }
+
+    function get_logical_coord(node, key_low, key_high) {
+        var force = [, ];
+        var low = node.getAttribute(key_low);
+        if (is_valid(low) && low !== "") {
+            force[0] = Number(low);
+        }
+
+        var high = node.getAttribute(key_high);
+        if (is_valid(high) && high !== "") {
+            force[1] = Number(high);
+        }
+
+        if (!is_valid(force[0]) && !is_valid(force[1]))
+            return null;
+
+        return force;
+    }
+
+    function get_logical_coord_x(node) {
+        var coord_x = get_logical_coord(node, "logical_x_low", "logical_x_high");
+        if (coord_x !== null) {
+            chart_object.options.forceX = coord_x;
+        }
+    }
+
+    function get_logical_coord_y(node) {
+        var coord_y = get_logical_coord(node, "logical_y_low", "logical_y_high");
+        if (coord_y !== null)
+            chart_object.options.forceY = coord_y;
+    }
+
+    function title_(node) {
+        if( node.hasAttribute("text") )
+            chart_object.title = node.getAttribute("text");
+        chart_object.title_style = node.getAttribute("style");
+        chart_object.title_position = node.getAttribute("position");
+    }
+
+    function legend_(node) {
+        chart_object.legend = true;
+        chart_object.legend_style = node.getAttribute("style");;
+        var align_h = node.getAttribute("alignment_h");
+        if (align_h == "right")
+            chart_object.legend_position = align_h;
+    }
+
+    function plot_(node) {
+        var style = node.getAttribute("style");
+        chart_object.options.margin = get_chart_margin(style);
+        get_logical_coord_x(node);
+        get_logical_coord_y(node);
+    }
+
+    function axis_x_(node) {
+        chart_object.options.showXAxis = true;
+        var axis = { label: node.getAttribute("label") };
+        chart_object.axisX.push(axis);
+        get_logical_coord_x(node);
+    }
+
+    function axis_y_(node) {
+        chart_object.options.showYAxis = true;
+        var axis = { label: node.getAttribute("label") };
+        chart_object.axisY.push(axis);
+        get_logical_coord_y(node);
+    }
+
+    function support_lines_(node) {
+        chart_object.showSupportLines = true;
+        //chart_object.options.showYAxis = true;
+        if (chart_object.axisY.length == 0) {
+            chart_object.axisY.push({});
+        }
+        chart_object.axisY[0].mask = node.getAttribute("mask");
+        get_logical_coord_y(node);
+    }
+
+    function layer_(node) {
+        var type_handlers = {
+            'pieChart': function () {
+                delete chart_object.options.showXAxis;
+                delete chart_object.options.showYAxis;
+                var donut = 'false';
+                var donut_ratio = node.getAttribute("donut_ratio");
+                if (donut_ratio != "" && donut_ratio > 0)
+                    donut = 'true';
+                chart_object.options.donut = donut;
+                if (donut_ratio != null)
+                    chart_object.options.donutRatio = donut_ratio;
+
+                var start_angle = node.getAttribute("start_angle");
+                if (start_angle != "") {
+                    chart_object.options.startAngle = d => d.startAngle + ((Number(start_angle) + 90) * (Math.PI / 180));
+                    chart_object.options.endAngle = d => d.endAngle + ((Number(start_angle) + 90) * (Math.PI / 180));
+                }
+
+                chart_object.options.showLabels = true;
+                var labels_offset = node.getAttribute("labels_offset");
+                if (labels_offset != null && labels_offset < 0)
+                    chart_object.options.labelsOutside = false;
+                else
+                    chart_object.options.labelsOutside = true;
+
+                if (chart_object.legend_position != null)
+                    chart_object.options.legendPosition = chart_object.legend_position;
+            },
+            'stackedBar': function () {
+                chart_object.stacked = true;
+            },
+            'multiBarChart': function () {
+                var gap = node.getAttribute("gap");
+                var width = node.getAttribute("bar_width");
+                if (gap != "" && (width != "" || width != 0))
+                    chart_object.options.groupSpacing = Number(gap) / (Number(width) + Number(gap));
+            },
+            'linePlusBarChart': function () {
+                delete chart_object.options.showXAxis;
+                delete chart_object.options.showYAxis;
+            }
+        };
+
+
+        chart_object.xpath = node.getAttribute("xpath");
+        var type_val = node.getAttribute("type");
+        chart_object.area = node.getAttribute("area");
+
+        chart_object.options.showLegend = chart_object.legend;
+        
+        forEachElement(ns, node.childNodes, layer_parser(chart_object.columns));
+
+        if (chart_object.type !== "") {
+            chart_object.type = "linePlusBarChart";
+        }
+        else {
+            chart_object.type = get_chart_type(type_val, chart_object.columns);
+        }
+
+        //console.log(chart_object);
+
+        var type_handler = type_handlers[chart_object.type];
+        if( is_valid(type_handler) )
+            type_handler();
+
+    }
+
+    return {
+        'title_': title_,
+        'legend_': legend_,
+        'plot_' : plot_,
+        'axis_x_': axis_x_,
+        'axis_y_': axis_y_,
+        'support_lines_': support_lines_,
+        'layer_': layer_,
+    };
+}
+
+function parse_scd(ns, node) {
+
+    var chart_object = {
+        type: "",
+        default_style: node.getAttribute("style"),
+        title: "",
+        title_style: "",
+        title_position: "top",
+        legend: false,
+        legend_style: "",
+        legend_position: "top",
+        labels_offset: 0,
+        stacked: false,
+        xpath: '',
+        columns: [],
+        showSupportLines: false,
+        axisX: [],
+        axisY: [],
+        options: {
+            showXAxis: false,
+            showYAxis: false
+        }
+    };
+
+    forEachElement(ns, node.childNodes, chart_parser(ns, chart_object));
+
+    return chart_object;
+}
+
+function parse_chart_xml(xml) {
+    var xmldom = require('xmldom');
+    parser = new xmldom.DOMParser();
+    var chart_object = {};
+
+    var dom = parser.parseFromString(xml, 'text/xml');
+
+    for (var i = 0; i < dom.childNodes.length; i++) {
+        var node = dom.childNodes[i];
+        var ns = namespace_stack();
+        ns.push(node.attributes);
+
+        var key = split_and_check(node.nodeName, ns);
+        if (key == "scd")
+            chart_object = parse_scd(ns, node);
+        else
+            throw new Error("Unknown chart definition!");
+
+        ns.pop(node.attributes);
+    }
+
+    return chart_object;
+}
+
+module.exports = {
+
+    d3chart : function( type, series, options ) {
+        var elem = layout.item();
+        var svg = elem.firstChild;
+        var creator = nv.models[type];
+        if (!creator)
+            throw new Error("Invalid chart type: ", options.type);
+        var chart = creator()
+            .width(svg.offsetWidth)
+            .height(svg.offsetHeight)
+        ;
+        process_options( chart, options );
+
+        var data_series = process_data(series, "values");
+        if ( type === 'pieChart' ){
+            data_series = data_series[0].values;
+        }
+
+        nv.addGraph(function() {
+            d3.select(svg)
+                .datum(data_series)
+                .call(chart);
+            nv.utils.windowResize(chart.update);
+            return chart;
+        });
+    },
+
+    stlchart : function(xml_def) {
+        var chart_object = parse_chart_xml(repo.load(xml_def));
+        stl2nvd3_chart(chart_object);
+    }
+
+}
+
 module.exports.time = d3.time;
 module.exports.format = d3.format;
 
-},{"../core/repo":161,"./data":165,"./layout":166,"util":198}],165:[function(require,module,exports){
+},{"../core/repo":161,"./data":165,"./layout":166,"util":198,"xmldom":156}],165:[function(require,module,exports){
 
 function data_evaluator(stl) {
 
@@ -14829,7 +15483,11 @@ function data_evaluator(stl) {
         return result;
     }
 
-    return { nodes: nodes, string: string };
+    function get_node(xpath, node) {
+        return stl.data.eval(xpath, XPathResult.FIRST_ORDERED_NODE_TYPE, node);
+    }
+
+    return { nodes: nodes, string: string, get_node: get_node };
 }
 
 module.exports = data_evaluator( window.stl );
@@ -14847,13 +15505,13 @@ function processor(data, layout) {
     var vm = require('vm');
 
     require('./core/data');
-    var d3chart = require('./lib/d3chart');
+    var charts = require('./lib/charts');
     var repo = require('./core/repo');
 
     var modules = {
         'data': './core/data',
         'repo': './core/repo',
-        'd3chart': './lib/d3chart',
+        'charts': './lib/charts',
     };
 
     function handle_script( elem, key ) {
@@ -14911,7 +15569,7 @@ function processor(data, layout) {
 
         function chart(elem) {
             var src = elem.dataset.stlSource;
-            d3chart('xml', src);
+            charts.stlchart(src);
             delete elem.dataset.stlSource;
         }
 
@@ -14967,7 +15625,7 @@ function processor(data, layout) {
 
 module.exports = processor;
 
-},{"./core/data":160,"./core/repo":161,"./lib/d3chart":164,"vm":199}],168:[function(require,module,exports){
+},{"./core/data":160,"./core/repo":161,"./lib/charts":164,"vm":199}],168:[function(require,module,exports){
 
 },{}],169:[function(require,module,exports){
 (function (global){

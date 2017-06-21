@@ -45,10 +45,6 @@
 	margin-bottom: 8pt;
 }
 
-.List {
-	color: dodgerblue;
-}
-
 .ListStart {
 	margin-top: 8pt;
 	margin-bottom: 4pt;
@@ -73,6 +69,11 @@
 	page-break-after: avoid;
 	widows: 2;
 	orphans: 2;
+	-stl-list-mask:"■&#9;";
+}
+
+.Bullet::marker {
+	color: dodgerblue;
 }
 
 .ColumnHead {
