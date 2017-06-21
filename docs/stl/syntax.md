@@ -2607,7 +2607,12 @@ input data), then it is possible to use `stl:modification` as follows:
     <stl:repeater xpath="/data/invoice">
       <stl:story>
         <stl:barcode w="30pt" h="20pt" type="Code 39" data=".">
-          <stl:modification key="@IBarcodeItem/Data">@number</stl:modification>
+          <stl:attribute name="modulesize">0.3</stl:attribute>
+          <stl:attribute name="widetonarrow">2.0</stl:attribute>
+          <stl:attribute name="printtext">true</stl:attribute>
+          <stl:attribute name="textlocation">Above</stl:attribute>
+          <stl:attribute name="checkchar">true</stl:attribute>
+          <stl:script language="js">require('layout').item().Data = require('data').js('string(@number)');</stl:script> 
         </stl:barcode>
         , 
       </stl:story>
@@ -2844,6 +2849,20 @@ Attributes:
 -   `label_rotation` ... rotation of label in degrees
 -   `label_position_h` ... horizontal position of label (left/center/right), default is center
 -   `label_position_v` ... vertical position of label (top/center/bottom), default is bottom
+
+**Chart examples:**
+
+[<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart2-bar-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart2-bar.xml)
+
+[<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart3-line-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart3-line.xml)
+
+[<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart6-pie-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart6-pie.xml)
+
+Modern chart that uses javascript NVD3 library and SVG rendering:
+[<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart4-donut-modern-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart4-donut-modern.xml)
+
+All examples are [here](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/) with [results](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/).
+
 
 # Runtime Behavior
 
