@@ -194,7 +194,7 @@ Consider the following example demonstrating the dual approach:
 -   [StoryTeller generated HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/stl2html/stl2html.xml-m-html/index.html)
 -   [StoryTeller generated Layout HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/stl2html/stl2html-xml-m.layout.html/index.html)
 -   [Design Transformation (XSLT)](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/stl2html/stl2html.xslt)
--   [Directly generated HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/stl2html/stl2html.html)
+-   [Directly generated HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/stl2html/stl2html.htm)
 
 More Detailed diagrams demonstrate both approaches (quite similar to an old diagram of [Dynamic HTML](DynamicHTML.pdf)):
 
