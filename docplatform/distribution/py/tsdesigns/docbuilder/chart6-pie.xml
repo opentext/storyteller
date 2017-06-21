@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="stl2html.xslt"?>
+<stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" 
+		 xmlns:scd="http://developer.opentext.com/schemas/storyteller/chart/definition"
+		 xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:data>
+	<stl:template>
+		<data xmlns:ddi="http://developer.opentext.com/schemas/storyteller/layout/ddi/v1">
+			<chartdata id="table1">
+				<ddi:header>
+					<ddi:cell data_type="number">Year</ddi:cell>
+					<ddi:cell data_type="number" data_style="stroke:#ff0000">Production</ddi:cell>
+					<ddi:cell data_type="number" data_style="fill:#0000ff;stroke:#0000ff">Profit</ddi:cell>
+				</ddi:header>
+        <ddi:row>
+            <ddi:cell label_rotation="30" label_position_h="right">2010</ddi:cell>
+            <ddi:cell data_style="fill:rgb(255,0,0)">2563</ddi:cell>
+            <ddi:cell>289</ddi:cell>
+				</ddi:row>
+        <ddi:row>
+            <ddi:cell label_rotation="30" label_position_h="right">2011</ddi:cell>
+            <ddi:cell data_style="fill:rgb(255,100,0)">3542</ddi:cell>
+            <ddi:cell>458</ddi:cell>
+				</ddi:row>
+        <ddi:row>
+            <ddi:cell label_rotation="30" label_position_h="right">2012</ddi:cell>
+            <ddi:cell data_style="fill:rgb(255,150,0)">2888</ddi:cell>
+            <ddi:cell>301</ddi:cell>
+				</ddi:row>
+        <ddi:row>
+            <ddi:cell label_rotation="30" label_position_h="right">2013</ddi:cell>
+            <ddi:cell>3110</ddi:cell>
+            <ddi:cell>350</ddi:cell>
+				</ddi:row>
+        <ddi:row>
+            <ddi:cell label_rotation="30" label_position_h="right">2014</ddi:cell>
+            <ddi:cell>1563</ddi:cell>
+            <ddi:cell>89</ddi:cell>
+				</ddi:row>
+        <ddi:row>
+            <ddi:cell label_rotation="30" label_position_h="right">2015</ddi:cell>
+            <ddi:cell>2993</ddi:cell>
+            <ddi:cell>189</ddi:cell>
+				</ddi:row>
+        <ddi:row>
+            <ddi:cell label_rotation="30" label_position_h="right">2016</ddi:cell>
+            <ddi:cell>3963</ddi:cell>
+            <ddi:cell>257</ddi:cell>
+				</ddi:row>
+			</chartdata>
+		</data> 	
+	</stl:template>
+		<stl:transformation>
+			<tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+		</stl:transformation>
+	</stl:data>
+  <stl:style>
+	.paragraph {
+	  margin-top:10pt;
+	}
+
+	/* style emphasizing a block of a text */
+	.emphasis {
+	  font-style:italic;
+	}
+	.theader {
+	  font-weight:bold;
+	}
+	/* style representing cell and table border */
+	.border {
+	/*  outline:1pt solid black;*/
+	}
+  </stl:style>
+  <stl:document>
+	<stl:story name="Main" tag="Normal">
+		<stl:p class="paragraph">
+			<stl:chart w="400pt" h="320pt">
+				<scd:scd>
+					<scd:title text="Pie Chart" style="font-size:12pt" />
+					<scd:layer type="pie" xpath="//chartdata" line="stroke:white">
+						<scd:series col_y="3" col_label="1"/>
+					</scd:layer>
+				</scd:scd>
+			</stl:chart>
+		</stl:p>
+	</stl:story>
+	<stl:page w="410pt" h="330pt" occurrence="repeatable">
+		<stl:text x="0pt" y="0pt" w="410pt" h="330pt" story="Main"/>
+	</stl:page>
+	</stl:document>
+</stl:stl>
