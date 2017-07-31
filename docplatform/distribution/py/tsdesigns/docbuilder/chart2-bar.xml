@@ -10,7 +10,7 @@
 				<ddi:header>
 					<ddi:cell>Year</ddi:cell>
 					<ddi:cell>Label</ddi:cell>
-					<ddi:cell data_type="number" data_style="stroke:#ff0000">Production</ddi:cell>
+					<ddi:cell data_type="number">Production</ddi:cell>
 					<ddi:cell data_type="number" data_style="stroke:#0000ff">Profit</ddi:cell>
 				</ddi:header>
         <ddi:row>

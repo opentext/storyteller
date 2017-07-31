@@ -9,8 +9,8 @@
 			<chartdata id="table1">
 				<ddi:header>
 					<ddi:cell data_type="number">Year</ddi:cell>
-					<ddi:cell data_type="number" data_style="stroke:#ff0000">Production</ddi:cell>
-					<ddi:cell data_type="number" data_style="fill:#0000ff;stroke:#0000ff">Profit</ddi:cell>
+					<ddi:cell data_type="number">Production</ddi:cell>
+					<ddi:cell data_type="number" data_style="fill:#0000ff">Profit</ddi:cell>
 				</ddi:header>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2010</ddi:cell>

@@ -2724,6 +2724,12 @@ Users can specify following attributes
 
 -   `draw_behind` ... axis should be drawn behind the chart
 
+axis_x specific:
+-   `label_rotation` ... data labels rotation in degrees
+-   `data_labels_position_h` ... data labels default horizontal position (alignment) (left/center/right)
+-   `data_labess_position_v` ... data labels default vertical position (top/center/bottom)
+
+
 If no attribute is specified the axis x/y is created with default settings.
 
 #####  scd:support_lines
@@ -2780,7 +2786,7 @@ Attributes for a line chart
 -   `node_size` ... data values nodes size
 -   `connected_axis_x` ... index (from 1) of axis x used for showing labels and getting logical coordinates
 -   `connected_axis_y` ... index (from 1) of axis y used for showing labels and getting logical coordinates
--   `area` ... color of area under line
+-   `area` ... "true" for area color from data or directly fill color of area under line
 
 Attributes for a bar chart
 
@@ -2847,14 +2853,16 @@ Attributes:
 -   `data_style` ... style used for the chart elements and their labels
 -   `exploded` ... part of pie chart that should be exploded (burst) (true/false)
 -   `label_rotation` ... rotation of label in degrees
--   `label_position_h` ... horizontal position of label (left/center/right), default is center
--   `label_position_v` ... vertical position of label (top/center/bottom), default is bottom
+-   `label_position_h` ... horizontal position of label (left/center/right), default is center if not specified as axis_x attribute
+-   `label_position_v` ... vertical position of label (top/center/bottom), default is bottom if not specified as axis_x attribute
 
 **Chart examples:**
 
 [<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart2-bar-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart2-bar.xml)
 
 [<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart3-line-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart3-line.xml)
+
+[<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart90-line-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart90-line.xml)
 
 [<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart6-pie-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart6-pie.xml)
 

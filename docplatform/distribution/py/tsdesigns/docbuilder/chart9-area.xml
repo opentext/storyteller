@@ -10,42 +10,42 @@
 				<ddi:header>
 					<ddi:cell data_type="number">Year</ddi:cell>
 					<ddi:cell data_type="number" data_style="stroke:#ff0000">Production</ddi:cell>
-					<ddi:cell data_type="number" data_style="fill:#0000ff">Profit</ddi:cell>
+					<ddi:cell data_type="number" data_style="stroke:#0000ff">Profit</ddi:cell>
 				</ddi:header>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2010</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,0,0)">2563</ddi:cell>
-            <ddi:cell>289</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,0,255)">289</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2011</ddi:cell>
-            <ddi:cell data_style="fill:rgb(255,100,0)">3542</ddi:cell>
-            <ddi:cell>458</ddi:cell>
+            <ddi:cell data_style="fill:rgb(255,20,0)">3542</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,20,255)">458</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2012</ddi:cell>
-            <ddi:cell data_style="fill:rgb(255,150,0)">2888</ddi:cell>
-            <ddi:cell>301</ddi:cell>
+            <ddi:cell data_style="fill:rgb(255,40,0)">2888</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,40,255)">301</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2013</ddi:cell>
-            <ddi:cell>3110</ddi:cell>
-            <ddi:cell>350</ddi:cell>
+            <ddi:cell data_style="fill:rgb(255,60,0)">3110</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,60,255)">350</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2014</ddi:cell>
-            <ddi:cell>1563</ddi:cell>
-            <ddi:cell>89</ddi:cell>
+            <ddi:cell data_style="fill:rgb(255,80,0)">1563</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,80,255)">89</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2015</ddi:cell>
-            <ddi:cell>2993</ddi:cell>
-            <ddi:cell>189</ddi:cell>
+            <ddi:cell data_style="fill:rgb(255,90,0)">2993</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,90,255)">189</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2016</ddi:cell>
-            <ddi:cell>3963</ddi:cell>
-            <ddi:cell>257</ddi:cell>
+            <ddi:cell data_style="fill:rgb(255,100,0)">3963</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,100,255)">257</ddi:cell>
 				</ddi:row>
 			</chartdata>
 		</data> 	
@@ -74,18 +74,23 @@
   <stl:document>
 	<stl:story name="Main" tag="Normal">
 		<stl:p class="paragraph">
-			<stl:chart w="400pt" h="320pt">
+			<stl:chart id="bar" w="400pt" h="320pt">
 				<scd:scd>
-					<scd:title text="Pie Chart" style="font-size:12pt" />
-					<scd:layer type="pie" xpath="//chartdata" line="stroke:white">
-						<scd:series col_y="3" col_label="1"/>
+					<scd:title text="Line Chart" style="font-size:12pt" />
+					<scd:plot logical_y_low="500" logical_y_high="3000"/>
+					<scd:axis_x/>
+					<scd:axis_y/>
+					<scd:support_lines/>
+					<scd:layer type="line" area="true" xpath="//chartdata">
+						<scd:series col_x="1" col_y="2"/>
+						<scd:series col_x="1" col_y="3" col_label="1"/>
 					</scd:layer>
 				</scd:scd>
 			</stl:chart>
 		</stl:p>
 	</stl:story>
-	<stl:page w="410pt" h="330pt" occurrence="repeatable">
-		<stl:text x="0pt" y="0pt" w="410pt" h="330pt" story="Main"/>
+	<stl:page w="800pt" h="800pt" occurrence="repeatable">
+	  <stl:text x="20pt" y="20pt" w="560pt" h="760pt" story="Main"/>
 	</stl:page>
-	</stl:document>
+  </stl:document>
 </stl:stl>

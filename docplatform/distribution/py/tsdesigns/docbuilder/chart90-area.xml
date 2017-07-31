@@ -9,22 +9,22 @@
 			<chartdata id="table1">
 				<ddi:header>
 					<ddi:cell data_type="number">Year</ddi:cell>
-					<ddi:cell data_type="number" data_style="stroke:#ff0000">Production</ddi:cell>
-					<ddi:cell data_type="number" data_style="fill:#0000ff">Profit</ddi:cell>
+					<ddi:cell data_type="number" data_style="stroke:#ff0000;fill:rgba(255,0,0,0.5)">Production</ddi:cell>
+					<ddi:cell data_type="number" data_style="stroke:#0000ff;fill:rgba(0,0,255,0.5)">Profit</ddi:cell>
 				</ddi:header>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2010</ddi:cell>
-            <ddi:cell data_style="fill:rgb(255,0,0)">2563</ddi:cell>
+            <ddi:cell>2563</ddi:cell>
             <ddi:cell>289</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2011</ddi:cell>
-            <ddi:cell data_style="fill:rgb(255,100,0)">3542</ddi:cell>
+            <ddi:cell>3542</ddi:cell>
             <ddi:cell>458</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2012</ddi:cell>
-            <ddi:cell data_style="fill:rgb(255,150,0)">2888</ddi:cell>
+            <ddi:cell>2888</ddi:cell>
             <ddi:cell>301</ddi:cell>
 				</ddi:row>
         <ddi:row>
@@ -74,18 +74,23 @@
   <stl:document>
 	<stl:story name="Main" tag="Normal">
 		<stl:p class="paragraph">
-			<stl:chart w="400pt" h="320pt">
+			<stl:chart id="bar" w="400pt" h="320pt">
 				<scd:scd>
-					<scd:title text="Pie Chart" style="font-size:12pt" />
-					<scd:layer type="pie" xpath="//chartdata" line="stroke:white">
-						<scd:series col_y="3" col_label="1"/>
+					<scd:title text="Line Chart" style="font-size:12pt" />
+					<scd:plot logical_y_low="500" logical_y_high="3000"/>
+					<scd:axis_x/>
+					<scd:axis_y/>
+					<scd:support_lines/>
+					<scd:layer type="line" area="true" xpath="//chartdata">
+						<scd:series col_x="1" col_y="2"/>
+						<scd:series col_x="1" col_y="3" col_label="1"/>
 					</scd:layer>
 				</scd:scd>
 			</stl:chart>
 		</stl:p>
 	</stl:story>
-	<stl:page w="410pt" h="330pt" occurrence="repeatable">
-		<stl:text x="0pt" y="0pt" w="410pt" h="330pt" story="Main"/>
+	<stl:page w="800pt" h="800pt" occurrence="repeatable">
+	  <stl:text x="20pt" y="20pt" w="560pt" h="760pt" story="Main"/>
 	</stl:page>
-	</stl:document>
+  </stl:document>
 </stl:stl>
