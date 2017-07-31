@@ -2862,7 +2862,7 @@ Attributes:
 
 [<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart3-line-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart3-line.xml)
 
-[<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart90-line-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart90-line.xml)
+[<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart90-area-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart90-area.xml)
 
 [<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart6-pie-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart6-pie.xml)
 
