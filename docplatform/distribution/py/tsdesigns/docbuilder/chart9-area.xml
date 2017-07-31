@@ -89,8 +89,8 @@
 			</stl:chart>
 		</stl:p>
 	</stl:story>
-	<stl:page w="800pt" h="800pt" occurrence="repeatable">
-	  <stl:text x="20pt" y="20pt" w="560pt" h="760pt" story="Main"/>
+	<stl:page w="410pt" h="330pt" occurrence="repeatable">
+		<stl:text x="0pt" y="0pt" w="410pt" h="330pt" story="Main"/>
 	</stl:page>
   </stl:document>
 </stl:stl>
