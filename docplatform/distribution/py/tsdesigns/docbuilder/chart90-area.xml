@@ -76,7 +76,7 @@
 		<stl:p class="paragraph">
 			<stl:chart id="bar" w="400pt" h="320pt">
 				<scd:scd>
-					<scd:title text="Line Chart" style="font-size:12pt" />
+					<scd:title text="Area Chart" style="font-size:12pt" />
 					<scd:plot logical_y_low="500" logical_y_high="3000"/>
 					<scd:axis_x/>
 					<scd:axis_y/>
