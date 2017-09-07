@@ -443,11 +443,11 @@ in near future:
   - Also there are many tools built on top of clang/LLVM which could help us in future 
     (more sanitizers, `clang-tidy`, `clang-format`, `clang-rename`, ...)
 
-It should also bring us closer to activate the GCC 7.0 and `-std=c++1z` language mode officially.
+It should also bring us closer to activate the GCC 7.1 and `-std=c++1z` language mode officially.
 This would make our day-to-day development more efficient thanks to C++17 features like
-`std::byte`, `std::string_view`, `std::optional`, `std::variant`, ... having a potential
-to make our code much better (thole features are already available in *MSVC17*, but cannot
-be used due to the lack of support in GCC < 7.x).
+`constexpr lambdas`, `std::byte`, `std::string_view`, `std::optional`, `std::variant`,
+... having a potential to make our code much better (thole features are already available
+in *MSVC17*, but cannot be used due to the lack of support in *GCC < 7.x*).
 
 ### CMake Toolchains
 
