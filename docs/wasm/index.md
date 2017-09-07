@@ -42,13 +42,14 @@ a source-to-source compiler (runs as a back end to [LLVM](https://en.wikipedia.o
 *WebAssembly* can be considered as "asm.js done right". It is a binary executable format for the web,
 new web standard created by multi-ventor cooperation (*Google*, *Mozilla*, *Microsoft*, *Apple*, ...).
 
-It is supported by several modern browsers:
+It is [supported](http://caniuse.com/#feat=wasm) by several modern browsers:
 
   - *Google Chrome*
   - *Chromium*
   - *Mozilla Firefox*
   - *Microsoft Edge*
   - *Opera*
+  - *Safari*
 
 ## Tutorials & Examples
 
