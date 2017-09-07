@@ -1,27 +1,27 @@
-Table of Contents
-=================
-
-      * [WebAssembly](#webassembly)
-      * [Tutorials &amp; Examples](#tutorials--examples)
-      * [Technical Details](#technical-details)
-         * [Attempt #1 - Emscripten](#attempt-1---emscripten)
-            * [Prepare the environment](#prepare-the-environment)
-            * [Build application code](#build-application-code)
-            * [Dynamic libraries](#dynamic-libraries)
-            * [32-bit vs. 64-bit](#32-bit-vs-64-bit)
-         * [Attempt #2 - Clang 6.0](#attempt-2---clang-60)
-            * [Prepare the environment](#prepare-the-environment-1)
-            * [Build code](#build-code)
-         * [Setup toolchain](#setup-toolchain)
-            * [LLD Linker](#lld-linker)
-            * [Binaryen](#binaryen)
-            * [CMake configuration](#cmake-configuration)
-
 StoryTeller in WebAssembly
 ==========================
 
 This document aims to discuss technical aspects and possible benefits of porting *Document Platform*
 to [WebAssembly](http://webassembly.org), low-level bytecode format for in-browser client-side scripting. 
+
+## Table of Contents
+
+  * [WebAssembly](#webassembly)
+  * [Tutorials &amp; Examples](#tutorials--examples)
+  * [Technical Details](#technical-details)
+     * [Attempt #1 - Emscripten](#attempt-1---emscripten)
+        * [Prepare the environment](#prepare-the-environment)
+        * [Build application code](#build-application-code)
+        * [Dynamic libraries](#dynamic-libraries)
+        * [32-bit vs. 64-bit](#32-bit-vs-64-bit)
+     * [Attempt #2 - Clang 6.0](#attempt-2---clang-60)
+        * [Prepare the environment](#prepare-the-environment-1)
+        * [Build code](#build-code)
+        * [Setup toolchain](#setup-toolchain)
+           * [LLD Linker](#lld-linker)
+           * [Binaryen](#binaryen)
+           * [CMake configuration](#cmake-configuration)
+
 
 ## WebAssembly
 
@@ -29,7 +29,7 @@ to [WebAssembly](http://webassembly.org), low-level bytecode format for in-brows
 as well as faster to execute. Its initial aim is to support compilation from *C* and *C++*.
 
 *WebAssembly* evolved from [asm.js](https://en.wikipedia.org/wiki/Asm.js) an intermediate programming
-language (a strict subset of /Javascript/) designed to allow programs written in *C/C++* to be run
+language (a strict subset of *Javascript*) designed to allow programs written in *C/C++* to be run
 as web applications while maintaining performance considerably better than standard *Javascript*,
 the typical language used for such applications.
 
@@ -74,8 +74,8 @@ As soon as everyone agreed on a common approach, two parallel efforts begun:
 
 2. The long term and more "correct" approach - several compilers are being worked on:
 
-  - New *WebAssembly* backend in *LLVM* (upstream [clang](https://clang.llvm.org/) )
-  - [ilwasm](https://github.com/kg/ilwasm) for [.NET CIL](https://en.wikipedia.org/wiki/Common_Intermediate_Language)
+   - New *WebAssembly* backend in *LLVM* (upstream [clang](https://clang.llvm.org/) )
+   - [ilwasm](https://github.com/kg/ilwasm) for [.NET CIL](https://en.wikipedia.org/wiki/Common_Intermediate_Language)
 
 Now we are going to describe both variants in more detail:
 
@@ -110,7 +110,7 @@ from which you can compile C examples to `asm.js`/`wasm`:
 ```
 # prepare environment
 source ./emsdk_env.sh
-# compile a single source code to WebAssembly along with a simple HTML page to run our code in
+# compile a single source code to wasm along with a simple HTML page to run our code in
 emcc example.c -s WASM=1 -o example.html
 ```
 
@@ -213,9 +213,11 @@ svn co http://llvm.org/svn/llvm-project/lld/trunk lld
 # build folder (~14 min; ~1 hour /wo -j)
 mkdir $WORKDIR/llvm-build
 cd $WORKDIR/llvm-build
-# For Debug build:
-# cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=$INSTALLDIR -DLLVM_TARGETS_TO_BUILD= -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD=WebAssembly -DCMAKE_BUILD_TYPE=Debug $WORKDIR/llvm
-cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=$INSTALLDIR -DLLVM_TARGETS_TO_BUILD= -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD=WebAssembly $WORKDIR/llvm
+cmake -G "Unix Makefiles" \
+  -DCMAKE_INSTALL_PREFIX=$INSTALLDIR \
+  -DLLVM_TARGETS_TO_BUILD= \
+  -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD=WebAssembly \
+  $WORKDIR/llvm
 make -j 8
 
 # install llvm
@@ -242,11 +244,19 @@ $BINARYENDIR/bin/s2wasm fib.s > fib.wast
 
 But our projects are much more complicated (lots of dynamic libraries) and we are using CMake build system.
 
-In next sections we will try to modify CMake configuration.
+In next sections we will try to modify *CMake* configuration.
 
-### Setup toolchain
+#### Setup toolchain
 
-If we try to run CMake configuration we get the following error:
+In `cmake.sh` we reconfigure the commandline to use the toolchain:
+
+```
+cmake \
+    -D CMAKE_TOOLCHAIN_FILE=$STRS_ROOT/tools/cmake-modules/WebAssembly.cmake \
+    ...
+```
+
+If we try to run *CMake* configuration we get the following error:
 
 ```
 # ./tools/scripts/cmake-all.sh Debug ubuntu
@@ -272,12 +282,14 @@ CMake Error at /usr/share/cmake-3.5/Modules/CMakeTestCCompiler.cmake:61 (message
   make[1]: Entering directory '~/streamserve/coreplatform/build/cmake/CMakeFiles/CMakeTmp'
   Building C object CMakeFiles/cmTC_36111.dir/testCCompiler.c.o
 
-  ~/llvmwasm/bin/clang --target=wasm64-unknown-unknown-wasm -o CMakeFiles/cmTC_36111.dir/testCCompiler.c.o
+  ~/llvmwasm/bin/clang --target=wasm64-unknown-unknown-wasm
+     -o CMakeFiles/cmTC_36111.dir/testCCompiler.c.o
      -c ~/streamserve/coreplatform/build/cmake/CMakeFiles/CMakeTmp/testCCompiler.c
 
   Linking C executable cmTC_36111
   /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_36111.dir/link.txt --verbose=1
-  ~/llvmwasm/bin/clang --target=wasm64-unknown-unknown-wasm CMakeFiles/cmTC_36111.dir/testCCompiler.c.o -o cmTC_36111 -rdynamic
+  ~/llvmwasm/bin/clang --target=wasm64-unknown-unknown-wasm
+    CMakeFiles/cmTC_36111.dir/testCCompiler.c.o -o cmTC_36111 -rdynamic
 
   Unknown flavor: wasm
 
@@ -297,7 +309,7 @@ So the importatn message here is the:
 
 It seems that we have to look for an updated version of LLD.
 
-#### LLD Linker
+##### LLD Linker
 
 In previous section we found out that LLVM version of the [lld` linker](https://github.com/llvm-mirror/lld.git)
 does not support the `wasm` flavor yet.
@@ -322,32 +334,39 @@ we had to fix several compilation errors. Fortunately it was not that hard.
 
 This [patch](https://github.com/opentext/storyteller/blob/master/docs/wasm/lld-build-fix.diff) fixes all the build errors. 
 
-#### Binaryen
+##### Binaryen
 
 We also tried to clone and build [Binaryen](https://github.com/WebAssembly/binaryen.git) tool:
 
 ```
 git clone https://github.com/WebAssembly/binaryen.git
 cd binaryen
-cmake -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=gold" -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=gold" -DCMAKE_BUILD_TYPE=MinSizeRel -DCMAKE_INSTALL_PREFIX=$INSTALLDIR .
+cmake -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=gold" \
+      -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=gold" \
+	  -DCMAKE_BUILD_TYPE=MinSizeRel \
+	  -DCMAKE_INSTALL_PREFIX=$INSTALLDIR
+	  .
 make -j8
 make install
 ```
 
-#### CMake configuration
+##### CMake configuration
 
 Now we are able to compile and link a simple code as folows:
 
 ```
 echo "int main(int argc, char* argv[]) { (void)argv; return argc-1;}" > /tmp/testCompiler.c
-$ $HOME/llvmwasm/bin/clang --target=wasm64-unknown-unknown-wasm1  /tmp/testCompiler.c.o -o /tmp/testCompiler -rdynamic
-$ $HOME/llvmwasm/bin/lld -flavor wasm /tmp/testCompiler.c.o -entry=main -o /tmp/testCompiler.c.o.wasm
+$ ~/llvmwasm/bin/clang --target=wasm64-unknown-unknown-wasm1  /tmp/testCompiler.c.o
+    -o /tmp/testCompiler -rdynamic
+$ ~/llvmwasm/bin/lld -flavor wasm /tmp/testCompiler.c.o -entry=main
+    -o /tmp/testCompiler.c.o.wasm
 ```
 
 Unfortunately we still are not able to link dynamic libraries:
 
 ```
-$ ~/llvmwasm/bin/clang --target=wasm64-unknown-unknown-wasm  /tmp/testCompiler.c.o -o /tmp/testCompiler.c.o.wasm -rdynamic -v
+$ ~/llvmwasm/bin/clang --target=wasm64-unknown-unknown-wasm  /tmp/testCompiler.c.o
+    -o /tmp/testCompiler.c.o.wasm -rdynamic -v
 clang version 6.0.0 (trunk 311084)
 Target: wasm64-unknown-unknown-wasm
 Thread model: posix
