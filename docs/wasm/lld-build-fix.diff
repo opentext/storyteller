@@ -1,0 +1,124 @@
+diff --git a/COFF/Driver.cpp b/COFF/Driver.cpp
+index c07c2c6..9d5b4a0 100644
+--- a/COFF/Driver.cpp
++++ b/COFF/Driver.cpp
+@@ -581,12 +581,12 @@ filterBitcodeFiles(StringRef Path, std::vector<std::string> &TemporaryFiles) {
+   std::string Temp = S.str();
+   TemporaryFiles.push_back(Temp);
+ 
+-  std::error_code EC =
++  auto const EC =
+       llvm::writeArchive(Temp, New, /*WriteSymtab=*/true, Archive::Kind::K_GNU,
+                          /*Deterministics=*/true,
+                          /*Thin=*/false);
+-  if (EC)
+-    error("failed to create a new archive " + S.str() + ": " + EC.message());
++  if (EC.second)
++    error("failed to create a new archive " + S.str() + ": " + EC.second.message());
+   return Temp;
+ }
+ 
+diff --git a/COFF/DriverUtils.cpp b/COFF/DriverUtils.cpp
+index df600dd..2765bd1 100644
+--- a/COFF/DriverUtils.cpp
++++ b/COFF/DriverUtils.cpp
+@@ -365,7 +365,7 @@ createManifestXmlWithInternalMt(std::string &DefaultXml) {
+   std::unique_ptr<MemoryBuffer> DefaultXmlCopy =
+       MemoryBuffer::getMemBufferCopy(DefaultXml);
+ 
+-  windows_manifest::WindowsManifestMerger Merger;
++  WindowsManifestMerger Merger;
+   if (auto E = Merger.merge(*DefaultXmlCopy.get()))
+     return std::move(E);
+ 
+diff --git a/ELF/LTO.cpp b/ELF/LTO.cpp
+index 561494e..f0626e1 100644
+--- a/ELF/LTO.cpp
++++ b/ELF/LTO.cpp
+@@ -175,8 +175,7 @@ std::vector<InputFile *> BitcodeCompiler::compile() {
+   if (!Config->ThinLTOCacheDir.empty())
+     Cache = check(
+         lto::localCache(Config->ThinLTOCacheDir,
+-                        [&](size_t Task, std::unique_ptr<MemoryBuffer> MB,
+-                            StringRef Path) { Files[Task] = std::move(MB); }));
++                        [&](size_t Task, std::unique_ptr<MemoryBuffer> MB /*, StringRef Path*/) { Files[Task] = std::move(MB); }));
+ 
+   checkError(LTOObj->run(
+       [&](size_t Task) {
+diff --git a/wasm/Writer.cpp b/wasm/Writer.cpp
+index fc773f8..b4cafc6 100644
+--- a/wasm/Writer.cpp
++++ b/wasm/Writer.cpp
+@@ -342,7 +342,7 @@ std::string toString(OutputSection *Section) {
+     rtn += ")";
+   }
+   return rtn;
+-};
++}
+ 
+ // The writer writes a SymbolTable result to a file.
+ class Writer {
+@@ -480,9 +480,9 @@ static uint32_t calcNewIndex(const ObjectFile &File,
+     NewIndex = File.relocateTableIndex(Reloc.Index);
+     break;
+   case R_WEBASSEMBLY_GLOBAL_INDEX_LEB:
+-  case R_WEBASSEMBLY_MEMORY_ADDR_LEB:
+-  case R_WEBASSEMBLY_MEMORY_ADDR_SLEB:
+-  case R_WEBASSEMBLY_MEMORY_ADDR_I32:
++  case R_WEBASSEMBLY_GLOBAL_ADDR_LEB:
++  case R_WEBASSEMBLY_GLOBAL_ADDR_SLEB:
++  case R_WEBASSEMBLY_GLOBAL_ADDR_I32:
+     NewIndex = File.getGlobalAddress(Reloc.Index);
+     break;
+   default:
+@@ -516,9 +516,9 @@ static void calcRelocations(const ObjectFile &File,
+                  << " newOffset=" << NewReloc.Reloc.Offset << "\n");
+ 
+     switch (Reloc.Type) {
+-    case R_WEBASSEMBLY_MEMORY_ADDR_SLEB:
+-    case R_WEBASSEMBLY_MEMORY_ADDR_I32:
+-    case R_WEBASSEMBLY_MEMORY_ADDR_LEB:
++    case R_WEBASSEMBLY_GLOBAL_ADDR_SLEB:
++    case R_WEBASSEMBLY_GLOBAL_ADDR_I32:
++    case R_WEBASSEMBLY_GLOBAL_ADDR_LEB:
+       NewReloc.Value = File.getGlobalAddress(Reloc.Index) + Reloc.Addend;
+       break;
+     default:
+@@ -538,17 +538,17 @@ static void applyRelocation(uint8_t* Buf, const OutputRelocation &Reloc) {
+   case R_WEBASSEMBLY_TYPE_INDEX_LEB:
+   case R_WEBASSEMBLY_FUNCTION_INDEX_LEB:
+     assert(decodeULEB128(Buf) == Reloc.Reloc.Index);
+-  case R_WEBASSEMBLY_MEMORY_ADDR_LEB:
++  case R_WEBASSEMBLY_GLOBAL_ADDR_LEB:
+   case R_WEBASSEMBLY_GLOBAL_INDEX_LEB:
+     Encoding = RelocEncoding::Uleb128;
+     break;
+   case R_WEBASSEMBLY_TABLE_INDEX_SLEB:
+     assert(decodeSLEB128(Buf) == Reloc.Reloc.Index);
+-  case R_WEBASSEMBLY_MEMORY_ADDR_SLEB:
++  case R_WEBASSEMBLY_GLOBAL_ADDR_SLEB:
+     Encoding = RelocEncoding::Sleb128;
+     break;
+   case R_WEBASSEMBLY_TABLE_INDEX_I32:
+-  case R_WEBASSEMBLY_MEMORY_ADDR_I32:
++  case R_WEBASSEMBLY_GLOBAL_ADDR_I32:
+     Encoding = RelocEncoding::I32;
+     break;
+   }
+diff --git a/wasm/WriterUtils.cpp b/wasm/WriterUtils.cpp
+index 891257c..06814c4 100644
+--- a/wasm/WriterUtils.cpp
++++ b/wasm/WriterUtils.cpp
+@@ -181,9 +181,9 @@ void writeReloc(raw_ostream &OS, const OutputRelocation &Reloc) {
+   writeUleb128(OS, Reloc.NewIndex, "reloc index");
+ 
+   switch (Reloc.Reloc.Type) {
+-  case R_WEBASSEMBLY_MEMORY_ADDR_LEB:
+-  case R_WEBASSEMBLY_MEMORY_ADDR_SLEB:
+-  case R_WEBASSEMBLY_MEMORY_ADDR_I32:
++  case R_WEBASSEMBLY_GLOBAL_ADDR_LEB:
++  case R_WEBASSEMBLY_GLOBAL_ADDR_SLEB:
++  case R_WEBASSEMBLY_GLOBAL_ADDR_I32:
+     writeUleb128(OS, Reloc.Reloc.Addend, "reloc addend");
+     break;
+   default:
