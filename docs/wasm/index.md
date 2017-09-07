@@ -80,8 +80,12 @@ Now we are going to describe both variants in more detail:
 
 ## Attempt #1 - Emscripten
 
-The alternative method is to use *Emscripten*. *Emscripten's WebAssembly* support depends on *Binaryen*,
-compiler infrastructure and toolchain library for *WebAssembly*.
+First we decided to try a more hackish approach - *Emscripten*.
+It has a longer tradition and there exists much more documentation, unfortunately the majority
+of the documentation deals with *Asm.js*, not with *WebAssembly*.
+
+*Emscripten's WebAssembly* support depends on *Binaryen*, compiler infrastructure
+and toolchain library for *WebAssembly*.
 
 More details about generating *WebAssembly* from /Emscripten/ are described
 [here](https://github.com/kripken/emscripten/wiki/WebAssembly).
@@ -93,12 +97,12 @@ The method is described in detail [here](https://developer.mozilla.org/en-US/doc
 
 ```
 # clone the Emscripten SDK
-git clone https://github.com/juj/emsdk.git
-cd emsdk
+$ git clone https://github.com/juj/emsdk.git
+$ cd emsdk
 
 # Build, install and activate 
-./emsdk install --build=Release sdk-incoming-64bit binaryen-master-64bit
-./emsdk activate --global --build=Release sdk-incoming-64bit binaryen-master-64bit
+$ ./emsdk install --build=Release sdk-incoming-64bit binaryen-master-64bit
+$ ./emsdk activate --global --build=Release sdk-incoming-64bit binaryen-master-64bit
 ```
 
 ### Build application code
@@ -155,10 +159,10 @@ to a single result as is described
 ...
 
 # Link together the bitcode files
-emcc project.bc libstuff.bc -o allproject.bc
+$ emcc project.bc libstuff.bc -o allproject.bc
 
 # Compile the combined bitcode to HTML
-emcc allproject.bc -o final.html
+$ emcc allproject.bc -o final.html
 ```
 
 It is also described [here](https://kripken.github.io/emscripten-site/docs/compiling/Building-Projects.html#dynamic-linking)
@@ -196,31 +200,31 @@ and [here](https://lld.llvm.org/getting_started.html), and consists of following
 
 ```
 # locations, e.g.
-export WORKDIR=~/llvmwasm; mkdir -p $WORKDIR
-export INSTALLDIR=$WORKDIR
+$ export WORKDIR=~/llvmwasm; mkdir -p $WORKDIR
+$ export INSTALLDIR=$WORKDIR
 
 # checkout LLVM
-cd $WORKDIR
-svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm
+$ cd $WORKDIR
+$ svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm
 
 # checkout clang compiler
-cd $WORKDIR/llvm/tools
-svn co http://llvm.org/svn/llvm-project/cfe/trunk clang
+$ cd $WORKDIR/llvm/tools
+$ svn co http://llvm.org/svn/llvm-project/cfe/trunk clang
 # checkout lld linker
-svn co http://llvm.org/svn/llvm-project/lld/trunk lld
+$ svn co http://llvm.org/svn/llvm-project/lld/trunk lld
 
 # build folder (~14 min; ~1 hour /wo -j)
-mkdir $WORKDIR/llvm-build
-cd $WORKDIR/llvm-build
-cmake -G "Unix Makefiles" \
-  -DCMAKE_INSTALL_PREFIX=$INSTALLDIR \
-  -DLLVM_TARGETS_TO_BUILD= \
-  -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD=WebAssembly \
-  $WORKDIR/llvm
-make -j 8
+$ mkdir $WORKDIR/llvm-build
+$ cd $WORKDIR/llvm-build
+$ cmake -G "Unix Makefiles" \
+   -D CMAKE_INSTALL_PREFIX=$INSTALLDIR \
+   -D LLVM_TARGETS_TO_BUILD= \
+   -D LLVM_EXPERIMENTAL_TARGETS_TO_BUILD=WebAssembly \
+   $WORKDIR/llvm
+$ make -j 8
 
 # install llvm
-make install
+$ make install
 ```
 
 As the code is under bleeding-edge development, It was necessary to fix two compile errors in `lld`
@@ -234,11 +238,11 @@ Now we are able to build a simple code example as follows:
 
 ```
 # convert source to LLVM bitcode
-$INSTALLDIR/bin/clang -emit-llvm --target=wasm64 -Oz example.c -c -o example.bc
+$ $INSTALLDIR/bin/clang -emit-llvm --target=wasm64 -Oz example.c -c -o example.bc
 # convert LLVM bitcode to WebAssembly
-$INSTALLDIR/bin/llc -asm-verbose=false -o example.s example.bc
+$ $INSTALLDIR/bin/llc -asm-verbose=false -o example.s example.bc
 # convert WebAssembly to s-expressions 
-$BINARYENDIR/bin/s2wasm fib.s > fib.wast
+$ $BINARYENDIR/bin/s2wasm fib.s > fib.wast
 ```
 
 But our projects are much more complicated (lots of dynamic libraries) and we are using CMake build system.
@@ -258,7 +262,7 @@ cmake \
 If we try to run *CMake* configuration we get the following error:
 
 ```
-# ./tools/scripts/cmake-all.sh Debug ubuntu
+$ ./tools/scripts/cmake-all.sh Debug ubuntu
 
 ...
 ~/streamserve/coreplatform/build/cmake ~/streamserve
@@ -318,12 +322,12 @@ github repository.
 
 So instead of:
 ```
-git clone https://github.com/llvm-mirror/lld.git
+$ git clone https://github.com/llvm-mirror/lld.git
 ```
 ... we use the updated version:
 ```
-git clone https://github.com/WebAssembly/lld.git
-git checkout wasm
+$ git clone https://github.com/WebAssembly/lld.git
+$ git checkout wasm
 ```
 
 And try to build it.
@@ -338,15 +342,15 @@ This [patch](https://github.com/opentext/storyteller/blob/master/docs/wasm/lld-b
 We also tried to clone and build [Binaryen](https://github.com/WebAssembly/binaryen.git) tool:
 
 ```
-git clone https://github.com/WebAssembly/binaryen.git
-cd binaryen
-cmake -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=gold" \
-      -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=gold" \
-	  -DCMAKE_BUILD_TYPE=MinSizeRel \
-	  -DCMAKE_INSTALL_PREFIX=$INSTALLDIR
+$ git clone https://github.com/WebAssembly/binaryen.git
+$ cd binaryen
+$ cmake -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=gold" \
+        -DCMAKE_SHARED_LINKER_FLAGS="-fuse-ld=gold" \
+	    -DCMAKE_BUILD_TYPE=MinSizeRel \
+	    -DCMAKE_INSTALL_PREFIX=$INSTALLDIR
 	  .
-make -j8
-make install
+$ make -j8
+$ make install
 ```
 
 #### CMake configuration
