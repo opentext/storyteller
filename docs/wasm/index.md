@@ -6,7 +6,7 @@ to [WebAssembly](http://webassembly.org), low-level bytecode format for in-brows
 
 ## Table of Contents
 
-  * [WebAssembly](#webassembly)
+  * [Overview](#overview)
   * [Tutorials &amp; Examples](#tutorials--examples)
   * [Technical Details](#technical-details)
      * [Port our code under clang](#port-our-code-under-clang)
@@ -25,7 +25,7 @@ to [WebAssembly](http://webassembly.org), low-level bytecode format for in-brows
         * [CMake configuration](#cmake-configuration)
   * [Conclusion](#conclusion)
 
-## WebAssembly
+## Overview
 
 *WebAssembly* is a portable stack machine which is designed to be faster to parse than *Javascript*
 as well as faster to execute. Its initial aim is to support compilation from *C* and *C++*.
