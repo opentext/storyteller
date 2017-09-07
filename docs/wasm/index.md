@@ -9,6 +9,8 @@ to [WebAssembly](http://webassembly.org), low-level bytecode format for in-brows
   * [WebAssembly](#webassembly)
   * [Tutorials &amp; Examples](#tutorials--examples)
   * [Technical Details](#technical-details)
+     * [Port our code under clang](#port-our-code-under-clang)
+     * [Prepare WebAssembly environment and Toolchain](#prepare-webassembly-environment-and-toolchain)
   * [Attempt #1 - Emscripten](#attempt-1---emscripten)
      * [Prepare the environment](#prepare-the-environment)
      * [Build application code](#build-application-code)
@@ -21,6 +23,7 @@ to [WebAssembly](http://webassembly.org), low-level bytecode format for in-brows
         * [LLD Linker](#lld-linker)
         * [Binaryen](#binaryen)
         * [CMake configuration](#cmake-configuration)
+  * [Conclusion](#conclusion)
 
 ## WebAssembly
 
