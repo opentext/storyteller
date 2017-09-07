@@ -9,19 +9,18 @@ to [WebAssembly](http://webassembly.org), low-level bytecode format for in-brows
   * [WebAssembly](#webassembly)
   * [Tutorials &amp; Examples](#tutorials--examples)
   * [Technical Details](#technical-details)
-     * [Attempt #1 - Emscripten](#attempt-1---emscripten)
-        * [Prepare the environment](#prepare-the-environment)
-        * [Build application code](#build-application-code)
-        * [Dynamic libraries](#dynamic-libraries)
-        * [32-bit vs. 64-bit](#32-bit-vs-64-bit)
-     * [Attempt #2 - Clang 6.0](#attempt-2---clang-60)
-        * [Prepare the environment](#prepare-the-environment-1)
-        * [Build code](#build-code)
-        * [Setup toolchain](#setup-toolchain)
-           * [LLD Linker](#lld-linker)
-           * [Binaryen](#binaryen)
-           * [CMake configuration](#cmake-configuration)
-
+  * [Attempt #1 - Emscripten](#attempt-1---emscripten)
+     * [Prepare the environment](#prepare-the-environment)
+     * [Build application code](#build-application-code)
+     * [Dynamic libraries](#dynamic-libraries)
+     * [32-bit vs. 64-bit](#32-bit-vs-64-bit)
+  * [Attempt #2 - Clang 6.0](#attempt-2---clang-60)
+     * [Prepare the environment](#prepare-the-environment-1)
+     * [Build code](#build-code)
+     * [Setup toolchain](#setup-toolchain)
+        * [LLD Linker](#lld-linker)
+        * [Binaryen](#binaryen)
+        * [CMake configuration](#cmake-configuration)
 
 ## WebAssembly
 
@@ -79,7 +78,7 @@ As soon as everyone agreed on a common approach, two parallel efforts begun:
 
 Now we are going to describe both variants in more detail:
 
-### Attempt #1 - Emscripten
+## Attempt #1 - Emscripten
 
 The alternative method is to use *Emscripten*. *Emscripten's WebAssembly* support depends on *Binaryen*,
 compiler infrastructure and toolchain library for *WebAssembly*.
@@ -87,7 +86,7 @@ compiler infrastructure and toolchain library for *WebAssembly*.
 More details about generating *WebAssembly* from /Emscripten/ are described
 [here](https://github.com/kripken/emscripten/wiki/WebAssembly).
 
-#### Prepare the environment
+### Prepare the environment
 
 First we need to compile *Emscripten* from source.
 The method is described in detail [here](https://developer.mozilla.org/en-US/docs/WebAssembly/C_to_wasm):
@@ -102,7 +101,7 @@ cd emsdk
 ./emsdk activate --global --build=Release sdk-incoming-64bit binaryen-master-64bit
 ```
 
-#### Build application code
+### Build application code
 
 Now from inside the `emsdk` directory, enter the following command to enter an Emscripten compiler environment
 from which you can compile C examples to `asm.js`/`wasm`:
@@ -129,7 +128,7 @@ cmake \
 ... and use the `-s WASM=1` argument to compiler.
 
 
-#### Dynamic libraries
+### Dynamic libraries
 
 During the build we get the following warning:
 
@@ -177,7 +176,7 @@ See the link for more details.
 The *WebAssembly* is designed to support dynamic modules, so the format should support it with no problem.
 See the [design document](https://github.com/WebAssembly/design/pull/682) for more details.
 
-#### 32-bit vs. 64-bit
+### 32-bit vs. 64-bit
 
 During the build we get many compilation warnings regarding the 64-bit to 32-bit shortening.
 The problem is that right no the /Emscripten/ is a 32-bit platform, so size_t is a 32-bit
@@ -186,11 +185,11 @@ unsigned integer, `__POINTER_WIDTH__=32`, `__SIZEOF_LONG__=4` and `__LONG_MAX__`
 This is because of Javascript target, that limitation is not necessary when building to /WebAssembly/.
 But so far we did not find a way to switch to a 64-bit build.
 
-### Attempt #2 - Clang 6.0
+## Attempt #2 - Clang 6.0
 
 We tried a second strategy - build a development version of the *clang compiler 6.0*.
 
-#### Prepare the environment
+### Prepare the environment
 
 The clang 6.0 build method is described [here](https://gist.github.com/yurydelendik/4eeff8248aeb14ce763e)
 and [here](https://lld.llvm.org/getting_started.html), and consists of following steps:
@@ -229,7 +228,7 @@ linker (in [COFF/Driver.cpp](https://github.com/llvm-mirror/lld/blob/master/COFF
 [COFF/DriverUtils.cpp](https://github.com/llvm-mirror/lld/blob/master/COFF/DriverUtils.cpp) files)
 but other than that everything was build succesfully.
 
-#### Build code
+### Build code
 
 Now we are able to build a simple code example as follows:
 
@@ -246,7 +245,7 @@ But our projects are much more complicated (lots of dynamic libraries) and we ar
 
 In next sections we will try to modify *CMake* configuration.
 
-#### Setup toolchain
+### Setup toolchain
 
 In `cmake.sh` we reconfigure the commandline to use the toolchain:
 
@@ -309,7 +308,7 @@ So the importatn message here is the:
 
 It seems that we have to look for an updated version of LLD.
 
-##### LLD Linker
+#### LLD Linker
 
 In previous section we found out that LLVM version of the [lld` linker](https://github.com/llvm-mirror/lld.git)
 does not support the `wasm` flavor yet.
@@ -334,7 +333,7 @@ we had to fix several compilation errors. Fortunately it was not that hard.
 
 This [patch](https://github.com/opentext/storyteller/blob/master/docs/wasm/lld-build-fix.diff) fixes all the build errors. 
 
-##### Binaryen
+#### Binaryen
 
 We also tried to clone and build [Binaryen](https://github.com/WebAssembly/binaryen.git) tool:
 
@@ -350,7 +349,7 @@ make -j8
 make install
 ```
 
-##### CMake configuration
+#### CMake configuration
 
 Now we are able to compile and link a simple code as folows:
 
