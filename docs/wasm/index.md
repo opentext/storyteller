@@ -95,7 +95,7 @@ More details about generating *WebAssembly* from /Emscripten/ are described
 First we need to compile *Emscripten* from source.
 The method is described in detail [here](https://developer.mozilla.org/en-US/docs/WebAssembly/C_to_wasm):
 
-```
+```bash
 # clone the Emscripten SDK
 $ git clone https://github.com/juj/emsdk.git
 $ cd emsdk
@@ -110,7 +110,7 @@ $ ./emsdk activate --global --build=Release sdk-incoming-64bit binaryen-master-6
 Now from inside the `emsdk` directory, enter the following command to enter an Emscripten compiler environment
 from which you can compile C examples to `asm.js`/`wasm`:
 
-```
+```bash
 # prepare environment
 source ./emsdk_env.sh
 # compile a single source code to wasm along with a simple HTML page to run our code in
@@ -123,7 +123,7 @@ Now we are almost ready to compile our code with *Emscripten*. We just have to u
 
 In `cmake.sh` we reconfigure the commandline to use the toolchain:
 
-```
+```bash
 cmake \
     -D CMAKE_TOOLCHAIN_FILE=$STRS_ROOT/tools/cmake-modules/Emscripten.cmake \
     ...
@@ -154,7 +154,7 @@ individual libraries separately to `.bc` file and then combine all the bitcode f
 to a single result as is described
 [here](https://kripken.github.io/emscripten-site/docs/compiling/Building-Projects.html#using-libraries):
 
-```
+```bash
 # Generate bitcode files project.bc and libstuff.bc
 ...
 
@@ -198,7 +198,7 @@ We tried a second strategy - build a development version of the *clang compiler 
 The clang 6.0 build method is described [here](https://gist.github.com/yurydelendik/4eeff8248aeb14ce763e)
 and [here](https://lld.llvm.org/getting_started.html), and consists of following steps:
 
-```
+```bash
 # locations, e.g.
 $ export WORKDIR=~/llvmwasm; mkdir -p $WORKDIR
 $ export INSTALLDIR=$WORKDIR
@@ -236,7 +236,7 @@ but other than that everything was build succesfully.
 
 Now we are able to build a simple code example as follows:
 
-```
+```bash
 # convert source to LLVM bitcode
 $ $INSTALLDIR/bin/clang -emit-llvm --target=wasm64 -Oz example.c -c -o example.bc
 # convert LLVM bitcode to WebAssembly
@@ -253,7 +253,7 @@ In next sections we will try to modify *CMake* configuration.
 
 In `cmake.sh` we reconfigure the commandline to use the toolchain:
 
-```
+```bash
 cmake \
     -D CMAKE_TOOLCHAIN_FILE=$STRS_ROOT/tools/cmake-modules/WebAssembly.cmake \
     ...
@@ -261,7 +261,7 @@ cmake \
 
 If we try to run *CMake* configuration we get the following error:
 
-```
+```bash
 $ ./tools/scripts/cmake-all.sh Debug ubuntu
 
 ...
@@ -321,11 +321,13 @@ But fortunately there is an updated version in the [WebAssembly/lld ](https://gi
 github repository.
 
 So instead of:
-```
+
+```bash
 $ git clone https://github.com/llvm-mirror/lld.git
 ```
 ... we use the updated version:
-```
+
+```bash
 $ git clone https://github.com/WebAssembly/lld.git
 $ git checkout wasm
 ```
@@ -341,7 +343,7 @@ This [patch](https://github.com/opentext/storyteller/blob/master/docs/wasm/lld-b
 
 We also tried to clone and build [Binaryen](https://github.com/WebAssembly/binaryen.git) tool:
 
-```
+```bash
 $ git clone https://github.com/WebAssembly/binaryen.git
 $ cd binaryen
 $ cmake -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=gold" \
@@ -357,7 +359,7 @@ $ make install
 
 Now we are able to compile and link a simple code as folows:
 
-```
+```bash
 echo "int main(int argc, char* argv[]) { (void)argv; return argc-1;}" > /tmp/testCompiler.c
 $ ~/llvmwasm/bin/clang --target=wasm64-unknown-unknown-wasm1  /tmp/testCompiler.c.o
     -o /tmp/testCompiler -rdynamic
@@ -367,7 +369,7 @@ $ ~/llvmwasm/bin/lld -flavor wasm /tmp/testCompiler.c.o -entry=main
 
 Unfortunately we still are not able to link dynamic libraries:
 
-```
+```bash
 $ ~/llvmwasm/bin/clang --target=wasm64-unknown-unknown-wasm  /tmp/testCompiler.c.o
     -o /tmp/testCompiler.c.o.wasm -rdynamic -v
 clang version 6.0.0 (trunk 311084)
