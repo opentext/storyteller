@@ -430,6 +430,8 @@ Hopefully we'll solve this problem soon.
 
 This document describes the result of *WebAssembly* POC.
 
+### Source Code Port
+
 First we succesfully ported majority of our C++ code base under the *clang* compiler
 (4.0 and 6.0, both in `-std=c++14` and `-std=c++1z` language mode). This alone is
 a great achievement with lot of potential - it can help us to make our code much better
@@ -441,18 +443,28 @@ in near future:
   - Also there are many tools built on top of clang/LLVM which could help us in future 
     (more sanitizers, `clang-tidy`, `clang-format`, `clang-rename`, ...)
 
-We also refactored our CMake-based build system, introduced a set of *toolchains* for
+It should also bring us closer to activate the GCC 7.0 and `-std=c++1z` language mode officially.
+This would make our day-to-day development more efficient thanks to C++17 features like
+`std::byte`, `std::string_view`, `std::optional`, `std::variant`, ... having a potential
+to make our code much better (thole features are already available in *MSVC17*, but cannot
+be used due to the lack of support in GCC < 7.x).
+
+### CMake Toolchains
+
+Secondly we also refactored our *CMake-based* build system, introduced a set of *toolchains* for
 individual build environments (*GCC*, *Clang*, *Wine/MSVC*, *Android*, *Emscripten*,
-*WebAssembly*) so that it should be much easier to introduce new platform and experiments
+*WebAssembly*) so that it should be much easier to introduce new platforms and experiments
 in future.
 
+### WebAssembly Build & Link
+
 Finally we have evaluated available possibilities of compiling *Document Platform* with
-all dependencies to *WebAssembly*. Two toolchain possibilities were tried:
+all dependencies to *WebAssembly*. Two *toolchain* possibilities were tried:
 *Emscripten* and *Clang 6.0*.
 
 Unfortunately we did not succeed to *compile* and *link* our code base to *WebAssembly*. 
 The main issues seemed to be a lack of *64-bit support* in *Emscripten* and a problematic 
-build of *dynamic libraries* with both evaluated toolchains.
+build of *dynamic libraries* with both evaluated *toolchains*.
 
 Currently the overall *WebAssembly* infrastructure is in so-called MVP (Minimal Viable Product)
 stage and so it is kind of hard to succesfully port (*compile*, *link* and *run*)
