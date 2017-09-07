@@ -76,20 +76,21 @@ It is [supported](http://caniuse.com/#feat=wasm) by several modern browsers:
 Our goal is to prepare a POC of building our source code to *WebAssembly*.
 It consists of several tasks:
 
-- Make our source code compilable by clang compiler
+- Make our source code compilable under `clang` compiler
 - Prepare an environment able to compile a complex *C++* project to *WebAssembly*
 - Update our build systems (*CMake*) to support *WebAssembly* toolchain
 
 ### Port our code under clang
 
 The good news is that we managed to compile `coreplatform`, `codebase` and `docplatform`
-repositories with *clang 4.0* and *clang 6.0* compilers even both in `-std=c++14` and
-`-std=c++1z` compilation mode and succesfully run the full set of 6000+ docplatform regression
-tests. The source code modification are available in `pfi01/develop/clang` git branches.
+repositories with *clang 4.0* and *clang 6.0* compilers both in `-std=c++14` and `-std=c++1z`
+language modes and even succesfully run the full set of 6000+ tests of *DocPlatform Regression
+Test Suite*. The source code modifications are not merget to upstream yet, but are available for review
+in internal `pfi01/develop/clang` git branches.
 
 ### Prepare WebAssembly environment and Toolchain
 
-As soon as all "Big companies* agreed on a common approach, two parallel efforts had begun:
+As soon as all "Big players" had agreed on a common *WebAssembly* approach, two parallel efforts begun:
 
 1. There is a temporary hack able to create WebAssembly from asm.js -
    the [asm2wasm](https://github.com/WebAssembly/binaryen/blob/master/src/asm2wasm.h), part of
@@ -429,9 +430,10 @@ Hopefully we'll solve this problem soon.
 
 This document describes the result of *WebAssembly* POC.
 
-First we succesfully ported majority of our C++ code base to *clang* compiler
-(both in `-std=c++14` and `-std=c++1z` language mode). This alone is a good achievement
-as it can help us to make our code better in near future:
+First we succesfully ported majority of our C++ code base under the *clang* compiler
+(4.0 and 6.0, both in `-std=c++14` and `-std=c++1z` language mode). This alone is
+a great achievement with lot of potential - it can help us to make our code much better
+in near future:
 
   - Now the performance of clang-generated code is on par with gcc-generated code 
     (it was not always so, but clang has improved a lot recently).
@@ -439,13 +441,22 @@ as it can help us to make our code better in near future:
   - Also there are many tools built on top of clang/LLVM which could help us in future 
     (more sanitizers, `clang-tidy`, `clang-format`, `clang-rename`, ...)
 
-Then we evaluated available possibilities to compile *Document Platform* in *WebAssembly*.
-Two toolchain possibilities were tried: *Emscripten* and *Clang 6.0*.
-Unfortunately we did not succeed to compile and link our code base to *WebAssembly*. 
-The main issues seemed to be a lack of 64-bit support in *Emscripten* and a problematic 
-build of dynamic libraries in both evaluated toolchains.
+We also refactored our CMake-based build system, introduced a set of *toolchains* for
+individual build environments (*GCC*, *Clang*, *Wine/MSVC*, *Android*, *Emscripten*,
+*WebAssembly*) so that it should be much easier to introduce new platform and experiments
+in future.
 
-Currently the overall *WebAssembly* infrastructure is in so-called MVP (Minimal viable product)
-stage and so it is kind of hard to compile and run an extensive project like *Document Platform*.
-Hopefully we reiterate the POC after some time when more and bettter quality documentation 
+Finally we have evaluated available possibilities of compiling *Document Platform* with
+all dependencies to *WebAssembly*. Two toolchain possibilities were tried:
+*Emscripten* and *Clang 6.0*.
+
+Unfortunately we did not succeed to *compile* and *link* our code base to *WebAssembly*. 
+The main issues seemed to be a lack of *64-bit support* in *Emscripten* and a problematic 
+build of *dynamic libraries* with both evaluated toolchains.
+
+Currently the overall *WebAssembly* infrastructure is in so-called MVP (Minimal Viable Product)
+stage and so it is kind of hard to succesfully port (*compile*, *link* and *run*)
+an extensive project like *Document Platform*.
+
+Hopefully we reiterate the POC after some time when more and better quality documentation 
 and tutorials are available.
