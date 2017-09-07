@@ -70,7 +70,23 @@ It is [supported](http://caniuse.com/#feat=wasm) by several modern browsers:
   
 ## Technical Details
 
-As soon as everyone agreed on a common approach, two parallel efforts begun:
+Our goal is to prepare a POC of building our source code to *WebAssembly*.
+It consists of several tasks:
+
+- Make our source code compilable by clang compiler
+- Prepare an environment able to compile a complex *C++* project to *WebAssembly*
+- Update our build systems (*CMake*) to support *WebAssembly* toolchain
+
+### Port our code under clang
+
+The good news is that we managed to compile `coreplatform`, `codebase` and `docplatform`
+repositories with *clang 4.0* and *clang 6.0* compilers even both in `-std=c++14` and
+`-std=c++1z` compilation mode and succesfully run the full set of 6000+ docplatform regression
+tests. The source code modification are available in `pfi01/develop/clang` git branches.
+
+### Prepare WebAssembly environment and Toolchain
+
+As soon as all "Big companies* agreed on a common approach, two parallel efforts had begun:
 
 1. There is a temporary hack able to create WebAssembly from asm.js -
    the [asm2wasm](https://github.com/WebAssembly/binaryen/blob/master/src/asm2wasm.h), part of
@@ -85,7 +101,8 @@ As soon as everyone agreed on a common approach, two parallel efforts begun:
    - New *WebAssembly* backend in *LLVM* (upstream [clang](https://clang.llvm.org/) )
    - [ilwasm](https://github.com/kg/ilwasm) for [.NET CIL](https://en.wikipedia.org/wiki/Common_Intermediate_Language)
 
-Now we are going to describe both variants in more detail:
+In the following sections we are going to evaluate both alternatives and compare the results
+in detail:
 
 ## Attempt #1 - Emscripten
 
@@ -404,3 +421,28 @@ the
 argument to point the compiler and linker to it.
 
 Hopefully we'll solve this problem soon.
+
+## Conclusion
+
+This document describes the result of *WebAssembly* POC.
+
+First we succesfully ported majority of our C++ code base to *clang* compiler
+(both in `-std=c++14` and `-std=c++1z` language mode). This alone is a good achievement
+as it can help us to make our code better in near future:
+
+  - Now the performance of clang-generated code is on par with gcc-generated code 
+    (it was not always so, but clang has improved a lot recently).
+  - The clang warnings and error diagnostics are better in many cases compared to GCC.
+  - Also there are many tools built on top of clang/LLVM which could help us in future 
+    (more sanitizers, `clang-tidy`, `clang-format`, `clang-rename`, ...)
+
+Then we evaluated available possibilities to compile *Document Platform* in *WebAssembly*.
+Two toolchain possibilities were tried: *Emscripten* and *Clang 6.0*.
+Unfortunately we did not succeed to compile and link our code base to *WebAssembly*. 
+The main issues seemed to be a lack of 64-bit support in *Emscripten* and a problematic 
+build of dynamic libraries in both evaluated toolchains.
+
+Currently the overall *WebAssembly* infrastructure is in so-called MVP (Minimal viable product)
+stage and so it is kind of hard to compile and run an extensive project like *Document Platform*.
+Hopefully we reiterate the POC after some time when more and bettter quality documentation 
+and tutorials are available.
