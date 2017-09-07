@@ -112,9 +112,9 @@ from which you can compile C examples to `asm.js`/`wasm`:
 
 ```bash
 # prepare environment
-source ./emsdk_env.sh
+$ source ./emsdk_env.sh
 # compile a single source code to wasm along with a simple HTML page to run our code in
-emcc example.c -s WASM=1 -o example.html
+$ emcc example.c -s WASM=1 -o example.html
 ```
 
 Now we are almost ready to compile our code with *Emscripten*. We just have to use a modified
@@ -186,7 +186,7 @@ During the build we get many compilation warnings regarding the 64-bit to 32-bit
 The problem is that right no the /Emscripten/ is a 32-bit platform, so size_t is a 32-bit
 unsigned integer, `__POINTER_WIDTH__=32`, `__SIZEOF_LONG__=4` and `__LONG_MAX__` equals `2147483647L`.
 
-This is because of Javascript target, that limitation is not necessary when building to /WebAssembly/.
+This is because of *Javascript* target, that limitation is not necessary when building to *WebAssembly*.
 But so far we did not find a way to switch to a 64-bit build.
 
 ## Attempt #2 - Clang 6.0
@@ -314,10 +314,10 @@ It seems that we have to look for an updated version of LLD.
 
 #### LLD Linker
 
-In previous section we found out that LLVM version of the [lld` linker](https://github.com/llvm-mirror/lld.git)
-does not support the `wasm` flavor yet.
+In previous section we found out that original version of the
+[LLVM lld linker](https://github.com/llvm-mirror/lld.git) does not support the `wasm` flavor yet.
 
-But fortunately there is an updated version in the [WebAssembly/lld ](https://github.com/WebAssembly/lld.git)
+Fortunately there is an updated version in the [WebAssembly lld](https://github.com/WebAssembly/lld.git)
 github repository.
 
 So instead of:
@@ -334,7 +334,7 @@ $ git checkout wasm
 
 And try to build it.
 
-The LLVM branch we checked out previously and the updated lld version were not in sync and so
+The *LLVM* branch we checked out previously and the updated `lld` version were not in sync and so
 we had to fix several compilation errors. Fortunately it was not that hard.
 
 This [patch](https://github.com/opentext/storyteller/blob/master/docs/wasm/lld-build-fix.diff) fixes all the build errors. 
@@ -387,9 +387,11 @@ InstalledDir: $HOME/llvmwasm/bin
  clang-6.0: error: lld command failed with exit code 1 (use -v to see invocation)
 ```
 
-The reason seems to be a lack of a system environment for WebAsssembly build (C runtime, etc.).
+The reason seems to be a lack of a system environment for *WebAsssembly* build (C runtime, etc.).
 
 It would be great if we were able to find and download a pre-build environment and use
-the `--sysroot` argument to point the compiler and linker to it.
+the
+```--sysroot```
+argument to point the compiler and linker to it.
 
 Hopefully we'll solve this problem soon.
