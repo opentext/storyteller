@@ -52,12 +52,20 @@ It is supported by several modern browsers:
 
 ## Tutorials & Examples
 
-  - [Getting Started with WebAssembly](https://tutorialzine.com/2017/06/getting-started-with-web-assembly)
-  - [Tanks demo](http://webassembly.org/demo/)
-  - [WebAssembly Video Editor](https://d2jta7o2zej4pf.cloudfront.net/)
-  - [An Abridged Cartoon Introduction To WebAssembly](https://www.smashingmagazine.com/2017/05/abridged-cartoon-introduction-webassembly/)
-  - [Emscripten Examples](https://github.com/kripken/emscripten/wiki/Porting-Examples-and-Demos)
-  - [Pdfium in asm.js](http://coolwanglu.github.io/PDFium.js/)
+  - Video
+    - [WebAssembly: A game changer for the Web](https://www.youtube.com/watch?v=MaJCfdmr9Wg)
+    - [Compiling for the Web with WebAssembly](https://www.youtube.com/watch?v=6v4E6oksar0)
+    - [Advanced JS performance with V8 and Web Assembly](https://www.youtube.com/watch?v=PvZdTZ1Nl5o)
+	- [WebAssebmly in Action](https://www.youtube.com/watch?v=DKHuEkmsx3M)
+	- [Unreal Engine 3 in Firefox with asm.js](https://www.youtube.com/watch?v=BV32Cs_CMqo&t=24s)
+  - Tutorials
+    - [Getting Started with WebAssembly](https://tutorialzine.com/2017/06/getting-started-with-web-assembly)
+    - [An Abridged Cartoon Introduction To WebAssembly](https://www.smashingmagazine.com/2017/05/abridged-cartoon-introduction-webassembly/)
+  - Demos
+    - [Tanks demo](http://webassembly.org/demo/)
+    - [WebAssembly Video Editor](https://d2jta7o2zej4pf.cloudfront.net/)
+    - [Emscripten Examples](https://github.com/kripken/emscripten/wiki/Porting-Examples-and-Demos)
+    - [Pdfium in asm.js](http://coolwanglu.github.io/PDFium.js/)
   
 ## Technical Details
 
