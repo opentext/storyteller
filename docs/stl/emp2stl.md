@@ -263,37 +263,7 @@ If we compare the new [hello_sizes.json](https://rawgit.com/opentext/storyteller
 
 ```js
       "m_TextFonts": [
-        {
-          "strName": "Lato",
-          "iTracking": 0,
-          "clrFontColor": {
-            "m_eColorModel": 0,
-            "m_lColor": 0
-          },
-          "iFontHeight10X": 100,
-          "bBold": false,
-          "bItalic": false,
-          "bUnderline": false
-        },
-        {
-          "oiFont": 95,
-          "strName": "Lato",
-          "iTracking": 0,
-          "clrFontColor": {
-            "m_eColorModel": 0,
-            "m_lColor": 0
-          },
-          "iFontHeight10X": 100,
-          "bBold": false,
-          "bUnderline": false,
-          "bItalic": false,
-          "bStrikeThru": false,
-          "uUnderWgt": 0,
-          "sUnderPos": -32768,
-          "iAscent": 41,
-          "iDescent": 9,
-          "iLeading": 0
-+       },
+	    ...
 +       {       // a new font specs - Lato 11pt, 12pt, 13pt ...
 +         "oiFont": 103,
 +         "strName": "Lato",
@@ -354,14 +324,96 @@ If we compare the new [hello_sizes.json](https://rawgit.com/opentext/storyteller
 - [Diff](http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_sizes.json)
 - [STL](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_sizes.xml)
 
+### Superscript & Subscript
+
+Another possibility is to change text decoration to superscript or subscript.
+
+If we compare the new [hello_sub_super_script.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_sub_super_script.json) with previous [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
+
+```js
+     "m_cChars": [
+        0,
+        0,
+        1,
+        0,
+        72,
+        101,
+        108,
+        108,
+        111,
++       0,
++       0,
++       50,   // chr(50) == '2'
++       0,
++       0,
++       0,
++       51,   // chr(51) == '3'
++       0,
+        0
+      ],
+      "m_sXPos": [
+        -244,
+        0,
+        -62,
+        -63,
+        0,
+        0,
+        0,
+        0,
+        0,
++       -240, // superscript start
++       0,
++       0,
++       -59,  // superscript end
++       -239, // subscript start
++       0,
++       0,
++       -58,  // subscript end
+        -64
+      ],
+```
+
+- [JSON](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_sub_super_script.json)
+- [Diff](http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_sub_super_script.json)
+- [STL](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_sub_super_script.xml)
+
 ### Hyperlink
 
-Let's append a hyperlink - a text "hyperlink" with address http://www.opentext.com.
+Let's append a hyperlink - a text "hyperlink" with [http://www.opentext.com](http://www.opentext.com) address.
 
 If we compare the new [hello_hyperlink.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.json) with previous [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
 
 ```js
       ...
+      "m_TextFonts": [
+	    ...
++       {  // new font spec #2 (underline)
++         "oiFont": 95,
++         "strName": "Lato",
++         "iTracking": 0,
++         "clrFontColor": {
++           "m_eColorModel": 0,
++           "m_lColor": 0
++         },
++         "iFontHeight10X": 100,
++         "bBold": false,
++         "bUnderline": true,
++         "bItalic": false,
++         "bStrikeThru": false,
++         "uUnderWgt": 0,
++         "sUnderPos": -32768,
++         "iAscent": 41,
++         "iDescent": 9,
++         "iLeading": 0
+        }
+      ],
+      "m_Colors": [
+	    ...
++       {  // new color spec #3 (blue #0000c4)
++         "m_eColorModel": 0,
++         "m_lColor": 12845056
++       }
+      ],
       "m_cChars": [
         0,
         0,
@@ -424,9 +476,7 @@ If we compare the new [hello_hyperlink.json](https://rawgit.com/opentext/storyte
 +       0,
         -64
       ],
-      "m_oiLayer": 0,
-      "m_pObjs": [],
-      "m_Objs": [],
+	  ...
       "m_Links": [
 +       {          // link spec #0
 +         "eLinkType": 0,
