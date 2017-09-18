@@ -58,8 +58,7 @@
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
-          "iBulletFont": -1,
-          "iJustification": 0
+          "iBulletFont": -1
         }
       ],
       "m_TextFonts": [

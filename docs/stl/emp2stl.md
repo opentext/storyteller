@@ -294,7 +294,7 @@ If we compare the new [hello_sizes.json](https://rawgit.com/opentext/storyteller
           "iDescent": 9,
           "iLeading": 0
 +       },
-+       {       / a new font specs - Lato 11pt, 12pt, 13pt ...
++       {       // a new font specs - Lato 11pt, 12pt, 13pt ...
 +         "oiFont": 103,
 +         "strName": "Lato",
 +         "iTracking": 0,
@@ -354,5 +354,91 @@ If we compare the new [hello_sizes.json](https://rawgit.com/opentext/storyteller
 - [Diff](http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_sizes.json)
 - [STL](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_sizes.xml)
 
+### Hyperlink
+
+Let's append a hyperlink - a text "hyperlink" with address http://www.opentext.com.
+
+If we compare the new [hello_hyperlink.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.json) with previous [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
+
+```js
+      ...
+      "m_cChars": [
+        0,
+        0,
+        1,
+        0,
+        72,
+        101,
+        108,
+        108,
+        111,
++       32,
++       0,    // link index #0
++       0,
++       2,    // font index #2
++       3,    // color index #3
++       104,  // chr(111) == 'h'
++       121,  // chr(111) == 'y'
++       112,  // chr(111) == 'p'
++       101,  // chr(111) == 'e'
++       114,  // chr(111) == 'r'
++       108,  // chr(111) == 'l'
++       105,  // chr(111) == 'i'
++       110,  // chr(111) == 'n'
++       107,  // chr(111) == 'k'
++       1,    // font index #1
++       0,    // color index #0
++       0,
++       0,
++       33,  // chr(111) == '!'
+        0
+      ],
+      "m_sXPos": [
+        -244,
+        0,
+        -62,
+        -63,
+        0,
+        0,
+        0,
+        0,
+        0,
++       0,
++       -252, // start hyperlink
++       0,
++       -62,  // font change
++       -63,  // color change
++       0,
++       0,
++       0,
++       0,
++       0,
++       0,
++       0,
++       0,
++       0,
++       -62,  // font change
++       -63,  // color change
++       -109, // end hyperlink
++       0,
++       0,
+        -64
+      ],
+      "m_oiLayer": 0,
+      "m_pObjs": [],
+      "m_Objs": [],
+      "m_Links": [
++       {          // link spec #0
++         "eLinkType": 0,
++         "msLink": "http://www.opentext.com",
++         "oiVariable": -1,
++         "bNewWindow": true
++       }
+      ],
+```
+
+- [JSON](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.json)
+- [Diff](http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.json)
+- [STL](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_hyperlink.xml)
 
 ## Graphical Fragments
