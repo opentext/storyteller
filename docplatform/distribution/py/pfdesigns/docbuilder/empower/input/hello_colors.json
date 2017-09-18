@@ -92,25 +92,6 @@
           "iAscent": 41,
           "iDescent": 9,
           "iLeading": 0
-        },
-        {
-          "oiFont": 79,
-          "strName": "Lato",
-          "iTracking": 0,
-          "clrFontColor": {
-            "m_eColorModel": 0,
-            "m_lColor": 0
-          },
-          "iFontHeight10X": 80,
-          "bBold": false,
-          "bUnderline": false,
-          "bItalic": false,
-          "bStrikeThru": false,
-          "uUnderWgt": 0,
-          "sUnderPos": -32768,
-          "iAscent": 33,
-          "iDescent": 7,
-          "iLeading": 0
         }
       ],
       "m_Colors": [
