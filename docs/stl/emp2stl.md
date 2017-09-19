@@ -31,17 +31,72 @@ of the Empower JSON format. There are still too many fields we do not understand
 and some of them point outside the JSON persistence (there are some database indexes,
 resource package identifiers, etc).
 
+## Implementation
+
+We decided to implement the conversion in javascript.
+
+There are several reasons why currently the javascript seems like a best choice:
+
+  - It is a language for rapid prototyping and development (much faster than in C++)
+  - It can form a dual-environment solution:
+    - It can work as part of _StoryTeller_ scripting environment
+	- It can also work in browser as a part of _Opentext_ web applications like _StoryBoard_
+
+It is possible that we decide to reimplement the conversion in C++ (only if we find really
+good reasons), but for now we consider javascript the best choice.
+
+Right now the interface is really simple, it is a single-method module called `emp2stl`
+which has the following interface:
+
+-   `emp2stl( json: string ) : string`
+    -   parses empower JSON fragment and generates corresponding STL fragment
+
+All the parsing and translation is implemented inside this module, except low-level writing
+the resulting STL XML, we use the 3rd party [XMLWriter](http://github.com/touv/node-xml-writer)
+implementation published under MIT software licence.
+
+The current `emp2stl` implementation is available
+[here](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emp2stl.js),
+usage example is visible in a test module
+[empower.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/empower.js)
+which is used in two STL based regression tests
+[basic.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/basic.xml)
+and [complex.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/complex.xml).
+It is worth to mention that both mentioned STL-based tests were also used for generating STL fragments and rasters of all examples for this documentation.
+
+The usage of `emp2stl` conversion is very simple and looks as follows:
+
+```js
+    var streams = require('streams');
+    var emp2stl = require('wd:/emp2stl');
+	// read JSON input from a file
+    var json = streams.stream('wd:/input/hello.json').read();
+	// convert Empower JSON to STL 
+    var stl = emp2stl(json);
+	// write resulting STL to a file
+    streams.stream('wd:/output/hello.xml').write(stl);
+```
+
 ## Text Fragments
 
-### Empty
+### Empty Fragment
 
 At the very beginning we start with an empty text fragment.
 Even though it contains no visible content, the initial JSON boilerplate is relatively verbose -
 see [empty.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json).
 
-The generated STL is much more concise:
+The generated STL is much more concise.
 
-- [STL](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/empty.xml)
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json">empty.json</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/empty.xml">empty.xml</a></td>
+  </tr>
+</table>
 
 ### Hello
 
@@ -377,6 +432,10 @@ If we compare the new [hello_font.json](https://rawgit.com/opentext/storyteller/
     <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_font.png"/></td>
   </tr>
 </table>
+
+Note that there is a difference between the two renders. For some reason the Empower engine seems to render
+the "Hello" text, but I believe that the StoryTeller output is correct
+(you can consult the [Wingdings Translator](https://lingojam.com/wingdingstranslator) ).
 
 ### Font sizes
 

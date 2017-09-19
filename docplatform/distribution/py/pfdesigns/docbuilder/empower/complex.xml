@@ -1,0 +1,33 @@
+<stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
+		 xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:data>
+	<stl:source key="_default">
+	  <data>
+		<input>char_styles</input>
+		<input>par_styles</input>
+		<input>table_styles</input>
+      </data>
+	</stl:source>
+  </stl:data>
+  <stl:document>
+	<stl:story name="Body">
+	  <stl:repeater xpath="/data/input">
+		<stl:story>
+		  <stl:p>===================== <stl:field xpath="."/> =====================</stl:p>
+		  <stl:content uri="wd:/empty.xml" selector="/story[1]">
+			<stl:script language="js">
+			  'use strict';
+			  var empower = require('wd:/empower');
+			  var item = require('layout').item();
+			  var input = require('data').dump('string(.)');
+			  item.Uri = empower.convert(input);
+			</stl:script>
+		  </stl:content>
+		</stl:story>
+	  </stl:repeater>
+	</stl:story>
+	<stl:page w="540pt" h="800pt">
+	  <stl:text x="20pt" y="20pt" w="500pt" h="760pt" story="Body" style="fill:lightcyan"/>
+	</stl:page>	
+  </stl:document>
+</stl:stl>
