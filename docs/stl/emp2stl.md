@@ -547,13 +547,13 @@ If we compare the new [hello_hyperlink.json](https://rawgit.com/opentext/storyte
     <td colspan="2">Empower JSON render:</td>
   </tr>
   <tr>
-    <td colspan=2><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.png"/></td>
+    <td colspan="2"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.png"/></td>
   </tr>
   <tr>
     <td colspan="2">StoryTeller STL render:</td>
   </tr>
   <tr>
-    <td colspan=2><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_hyperlink.png"/></td>
+    <td colspan="2"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_hyperlink.png"/></td>
   </tr>
 </table>
 
