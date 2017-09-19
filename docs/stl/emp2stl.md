@@ -1,9 +1,25 @@
-# EMP2STL Conversion
+Table of Contents
+=================
+
+  * [Overview](#overview)
+  * [Implementation](#implementation)
+  * [Text Fragments](#text-fragments)
+     * [Empty Fragment](#empty-fragment)
+     * [Plain Text](#plain-text)
+     * [Text Colors](#text-colors)
+     * [Non ASCII Characters](#non-ascii-characters)
+     * [Font Change](#font-change)
+     * [Font Size](#font-size)
+     * [Superscript &amp; Subscript](#superscript--subscript)
+     * [Hyperlink](#hyperlink)
+  * [Graphical Fragments](#graphical-fragments)
+
+# Empower to STL Conversion
 
 ## Overview
 
-This document describes a process of reverse-engineering the Empower JSON format
-and converting it to StoryTeller Layout (STL).
+This document describes a process of reverse-engineering the _Empower JSON_ format
+and converting it to _StoryTeller Layout_ (_STL_).
 
 An important think to note is that we got no documentation of the input format,
 every insight is gained by interactively editing a fragment and comparing
@@ -25,9 +41,9 @@ The editor window looks as follows:
 ![Empower editor](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/editor.png)
 
 Thanks to the interactive editor it was relatively easy to reverse-engineer at least some
-of the features of Empower JSON format and convert them to STL. On the other hand it would
+of the features of _Empower JSON_ format and convert them to _STL_. On the other hand it would
 be really complicated to implement the opposite direction without deeper knowledge
-of the Empower JSON format. There are still too many fields we do not understand
+of the _Empower JSON_ format. There are still too many fields we do not understand
 and some of them point outside the JSON persistence (there are some database indexes,
 resource package identifiers, etc).
 
@@ -49,31 +65,31 @@ Right now the interface is really simple, it is a single-method module called `e
 which has the following interface:
 
 -   `emp2stl( json: string ) : string`
-    -   parses empower JSON fragment and generates corresponding STL fragment
+    -   parses _Empower JSON_ fragment and generates corresponding _STL_ fragment
 
 All the parsing and translation is implemented inside this module, except low-level writing
-the resulting STL XML, we use the 3rd party [XMLWriter](http://github.com/touv/node-xml-writer)
+the resulting _STL XML_, for that purpose we use the 3rd party [XMLWriter](http://github.com/touv/node-xml-writer)
 implementation published under MIT software licence.
 
 The current `emp2stl` implementation is available
 [here](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emp2stl.js),
 usage example is visible in a test module
 [empower.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/empower.js)
-which is used in two STL based regression tests
+which is used in two _STL_ based regression tests
 [basic.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/basic.xml)
 and [complex.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/complex.xml).
-It is worth to mention that both mentioned STL-based tests were also used for generating STL fragments and rasters of all examples for this documentation.
+It is worth to mention that both mentioned STL-based tests were also used for generating _STL_ fragments and rasters of all examples for this documentation.
 
 The usage of `emp2stl` conversion is very simple and looks as follows:
 
 ```js
     var streams = require('streams');
     var emp2stl = require('wd:/emp2stl');
-	// read JSON input from a file
+    // read JSON input from a file
     var json = streams.stream('wd:/input/hello.json').read();
-	// convert Empower JSON to STL 
+    // convert Empower JSON to STL 
     var stl = emp2stl(json);
-	// write resulting STL to a file
+    // write resulting STL to a file
     streams.stream('wd:/output/hello.xml').write(stl);
 ```
 
@@ -85,7 +101,7 @@ At the very beginning we start with an empty text fragment.
 Even though it contains no visible content, the initial JSON boilerplate is relatively verbose -
 see [empty.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json).
 
-The generated STL is much more concise.
+The generated _STL_ is much more concise.
 
 <table style="background-color:#fff49c">
   <tr>
@@ -98,7 +114,7 @@ The generated STL is much more concise.
   </tr>
 </table>
 
-### Hello
+### Plain Text
 
 Now we start to insert a plain text just with default styling.
 The only difference is in two parallel arrays `m_cChars` containing character codes
@@ -160,7 +176,7 @@ If we compare the new [hello.json](https://rawgit.com/opentext/storyteller/maste
   </tr>
 </table>
 
-### Colors
+### Text Colors
 
 Let's look at the text colors. If we make the middle `ell` characters of the word `Hello` red, green and blue
 we can see changes in `m_Colors`, `m_cChars` and `m_sXPos` arrays.
@@ -320,7 +336,7 @@ If we compare the new [hello_euro.json](https://rawgit.com/opentext/storyteller/
   </tr>
 </table>
 
-### Change Font
+### Font Change
 
 And what if we change the font - the only available alternative to _Lato_ is _Wingdings_, so let's try that:
 
@@ -437,7 +453,7 @@ Note that there is a difference between the two renders. For some reason the Emp
 the "Hello" text, but I believe that the StoryTeller output is correct
 (you can consult the [Wingdings Translator](https://lingojam.com/wingdingstranslator) ).
 
-### Font sizes
+### Font Size
 
 OK, _Wingdings_ font is not very readable, let's experiment with font sizes instead.
 
@@ -744,3 +760,5 @@ If we compare the new [hello_hyperlink.json](https://rawgit.com/opentext/storyte
 </table>
 
 ## Graphical Fragments
+
+@TBD
