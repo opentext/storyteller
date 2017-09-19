@@ -3,17 +3,11 @@ Table of Contents
 
   * [Overview](#overview)
   * [Implementation](#implementation)
-  * [Text Fragments](#text-fragments)
-     * [Empty Fragment](#empty-fragment)
-     * [Plain Text](#plain-text)
-     * [Text Colors](#text-colors)
-     * [Non ASCII Characters](#non-ascii-characters)
-     * [Font Change](#font-change)
-     * [Font Size](#font-size)
-     * [Superscript &amp; Subscript](#superscript--subscript)
-     * [Hyperlink](#hyperlink)
-  * [Graphical Fragments](#graphical-fragments)
-
+  * [Examples](#examples)
+     * [Text Fragments](#text-fragments)
+     * [Graphical Fragments](#graphical-fragments)
+  * [Conclusion](#conclusion)
+ 
 # Empower to STL Conversion
 
 ## Overview
@@ -39,13 +33,6 @@ to create a nice looking content. It reasonably limits the complexity of the fra
 The editor window looks as follows:
 
 ![Empower editor](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/editor.png)
-
-Thanks to the interactive editor it was relatively easy to reverse-engineer at least some
-of the features of _Empower JSON_ format and convert them to _STL_. On the other hand it would
-be really complicated to implement the opposite direction without deeper knowledge
-of the _Empower JSON_ format. There are still too many fields we do not understand
-and some of them point outside the JSON persistence (there are some database indexes,
-resource package identifiers, etc).
 
 ## Implementation
 
@@ -93,9 +80,19 @@ The usage of `emp2stl` conversion is very simple and looks as follows:
     streams.stream('wd:/output/hello.xml').write(stl);
 ```
 
-## Text Fragments
+## Examples
 
-### Empty Fragment
+This section will contain several examples of text and graphical fragments
+starting from trivial ones to more complex ones. The icremental manner will
+help us to locate individual features in JSON file as well as distinguish
+between individual enumeration values and codes.  
+
+### Text Fragments
+
+Text fragments represent an implicit text object as a top of hierarchy of objects.
+They typically grow with content.
+
+#### Empty Fragment
 
 At the very beginning we start with an empty text fragment.
 Even though it contains no visible content, the initial JSON boilerplate is relatively verbose -
@@ -114,7 +111,7 @@ The generated _STL_ is much more concise.
   </tr>
 </table>
 
-### Plain Text
+#### Plain Text
 
 Now we start to insert a plain text just with default styling.
 The only difference is in two parallel arrays `m_cChars` containing character codes
@@ -176,7 +173,7 @@ If we compare the new [hello.json](https://rawgit.com/opentext/storyteller/maste
   </tr>
 </table>
 
-### Text Colors
+#### Text Colors
 
 Let's look at the text colors. If we make the middle `ell` characters of the word `Hello` red, green and blue
 we can see changes in `m_Colors`, `m_cChars` and `m_sXPos` arrays.
@@ -267,7 +264,7 @@ If we compare the new [hello_colors.json](https://rawgit.com/opentext/storytelle
   </tr>
 </table>
 
-### Non ASCII Characters
+#### Non ASCII Characters
 
 Let's try to insert a character outside the ASCII range,
 for example the [€ symbol](http://www.fileformat.info/info/unicode/char/20ac/index.htm).
@@ -336,7 +333,7 @@ If we compare the new [hello_euro.json](https://rawgit.com/opentext/storyteller/
   </tr>
 </table>
 
-### Font Change
+#### Font Change
 
 And what if we change the font - the only available alternative to _Lato_ is _Wingdings_, so let's try that:
 
@@ -453,7 +450,7 @@ Note that there is a difference between the two renders. For some reason the Emp
 the "Hello" text, but I believe that the StoryTeller output is correct
 (you can consult the [Wingdings Translator](https://lingojam.com/wingdingstranslator) ).
 
-### Font Size
+#### Font Size
 
 OK, _Wingdings_ font is not very readable, let's experiment with font sizes instead.
 
@@ -545,7 +542,7 @@ If we compare the new [hello_sizes.json](https://rawgit.com/opentext/storyteller
   </tr>
 </table>
 
-### Superscript & Subscript
+#### Superscript & Subscript
 
 Another possibility is to change text decoration to superscript or subscript.
 
@@ -622,7 +619,7 @@ If we compare the new [hello_sub_super_script.json](https://rawgit.com/opentext/
   </tr>
 </table>
 
-### Hyperlink
+#### Hyperlink
 
 Let's append a hyperlink - a text "hyperlink" with [http://www.opentext.com](http://www.opentext.com) address.
 
@@ -759,6 +756,38 @@ If we compare the new [hello_hyperlink.json](https://rawgit.com/opentext/storyte
   </tr>
 </table>
 
-## Graphical Fragments
+#### Paragraphs
 
 @TBD
+
+#### Lists
+
+@TBD
+
+#### Image
+
+@TBD
+
+#### Text Frame
+
+@TBD
+
+#### Table
+
+@TBD
+
+### Graphical Fragments
+
+Graphical fragments represent a canvas area containing one or more absolutely positioned
+objects like images, tables and text frames.
+
+@TBD
+
+## Conclusion
+
+Thanks to the interactive editor it was relatively easy to reverse-engineer at least some
+of the features of _Empower JSON_ format and convert them to _STL_. On the other hand it would
+be really complicated to implement the opposite direction without deeper knowledge
+of the _Empower JSON_ format. There are still too many fields we do not understand
+and some of them point outside the JSON persistence (there are some database indexes,
+resource package identifiers, etc).
