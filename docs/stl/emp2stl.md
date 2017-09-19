@@ -533,29 +533,27 @@ If we compare the new [hello_hyperlink.json](https://rawgit.com/opentext/storyte
 <table>
   <tr>
 	<td>JSON input:</td>
-	<td>[hello_hyperlink.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.json)</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.json">hello_hyperlink.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td>[hello_hyperlink.diff](http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.json)</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.json">hello_hyperlink.diff</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td>[hello_hyperlink.xml](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_hyperlink.xml)</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_hyperlink.xml">hello_hyperlink.xml</a></td>
   </tr>
   <tr>
-    <td>JSON render</td>
-	<td/>
+    <td colspan="2">Empower JSON render:</td>
   </tr>
   <tr>
-    <td colspan=2> ![hello_hyperlink.png](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.png)</td>
+    <td colspan=2><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.png"/></td>
   </tr>
   <tr>
-    <td>STL render</td>
-	<td/>
+    <td colspan="2">StoryTeller STL render:</td>
   </tr>
   <tr>
-    <td colspan=2> ![hello_hyperlink.png](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_hyperlink.png)</td>
+    <td colspan=2><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_hyperlink.png"/></td>
   </tr>
 </table>
 
