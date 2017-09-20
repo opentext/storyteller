@@ -1,5 +1,6 @@
-Table of Contents
-=================
+# Empower to STL Conversion
+
+## Table of Contents
 
   * [Overview](#overview)
   * [Implementation](#implementation)
@@ -8,8 +9,6 @@ Table of Contents
      * [Graphical Fragments](#graphical-fragments)
   * [Conclusion](#conclusion)
  
-# Empower to STL Conversion
-
 ## Overview
 
 This document describes a process of reverse-engineering the _Empower JSON_ format
