@@ -1,3 +1,4 @@
+// Copyright (c) 2017 Open Text. All Rights Reserved.
 'use strict';
 
 function STLWriter() {
@@ -5,9 +6,12 @@ function STLWriter() {
     var uri_stl = 'http://developer.opentext.com/schemas/storyteller/layout';
     var self = null;
     var xw = null;
+    var tags = [];
     
-    function start(name, attrs) {
-        xw.startElementNS('stl', name, uri_stl);
+    function start(tag, attrs) {
+        //console.log('<'+tag+'>');
+        tags.push(tag);
+        xw.startElementNS('stl', tag, uri_stl);
         if (attrs) {
             xw.startAttributes();
             Object.keys(attrs).forEach( function(key) {
@@ -18,12 +22,19 @@ function STLWriter() {
         return self;
     }
     
-    function end() {
+    function end(tag) {
+        //console.log('</'+tag+'>');
+        var top = tags.pop();
+        if (top !== tag)
+            throw new Error("Tag mismatch (trying to close '" + tag + "' while top element is '" + top + "')" ); 
         xw.endElement();
         return self;
     }
 
     function text(data) {
+        //console.log("'" + data + "'");
+        if (!tags.length)
+            throw new Error("Cannot write text '" + data + "' outside elements");
         xw.text(data);
         return self;
     }
@@ -57,7 +68,9 @@ function STLWriter() {
 }
 
 function css_format(css) {
-    return Object.keys(css).map(function(key) {
+    return Object.keys(css).filter(function(key) {
+        return css[key] !== null;
+    }).map(function(key) {
         return key + ': ' + css[key]
     }).join('; ');
 }
@@ -79,8 +92,42 @@ function unit2inch(v) {
     return v/1000+'in';
 }
 
-function css_parstyle(ps, em_indent) {   
-    var css = {};
+function css_reset() {
+    return {
+        'font-family': null,
+        'font-size': null,
+        'font-weight': null,
+        'font-style': null,
+        'text-decoration': null,
+        'text-align': null,
+        'margin-left': null,
+        'margin-right': null,
+        'margin-top': null,
+        'margin-bottom': null,
+        'padding-left': null,
+        'padding-right': null,
+        'padding-top': null,
+        'padding-bottom': null,
+        'border': null,
+        'border-top': null,
+        'border-right': null,
+        'border-bottom': null,
+        'border-left': null,
+        'fill': null,
+        'vertical-align': null,
+        '-stl-list-counter': null,
+        '-stl-list-mask': null,
+        '-stl-list-level': null,
+        '-stl-tabs': null,
+        '-stl-shape-resize': null,
+        '-stl-shape-growth': null,
+        '-stl-shape-shrink': null,
+        '-stl-alignment': null,
+    };
+}
+
+function css_parstyle(ps, css) {   
+    css = css || css_reset();
     if (ps.iJustification)
         css['text-align'] = ['left', 'right', 'center', 'justify'][ps.iJustification];
     if (ps.iLeftIndent)
@@ -126,8 +173,8 @@ function css_font(name) {
     return family;
 }
 
-function css_charstyle(cs) {
-    var css = {};
+function css_charstyle(cs, css) {
+    css = css || css_reset();
     css['font-family'] = css_font(cs.strName);
     css['font-size'] = cs.iFontHeight10X / 10 + 'pt';
     if (cs.bBold)
@@ -157,7 +204,7 @@ function css_pen(thickness, style, color) {
 }
 
 function css_padding(src, css) {
-    css = css || {};
+    css = css || css_reset();
     if (src.m_iLeftMargin)
         css['padding-left'] = unit2inch(src.m_iLeftMargin);
     if (src.m_iRightMargin)
@@ -170,7 +217,7 @@ function css_padding(src, css) {
 }
 
 function css_layout_item(src, css) {
-    css = css || {};
+    css = css || css_reset();
     if (src.m_bPen === true)
         css.border = css_pen(src.m_iPenWidth, src.m_iPenStyle, src.m_clrPen);
     if (src.m_bBackGroundTransparent === false)
@@ -186,6 +233,7 @@ function css_layout_item(src, css) {
     switch(src.m_eVertJust) {
     case undefined: // top
     case 0: // top
+        css['-stl-alignment'] = null;
         break;
     case 1: // center
         css['-stl-alignment'] = 'vertical 0.5';
@@ -200,7 +248,7 @@ function css_layout_item(src, css) {
 }
 
 function css_cell_border(cell, row, column, css) {
-    css = css || {};
+    css = css || css_reset();
     if (row.m_iLineAbove !== -1)
         css['border-top'] = css_pen(row.m_iWeightAbove, row.m_iLineAbove, row.m_clrAbove);
     if (row.m_iLineBelow !== -1)
@@ -226,35 +274,81 @@ function css_cell_border(cell, row, column, css) {
     return css;
 }
 
-function ContentStack(writer) {
-    var states = [];
+function ContentInserter(writer) {
+    var CLOSED = 0;
+    var CACHED = 1;
+    var OPEN = 2;
+    
+    var style = {
+        state: CLOSED,
+        css : {}
+    };
     var blackspace = null;
+    var paragraph = null;
 
     function padding() { // generate empty span to avoid whitespace trim
         writer.start('span');
         writer.end('span');
     }
+
+    function flush() {
+        if (blackspace === false) {
+            padding();
+        }
+        if (style.state === OPEN) {
+            writer.end('span');
+        }
+        style.state = CACHED;
+    }
     
+    function style_change(css) {
+        var modified = false;
+        Object.keys(css).forEach(function(key) {
+            var value = css[key];
+            if (style.css[key] !== value) {
+                style.css[key] = value;
+                modified = true;
+            }
+        });
+        if (modified) {
+            flush();
+        }
+    }
+
     function push(tag, attrs) {
+        flush();
         blackspace = null;
         writer.start(tag, attrs);
-        states.push(tag);
     }
 
     function pop(tag) {
-        if (blackspace == false) {
-            padding();
-        }
-        while (true) {
-            if (!states.length)
-                break;
-            writer.end(tag);
-            if (states.pop() === tag)
-                break;
-        }
+        flush();
+        writer.end(tag);
+    }
+    
+    function paragraph_start(css) {
+        if (paragraph === true)
+            throw new Error("Paragraph nesting not supported");
+        push('p', {style: css_format(css)});
+        paragraph = true;
     }
 
+    function paragraph_end() {
+        if (paragraph === null)
+            return;
+        if (paragraph === false)
+            throw new Error("Paragraph already closed");
+        pop('p');
+        paragraph = false;
+    }
+    
     function character(ch) {
+        if (style.state === CACHED) {
+            writer.start('span', {style: css_format(style.css)});
+            style.state = OPEN;
+            blackspace = null;
+        }
+            
         if (/\s/.test(ch)) {
             if (!blackspace) {
                 padding();
@@ -267,9 +361,12 @@ function ContentStack(writer) {
     }
 
     return {
+        style_change: style_change,
+        paragraph_start: paragraph_start,
+        paragraph_end: paragraph_end,
+        character: character,
         push: push,
         pop: pop,
-        character: character,
         writer: function() { return writer; },
     }
 }
@@ -306,30 +403,6 @@ function convert_bbox(rect, attrs) {
 }
 
 function convert_content(src, writer) {
-    function push_style(newcs, force) {
-        var cs = force ? undefined : states.top().cs;
-        if (newcs !== cs) {
-            if (cs !== undefined) {
-                inserter.pop('span'); // close previous style span
-            }
-            var css = css_charstyle(src.m_TextFonts[newcs]);
-            inserter.push('span', {'style': css_format(css)});
-            states.top().cs = newcs;
-        }
-    }
-
-    function push_color(newcol, force) {
-        var col = force ? undefined : states.top().col;
-        if (newcol !== col) {
-            if (col !== undefined) {
-                inserter.pop('span'); // close previous color span
-            }
-            var css = {'color': css_color(src.m_Colors[newcol])};
-            inserter.push('span', {'style': css_format(css)});
-            states.top().col = newcol;
-        }
-    }
-
     function row_attrs(row) {
         var attrs = {};
         if (row.m_bFixedSize) {
@@ -397,8 +470,7 @@ function convert_content(src, writer) {
         }
     }
     
-    var inserter = ContentStack(writer);
-    var states = StateStack();
+    var inserter = ContentInserter(writer);
     src.m_cChars.forEach(function(code, index) {
         var cmd = src.m_sXPos[index];
         switch(cmd) {
@@ -406,7 +478,6 @@ function convert_content(src, writer) {
             var link = src.m_Links[code];
             inserter.push('scope', {'hyperlink': link.msLink});
             inserter.push('story');
-            states.push();
             break;
         case -251: // object start
             var type = src.m_Objs[code].m_iObjType;
@@ -414,44 +485,34 @@ function convert_content(src, writer) {
             convert_object(type, obj, inserter);
             break;
         case -244: // paragraph start
-            inserter.pop('p');
+            inserter.paragraph_end();
             var ps = src.m_ParaValues[src.m_sXPos[index+1]];
-            var css = css_parstyle(ps);
-            inserter.push('p', {'style': css_format(css)});
-            // propagate character style through paragraphs
-            push_style(states.top().cs, true);
-            push_color(states.top().col, true);
+            inserter.paragraph_start(css_parstyle(ps));
             break;
         case -240: // superscript
-            var css = {'vertical-align': 'super'};
-            inserter.push('span', {'style': css_format(css)});
+            inserter.style_change({'vertical-align': 'super'});
             break;
         case -239: // subscript
-            var css = {'vertical-align': 'sub'};
-            inserter.push('span', {'style': css_format(css)});
+            inserter.style_change({'vertical-align': 'sub'});
             break;
         case -109: // hyperlink end
             inserter.pop('story');
             inserter.pop('scope');
-            var state = states.pop();
-            // propagate character style through paragraphs
-            push_style(state.cs, true);
-            push_color(state.col, true);            
             break;
         case -106: // object end
             break;
-        case -64:  // story end
-            inserter.pop('p');
+        case -64:  // content end
+            inserter.paragraph_end();
             break;
         case -63: // set color
-            push_color(code);
+            inserter.style_change({'color': css_color(src.m_Colors[code])});
             break;
         case -62:  // font change
-            push_style(code);
+            inserter.style_change(css_charstyle(src.m_TextFonts[code]));
             break;
         case -58: // end of subscript
         case -59: // end of superscript
-            inserter.pop('span');
+            inserter.style_change({'vertical-align': null});
             break;
         default:
             if (cmd>=0 && code>0) {
@@ -462,7 +523,7 @@ function convert_content(src, writer) {
     });
 }
 
-module.exports = function json2xml(json) {
+module.exports = function emp2stl(json) {
     json = JSON.parse(json);
     var text = json.contents.m_pTextDraw;
     var writer = STLWriter();

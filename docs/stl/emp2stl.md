@@ -763,6 +763,10 @@ If we compare the new [hello_hyperlink.json](https://rawgit.com/opentext/storyte
 
 @TBD
 
+#### Variables
+
+@TBD
+
 #### Image
 
 @TBD
@@ -785,8 +789,53 @@ objects like images, tables and text frames.
 ## Conclusion
 
 Thanks to the interactive editor it was relatively easy to reverse-engineer at least some
-of the features of _Empower JSON_ format and convert them to _STL_. On the other hand it would
-be really complicated to implement the opposite direction without deeper knowledge
-of the _Empower JSON_ format. There are still too many fields we do not understand
-and some of them point outside the JSON persistence (there are some database indexes,
-resource package identifiers, etc).
+of the features of _Empower JSON_ format and convert them to _STL_. On the other hand
+it would be really complicated to implement the opposite direction without deeper
+knowledge of the _Empower JSON_ format. There are still too many fields we do not
+understand and some of them point outside the JSON persistence (there are some database
+indexes, resource package identifiers, etc).
+
+We believe that this document can serve as another demonstration of strengths and advantages
+of _StoryTeller Layout (STL)_ exchange format. The fact that it is carefully designed
+to be human readable and understandable makes a conversion from different formats
+a relatively quick and straightforward task.
+
+There is a non-trivial mapping between a flat sequence of font and color changes
+in _Empower JSON_ and more general and powerful hierarchy of `span` elements in _STL_.
+So far we did not complicate the implementation - the convertor only collects,
+merges and matches CSS individual properties and generates a flat `span` sequence.
+
+Of course we could make it more optimized and maintainable by heuristically
+creating a synthesized `span` hierarchy when `span` elements could split to more
+levels, coalesce by matching properties and form a hierarchy when more frequently
+changed CSS properties deeper at the bottom and less frequently changed properties
+at the top of the synthesized span hierarchy.
+
+For example the following sub-optimal STL sequence:
+
+```xml
+<stl:p>
+  <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">H</stl:span>
+  <stl:span style="font-family: Arial; font-size: 11pt; color: #000000">e</stl:span>
+  <stl:span style="font-family: Arial; font-size: 12pt; font-weight: bold; color: #000000">l</stl:span>
+  <stl:span style="font-family: Arial; font-size: 13pt; font-weight: bold; color: #000000">l</stl:span>
+  <stl:span style="font-family: Arial; font-size: 14pt; color: #000000">o</stl:span>
+</stl:p>
+```
+
+... could be transformed to:
+
+```xml
+<stl:p style="font-family: Arial; color: #000000">
+  <stl:span style="font-size: 10pt">H</stl:span>
+  <stl:span style="font-size: 11pt">e</stl:span>
+  <stl:span style="font-weight: bold">
+    <stl:span style="font-size: 12pt">l</stl:span>
+    <stl:span style="font-size: 13pt">l</stl:span>
+  </span>
+  <stl:span style="font-size: 14pt">o</stl:span>
+</stl:p>
+```
+... which is an interesting task, but we consider it outside the scope
+of this document. It would be better to expose it as a completely separate service
+independent on _emp2stl_ conversion - something like _STL optimizer_.
