@@ -101,6 +101,7 @@ The generated _STL_ is much more concise:
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/empty.xml?footer=minimal"></script>
 
+##### Summary
 
 <table style="background-color:#fff49c">
   <tr>
@@ -156,6 +157,12 @@ If we compare the new [hello.json](https://rawgit.com/opentext/storyteller/maste
     -64
   ],
 ```
+
+##### Resulting STL
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello.xml?footer=minimal"></script>
+
+##### Summary
 
 <table style="background-color:#fff49c">
   <tr>
@@ -270,6 +277,12 @@ If we compare the new [font.json](https://rawgit.com/opentext/storyteller/master
       ],
 ```
 
+##### Resulting STL
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/font.xml?footer=minimal"></script>
+
+##### Summary
+
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
@@ -342,6 +355,12 @@ If we compare the new [euro.json](https://rawgit.com/opentext/storyteller/master
         -64
       ],
 ```
+
+##### Resulting STL
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/euro.xml?footer=minimal"></script>
+
+##### Summary
 
 <table style="background-color:#fff49c">
   <tr>
@@ -425,6 +444,12 @@ If we compare the new [hello_opentext.json](https://rawgit.com/opentext/storytel
     -64
   ],
 ```
+
+##### Resulting STL
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_opentext.xml?footer=minimal"></script>
+
+##### Summary
 
 <table style="background-color:#fff49c">
   <tr>
@@ -554,6 +579,12 @@ If we compare the new [sizes.json](https://rawgit.com/opentext/storyteller/maste
       ],
 ```
 
+##### Resulting STL
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/sizes.xml?footer=minimal"></script>
+
+##### Summary
+
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
@@ -665,6 +696,12 @@ If we compare the new [colors.json](https://rawgit.com/opentext/storyteller/mast
          -64
       ],
 ```
+
+##### Resulting STL
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/colors.xml?footer=minimal"></script>
+
+##### Summary
 
 <table style="background-color:#fff49c">
   <tr>
@@ -781,6 +818,12 @@ If we compare the new [valign.json](https://rawgit.com/opentext/storyteller/mast
       ],
 ```
 
+
+##### Resulting STL
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/valign.xml?footer=minimal"></script>
+
+##### Summary
 
 <table style="background-color:#fff49c">
   <tr>
@@ -916,6 +959,12 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
 +       }
       ],
 ```
+
+##### Resulting STL
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hyperlink.xml?footer=minimal"></script>
+
+##### Summary
 
 <table style="background-color:#fff49c">
   <tr>
