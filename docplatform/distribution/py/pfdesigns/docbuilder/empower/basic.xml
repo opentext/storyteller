@@ -4,20 +4,20 @@
 	<stl:source key="_default">
 	  <data>
 		<input>empty</input>
-		<input>hell</input>
 		<input>hello</input>
-		<input>colors</input>
 		<input>euro</input>
 		<input>font</input>
+		<input>hello_opentext</input>
 		<input>sizes</input>
+		<input>colors</input>
 		<input>valign</input>
 		<input>hyperlink</input>
 		<input>image</input>
 		<input>text</input>
 		<input>table</input>
 		<input>paragraphs</input>
-		<input>par_indent</input>
 		<input>par_color</input>
+		<input>par_indent</input>
 		<input>par_halign</input>
 		<input>par_bullets</input>
 		<input>par_numbering</input>
