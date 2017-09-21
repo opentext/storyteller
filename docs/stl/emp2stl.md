@@ -502,17 +502,17 @@ If we compare the new [sizes.json](https://rawgit.com/opentext/storyteller/maste
         108,
         111,
         32,
-        2,      // Font index #2
++       2,      // Font index #2
         79,
         112,
         101,
         110,
-        3,      // Font index #3
++       3,      // Font index #3
         116,
         101,
         120,
         116,
-        1,      // Font index #1
++       1,      // Font index #1
         33,
       ],
       "m_sXPos": [
@@ -526,17 +526,17 @@ If we compare the new [sizes.json](https://rawgit.com/opentext/storyteller/maste
         0,
         0,
         0,
-        -62,    // font change
++       -62,    // font change
         0,
         0,
         0,
         0,
-        -62,    // font change
++       -62,    // font change
         0,
         0,
         0,
         0,
-        -62,    // font change
++       -62,    // font change
         0,
         -64
       ],
@@ -750,20 +750,20 @@ If we compare the new [valign.json](https://rawgit.com/opentext/storyteller/mast
         0,
         0,
         0,
-        -240,  // superscript start
++       -240,  // superscript start
++       0,     // ?
++       0,     // ?
+        0,
+        0,
+        0,
++       -59,   // superscript end
++       -239,  // subscript start
         0,
         0,
         0,
         0,
         0,
-        -59,   // superscript end
-        -239,  // subscript start
-        0,
-        0,
-        0,
-        0,
-        0,
-        -58,   // subscript end
++       -58,   // subscript end
         0,
         -64
       ],
@@ -875,7 +875,7 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
         0,
         0,
         0,
-+       -252, // start hyperlink
++       -252, // hyperlink start
         0,
 +       -62,  // font change
 +       -63,  // color change
@@ -889,7 +889,7 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
         0,
 +       -62,  // font change
 +       -63,  // color change
-+       -109, // end hyperlink
++       -109, // hyperlink end
 +       0,
 +       0,
         -64
