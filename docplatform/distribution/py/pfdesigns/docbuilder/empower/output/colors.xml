@@ -1,2 +1,20 @@
 <?xml version="1.0"?>
-<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1"><stl:document><stl:story name="Main"><stl:p><stl:span style="font-family: Arial; font-size: 10pt; color: #FF0000">Hello</stl:span><stl:span style="font-family: Arial; font-size: 10pt; color: #000000"><stl:span/> <stl:span/></stl:span><stl:span style="font-family: Arial; font-size: 10pt; color: #00FF00">Open</stl:span><stl:span style="font-family: Arial; font-size: 10pt; color: #0000FF">text</stl:span><stl:span style="font-family: Arial; font-size: 10pt; color: #000000">!</stl:span></stl:p></stl:story><stl:page w="8.5in" h="1in"><stl:text w="8.5in" h="1in" style="-stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: -0pt -max" story="Main"></stl:text></stl:page></stl:document></stl:stl>
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+    <stl:story name="Main">
+      <stl:p>
+        <stl:span style="font-family: Arial; font-size: 10pt; color: #FF0000">Hello</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">
+          <stl:span/> 
+          <stl:span/>
+        </stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt; color: #00FF00">Open</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt; color: #0000FF">text</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">!</stl:span>
+      </stl:p>
+    </stl:story>
+    <stl:page w="8.5in" h="1in">
+      <stl:text w="8.5in" h="1in" style="-stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: -0pt -max" story="Main"></stl:text>
+    </stl:page>
+  </stl:document>
+</stl:stl>
