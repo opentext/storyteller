@@ -3,15 +3,15 @@
   <stl:document>
     <stl:story name="Main">
       <stl:p>
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Hello 
+        <stl:span style="font-family: Arial; font-size: 10pt">Hello 
           <stl:span/>
         </stl:span>
         <stl:scope hyperlink="http://www.opentext.com">
           <stl:story>
-            <stl:span style="font-family: Arial; font-size: 10pt; text-decoration: underline; color: #0000C4">Opentext</stl:span>
+            <stl:span style="color: #0000C4; font-family: Arial; font-size: 10pt; text-decoration: underline">Opentext</stl:span>
           </stl:story>
         </stl:scope>
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">!</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">!</stl:span>
       </stl:p>
     </stl:story>
   </stl:document>

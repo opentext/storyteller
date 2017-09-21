@@ -3,55 +3,55 @@
   <stl:document>
     <stl:story name="Main">
       <stl:p>
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Left justification</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Left justification</stl:span>
       </stl:p>
       <stl:p style="text-align: center">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Center justification</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Center justification</stl:span>
       </stl:p>
       <stl:p style="text-align: right">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Right justification</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Right justification</stl:span>
       </stl:p>
       <stl:p style="text-align: justify">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Full justification</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Full justification</stl:span>
       </stl:p>
       <stl:p style="text-align: justify; margin-left: 0.3in; margin-right: 0.4in; margin-top: 0.1in; margin-bottom: 0.2in">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Paragraph and line spacing</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Paragraph and line spacing</stl:span>
       </stl:p>
       <stl:p>
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">No Indent</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">No Indent</stl:span>
       </stl:p>
       <stl:p style="margin-left: 0.25in">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Indent</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Indent</stl:span>
       </stl:p>
       <stl:p style="margin-left: 0.5in">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Indent more</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Indent more</stl:span>
       </stl:p>
       <stl:p style="margin-left: 0.75in">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Indent even more</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Indent even more</stl:span>
       </stl:p>
       <stl:p style="margin-left: 0in; -stl-list-mask: •\9; -stl-list-level: 0; -stl-tabs: 0.25in">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Bullets level 1</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Bullets level 1</stl:span>
       </stl:p>
       <stl:p style="margin-left: 0.25in; -stl-list-mask: ◦\9; -stl-list-level: 1; -stl-tabs: 0.5in">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Bullets level 2</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Bullets level 2</stl:span>
       </stl:p>
       <stl:p style="margin-left: 0.5in; -stl-list-mask: ▪\9; -stl-list-level: 2; -stl-tabs: 0.75in">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Bullets level 3</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Bullets level 3</stl:span>
       </stl:p>
       <stl:p style="margin-left: 0.75in; -stl-list-mask: •\9; -stl-list-level: 3; -stl-tabs: 1in">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Bullets level 4</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Bullets level 4</stl:span>
       </stl:p>
       <stl:p style="margin-left: 0in; -stl-list-counter: default_counter; -stl-list-mask: %0!1.\9; -stl-list-level: 0; -stl-tabs: 0.25in">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Numbering level 1</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Numbering level 1</stl:span>
       </stl:p>
       <stl:p style="margin-left: 0.25in; -stl-list-counter: default_counter; -stl-list-mask: %1!1.\9; -stl-list-level: 1; -stl-tabs: 0.5in">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Numbering Level 2</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Numbering Level 2</stl:span>
       </stl:p>
       <stl:p style="margin-left: 0.5in; -stl-list-counter: default_counter; -stl-list-mask: %2!r.\9; -stl-list-level: 2; -stl-tabs: 0.75in">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Numbering Level 3</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Numbering Level 3</stl:span>
       </stl:p>
       <stl:p style="margin-left: 0.75in; -stl-list-counter: default_counter; -stl-list-mask: %3!1)\9; -stl-list-level: 3; -stl-tabs: 1in">
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Numbering Level 4</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Numbering Level 4</stl:span>
       </stl:p>
     </stl:story>
   </stl:document>

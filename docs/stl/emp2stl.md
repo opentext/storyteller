@@ -68,8 +68,8 @@ implementation published under MIT software licence.
 
 ### Source code
 
-The current `emp2stl` implementation is available
-[here](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emp2stl.js),
+The current implementation is available in the 
+[emp2stl.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emp2stl.js),
 usage example is visible in a test module
 [empower.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/empower.js)
 which is used in two _STL_ based regression tests

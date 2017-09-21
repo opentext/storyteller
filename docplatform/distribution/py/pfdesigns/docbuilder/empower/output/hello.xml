@@ -3,7 +3,7 @@
   <stl:document>
     <stl:story name="Main">
       <stl:p>
-        <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">Hello</stl:span>
+        <stl:span style="font-family: Arial; font-size: 10pt">Hello</stl:span>
       </stl:p>
     </stl:story>
   </stl:document>
