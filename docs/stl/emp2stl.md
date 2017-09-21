@@ -801,7 +801,7 @@ If we compare the new [valign.json](https://rawgit.com/opentext/storyteller/mast
 
 Let's append a hyperlink - attach the [http://www.opentext.com](http://www.opentext.com) address to word "Opentext".
 
-If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json) with previous [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
+If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json) with previous [hello_opentext.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json) we get the following differences:
 
 ```js
       ...
@@ -844,24 +844,24 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
         108,
         108,
         111,
-+       32,
+        32,
 +       0,    // link index #0
 +       0,
 +       2,    // font index #2
 +       3,    // color index #3
-+       79,   // chr(79) == 'O'
-+       112,  // chr(112) == 'p'
-+       101,  // chr(101) == 'e'
-+       110,  // chr(110) == 'n'
-+       116,  // chr(116) == 't'
-+       101,  // chr(101) == 'e'
-+       120,  // chr(120) == 'x'
-+       116,  // chr(116) == 't'
+        79,
+        112,
+        101,
+        110,
+        116,
+        101,
+        120,
+        116,
 +       1,    // font index #1
 +       0,    // color index #0
 +       0,
 +       0,
-+       33,  // chr(111) == '!'
+        33,
         0
       ],
       "m_sXPos": [
@@ -874,19 +874,19 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
         0,
         0,
         0,
-+       0,
+        0,
 +       -252, // start hyperlink
-+       0,
+        0,
 +       -62,  // font change
 +       -63,  // color change
-+       0,
-+       0,
-+       0,
-+       0,
-+       0,
-+       0,
-+       0,
-+       0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
 +       -62,  // font change
 +       -63,  // color change
 +       -109, // end hyperlink
@@ -912,7 +912,7 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json">hyperlink.diff</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json">hyperlink.diff</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
