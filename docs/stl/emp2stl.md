@@ -97,7 +97,10 @@ At the very beginning we start with an empty text fragment.
 Even though it contains no visible content, the initial JSON boilerplate is relatively verbose -
 see [empty.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json).
 
-The generated _STL_ is much more concise.
+The generated _STL_ is much more concise:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/empty.xml?footer=minimal"></script>
+
 
 <table style="background-color:#fff49c">
   <tr>
@@ -107,6 +110,15 @@ The generated _STL_ is much more concise.
   <tr>
 	<td>STL output:</td>
 	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/empty.xml">empty.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/empty.png"/></td>
   </tr>
 </table>
 
