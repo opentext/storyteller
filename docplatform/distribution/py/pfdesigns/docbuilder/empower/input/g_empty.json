@@ -1,0 +1,34 @@
+{
+  "m_lTableNumber": 21,
+  "m_strName": "",
+  "m_ePageType": 1,
+  "m_iDesignResolution": 1000,
+  "m_Size": {
+    "width": 3600,
+    "height": 3500
+  },
+  "m_bSendDefault": true,
+  "m_refUsageRule": 0,
+  "m_scopedMessageTemplate": 1,
+  "contents": {
+    "m_lResolution": 1000,
+    "m_bTextOnly": false,
+    "m_lWidth": 3600,
+    "m_lHeight": 3500,
+    "m_lTopMargin": 0,
+    "m_lBottomMargin": 0,
+    "m_lGrowMaxY": 3500,
+    "m_bHasDynamicBottom": false,
+    "m_bAllStatic": false,
+    "m_bHasStatic": false,
+    "m_iGrowth": 0,
+    "m_DrawFront": [],
+    "m_FrontRelNdx": [],
+    "m_iFrontBottomMin": 101,
+    "m_iFrontStaticBottom": 750,
+    "m_iFrontDynBottom": 750,
+    "m_bHasFlowLists": false,
+    "m_FrontFlowControls": []
+  },
+  "rule": null
+}

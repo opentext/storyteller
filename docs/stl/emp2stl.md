@@ -31,7 +31,7 @@ to create a nice looking content. It reasonably limits the complexity of the fra
 
 The editor window looks as follows:
 
-![Empower editor](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/editor.png)
+![Empower editor](empower-editor.png)
 
 ## Implementation
 
@@ -177,7 +177,7 @@ If we compare the new [hello.json](https://rawgit.com/opentext/storyteller/maste
 Let's look at the text colors. If we make the middle `ell` characters of the word `Hello` red, green and blue
 we can see changes in `m_Colors`, `m_cChars` and `m_sXPos` arrays.
 
-If we compare the new [hello_colors.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_colors.json) with [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
+If we compare the new [colors.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/colors.json) with [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
 
 ```js
      "m_Colors": [
@@ -239,27 +239,27 @@ If we compare the new [hello_colors.json](https://rawgit.com/opentext/storytelle
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_colors.json">hello_colors.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/colors.json">colors.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_colors.json">hello_colors.diff</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/colors.json">colors.diff</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_colors.xml">hello_colors.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/colors.xml">colors.xml</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_colors.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/colors.png"/></td>
   </tr>
   <tr>
     <td colspan="2">StoryTeller STL render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_colors.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/colors.png"/></td>
   </tr>
 </table>
 
@@ -268,7 +268,7 @@ If we compare the new [hello_colors.json](https://rawgit.com/opentext/storytelle
 Let's try to insert a character outside the ASCII range,
 for example the [€ symbol](http://www.fileformat.info/info/unicode/char/20ac/index.htm).
 
-If we compare the new [hello_euro.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_euro.json) with [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
+If we compare the new [euro.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/euro.json) with [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
 
 ```js
       "m_cChars": [
@@ -308,27 +308,27 @@ If we compare the new [hello_euro.json](https://rawgit.com/opentext/storyteller/
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_euro.json">hello_euro.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/euro.json">euro.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_euro.json">hello_euro.diff</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/euro.json">euro.diff</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_euro.xml">hello_euro.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/euro.xml">euro.xml</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_euro.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/euro.png"/></td>
   </tr>
   <tr>
     <td colspan="2">StoryTeller STL render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_euro.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/euro.png"/></td>
   </tr>
 </table>
 
@@ -336,7 +336,7 @@ If we compare the new [hello_euro.json](https://rawgit.com/opentext/storyteller/
 
 And what if we change the font - the only available alternative to _Lato_ is _Wingdings_, so let's try that:
 
-If we compare the new [hello_font.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_font.json) with [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
+If we compare the new [font.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json) with [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
 
 ```js
       "m_TextFonts": [
@@ -421,27 +421,27 @@ If we compare the new [hello_font.json](https://rawgit.com/opentext/storyteller/
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_font.json">hello_font.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json">font.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_font.json">hello_font.diff</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json">font.diff</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_font.xml">hello_font.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/font.xml">font.xml</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_font.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.png"/></td>
   </tr>
   <tr>
     <td colspan="2">StoryTeller STL render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_font.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/font.png"/></td>
   </tr>
 </table>
 
@@ -453,7 +453,7 @@ the "Hello" text, but I believe that the StoryTeller output is correct
 
 OK, _Wingdings_ font is not very readable, let's experiment with font sizes instead.
 
-If we compare the new [hello_sizes.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_sizes.json) with previous [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
+If we compare the new [sizes.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/sizes.json) with previous [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
 
 ```js
       "m_TextFonts": [
@@ -517,27 +517,27 @@ If we compare the new [hello_sizes.json](https://rawgit.com/opentext/storyteller
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_sizes.json">hello_sizes.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/sizes.json">sizes.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_sizes.json">hello_sizes.diff</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/sizes.json">sizes.diff</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_sizes.xml">hello_sizes.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/sizes.xml">sizes.xml</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_sizes.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/sizes.png"/></td>
   </tr>
   <tr>
     <td colspan="2">StoryTeller STL render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_sizes.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/sizes.png"/></td>
   </tr>
 </table>
 
@@ -545,7 +545,7 @@ If we compare the new [hello_sizes.json](https://rawgit.com/opentext/storyteller
 
 Another possibility is to change text decoration to superscript or subscript.
 
-If we compare the new [hello_sub_super_script.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_sub_super_script.json) with previous [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
+If we compare the new [valign.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/valign.json) with previous [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
 
 ```js
      "m_cChars": [
@@ -594,27 +594,27 @@ If we compare the new [hello_sub_super_script.json](https://rawgit.com/opentext/
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_sub_super_script.json">hello_sub_super_script.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/valign.json">valign.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_sub_super_script.json">hello_sub_super_script.diff</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/valign.json">valign.diff</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_sub_super_script.xml">hello_sub_super_script.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/valign.xml">valign.xml</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_sub_super_script.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/valign.png"/></td>
   </tr>
   <tr>
     <td colspan="2">StoryTeller STL render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_sub_super_script.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/valign.png"/></td>
   </tr>
 </table>
 
@@ -622,7 +622,7 @@ If we compare the new [hello_sub_super_script.json](https://rawgit.com/opentext/
 
 Let's append a hyperlink - a text "hyperlink" with [http://www.opentext.com](http://www.opentext.com) address.
 
-If we compare the new [hello_hyperlink.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.json) with previous [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
+If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json) with previous [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
 
 ```js
       ...
@@ -670,15 +670,14 @@ If we compare the new [hello_hyperlink.json](https://rawgit.com/opentext/storyte
 +       0,
 +       2,    // font index #2
 +       3,    // color index #3
-+       104,  // chr(111) == 'h'
-+       121,  // chr(111) == 'y'
-+       112,  // chr(111) == 'p'
-+       101,  // chr(111) == 'e'
-+       114,  // chr(111) == 'r'
-+       108,  // chr(111) == 'l'
-+       105,  // chr(111) == 'i'
-+       110,  // chr(111) == 'n'
-+       107,  // chr(111) == 'k'
++       79,   // chr(79) == 'O'
++       112,  // chr(112) == 'p'
++       101,  // chr(101) == 'e'
++       110,  // chr(110) == 'n'
++       116,  // chr(116) == 't'
++       101,  // chr(101) == 'e'
++       120,  // chr(120) == 'x'
++       116,  // chr(116) == 't'
 +       1,    // font index #1
 +       0,    // color index #0
 +       0,
@@ -709,7 +708,6 @@ If we compare the new [hello_hyperlink.json](https://rawgit.com/opentext/storyte
 +       0,
 +       0,
 +       0,
-+       0,
 +       -62,  // font change
 +       -63,  // color change
 +       -109, // end hyperlink
@@ -731,27 +729,27 @@ If we compare the new [hello_hyperlink.json](https://rawgit.com/opentext/storyte
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.json">hello_hyperlink.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json">hyperlink.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.json">hello_hyperlink.diff</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json">hyperlink.diff</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_hyperlink.xml">hello_hyperlink.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hyperlink.xml">hyperlink.xml</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_hyperlink.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.png"/></td>
   </tr>
   <tr>
     <td colspan="2">StoryTeller STL render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_hyperlink.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hyperlink.png"/></td>
   </tr>
 </table>
 
@@ -815,18 +813,18 @@ For example the following sub-optimal STL sequence:
 
 ```xml
 <stl:p>
-  <stl:span style="font-family: Arial; font-size: 10pt; color: #000000">H</stl:span>
-  <stl:span style="font-family: Arial; font-size: 11pt; color: #000000">e</stl:span>
-  <stl:span style="font-family: Arial; font-size: 12pt; font-weight: bold; color: #000000">l</stl:span>
-  <stl:span style="font-family: Arial; font-size: 13pt; font-weight: bold; color: #000000">l</stl:span>
-  <stl:span style="font-family: Arial; font-size: 14pt; color: #000000">o</stl:span>
+  <stl:span style="font-family: Arial; font-size: 10pt">H</stl:span>
+  <stl:span style="font-family: Arial; font-size: 11pt">e</stl:span>
+  <stl:span style="font-family: Arial; font-size: 12pt; font-weight: bold">l</stl:span>
+  <stl:span style="font-family: Arial; font-size: 13pt; font-weight: bold">l</stl:span>
+  <stl:span style="font-family: Arial; font-size: 14pt">o</stl:span>
 </stl:p>
 ```
 
-... could be transformed to:
+... could be transformed to the following `span` hierarchy:
 
 ```xml
-<stl:p style="font-family: Arial; color: #000000">
+<stl:p style="font-family: Arial">
   <stl:span style="font-size: 10pt">H</stl:span>
   <stl:span style="font-size: 11pt">e</stl:span>
   <stl:span style="font-weight: bold">
@@ -836,6 +834,6 @@ For example the following sub-optimal STL sequence:
   <stl:span style="font-size: 14pt">o</stl:span>
 </stl:p>
 ```
-... which is an interesting task, but we consider it outside the scope
-of this document. It would be better to expose it as a completely separate service
-independent on _emp2stl_ conversion - something like _STL optimizer_.
+Such optimization could be an interesting programming task, but we consider it
+outside the scope of this document. It would be better to expose it as a completely
+separate service independent on _emp2stl_ conversion - called something like _STL optimizer_.

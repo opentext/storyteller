@@ -6,21 +6,22 @@
 		<input>empty</input>
 		<input>hell</input>
 		<input>hello</input>
-		<input>hello_colors</input>
-		<input>hello_euro</input>
-		<input>hello_image</input>
-		<input>hello_hyperlink</input>
-		<input>hello_sub_super_script</input>
-		<input>hello_font</input>
-		<input>hello_sizes</input>
-		<input>hello_world</input>
-		<input>hello_world_red</input>
-		<input>hello_world_lrc</input>
-		<input>hello_world_bullets</input>
-		<input>hello_world_numbering</input>
-		<input>hello_world_numbering_indented</input>
-		<input>hello_world_nested</input>
-		<input>hello_table</input>
+		<input>colors</input>
+		<input>euro</input>
+		<input>font</input>
+		<input>sizes</input>
+		<input>valign</input>
+		<input>hyperlink</input>
+		<input>image</input>
+		<input>text</input>
+		<input>table</input>
+		<input>paragraphs</input>
+		<input>par_indent</input>
+		<input>par_color</input>
+		<input>par_halign</input>
+		<input>par_bullets</input>
+		<input>par_numbering</input>
+		<input>par_numbering_indent</input>
       </data>
 	</stl:source>
   </stl:data>
@@ -28,7 +29,7 @@
 	<stl:story name="Body">
 	  <stl:repeater xpath="/data/input">
 		<stl:story>
-		  <stl:p>===================== <stl:field xpath="."/> =====================</stl:p>
+		  <stl:p>========================= <stl:field xpath="."/> =========================</stl:p>
 		  <stl:content uri="wd:/empty.xml" selector="/story[1]">
 			<stl:script language="js">
 			  'use strict';
@@ -41,8 +42,8 @@
 		</stl:story>
 	  </stl:repeater>
 	</stl:story>
-	<stl:page w="540pt" h="800pt">
-	  <stl:text x="20pt" y="20pt" w="500pt" h="760pt" story="Body" style="fill:lightcyan"/>
+	<stl:page w="540pt" h="820pt">
+	  <stl:text x="20pt" y="20pt" w="500pt" h="780pt" story="Body" style="fill:lightcyan"/>
 	</stl:page>	
   </stl:document>
 </stl:stl>

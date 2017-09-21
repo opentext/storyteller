@@ -3,9 +3,9 @@
   <stl:data>
 	<stl:source key="_default">
 	  <data>
-		<input>char_styles</input>
-		<input>par_styles</input>
-		<input>table_styles</input>
+		<input>styles_char</input>
+		<input>styles_par</input>
+		<input>styles_table</input>
       </data>
 	</stl:source>
   </stl:data>
@@ -13,7 +13,7 @@
 	<stl:story name="Body">
 	  <stl:repeater xpath="/data/input">
 		<stl:story>
-		  <stl:p>===================== <stl:field xpath="."/> =====================</stl:p>
+		  <stl:p>========================= <stl:field xpath="."/> =========================</stl:p>
 		  <stl:content uri="wd:/empty.xml" selector="/story[1]">
 			<stl:script language="js">
 			  'use strict';
