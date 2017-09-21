@@ -1,7 +1,7 @@
 // Copyright (c) 2017 Open Text. All Rights Reserved.
 'use strict';
 
-function STLWriter() {
+function STLWriter(indent) {
     var XMLWriter = require('wd:/xml-writer');
     var uri_stl = 'http://developer.opentext.com/schemas/storyteller/layout';
     var self = null;
@@ -40,7 +40,7 @@ function STLWriter() {
     }
     
     function init() {
-        xw = new XMLWriter;
+        xw = new XMLWriter(indent);
         xw.startDocument();
         var attrs = {
             'xmlns:stl': uri_stl,
@@ -523,23 +523,27 @@ function convert_content(src, writer) {
     });
 }
 
-module.exports = function emp2stl(json) {
+module.exports = function emp2stl(json, options) {
+    options = options || {};
+    
     json = JSON.parse(json);
     var text = json.contents.m_pTextDraw;
-    var writer = STLWriter();
+    var writer = STLWriter(options.indent);
     writer.init();
     writer.start('document');
     writer.start('story', {name: 'Main'});
     convert_content(text, writer);
     writer.end('story');
     var attrs = convert_bbox(text.m_rectPosition);
-    writer.start('page', attrs);
-    var css = css_layout_item(text);
-    attrs.style = css_format(css);    
-    attrs.story = 'Main';
-    writer.start('text', attrs);
-    writer.end('text');    
-    writer.end('page');
+    if (options.page) {
+        writer.start('page', attrs);
+        var css = css_layout_item(text);
+        attrs.style = css_format(css);    
+        attrs.story = 'Main';
+        writer.start('text', attrs);
+        writer.end('text');    
+        writer.end('page');
+    }
     writer.end('document');
     return writer.finish();
 }

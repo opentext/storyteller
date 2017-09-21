@@ -9,8 +9,5 @@
         <stl:image w="3.802in" h="0.708in" src="wd:/opentext.png"></stl:image>
       </stl:p>
     </stl:story>
-    <stl:page w="8.5in" h="1in">
-      <stl:text w="8.5in" h="1in" style="-stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: -0pt -max" story="Main"></stl:text>
-    </stl:page>
   </stl:document>
 </stl:stl>
