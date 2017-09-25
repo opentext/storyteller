@@ -9,16 +9,19 @@
       * [Libraries](#libraries)
       * [Source code](#source-code)
       * [Usage](#usage)
-   * [Examples](#examples)
+   * [Technical details](#technical-details)
       * [Content Fragments](#content-fragments)
-         * [Rich Text](#rich-text)
+         * [Singleline Text](#singleline-text)
          * [Multiline Text](#multiline-text)
          * [Lists](#lists)
          * [Objects](#objects)
          * [Variables](#variables)
-         * [Graphical Fragments](#graphical-fragments)
-      * [Conclusion](#conclusion)
- 
+      * [Canvas Fragments](#canvas-fragments)
+   * [Conclusion](#conclusion)
+      * [Fixes](#fixes)
+      * [Optimizations](#optimizations)
+      * [Alternatives](#alternatives)
+
 # Overview
 
 This document describes a process of reverse-engineering the _Empower JSON_ format
@@ -131,7 +134,7 @@ And we can also generate a page & text boilerplate (via `emp2stl(json, {indent: 
 </stl:stl>
 ```
 
-# Examples
+# Technical details
 
 This section will contain several examples of text and graphical fragments
 starting from trivial ones to more complex ones. The icremental manner will
@@ -143,7 +146,7 @@ between individual enumeration values and codes.
 Text fragments represent an implicit text object as a top of hierarchy of objects.
 They typically grow with content.
 
-### Rich Text
+### Singleline Text
 
 #### Empty Fragment
 
@@ -1449,14 +1452,14 @@ The _emp2stl_ convertor generates the following STL equivalent:
 
 @TBD
 
-### Graphical Fragments
+## Canvas Fragments
 
-Graphical fragments represent a canvas area containing one or more absolutely positioned
-objects like images, tables and text frames.
+This type of fragments represents a canvas area containing one or more absolutely positioned
+objects like _images_, _tables_ or _text frames_.
 
 @TBD
 
-## Conclusion
+# Conclusion
 
 Thanks to the interactive editor it was relatively easy to reverse-engineer at least some
 of the features of _Empower JSON_ format and convert them to _STL_. On the other hand
@@ -1469,6 +1472,15 @@ We believe that this document can serve as another demonstration of strengths an
 of _StoryTeller Layout (STL)_ exchange format. The fact that it is carefully designed
 to be human readable and understandable makes a conversion from different formats
 a relatively quick and straightforward task.
+
+## Fixes
+
+This proof of concept helped to fix few minor issues in _DocBuilder_ implementation
+(incorrect brush propagation, lack of support for vertical alignment, inline tables, ...),
+but other than that the _STL_ format proved to be mature enough to support
+almost all the features necessary for this non-trivial task.
+
+## Optimizations
 
 There is a non-trivial mapping between a flat sequence of font and color changes
 in _Empower JSON_ and more general and powerful hierarchy of `span` elements in _STL_.
@@ -1510,8 +1522,6 @@ Such optimization could be an interesting programming task, but we consider it
 outside the scope of this document. It would be better to expose it as a completely
 separate service independent on _emp2stl_ conversion - called something like _STL optimizer_.
 
+## Alternatives
 
-This proof of concept helped to fix few minor issues in _DocBuilder_ implementation
-(incorrect brush propagation, lack of support for vertical alignment, inline tables, ...),
-but other than that the _STL_ format proved to be mature enough to support
-almost all the features necessary for this non-trivial task.
+@TBD
