@@ -1,15 +1,25 @@
 # Empower to STL Conversion
 
-## Table of Contents
+# Table of Contents
 
-  * [Overview](#overview)
-  * [Implementation](#implementation)
-  * [Examples](#examples)
-     * [Text Fragments](#text-fragments)
-     * [Graphical Fragments](#graphical-fragments)
-  * [Conclusion](#conclusion)
+   * [Overview](#overview)
+   * [Implementation](#implementation)
+      * [Language](#language)
+      * [Interface](#interface)
+      * [Libraries](#libraries)
+      * [Source code](#source-code)
+      * [Usage](#usage)
+   * [Examples](#examples)
+      * [Content Fragments](#content-fragments)
+         * [Rich Text](#rich-text)
+         * [Multiline Text](#multiline-text)
+         * [Lists](#lists)
+         * [Objects](#objects)
+         * [Variables](#variables)
+         * [Graphical Fragments](#graphical-fragments)
+      * [Conclusion](#conclusion)
  
-## Overview
+# Overview
 
 This document describes a process of reverse-engineering the _Empower JSON_ format
 and converting it to _StoryTeller Layout_ (_STL_).
@@ -33,9 +43,9 @@ The editor window looks as follows:
 
 ![Empower editor](empower-editor.png)
 
-## Implementation
+# Implementation
 
-### Language
+## Language
 
 We decided to implement the conversion in javascript.
 
@@ -49,7 +59,7 @@ There are several reasons why currently the javascript seems like a best choice:
 It is possible that we decide to reimplement the conversion in C++ (only if we find really
 good reasons), but for now we consider javascript the best choice.
 
-### Interface
+## Interface
 
 Right now the interface is really simple, it is a single-method module called `emp2stl`
 which has the following interface:
@@ -60,13 +70,13 @@ which has the following interface:
 	  - `indent` ... bool or a string used for indentation
 	  - `page` ... bool determining whether page type should be generated
 
-### Libraries
+## Libraries
 
 All the parsing and translation is implemented inside this module, except low-level writing
 the resulting _STL XML_, for that purpose we use the 3rd party [XMLWriter](http://github.com/touv/node-xml-writer)
 implementation published under MIT software licence.
 
-### Source code
+## Source code
 
 The current implementation is available in the 
 [emp2stl.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emp2stl.js),
@@ -77,7 +87,7 @@ which is used in two _STL_ based regression tests
 and [complex.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/complex.xml).
 It is worth to mention that both mentioned STL-based tests were also used for generating _STL_ fragments and rasters of all examples for this documentation.
 
-### Usage
+## Usage
 
 The usage of `emp2stl` conversion is very simple and looks as follows:
 
@@ -121,17 +131,19 @@ And we can also generate a page & text boilerplate (via `emp2stl(json, {indent: 
 </stl:stl>
 ```
 
-## Examples
+# Examples
 
 This section will contain several examples of text and graphical fragments
 starting from trivial ones to more complex ones. The icremental manner will
 help us to locate individual features in JSON file as well as distinguish
 between individual enumeration values and codes.  
 
-### Text Fragments
+## Content Fragments
 
 Text fragments represent an implicit text object as a top of hierarchy of objects.
 They typically grow with content.
+
+### Rich Text
 
 #### Empty Fragment
 
@@ -1037,9 +1049,9 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
   </tr>
 </table>
 
-#### Paragraphs
+### Multiline Text
 
-##### Plain Text
+#### Plain Paragraphs
 
 Now instead of just a single line of text we can split it to several paragraphs.
 This way we can investigate concept of _paragraph block_ along with it's associated
@@ -1128,13 +1140,13 @@ It means that _paragraph styles_ are not shared like other kinds of specs
 even though the specs are identical. We do not know if that is a property
 of the JSON format itself, or just a current behavior of the _Empower editor_.
 
-###### Resulting STL
+##### Resulting STL
 
 The _emp2stl_ convertor generates the following STL equivalent:
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/paragraphs.xml?footer=minimal"></script>
 
-###### Summary
+##### Summary
 
 <table style="background-color:#fff49c">
   <tr>
@@ -1163,7 +1175,7 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
 </table>
 
-##### Font Color
+#### Font Color
 
 Let's investigate how font color changes interact with paragraph breaks.
 What if we select all three paragraphs of text and set the font color to red?
@@ -1222,13 +1234,13 @@ _color specs_ are reused - a red color spec already existed so there
 were no need to append another `m_Color` item - the color index #2
 was reused.
 
-###### Resulting STL
+##### Resulting STL
 
 The _emp2stl_ convertor generates the following STL equivalent:
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_color.xml?footer=minimal"></script>
 
-###### Summary
+##### Summary
 
 <table style="background-color:#fff49c">
   <tr>
@@ -1257,11 +1269,11 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
 </table>
 
-##### Horizontal Alignment
+#### Horizontal Alignment
 
 Now let's look at a paragraph style  property - alignment. What if we
 change the _Horizontal Alignment_ of the individual paragraphs
-to _Full_, _Center_ and _Right_ respectively?
+to _Full_, _Right_ and _Center_ respectively?
 
 If we compare the new [par_color.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json) with previous [paragraphs.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json) we get the following differences:
 
@@ -1280,7 +1292,7 @@ If we compare the new [par_color.json](https://rawgit.com/opentext/storyteller/m
           "iDefaultTab": 250,
           "iBulletFont": -1,
           "eUserSetNumber": 0,
-+         "iJustification": 1  // center alignment
++         "iJustification": 1  // right alignment
         },
         {
           "m_iEditAreaNdx": -1,
@@ -1288,7 +1300,7 @@ If we compare the new [par_color.json](https://rawgit.com/opentext/storyteller/m
           "iDefaultTab": 250,
           "iBulletFont": -1,
           "eUserSetNumber": 0,
-+         "iJustification": 2  // right alignment
++         "iJustification": 2  // center alignment
         }
       ],
 ```
@@ -1296,13 +1308,13 @@ If we compare the new [par_color.json](https://rawgit.com/opentext/storyteller/m
 ... so we see that the only property changes is the `iJustification` member
 of _paragraph style spec_.
 
-###### Resulting STL
+##### Resulting STL
 
 The _emp2stl_ convertor generates the following STL equivalent:
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_halign.xml?footer=minimal"></script>
 
-###### Summary
+##### Summary
 
 <table style="background-color:#fff49c">
   <tr>
@@ -1332,7 +1344,7 @@ The _emp2stl_ convertor generates the following STL equivalent:
 </table>
 
 
-##### Indent
+#### Indent
 
 The similar situation is when we modify _Indentation_ of individual paragraphs:
 
@@ -1369,13 +1381,13 @@ If we compare the new [par_color.json](https://rawgit.com/opentext/storyteller/m
 ... so we see that the only property changes is the `iJustification` member
 of _paragraph style spec_.
 
-###### Resulting STL
+##### Resulting STL
 
 The _emp2stl_ convertor generates the following STL equivalent:
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_indent.xml?footer=minimal"></script>
 
-###### Summary
+##### Summary
 
 <table style="background-color:#fff49c">
   <tr>
@@ -1405,13 +1417,21 @@ The _emp2stl_ convertor generates the following STL equivalent:
 </table>
 
 
-#### Lists
+### Lists
+
+#### Bullets
 
 @TBD
 
-#### Variables
+#### Numbering
 
 @TBD
+
+#### Nested Numbering
+
+@TBD
+
+### Objects
 
 #### Image
 
@@ -1422,6 +1442,10 @@ The _emp2stl_ convertor generates the following STL equivalent:
 @TBD
 
 #### Table
+
+@TBD
+
+### Variables
 
 @TBD
 
