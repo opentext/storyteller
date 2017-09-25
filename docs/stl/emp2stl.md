@@ -945,7 +945,7 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
         111,
         32,
 +       0,    // link index #0
-+       0,
++       0,    // padding zero
 +       2,    // font index #2
 +       3,    // color index #3
         79,
@@ -958,8 +958,8 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
         116,
 +       1,    // font index #1
 +       0,    // color index #0
-+       0,
-+       0,
++       0,    // padding zero
++       0,    // padding zero
         33,
         0
       ],
@@ -1039,7 +1039,219 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
 
 #### Paragraphs
 
-@TBD
+Now instead of just a single line of text we can split it to several paragraphs.
+This way we can investigate concept of _paragraph block_ along with it's associated
+style.
+
+If we compare the new [paragraphs.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json) with previous [hello_opentext.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json) we get the following differences:
+
+```js
+      "m_ParaValues": [
+        {
+          "m_iEditAreaNdx": -1,
+          "iNumbering": 0,
+          "iDefaultTab": 250,
+          "iBulletFont": -1
+        },
++       {
++         "m_iEditAreaNdx": -1,
++         "iNumbering": 0,
++         "iDefaultTab": 250,
++         "iBulletFont": -1,
++         "eUserSetNumber": 0
++       },
++       {
++         "m_iEditAreaNdx": -1,
++         "iNumbering": 0,
++         "iDefaultTab": 250,
++         "iBulletFont": -1,
++         "eUserSetNumber": 0
++       }
+      ],
+	  ...
+      "m_cChars": [
+        0,
+        0,
+        1,
+        0,
+        72,
+        101,
+        108,
+        108,
+        111,
++       0,     // padding zero
++       0,     // padding zero
+         79,
+        112,
+        101,
+        110,
+        116,
+        101,
+        120,
+        116,
++       0,     // padding zero
++       0,     // padding zero
+        33,
+        0
+      ],
+      "m_sXPos": [
+        -244,  // paragraph break
+        0,     // paragraph style spec #0
+        -62,
+        -63,
+        0,
+        0,
+        0,
+        0,
+        0,
++       -244,  // paragraph break
++       1,     // paragraph style spec #1 
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
++       -244,  // paragraph break
++       2,     // paragraph style spec #2
+        0,
+        -64
+      ],
+``` 
+
+It means taht paragraph styles are not shared - each paragraph has its own
+paragraph style spec even though the specs are identical.
+
+##### Resulting STL
+
+The _emp2stl_ convertor generates the following STL equivalent:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/paragraphs.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json">paragraphs.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json">paragraphs.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/paragraphs.xml">paragraphs.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/paragraphs.png"/></td>
+  </tr>
+</table>
+
+#### Paragraph Color
+
+Let's investigate how font color changes interact with paragraph breaks.
+What if we select all three paragraphs of text and set the font color to red?
+
+If we compare the new [par_color.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json) with previous [hello_opentext.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json) we get the following differences:
+
+```js
+      "m_Colors": [
+        {
+          "m_eColorModel": 0,
+          "m_lColor": 0
+        },
+        {
+          "m_eColorModel": 0,
+          "m_lColor": 12648192
+        },
+        {
+          "m_eColorModel": 0,
+          "m_lColor": 255
+        }
+      ],
+      "m_cChars": [
+        0,
+        0,
+        1,
++       2,  // color index #2
+        72,
+        101,
+        108,
+        108,
+        111,
+        0,
+        0,
+         79,
+        112,
+        101,
+        110,
+        116,
+        101,
+        120,
+        116,
+        0,
+        0,
+        33,
+        0
+      ],
+```
+
+The only change is the color index at the start of the text content.
+It means that cyurrent color spans across all the three paragraphs
+- there is no need to reestablish the font color for each individual
+paragraph separately.
+
+Another interesting thing is that unlike the _paragraph specs_ the
+_color specs_ are reused - a red color spec already existed so there
+were no need to append another `m_Color` item - the color index #2
+was reused.
+
+##### Resulting STL
+
+The _emp2stl_ convertor generates the following STL equivalent:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_color.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json">par_color.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json">par_color.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_color.xml">par_color.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_color.png"/></td>
+  </tr>
+</table>
 
 #### Lists
 
@@ -1121,3 +1333,9 @@ For example the following sub-optimal STL sequence:
 Such optimization could be an interesting programming task, but we consider it
 outside the scope of this document. It would be better to expose it as a completely
 separate service independent on _emp2stl_ conversion - called something like _STL optimizer_.
+
+
+This proof of concept helped to fix few minor issues in _DocBuilder_ implementation
+(incorrect brush propagation, lack of support for vertical alignment, inline tables, ...),
+but other than that the _STL_ format proved to be mature enough to support
+almost all the features necessary for this non-trivial task.
