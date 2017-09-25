@@ -1039,6 +1039,8 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
 
 #### Paragraphs
 
+##### Plain Text
+
 Now instead of just a single line of text we can split it to several paragraphs.
 This way we can investigate concept of _paragraph block_ along with it's associated
 style.
@@ -1121,16 +1123,18 @@ If we compare the new [paragraphs.json](https://rawgit.com/opentext/storyteller/
       ],
 ``` 
 
-It means taht paragraph styles are not shared - each paragraph has its own
-paragraph style spec even though the specs are identical.
+It means that _paragraph styles_ are not shared like other kinds of specs
+(_fonts_ or _colors_) - each paragraph has its own _paragraph style spec_
+even though the specs are identical. We do not know if that is a property
+of the JSON format itself, or just a current behavior of the _Empower editor_.
 
-##### Resulting STL
+###### Resulting STL
 
 The _emp2stl_ convertor generates the following STL equivalent:
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/paragraphs.xml?footer=minimal"></script>
 
-##### Summary
+###### Summary
 
 <table style="background-color:#fff49c">
   <tr>
@@ -1159,12 +1163,12 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
 </table>
 
-#### Paragraph Color
+##### Font Color
 
 Let's investigate how font color changes interact with paragraph breaks.
 What if we select all three paragraphs of text and set the font color to red?
 
-If we compare the new [par_color.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json) with previous [hello_opentext.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json) we get the following differences:
+If we compare the new [par_color.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json) with previous [paragraphs.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json) we get the following differences:
 
 ```js
       "m_Colors": [
@@ -1218,13 +1222,13 @@ _color specs_ are reused - a red color spec already existed so there
 were no need to append another `m_Color` item - the color index #2
 was reused.
 
-##### Resulting STL
+###### Resulting STL
 
 The _emp2stl_ convertor generates the following STL equivalent:
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_color.xml?footer=minimal"></script>
 
-##### Summary
+###### Summary
 
 <table style="background-color:#fff49c">
   <tr>
@@ -1233,7 +1237,7 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json">par_color.diff</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json">par_color.diff</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
@@ -1252,6 +1256,154 @@ The _emp2stl_ convertor generates the following STL equivalent:
     <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_color.png"/></td>
   </tr>
 </table>
+
+##### Horizontal Alignment
+
+Now let's look at a paragraph style  property - alignment. What if we
+change the _Horizontal Alignment_ of the individual paragraphs
+to _Full_, _Center_ and _Right_ respectively?
+
+If we compare the new [par_color.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json) with previous [paragraphs.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json) we get the following differences:
+
+```js
+      "m_ParaValues": [
+        {
+          "m_iEditAreaNdx": -1,
+          "iNumbering": 0,
+          "iDefaultTab": 250,
+          "iBulletFont": -1,
++         "iJustification": 3  // full alignment
+        },
+        {
+          "m_iEditAreaNdx": -1,
+          "iNumbering": 0,
+          "iDefaultTab": 250,
+          "iBulletFont": -1,
+          "eUserSetNumber": 0,
++         "iJustification": 1  // center alignment
+        },
+        {
+          "m_iEditAreaNdx": -1,
+          "iNumbering": 0,
+          "iDefaultTab": 250,
+          "iBulletFont": -1,
+          "eUserSetNumber": 0,
++         "iJustification": 2  // right alignment
+        }
+      ],
+```
+
+... so we see that the only property changes is the `iJustification` member
+of _paragraph style spec_.
+
+###### Resulting STL
+
+The _emp2stl_ convertor generates the following STL equivalent:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_halign.xml?footer=minimal"></script>
+
+###### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_halign.json">par_halign.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_halign.json">par_halign.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_halign.xml">par_halign.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_halign.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_halign.png"/></td>
+  </tr>
+</table>
+
+
+##### Indent
+
+The similar situation is when we modify _Indentation_ of individual paragraphs:
+
+If we compare the new [par_color.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json) with previous [paragraphs.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json) we get the following differences:
+
+```js
+      "m_ParaValues": [
+        {                        // no indent
+          "m_iEditAreaNdx": -1,
+          "iNumbering": 0,
+          "iDefaultTab": 250,
+          "iBulletFont": -1
+        },
+        {
+          "m_iEditAreaNdx": -1,
+          "iNumbering": 0,
+          "iDefaultTab": 250,
+          "iBulletFont": -1,
+          "eUserSetNumber": 0,
++         "iLeftIndent": 250    // indent 0.25 in 
+        },
+        {
+          "m_iEditAreaNdx": -1,
+          "iNumbering": 0,
+          "iDefaultTab": 250,
+          "iBulletFont": -1,
+          "eUserSetNumber": 0,
++         "iLeftIndent": 500   // indent 0.5 in
+        }
+      ],
+      ],
+```
+
+... so we see that the only property changes is the `iJustification` member
+of _paragraph style spec_.
+
+###### Resulting STL
+
+The _emp2stl_ convertor generates the following STL equivalent:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_indent.xml?footer=minimal"></script>
+
+###### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_indent.json">par_indent.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_indent.json">par_indent.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_indent.xml">par_indent.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_indent.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_indent.png"/></td>
+  </tr>
+</table>
+
 
 #### Lists
 
