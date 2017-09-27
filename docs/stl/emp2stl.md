@@ -1824,9 +1824,45 @@ The _emp2stl_ convertor generates the following STL equivalent:
 
 Now we try to replace the image with a nested text frame.
 
-If we compare the new [text.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json) with previous [image.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json) we get the following differences:
+If we compare the new [text.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json) with previous [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
 
 ```js
+      "m_cChars": [
+        0,
+        0,
+        1,
+        0,
+        72,
+        101,
+        108,
+        108,
+        111,
++       32, // space
++       0,
++       0,
++       0,
++       0,
++       33, // exclamation mark
+        0
+      ],
+      "m_sXPos": [
+        -244,
+        0,
+        -62,
+        -63,
+        0,
+        0,
+        0,
+        0,
+        0,
++       0,
++       -251, // object start
++       0,    // object index #0
++       -106, // object end
++       0,
++       0,
+        -64
+      ],
       "m_pObjs": [
 +       {        // text spec #0 
 +         "m_bAutoSizeX": false,
@@ -1887,7 +1923,9 @@ The _emp2stl_ convertor generates the following STL equivalent:
 #### Table
 
 The last object type is _table_. Presumably it will be most advanced structure,
-so let's look at the differences:
+so let's look into the details.
+
+If we compare the new [table.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json) with previous [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
 
 ```js
       "m_ParaValues": [
@@ -1930,7 +1968,7 @@ so let's look at the differences:
 +       0,
 +       0,
 +       0,
-+       33, // punctuation mark
++       33, // exclamation mark
         0
       ],
       "m_sXPos": [
