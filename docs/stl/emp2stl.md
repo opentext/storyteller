@@ -20,7 +20,7 @@
    * [Conclusion](#conclusion)
       * [Fixes](#fixes)
       * [Optimizations](#optimizations)
-      * [Alternatives](#alternatives)
+      * [Followup](#followup)
 
 # Overview
 
@@ -46,7 +46,13 @@ The editor window looks as follows:
 
 ![Empower editor](empower-editor.png)
 
+Currently supported _StoryTeller_ content fragments look as follows:
+
+![StoryTeller content fragments](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/empower/basic-xml_000-m.png)
+
 # Implementation
+
+This section contains some implementation related details and decisions.
 
 ## Language
 
@@ -137,8 +143,8 @@ And we can also generate a page & text boilerplate (via `emp2stl(json, {indent: 
 # Technical details
 
 This section will contain several examples of text and graphical fragments
-starting from trivial ones to more complex ones. The icremental manner will
-help us to locate individual features in JSON file as well as distinguish
+starting from trivial ones to more complex ones. The icremental manner helps
+us to locate individual features in JSON file as well as distinguish
 between individual enumeration values and codes.  
 
 ## Content Fragments
@@ -147,6 +153,9 @@ Text fragments represent an implicit text object as a top of hierarchy of object
 They typically grow with content.
 
 ### Singleline Text
+
+We start with singleline texts, in order to determine simple constructs
+and individual _character style_ equivalents.
 
 #### Empty Fragment
 
@@ -1015,11 +1024,14 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
 
 ### Multiline Text
 
+Multiline texts help us to understand a concept of _paragraphs_ and associated
+_paragraph styles_ as well as _lists_ (_bullets_ and _numbering_). 
+
 #### Plain Paragraphs
 
-Now instead of just a single line of text we can split it to several paragraphs.
-This way we can investigate concept of _paragraph block_ along with it's associated
-style.
+Now instead of just a single line of text we can split the "Hello Opentext!" phrase
+to several paragraphs. This way we can investigate concept of _paragraphs_ along with
+associated _paragraph style_ properties.
 
 If we compare the new [paragraphs.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json) with previous [hello_opentext.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json) we get the following differences:
 
