@@ -46,9 +46,12 @@ The editor window looks as follows:
 
 ![Empower editor](empower-editor.png)
 
-Currently supported _StoryTeller_ content fragments look as follows:
+Currently converted _StoryTeller_ content fragments look as follows:
 
-![StoryTeller content fragments](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/empower/basic-xml_000-m.png)
+- Character styles:
+  - ![StoryTeller character styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_char.png)
+- Paragraph styles:
+  - ![StoryTeller character styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_par.png)
 
 # Implementation
 
