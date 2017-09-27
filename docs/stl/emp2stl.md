@@ -261,10 +261,7 @@ If we compare the new [font.json](https://rawgit.com/opentext/storyteller/master
         {
           "strName": "Lato",
           "iTracking": 0,
-          "clrFontColor": {
-            "m_eColorModel": 0,
-            "m_lColor": 0
-          },
+          "clrFontColor": { "m_eColorModel": 0, "m_lColor": 0 },
           "iFontHeight10X": 100,
           "bBold": false,
           "bItalic": false,
@@ -274,10 +271,7 @@ If we compare the new [font.json](https://rawgit.com/opentext/storyteller/master
           "oiFont": 95,
           "strName": "Lato",
           "iTracking": 0,
-          "clrFontColor": {
-            "m_eColorModel": 0,
-            "m_lColor": 0
-          },
+          "clrFontColor": { "m_eColorModel": 0, "m_lColor": 0 },
           "iFontHeight10X": 100,
           "bBold": false,
           "bUnderline": false,
@@ -293,10 +287,7 @@ If we compare the new [font.json](https://rawgit.com/opentext/storyteller/master
 +         "oiFont": 44,
 +         "strName": "Wingdings",
 +         "iTracking": 0,
-+         "clrFontColor": {
-+           "m_eColorModel": 0,
-+           "m_lColor": 0
-+         },
++         "clrFontColor": { "m_eColorModel": 0, "m_lColor": 0 },
 +         "iFontHeight10X": 120,
 +         "bBold": false,
 +         "bUnderline": false,
@@ -551,10 +542,7 @@ If we compare the new [sizes.json](https://rawgit.com/opentext/storyteller/maste
 +          "oiFont": 111,
 +          "strName": "Lato",
 +          "iTracking": 0,
-+          "clrFontColor": {
-+            "m_eColorModel": 0,
-+            "m_lColor": 0
-+          },
++          "clrFontColor": { "m_eColorModel": 0, "m_lColor": 0 },
 +          "iFontHeight10X": 120,
 +          "bBold": false,
 +          "bUnderline": false,
@@ -570,10 +558,7 @@ If we compare the new [sizes.json](https://rawgit.com/opentext/storyteller/maste
 +          "oiFont": 127,
 +          "strName": "Lato",
 +          "iTracking": 0,
-+          "clrFontColor": {
-+            "m_eColorModel": 0,
-+            "m_lColor": 0
-+          },
++          "clrFontColor": { "m_eColorModel": 0, "m_lColor": 0 },
 +          "iFontHeight10X": 140,
 +          "bBold": false,
 +          "bUnderline": false,
@@ -680,26 +665,11 @@ If we compare the new [colors.json](https://rawgit.com/opentext/storyteller/mast
 
 ```js
      "m_Colors": [
-        {
-          "m_eColorModel": 0,
-          "m_lColor": 0
-        },
-        {
-          "m_eColorModel": 0,
-          "m_lColor": 12648192
-        },
-        {
-          "m_eColorModel": 0,   // RGB color model
-          "m_lColor": 255       // red (#ff0000)
-+       },
-+       {
-+         "m_eColorModel": 0,   // RGB color model
-+         "m_lColor": 65280     // red (#00ff00)
-+       },
-+       {
-+         "m_eColorModel": 0,   // RGB color model
-+         "m_lColor": 16711680  // blue (#0000ff)
-        }
+        { "m_eColorModel": 0, "m_lColor": 0 },
+        { "m_eColorModel": 0, "m_lColor": 12648192 },
+        { "m_eColorModel": 0, "m_lColor": 255 },       // RGB color model, red (#ff0000)
++       { "m_eColorModel": 0, "m_lColor": 65280 },     // RGB color model, green (#00ff00)
++       { "m_eColorModel": 0, "m_lColor": 16711680 }   // RGB color model, blue (#0000ff)
       ],
        "m_cChars": [
          0,
@@ -802,10 +772,7 @@ If we compare the new [valign.json](https://rawgit.com/opentext/storyteller/mast
 +          "oiFont": 79,
 +          "strName": "Lato",
 +          "iTracking": 0,
-+          "clrFontColor": {
-+            "m_eColorModel": 0,
-+            "m_lColor": 0
-+          },
++          "clrFontColor": { "m_eColorModel": 0, "m_lColor": 0 },
 +          "iFontHeight10X": 80,
 +          "bBold": false,
 +          "bUnderline": false,
@@ -925,10 +892,7 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
 +         "oiFont": 95,
 +         "strName": "Lato",
 +         "iTracking": 0,
-+         "clrFontColor": {
-+           "m_eColorModel": 0,
-+           "m_lColor": 0
-+         },
++         "clrFontColor": { "m_eColorModel": 0, "m_lColor": 0 },
 +         "iFontHeight10X": 100,
 +         "bBold": false,
 +         "bUnderline": true,
@@ -943,10 +907,7 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
       ],
       "m_Colors": [
 	    ...
-+       {  // new color spec #3 (blue #0000c4)
-+         "m_eColorModel": 0,
-+         "m_lColor": 12845056
-+       }
+        { "m_eColorModel": 0, "m_lColor": 12845056 } // new color spec #3 (blue #0000c4)
       ],
       "m_cChars": [
         0,
@@ -1187,18 +1148,9 @@ If we compare the new [par_color.json](https://rawgit.com/opentext/storyteller/m
 
 ```js
       "m_Colors": [
-        {
-          "m_eColorModel": 0,
-          "m_lColor": 0
-        },
-        {
-          "m_eColorModel": 0,
-          "m_lColor": 12648192
-        },
-        {
-          "m_eColorModel": 0,
-          "m_lColor": 255
-        }
+        { "m_eColorModel": 0, "m_lColor": 0 },
+        { "m_eColorModel": 0, "m_lColor": 12648192 },
+        { "m_eColorModel": 0, "m_lColor": 255 }
       ],
       "m_cChars": [
         0,
@@ -1422,17 +1374,331 @@ The _emp2stl_ convertor generates the following STL equivalent:
 
 ### Lists
 
+This section investigates a very popular construct for which was the _STL syntax_
+largely updated relatively recently - lists. It includes _bullets_ as well as single-level
+and multi-level _numbering_.
+
 #### Bullets
 
-@TBD
+We'll start with bullets at they are stateless and relatively simple - there is no counter
+associated.
+
+If we compare the new [par_bullets.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json) with previous [paragraphs.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json) we get the following differences:
+
+```js
+      "m_ParaValues": [
+        {
+          "m_iEditAreaNdx": -1,
++         "iNumbering": 1,
+          "iDefaultTab": 250,
++         "iBulletFont": 2,    // font index #2
++         "iNumberIndent": 1,
++         "iLeftIndent": 250,
++         "pszNumberString": 168,
++         "bUserSetType": false,
++         "iNumberColor": 0
+        },
+        {
+          "m_iEditAreaNdx": -1,
++         "iNumbering": 1,
+          "iDefaultTab": 250,
++         "iBulletFont": 2,   // font index #2
+          "eUserSetNumber": 0,
++         "iNumberIndent": 1,
++         "iLeftIndent": 250,
++         "pszNumberString": 168,
++         "bUserSetType": false,
++         "iNumberColor": 0
+        },
+        {
+          "m_iEditAreaNdx": -1,
++         "iNumbering": 1,
+          "iDefaultTab": 250,
++         "iBulletFont": 2,   // font index #2
+          "eUserSetNumber": 0,
++         "iNumberIndent": 1,
++         "iLeftIndent": 250,
++         "pszNumberString": 168,
++         "bUserSetType": false,
++         "iNumberColor": 0
+        }
+      ],
+      "m_TextFonts": [
+	    ...
+        {
+          "strName": "Lato",
+          "iTracking": 0,
+          "clrFontColor": { "m_eColorModel": 0, "m_lColor": 0 },
+          "iFontHeight10X": 100,
+          "bBold": false,
+          "bItalic": false,
+          "bUnderline": false
+        },
+        {
+          "oiFont": 95,
+          "strName": "Lato",
+          "iTracking": 0,
+          "clrFontColor": { "m_eColorModel": 0, "m_lColor": 0 },
+          "iFontHeight10X": 100,
+          "bBold": false,
+          "bUnderline": false,
+          "bItalic": false,
+          "bStrikeThru": false,
+          "uUnderWgt": 0,
+          "sUnderPos": -32768,
+          "iAscent": 41,
+          "iDescent": 9,
+          "iLeading": 0
+        },
++       {                      // font spec #2 used for bullets
++         "oiFont": 79,
++         "strName": "Lato",
++         "iTracking": 0,
++         "clrFontColor": { "m_eColorModel": 0, "m_lColor": 0 },
++         "iFontHeight10X": 80,
++         "bBold": false,
++         "bUnderline": false,
++         "bItalic": false,
++         "bStrikeThru": false,
++         "uUnderWgt": 0,
++         "sUnderPos": -32768,
++         "iAscent": 33,
++         "iDescent": 7,
++         "iLeading": 0
++       }
+      ],
+
+```
+
+##### Resulting STL
+
+The _emp2stl_ convertor generates the following STL equivalent:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_bullets.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json">par_bullets.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json">par_bullets.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_bullets.xml">par_bullets.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_bullets.png"/></td>
+  </tr>
+</table>
 
 #### Numbering
 
-@TBD
+Now we use _numbering_ instead of _bullets_ and let's see how it changes the JSON poersistence.
+
+If we compare the new [par_numbering.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json) with previous [par_bullets.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json) we get the following differences:
+
+```js
+      "m_ParaValues": [
+        {
+          "m_iEditAreaNdx": -1,
++         "iNumbering": 2,
+          "iDefaultTab": 250,
++         "iBulletFont": -1,
+          "iNumberIndent": 1,
+          "iLeftIndent": 250,
++         "pszNumberString": [ 49, 46 ],
+          "bUserSetType": false,
++         "iNumberColor": 0,
++         "bUserSetColor": false,
++         "eNumberType": 0,
++         "eUserSetNumber": 0,
++         "iNumberValue": 1
+        },
+        {
+          "m_iEditAreaNdx": -1,
++         "iNumbering": 2,
+          "iDefaultTab": 250,
++         "iBulletFont": -1,
+          "eUserSetNumber": 0,
+          "iNumberIndent": 1,
+          "iLeftIndent": 250,
++         "pszNumberString": [ 50, 46 ],
+          "bUserSetType": false,
++         "iNumberColor": 0,
++         "bUserSetColor": false,
++         "eNumberType": 0,
++         "iNumberValue": 2
+        },
+        {
+          "m_iEditAreaNdx": -1,
++         "iNumbering": 2,
+          "iDefaultTab": 250,
++         "iBulletFont": -1,
+          "eUserSetNumber": 0,
+          "iNumberIndent": 1,
+          "iLeftIndent": 250,
++         "pszNumberString": [ 51, 46 ],
+          "bUserSetType": false,
++         "iNumberColor": 0,
++         "bUserSetColor": false,
++         "eNumberType": 0,
++         "iNumberValue": 3
+        }
+      ],
+```
+... we can se that the content did not change at all, the only changed properties
+are inside the paragraph style specs. One interesting aspect is that numbering values
+(the `iNumberValue` field) including the formatted marker text (the `pszNumberString`field)
+are part of the persistence. It seems like the numbering is pre-computed
+and is not changed in runtime. That would significantly reduce usability of this feature,
+so we believe that there would be some other numbering mode which was not revealed
+in our experiments. For now we just use predefined masks for individual numbering
+levels and let _StoryTeller_ do it's numbering. Such approach, we believe, is most reasonable,
+even though it leads to a different numbering behavior.
+
+##### Resulting STL
+
+The _emp2stl_ convertor generates the following STL equivalent:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json">par_numbering.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json">par_numbering.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering.xml">par_numbering.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering.png"/></td>
+  </tr>
+</table>
 
 #### Nested Numbering
 
-@TBD
+Now we can try numbering nested in multiple levels.
+
+If we compare the new [par_numbering_indent.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering_indent.json) with previous [par_numbering.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json) we get the following differences:
+
+```js
+      "m_ParaValues": [
+        {
+          "m_iEditAreaNdx": -1,
+          "iNumbering": 2,
+          "iDefaultTab": 250,
+          "iBulletFont": -1,
+          "iNumberIndent": 1,
+          "iLeftIndent": 250,
+          "pszNumberString": [ 49, 46 ],
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "bUserSetColor": false,
+          "eNumberType": 0,
+          "eUserSetNumber": 0,
+          "iNumberValue": 1
+        },
+        {
+          "m_iEditAreaNdx": -1,
+          "iNumbering": 2,
+          "iDefaultTab": 250,
+          "iBulletFont": -1,
+          "eUserSetNumber": 0,
++         "iNumberIndent": 2,
++         "iLeftIndent": 500,
++         "pszNumberString": [ 49, 46 ],
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "bUserSetColor": false,
+          "eNumberType": 0,
++         "iNumberValue": 1
+        },
+        {
+          "m_iEditAreaNdx": -1,
+          "iNumbering": 2,
+          "iDefaultTab": 250,
+          "iBulletFont": -1,
+          "eUserSetNumber": 0,
++         "iNumberIndent": 3,
++         "iLeftIndent": 750,
++         "pszNumberString": [ 105, 46 ],
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "bUserSetColor": false,
+          "eNumberType": 0,
++         "iNumberValue": 1
+        }
+      ],
+```
+... so we can see that the level of numbering is defined in the `iNumberIndent`
+field, there is also independent `iLeftIndent` field defining the indentation
+and then there is `iNumberValue` field defining the actual numbering value along
+with the `pszNumberString` representing the resulting formatted numbering marker.
+
+##### Resulting STL
+
+The _emp2stl_ convertor generates the following STL equivalent:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering_indent.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering_indent.json">par_numbering_indent.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering_indent.json">par_numbering_indent.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering_indent.xml">par_numbering_indent.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering_indent.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering_indent.png"/></td>
+  </tr>
+</table>
 
 ### Objects
 
@@ -1468,7 +1734,7 @@ knowledge of the _Empower JSON_ format. There are still too many fields we do no
 understand and some of them point outside the JSON persistence (there are some database
 indexes, resource package identifiers, etc).
 
-We believe that this document can serve as another demonstration of strengths and advantages
+We believe that this document can serve as further demonstration of strengths and advantages
 of _StoryTeller Layout (STL)_ exchange format. The fact that it is carefully designed
 to be human readable and understandable makes a conversion from different formats
 a relatively quick and straightforward task.
@@ -1522,6 +1788,22 @@ Such optimization could be an interesting programming task, but we consider it
 outside the scope of this document. It would be better to expose it as a completely
 separate service independent on _emp2stl_ conversion - called something like _STL optimizer_.
 
-## Alternatives
+## Followup
 
-@TBD
+It is hard to tell without a documentation and more experience with _Empower product_,
+but we believe that the _Empower Editor_ used for this proof of concept was a stripped
+down version, which is relatively limited in comparison with full web-based editor.
+The only types of objects were _text frames_, _tables_ and _images_. It is likely
+that we extend the current implementation of the conversion with more object types
+like _barcodes_ etc. in near future.
+
+As the _Empower JSON_ format is clearly not designed for document exchange between products
+and probably it is not guaranteed to be backward compatible, we can consider an alternative
+to bypass the JSON serialization and implement _STL_ import and export directly to the
+_Empower web editor_. That way we would get rid of an unnecessary level of indirection
+and could achieve more stable and maintainable code. On the other hand the JSON intercode
+serves as an important persistence layer which helps the components to be more
+independent (we can test our _Emp2STL_ conversion as a separate component independently
+of the web editor or other components of the _Empower_ infrastructure). So the final
+decision about the arrangement is yet to come.
+
