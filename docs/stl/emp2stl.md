@@ -2033,34 +2033,34 @@ very similar to _text frame_ known from previous sections.
 
 The _emp2stl_ convertor generates the following STL equivalent:
 
-<script src="//gist-it.appspot.com/github/opentable/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.xml?footer=minimal"></script>
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.xml?footer=minimal"></script>
 
 ##### Summary
 
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentable/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json">table.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json">table.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentable/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentable/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json">table.diff</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json">table.diff</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentable/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.xml">table.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.xml">table.xml</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentable/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.png"/></td>
   </tr>
   <tr>
     <td colspan="2">StoryTeller STL render:</td>
   </tr>
   <tr>
-    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentable/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.png"/></td>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.png"/></td>
   </tr>
 </table>
 
