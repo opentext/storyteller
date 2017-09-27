@@ -49,9 +49,10 @@ The editor window looks as follows:
 Currently converted _StoryTeller_ content fragments look as follows:
 
 - Character styles:
-  - ![StoryTeller character styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_char.png)
+![StoryTeller character styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_char.png)
+
 - Paragraph styles:
-  - ![StoryTeller character styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_par.png)
+![StoryTeller character styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_par.png)
 
 # Implementation
 
