@@ -54,6 +54,9 @@ Currently converted _StoryTeller_ content fragments look as follows:
 - Paragraph styles:
 ![StoryTeller character styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_par.png)
 
+- Table styles:
+![StoryTeller character styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_table.png)
+
 # Implementation
 
 This section contains some implementation related details and decisions.
@@ -1718,17 +1721,310 @@ The _emp2stl_ convertor generates the following STL equivalent:
 
 ### Objects
 
+In this section we will investigate insertion of nested objects like
+_image_, _text frame_ and _table_.
+
 #### Image
 
-@TBD
+Image feels like the simplest of the three objects, so we will start with it.
+
+If we compare the new [image.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json) with previous [hello.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json) we get the following differences:
+
+```js
+      "m_cChars": [
+        0,
+        0,
+        1,
+        0,
+        72,
+        101,
+        108,
+        108,
+        111,
++       32,  // space character
++       0,
++       0,
++       0,
++       0,
+        0
+      ],
+      "m_sXPos": [
+        -244,
+        0,
+        -62,
+        -63,
+        0,
+        0,
+        0,
+        0,
+        0,
++       0,
++       -251,    // object start
++       0,       // object index #0
++       -106,    // object end
++       0,
+        -64
+      ],
+      "m_oiLayer": 0,
++     "m_pObjs": [
++       {                      // image spec #0 
++         "m_oiID": 4,
++         "m_UNITSPERINCH": 1000,
++         "m_bPen": 0,
++         "m_pDbBitmap": { "m_oiDB": 3, "m_strCASId": "Y3hyOi8_aWQ9Y2ZlMDkwN2Ut...OGZhYw==" },
++         "m_oiLayer": 0,
++         "m_rectPosition": { "left": 0, "top": 0, "bottom": 708, "right": 3802 }
++       }
++     ],
++     "m_Objs": [
++       { "m_iObjType": 6, "m_eAnchor": 6 } // object type 6 => image
++     ],
+```
+We can see that there is an object reference in the content stream
+and then there is an object specification which says that the type
+of the object is _image_ (`m_iObjType` = 6) and there is _CAS Resource ID_
+stores in the `m_strCASId` field.
+
+##### Resulting STL
+
+The _emp2stl_ convertor generates the following STL equivalent:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/image.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json">image.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json">image.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/image.xml">image.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/image.png"/></td>
+  </tr>
+</table>
 
 #### Text Frame
 
-@TBD
+Now we try to replace the image with a nested text frame.
+
+If we compare the new [text.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json) with previous [image.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json) we get the following differences:
+
+```js
+      "m_pObjs": [
++       {        // text spec #0 
++         "m_bAutoSizeX": false,
++         "m_bAutoSizeY": true,
++         "m_rectPosition": { ... },
++         "m_pEditableProps": { ... },
++         ...
++         "m_ParaValues": [ ... ],
++         "m_TextFonts": [ ... ],
++         "m_Colors": [ ... ],
++         "m_cChars": [ ... ],
++         "m_sXPos": [ ... ],
++         ...
++       }
+      ],
+     "m_Objs": [
++       { "m_iObjType": 14, "m_eAnchor": 6 } // object type 14 => text
+      ],
+```
+Note that the structure of the nested text object is quite similar
+to the top level structure of the whole content fragment.
+
+##### Resulting STL
+
+The _emp2stl_ convertor generates the following STL equivalent:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/text.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json">text.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json">text.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/text.xml">text.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/text.png"/></td>
+  </tr>
+</table>
 
 #### Table
 
-@TBD
+The last object type is _table_. Presumably it will be most advanced structure,
+so let's look at the differences:
+
+```js
+      "m_ParaValues": [
+        {
+          "m_iEditAreaNdx": -1,
+          "iNumbering": 0,
+          "iDefaultTab": 250,
+          "iBulletFont": -1
+        },
++       {  // second paragraph spec
++         "m_iEditAreaNdx": -1,
++         "iNumbering": 0,
++         "iDefaultTab": 250,
++         "iBulletFont": -1,
++         "eUserSetNumber": 0
++       },
++       {  // third paragraph spec
++         "m_iEditAreaNdx": -1,
++         "iNumbering": 0,
++         "iDefaultTab": 250,
++         "iBulletFont": -1,
++         "eUserSetNumber": 0
++       }
+        ...
+      "m_cChars": [
+        0,
+        0,
+        1,
+        0,
+        72,
+        101,
+        108,
+        108,
+        111,
++       0, // padding zeros
++       0,
++       0,
++       0,
++       0,
++       0,
++       0,
++       0,
++       33, // punctuation mark
+        0
+      ],
+      "m_sXPos": [
+        -244,
+        0,
+        -62,
+        -63,
+        0,
+        0,
+        0,
+        0,
+        0,
++       -244, // paragraph break
++       1,    // paragraph style #1
++       -251, // object start
++       0,    // object id #0
++       -106, // object end
++       0,
++       -244, // paragraph break
++       2,    // paragraph style #2
++       0,
+        -64
+      ],
+      "m_pObjs": [
++      {         // table spec #0
++         "iDbDrawObjVersion": -174,
++         "m_oiID": 2,
++         "m_rectPosition": { ... },
++         ...
++         "m_pEditableProps": { ... },
++         ...
++         "m_Cells": [
++           {
++             "m_pTextDraw": { ... }
++             "m_iColumn": 0,
++             "m_iRow": 0,
++             ...
++           },
++           {
++             "m_pTextDraw": { ... }
++             "m_iColumn": 1,
++             "m_iRow": 0,
++             ...
++           }
++         ],
++         "m_Columns": [ ... ],
++         "m_Rows": [ ... ],
++         ...
++       }
+      ],
+      "m_Objs": [
++       { "m_iObjType": 5, "m_eAnchor": 6 } // object type 5 => table
+      ],
+	  ...
+```
+
+We can see that each table contains _Column_ definitions, _Row_ definitions and
+_Cell_ definitions, where each cell contains a single _text_ - a structure
+very similar to _text frame_ known from previous sections.
+
+##### Resulting STL
+
+The _emp2stl_ convertor generates the following STL equivalent:
+
+<script src="//gist-it.appspot.com/github/opentable/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentable/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json">table.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentable/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentable/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json">table.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentable/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.xml">table.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentable/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentable/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.png"/></td>
+  </tr>
+</table>
 
 ### Variables
 
