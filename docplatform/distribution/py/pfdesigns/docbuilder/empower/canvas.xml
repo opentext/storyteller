@@ -8,10 +8,10 @@
 	  <data>
 		<input>g_empty</input>
 		<input>g_text</input>
-		<input>g_text_image</input>
-		<input>g_text_image_nested</input>
 		<input>g_text_image_table</input>
+		<input>g_text_image_nested</input>
 		<input>g_text_table_nested</input>
+		<input>g_table_text_image_nested</input>
       </data>
 	</stl:source>
   </stl:data>
