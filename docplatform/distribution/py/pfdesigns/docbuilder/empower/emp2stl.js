@@ -41,7 +41,7 @@ function STLWriter(indent) {
     
     function init() {
         xw = new XMLWriter(indent);
-        xw.startDocument();
+        //xw.startDocument();
         var attrs = {
             'xmlns:stl': uri_stl,
             version: '0.1'
@@ -51,7 +51,7 @@ function STLWriter(indent) {
     }
     
     function finish() {
-        xw.endDocument();
+        //xw.endDocument();
         var markup = xw.toString();
         xw = null;
         return markup;

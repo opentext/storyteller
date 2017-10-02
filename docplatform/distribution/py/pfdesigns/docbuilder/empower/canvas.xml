@@ -1,8 +1,5 @@
 <stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
 		 xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-  <stl:fixtures>
-	<xp:fixture key="link:/empty.svg" type="application/xml"><svg xmlns="http://www.w3.org/2000/svg" width="0px" height="0px"></svg></xp:fixture>
-  </stl:fixtures>	
   <stl:data>
 	<stl:source key="_default">
 	  <data>
@@ -20,7 +17,7 @@
 	  <stl:repeater xpath="/data/input">
 		<stl:story>
 		  <stl:p>========================= <stl:field xpath="."/> =========================</stl:p>
-		  <stl:fragment src="link:/empty.svg" selector="/item[1]">
+		  <stl:fragment src="wd:/empty.svg" selector="/item[1]">
 			<stl:script language="js">
 			  'use strict';
 			  var empower = require('wd:/empower');

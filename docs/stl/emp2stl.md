@@ -59,6 +59,9 @@ Currently converted _StoryTeller_ content fragments look as follows:
 - **Table styles**
 ![StoryTeller character styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_table.png)
 
+- **Canvas styles**
+![StoryTeller canvas styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_canvas.png)
+
 # Implementation
 
 This section contains some implementation related details and decisions.

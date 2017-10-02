@@ -11,9 +11,7 @@ exports.convert = function convert(input, dump, raster) {
 	// convert empower JSON to STL
 	var stl = emp2stl(json, {indent: dump ? '  ' : false, page: raster});
 	// this is just a hack - replace CAS URI with a local URI 
-	stl = stl.replace(
-		'cas:Y3hyOi8_aWQ9Y2ZlMDkwN2UtZWFlMi00ZDlkLWFkNzQtYjUzYTA2ODAwYzliO3Y9MTt0PTdjNjk4ZTFlLTdhMDUtZjA5Ny00NTYwLTdjYTc0ZWIyOGZhYw==',
-		'wd:/opentext.png');
+	stl = stl.replace(/cas:[a-zA-Z0-9+\/_=]+/g, 'wd:/opentext.png');
 	// log name and resulting STL
 	console.log(input);
 	console.log(stl);

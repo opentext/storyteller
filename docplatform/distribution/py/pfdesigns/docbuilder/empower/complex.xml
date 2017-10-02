@@ -3,15 +3,16 @@
   <stl:data>
 	<stl:source key="_default">
 	  <data>
-		<input>styles_char</input>
-		<input>styles_par</input>
-		<input>styles_table</input>
+		<content>styles_char</content>
+		<content>styles_par</content>
+		<content>styles_table</content>
+		<canvas>styles_canvas</canvas>
       </data>
 	</stl:source>
   </stl:data>
   <stl:document>
 	<stl:story name="Body">
-	  <stl:repeater xpath="/data/input">
+	  <stl:repeater xpath="/data/content">
 		<stl:story>
 		  <stl:p>========================= <stl:field xpath="."/> =========================</stl:p>
 		  <stl:content uri="wd:/empty.xml" selector="/story[1]">
@@ -23,6 +24,20 @@
 			  item.Uri = empower.convert(input);
 			</stl:script>
 		  </stl:content>
+		</stl:story>
+	  </stl:repeater>
+	  <stl:repeater xpath="/data/canvas">
+		<stl:story>
+		  <stl:p>========================= <stl:field xpath="."/> =========================</stl:p>
+		  <stl:fragment src="wd:/empty.svg" selector="/item[1]">
+			<stl:script language="js">
+			  'use strict';
+			  var empower = require('wd:/empower');
+			  var item = require('layout').item();
+			  var input = require('data').dump('string(.)');
+			  item.Uri = empower.convert(input);
+			</stl:script>
+		  </stl:fragment>
 		</stl:story>
 	  </stl:repeater>
 	</stl:story>
