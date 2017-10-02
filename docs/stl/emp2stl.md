@@ -17,6 +17,8 @@
          * [Objects](#objects)
          * [Variables](#variables)
       * [Canvas Fragments](#canvas-fragments)
+         * [Flat Objects](#flat-objects)
+         * [Nested Objects](#nested-objects)
    * [Conclusion](#conclusion)
       * [Fixes](#fixes)
       * [Optimizations](#optimizations)
@@ -2072,6 +2074,466 @@ The _emp2stl_ convertor generates the following STL equivalent:
 
 This type of fragments represents a canvas area containing one or more absolutely positioned
 objects like _images_, _tables_ or _text frames_.
+
+### Flat Objects
+
+First we test a simple scenario: an empty canvas or a canvas with one or more
+children of various types.
+
+#### Empty fragment
+
+Again we start with an empty canvas fragment.
+In this case the boilerplate for the empty canvas fragment is reasonably brief -
+see [g_empty.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json).
+
+##### Resulting STL
+
+The generated _STL_ looks as follows:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_empty.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json">g_empty.json</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_empty.xml">g_empty.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_empty.png"/></td>
+  </tr>
+</table>
+
+#### Text Frame
+
+Now we can insert a single absolutely positioned _text frame_.
+
+The only difference (except the canvas height) is in the `contents.m_DrawFront` array
+containing the newly created _text frame_.
+
+If we compare the new [g_text.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json) with previous [g_empty.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json) we get the following differences:
+
+```js
+{
+  "m_lTableNumber": 21,
+  "m_strName": "",
+  "m_ePageType": 1,
+  "m_iDesignResolution": 1000,
+  "m_Size": {
+    "width": 3600,
+    "height": 1000
+  },
+  "m_bSendDefault": true,
+  "m_refUsageRule": 0,
+  "m_scopedMessageTemplate": 1,
+  "contents": {
+    "m_lResolution": 1000,
+    "m_bTextOnly": false,
+    "m_lWidth": 3600,
+    "m_lHeight": 1000,
+    "m_lTopMargin": 0,
+    "m_lBottomMargin": 0,
+    "m_lGrowMaxY": 1000,
+    "m_bHasDynamicBottom": false,
+    "m_bAllStatic": false,
+    "m_bHasStatic": false,
+    "m_iGrowth": 0,
++   "m_DrawFront": [
++     {
++       "m_eComponentType": 14, // object type: text
++       "m_eDynamic": 40,
++       "m_pDrawObj": { ... }   // object definition
++     }
+    ],
+    "m_FrontRelNdx": [],
+    "m_iFrontBottomMin": 101,
+    "m_iFrontStaticBottom": 750,
+    "m_iFrontDynBottom": 750,
+    "m_bHasFlowLists": false,
+    "m_FrontFlowControls": []
+  },
+  "rule": null
+}		
+```
+
+The `contents.m_DrawFront.m_pDrawObj` definition is similar to a definition
+of an _inline text object_ we already know from the previous [Text Frame](#text-frame) section.
+
+##### Resulting STL
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json">g_text.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json">g_text.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text.xml">g_text.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text.png"/></td>
+  </tr>
+</table>
+
+#### Text, Image and Table
+
+Now instead of just a single object we insert all types of objects currently supported.
+
+The `contents.m_DrawFront` array should now contain three items instead of one.
+
+If we compare the new [g_text_image_table.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_table.json) with previous [g_empty.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json) we get the following differences:
+
+```js
+{
+  "m_lTableNumber": 21,
+  "m_strName": "",
+  "m_ePageType": 1,
+  "m_iDesignResolution": 1000,
+  "m_Size": {
+    "width": 3600,
+    "height": 2500
+  },
+  "m_bSendDefault": true,
+  "m_refUsageRule": 0,
+  "m_scopedMessageTemplate": 1,
+  "contents": {
+    "m_lResolution": 1000,
+    "m_bTextOnly": false,
+    "m_lWidth": 3600,
+    "m_lHeight": 2500,
+    "m_lTopMargin": 0,
+    "m_lBottomMargin": 0,
+    "m_lGrowMaxY": 2500,
+    "m_bHasDynamicBottom": false,
+    "m_bAllStatic": false,
+    "m_bHasStatic": false,
+    "m_iGrowth": 0,
+    "m_DrawFront": [
+      {
+        "m_eComponentType": 14, // object type 14 => text
+        "m_eDynamic": 40,
+        "m_pDrawObj": { ... },  // text object definition
+      },
+      {
+        "iVersion": 1101,
+        "m_eComponentType": 6,  // object type 6 => image
+        "m_eDynamic": 168,
+        "m_pDrawObj": { ... }   // image object definition
+      },
+      {
+        "m_eComponentType": 5,  // object type 5 => table
+        "m_eDynamic": 41,
+        "m_pDrawObj": { ... }   // table object definition
+      }
+    ],
+    "m_FrontRelNdx": [],
+    "m_iFrontBottomMin": 101,
+    "m_iFrontStaticBottom": 750,
+    "m_iFrontDynBottom": 750,
+    "m_bHasFlowLists": false,
+    "m_FrontFlowControls": []
+  },
+  "rule": null
+}
+```
+... the good news is that _canvas object types_ stored in the `m_eComponentType`
+are represented as the same anumeration like the _inline object types_ stored
+in the `m_iObjType` field.
+
+##### Resulting STL
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_table.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_table.json">g_text_image_table.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_table.json">g_text_image_table.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_table.xml">g_text_image_table.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_table.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_table.png"/></td>
+  </tr>
+</table>
+
+### Nested Objects
+
+Now we can proceed to a more advanced examples - nested object hierarchies.
+
+#### Image inside a Text
+
+First we insert an image inside a text frame.
+
+If we compare the new [g_text_image_nested.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_nested.json) with previous [g_text.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json) we get the following differences:
+
+```js
+{
+  ...
+  "contents": {
+    ...  
+    "m_DrawFront": [
+      {
+        "m_eComponentType": 14, // object type 14 => text
+        "m_eDynamic": 40,
+        "m_pDrawObj": {
+          "m_bAutoSizeX": false,
++         "m_bAutoSizeY": true,
+          ...
+          "m_cChars": [
+            0,
+            0,
+            1,
+            0,
+            72,
+            101,
+            108,
+            108,
+            111,
++           32,
++           0,    // object index #0
++           0,
++           0,
++           0,
+            0
+          ],
+          "m_sXPos": [
+            -244,
+            0,
+            -62,
+            -63,
+            0,
+            0,
+            0,
+            0,
+            0,
++           0,
++           -251,  // object start
++           0,
++           -106,  // object end
++           0,
+            -64
+          ],
+          "m_oiLayer": 0,
+          "m_pObjs": [
++           {                 // nested image
++             "m_oiID": 5,
++             "m_UNITSPERINCH": 1000,
++             "m_bPen": 0,
++             "m_pDbBitmap": { "m_oiDB": 4, "m_strCASId": "Y3hyOi8_aWQ...yOGZhYw==" },
++             "m_oiLayer": 0,
++             "m_rectPosition": { "left": 0, "top": 0, "bottom": 177, "right": 979 }
++           }
+          ],
+          "m_Objs": [
++           { "m_iObjType": 6, "m_eAnchor": 6 }  // object type 6 => image
+          ],
+          "m_Links": [],
+          "m_oiID": 0,
+          "m_VarProps": [],
+          "m_ppEditableAreas": [],
+          "m_Rules": []
+        }
+      }
+    ],
+    ...
+  },
+  "rule": null
+}
+```
+
+... so we can see that the outside of the text frame is identical, the only changes
+are inside the text frame:  the `m_cChars` and `m_sXPos` content arrays
+and `m_pObjs` plus `m_Objs` arrays are changed.
+
+##### Resulting STL
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_nested.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_nested.json">g_text_image_nested.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_nested.json">g_text_image_nested.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_nested.xml">g_text_image_nested.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_nested.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_nested.png"/></td>
+  </tr>
+</table>
+
+#### Table inside a Text
+
+Now we try to insert a _table_ instead of an _image_ inside a _text frame_.
+
+If we compare the new [g_text_table_nested.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_table_nested.json) with previous [g_text.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json) we get the following differences:
+
+```js
+{
+  ...
+  "contents": {
+    ...  
+    "m_DrawFront": [
+      {
+        "m_eComponentType": 14, // object type 14 => text
+        "m_eDynamic": 40,
+        "m_pDrawObj": {
+          "m_bAutoSizeX": false,
++         "m_bAutoSizeY": true,
+          ...
+          "m_cChars": [
+            0,
+            0,
+            1,
+            0,
+            72,
+            101,
+            108,
+            108,
+            111,
++           0,    // object index #0
++           0,
++           0,
++           0,
+            0
+          ],
+          "m_sXPos": [
+            -244,
+            0,
+            -62,
+            -63,
+            0,
+            0,
+            0,
+            0,
+            0,
++           -251,  // object start
++           0,
++           -106,  // object end
++           0,
+            -64
+          ],
+          "m_oiLayer": 0,
+          "m_pObjs": [
++           {                 // nested table
++              ...
++           }
+          ],
+          "m_Objs": [
++           { "m_iObjType": 5, "m_eAnchor": 6 }  // object type 5 => table
+          ],
+          "m_Links": [],
+          "m_oiID": 0,
+          "m_VarProps": [],
+          "m_ppEditableAreas": [],
+          "m_Rules": []
+        }
+      }
+    ],
+    ...
+  },
+  "rule": null
+}
+```
+
+... so we can see that again everything is very similar, the only changes
+are inside the top level _text frame_:  the `m_cChars` and `m_sXPos`
+content arrays and `m_pObjs` plus `m_Objs` arrays are changed.
+
+##### Resulting STL
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_table_nested.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_table_nested.json">g_text_table_nested.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_table_nested.json">g_text_table_nested.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_table_nested.xml">g_text_table_nested.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_table_nested.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_table_nested.png"/></td>
+  </tr>
+</table>
+
+#### Text and Image inside a Table
 
 @TBD
 
