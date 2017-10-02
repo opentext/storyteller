@@ -1,0 +1,39 @@
+<stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
+		 xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:fixtures>
+	<xp:fixture key="link:/empty.svg" type="application/xml"><svg xmlns="http://www.w3.org/2000/svg" width="0px" height="0px"></svg></xp:fixture>
+  </stl:fixtures>	
+  <stl:data>
+	<stl:source key="_default">
+	  <data>
+		<input>g_empty</input>
+		<input>g_text</input>
+		<input>g_text_image</input>
+		<input>g_text_image_nested</input>
+		<input>g_text_image_table</input>
+		<input>g_text_table_nested</input>
+      </data>
+	</stl:source>
+  </stl:data>
+  <stl:document>
+	<stl:story name="Body">
+	  <stl:repeater xpath="/data/input">
+		<stl:story>
+		  <stl:p>========================= <stl:field xpath="."/> =========================</stl:p>
+		  <stl:fragment src="link:/empty.svg" selector="/item[1]">
+			<stl:script language="js">
+			  'use strict';
+			  var empower = require('wd:/empower');
+			  var item = require('layout').item();
+			  var input = require('data').dump('string(.)');
+			  item.Uri = empower.convert(input);
+			</stl:script>
+		  </stl:fragment>
+		</stl:story>
+	  </stl:repeater>
+	</stl:story>
+	<stl:page w="540pt" h="820pt">
+	  <stl:text x="20pt" y="20pt" w="500pt" h="800pt" story="Body" style="fill:lightcyan"/>
+	</stl:page>	
+  </stl:document>
+</stl:stl>

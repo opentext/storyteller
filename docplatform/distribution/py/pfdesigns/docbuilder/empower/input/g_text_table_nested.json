@@ -1,0 +1,1134 @@
+{
+  "m_lTableNumber": 21,
+  "m_strName": "",
+  "m_ePageType": 1,
+  "m_iDesignResolution": 1000,
+  "m_Size": {
+    "width": 3600,
+    "height": 1000
+  },
+  "m_bSendDefault": true,
+  "m_refUsageRule": 0,
+  "m_scopedMessageTemplate": 1,
+  "contents": {
+    "m_lResolution": 1000,
+    "m_bTextOnly": false,
+    "m_lWidth": 3600,
+    "m_lHeight": 1000,
+    "m_lTopMargin": 0,
+    "m_lBottomMargin": 0,
+    "m_lGrowMaxY": 1000,
+    "m_bHasDynamicBottom": false,
+    "m_bAllStatic": false,
+    "m_bHasStatic": false,
+    "m_iGrowth": 0,
+    "m_DrawFront": [
+      {
+        "m_eComponentType": 14,
+        "m_eDynamic": 40,
+        "m_pDrawObj": {
+          "m_bAutoSizeX": false,
+          "m_bAutoSizeY": true,
+          "m_rectPosition": {
+            "left": 1000,
+            "right": 2000,
+            "top": 500,
+            "bottom": 698
+          },
+          "m_pEditableProps": {
+            "m_eEditChangeType": 1,
+            "m_bCanType": true,
+            "m_eTextField": 3,
+            "m_bCanChangeFormat": true,
+            "m_bCanChangeProperties": false,
+            "m_iCanDoObjProps": 0,
+            "m_msLink": "",
+            "m_eLinkType": 1,
+            "m_oiLink": 0,
+            "editor_isEdited": true
+          },
+          "m_UNITSPERINCH": 1000,
+          "m_iLogicalRes": 1000,
+          "m_iDesignRes": 1000,
+          "m_bPen": true,
+          "m_iPenWidth": 0,
+          "m_eFrameStyle": 0,
+          "m_iPenStyle": 0,
+          "m_clrPen": {
+            "m_eColorModel": 0,
+            "m_lColor": 0
+          },
+          "m_iFrameStyleExtent": 0,
+          "m_iLeftMargin": 0,
+          "m_iRightMargin": 0,
+          "m_iTopMargin": 0,
+          "m_iBottomMargin": 0,
+          "m_bBackGroundTransparent": true,
+          "m_bHideEmpty": false,
+          "m_ParaValues": [
+            {
+              "m_iEditAreaNdx": -1,
+              "iNumbering": 0,
+              "iDefaultTab": 250,
+              "iBulletFont": -1
+            }
+          ],
+          "m_TextFonts": [
+            {
+              "strName": "Lato",
+              "iTracking": 0,
+              "clrFontColor": {
+                "m_eColorModel": 0,
+                "m_lColor": 0
+              },
+              "iFontHeight10X": 100,
+              "bBold": false,
+              "bItalic": false,
+              "bUnderline": false
+            },
+            {
+              "oiFont": 95,
+              "strName": "Lato",
+              "iTracking": 0,
+              "clrFontColor": {
+                "m_eColorModel": 0,
+                "m_lColor": 0
+              },
+              "iFontHeight10X": 100,
+              "bBold": false,
+              "bUnderline": false,
+              "bItalic": false,
+              "bStrikeThru": false,
+              "uUnderWgt": 0,
+              "sUnderPos": -32768,
+              "iAscent": 41,
+              "iDescent": 9,
+              "iLeading": 0
+            }
+          ],
+          "m_Colors": [
+            {
+              "m_eColorModel": 0,
+              "m_lColor": 0
+            },
+            {
+              "m_eColorModel": 0,
+              "m_lColor": 12648192
+            },
+            {
+              "m_eColorModel": 0,
+              "m_lColor": 255
+            }
+          ],
+          "m_cChars": [
+            0,
+            0,
+            1,
+            0,
+            72,
+            101,
+            108,
+            108,
+            111,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "m_sXPos": [
+            -244,
+            0,
+            -62,
+            -63,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -251,
+            0,
+            -106,
+            0,
+            -64
+          ],
+          "m_oiLayer": 0,
+          "m_pObjs": [
+            {
+              "iDbDrawObjVersion": -174,
+              "m_oiID": 6,
+              "m_rectPosition": {
+                "left": 0,
+                "top": 0,
+                "right": 954,
+                "bottom": 250
+              },
+              "m_iCurrentAngle": 0,
+              "m_bFlipH": false,
+              "m_bFlipV": false,
+              "m_bHAutoSize": false,
+              "m_bVAutoSize": true,
+              "m_eUserSizable": 3,
+              "m_UNITSPERINCH": 1000,
+              "m_ePosRelToAbove": 0,
+              "m_iRelPosReqdY": 0,
+              "m_bPen": true,
+              "m_iPenStyle": 0,
+              "m_iPenWidth": 1,
+              "m_clrPen": {
+                "m_eColorModel": 0,
+                "m_lColor": 0
+              },
+              "m_bBrush": false,
+              "m_iBrushFillType": 0,
+              "m_clrBrushFill": {
+                "m_eColorModel": 0,
+                "m_lColor": 12632256
+              },
+              "m_iBrushHatch": 0,
+              "m_bDuplex": false,
+              "m_oiRef1": 0,
+              "m_oiRef2": 0,
+              "m_bCanSplit": false,
+              "m_eFlowTargetType": 1,
+              "m_iSizeMinimum": 0,
+              "m_iSizeMaximum": 11000,
+              "m_clrShadow": {
+                "m_eColorModel": 0,
+                "m_lColor": 12632256
+              },
+              "m_eShadow": 0,
+              "m_iShadowFill": 0,
+              "m_bDragProportional": false,
+              "m_eFlowAround": 0,
+              "m_eFlowBreak": 0,
+              "m_eAnchor": 0,
+              "m_eLocked": 0,
+              "bRule": false,
+              "m_eDynamic": 41,
+              "m_eDelayComp": 0,
+              "m_sName": "Table",
+              "m_eIgnoreRelative": 1,
+              "m_iFlowBreakMargin": 0,
+              "m_bEnableChecksum": false,
+              "m_sHyperlink": "",
+              "m_eHyperlinkType": 0,
+              "m_oiHyperlinkVar": 0,
+              "m_bHyperlinkNewWindow": false,
+              "m_iOwnedBy": 5177914,
+              "m_iMinFlowSize": 0,
+              "m_eEmbedInfo": 0,
+              "m_oiAssociatedObjectID": 0,
+              "m_oiLayer": 0,
+              "m_cOverlapFlags": 0,
+              "m_aSubscribe": [],
+              "m_bHidden": false,
+              "m_oiVisibleVariable": 0,
+              "m_bIsLiveEditable": true,
+              "m_pEditableProps": {
+                "iVersion": 121,
+                "m_eCanBeHidden": 0,
+                "m_bCanBeResized": false,
+                "m_bCanBeMoved": false,
+                "m_eEditChangeType": 1,
+                "m_bCanChangeFormat": true,
+                "m_bCanType": true,
+                "m_bCanChangeProperties": false,
+                "m_eValidation, enumLiveValidation": 0,
+                "m_oiContentVariable": 0,
+                "m_iBegin": 0,
+                "m_iEnd": 0,
+                "m_eContentPickType": 6,
+                "m_iCanDoObjProps": 0,
+                "m_eListListType": 0,
+                "m_msToolTip": "",
+                "m_oiListReturnVariable": 0,
+                "m_bLinkVisited": false,
+                "m_oiListDisplayVariable": 0,
+                "m_bAllowMultiselect": false,
+                "m_bUseSortedList": false,
+                "m_ListItems": {
+                  "iVersion": 101,
+                  "m_pListItems": []
+                },
+                "m_oiEnableVariable": 0,
+                "m_bChanged": false,
+                "m_msLink": "",
+                "m_bCanBeRotated": false,
+                "m_eTextField": 3,
+                "m_iMinimumTextWidth": 100,
+                "m_msName": "",
+                "m_oiSelectionVariable": 0,
+                "m_ePromptType": 1,
+                "m_msSelectionValue": "",
+                "m_bHiddenByUser": false,
+                "m_bValid": true,
+                "m_iContentVarIndex": 0,
+                "m_eLinkType": 0,
+                "m_oiLink": 0,
+                "m_msFormMask": "",
+                "m_eFormFieldSource": 0,
+                "m_oiFormField": 0,
+                "m_FormFieldInfoLocal": {
+                  "iVersion": 102,
+                  "m_eCombType": 1,
+                  "m_clrLine": {
+                    "m_eColorModel": 0,
+                    "m_lColor": 0
+                  },
+                  "m_clrFill": {
+                    "m_eColorModel": 0,
+                    "m_lColor": 12895428
+                  },
+                  "m_iLineWidth": 1,
+                  "m_bFill": false,
+                  "m_bAutoSize": true,
+                  "m_iFormSpace": 10,
+                  "m_iFormHeight": 200,
+                  "m_iFormWidth": 100,
+                  "m_bAllowFormInsert": true
+                },
+                "m_oiStartButtonFunction": 0,
+                "m_oiEndButtonFunction": 0,
+                "m_msLiveCaption": "",
+                "m_eInheritance": 1,
+                "m_iTabOrderID": 3,
+                "m_bShowTabInDesigner": 1,
+                "m_bAllowTabStop": 1,
+                "m_msUploadPrompt": "",
+                "m_bInLibrary": false,
+                "m_lTableNumber": 270,
+                "m_oi": 0,
+                "m_strName": "",
+                "m_dtExpires": {
+                  "m_dt": 0,
+                  "m_status": 2
+                },
+                "m_bIsDBCSMode": false,
+                "m_ownsObjectRefMetadata": [],
+                "m_bExcludeFromOutlineTree": false,
+                "m_bCanChangeTextProperties": false,
+                "m_bRequireComment": false,
+                "m_oiObjPropsVarOIs": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "m_ePageNameMethod": 0,
+                "m_oiPageNameVariable": 0,
+                "m_msPageNameStatic": "",
+                "editor_isEdited": true
+              },
+              "m_bLightenOnHoverOver": false,
+              "m_iTabOrder": 2,
+              "m_iNextEditAreaID": 4,
+              "m_iTabObjectID": 5,
+              "m_iCurrentVarIndex": 0,
+              "m_bNoFillAbove": false,
+              "m_bNoFillBelow": false,
+              "m_bNoFillBetween": false,
+              "bCanHaveMetaData": true,
+              "m_pMetaProps": {
+                "iVersion": 103,
+                "m_iOrder": 1,
+                "m_eMetaOpts": 2,
+                "m_strAltText": "",
+                "m_eMetaLanguage": 0,
+                "m_ePDFTag": 0
+              },
+              "m_refManyMetadata": [],
+              "m_oiCommentRevision": 0,
+              "m_pPdfBookmarkEntry": null,
+              "m_iDesignVarIndex": 0,
+              "m_bForceDynamicFlow": false,
+              "m_bProductOfDxfImport": false,
+              "m_eLateCompose": 0,
+              "m_bInAvailableObjects": false,
+              "m_oiHyperlinkAnchorVar": 0,
+              "iVersionDbDrawTable": -108,
+              "m_eTitlePos": 0,
+              "m_iTitleHeight": 300,
+              "m_bAlternateFill": false,
+              "m_bRemoveEmptyRows": false,
+              "m_Cells": [
+                {
+                  "m_pTextDraw": {
+                    "m_bAutoSizeX": false,
+                    "m_bAutoSizeY": false,
+                    "m_rectPosition": {
+                      "left": 0,
+                      "right": 1000,
+                      "top": 0,
+                      "bottom": 1000
+                    },
+                    "m_pEditableProps": {
+                      "m_eEditChangeType": 1,
+                      "m_bCanType": true,
+                      "m_eTextField": 3,
+                      "m_bCanChangeFormat": true,
+                      "m_bCanChangeProperties": false,
+                      "m_iCanDoObjProps": 0,
+                      "m_msLink": "",
+                      "m_eLinkType": 1,
+                      "m_oiLink": 0
+                    },
+                    "m_UNITSPERINCH": 1000,
+                    "m_iLogicalRes": 1000,
+                    "m_iDesignRes": 1000,
+                    "m_bPen": false,
+                    "m_iPenWidth": 0,
+                    "m_eFrameStyle": 0,
+                    "m_iPenStyle": 0,
+                    "m_clrPen": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_iFrameStyleExtent": 0,
+                    "m_iLeftMargin": 0,
+                    "m_iRightMargin": 0,
+                    "m_iTopMargin": 0,
+                    "m_iBottomMargin": 0,
+                    "m_bBackGroundTransparent": true,
+                    "m_bHideEmpty": false,
+                    "m_ParaValues": [
+                      {
+                        "m_iEditAreaNdx": -1,
+                        "iNumbering": 0,
+                        "iDefaultTab": 250,
+                        "iBulletFont": -1,
+                        "iJustification": 2
+                      }
+                    ],
+                    "m_TextFonts": [
+                      {
+                        "strName": "Lato",
+                        "iTracking": 0,
+                        "clrFontColor": {
+                          "m_eColorModel": 0,
+                          "m_lColor": 0
+                        },
+                        "iFontHeight10X": 100,
+                        "bBold": false,
+                        "bItalic": false,
+                        "bUnderline": false
+                      },
+                      {
+                        "oiFont": 95,
+                        "strName": "Lato",
+                        "iTracking": 0,
+                        "clrFontColor": {
+                          "m_eColorModel": 0,
+                          "m_lColor": 0
+                        },
+                        "iFontHeight10X": 100,
+                        "bBold": false,
+                        "bUnderline": false,
+                        "bItalic": false,
+                        "bStrikeThru": false,
+                        "uUnderWgt": 0,
+                        "sUnderPos": -32768,
+                        "iAscent": 41,
+                        "iDescent": 9,
+                        "iLeading": 0
+                      }
+                    ],
+                    "m_Colors": [
+                      {
+                        "m_eColorModel": 0,
+                        "m_lColor": 0
+                      },
+                      {
+                        "m_eColorModel": 0,
+                        "m_lColor": 12648192
+                      },
+                      {
+                        "m_eColorModel": 0,
+                        "m_lColor": 255
+                      }
+                    ],
+                    "m_cChars": [
+                      0,
+                      0,
+                      1,
+                      0,
+                      79,
+                      112,
+                      101,
+                      110,
+                      0
+                    ],
+                    "m_sXPos": [
+                      -244,
+                      0,
+                      -62,
+                      -63,
+                      0,
+                      0,
+                      0,
+                      0,
+                      -64
+                    ],
+                    "m_oiLayer": 0,
+                    "m_pObjs": [],
+                    "m_Objs": [],
+                    "m_Links": [],
+                    "m_iWidth": 477,
+                    "m_VarProps": [],
+                    "m_ppEditableAreas": [],
+                    "m_Rules": []
+                  },
+                  "iVersionDbTableCell": -105,
+                  "m_iColumn": 0,
+                  "m_iRow": 0,
+                  "m_sCellRule": "",
+                  "m_lFrameStyle": 0,
+                  "m_numCols": 1,
+                  "m_bOverlapCell": false,
+                  "m_iCellWidth": 0,
+                  "m_eComposeTime": 0,
+                  "m_eCellTotalVarUse": 0,
+                  "m_eCellSplit": 0,
+                  "m_eCellOverlapHdrPosition": 0,
+                  "m_oiAutoJoinEqual": 0,
+                  "m_FrameSegShape": {
+                    "iVersion": 101,
+                    "m_eShape": -1,
+                    "m_rect": {
+                      "left": 0,
+                      "top": 0,
+                      "right": 0,
+                      "bottom": 0
+                    },
+                    "m_ecpCornerMask": 0,
+                    "m_ppSegments": []
+                  },
+                  "m_iCurrentVarIndex": 0,
+                  "m_pMetaProps": {
+                    "iVersion": 103,
+                    "m_iOrder": 1,
+                    "m_eMetaOpts": 2,
+                    "m_strAltText": "",
+                    "m_eMetaLanguage": 0,
+                    "m_ePDFTag": 0
+                  }
+                },
+                {
+                  "m_pTextDraw": {
+                    "m_bAutoSizeX": false,
+                    "m_bAutoSizeY": false,
+                    "m_rectPosition": {
+                      "left": 0,
+                      "right": 1000,
+                      "top": 0,
+                      "bottom": 1000
+                    },
+                    "m_pEditableProps": {
+                      "m_eEditChangeType": 1,
+                      "m_bCanType": true,
+                      "m_eTextField": 3,
+                      "m_bCanChangeFormat": true,
+                      "m_bCanChangeProperties": false,
+                      "m_iCanDoObjProps": 0,
+                      "m_msLink": "",
+                      "m_eLinkType": 1,
+                      "m_oiLink": 0
+                    },
+                    "m_UNITSPERINCH": 1000,
+                    "m_iLogicalRes": 1000,
+                    "m_iDesignRes": 1000,
+                    "m_bPen": false,
+                    "m_iPenWidth": 0,
+                    "m_eFrameStyle": 0,
+                    "m_iPenStyle": 0,
+                    "m_clrPen": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_iFrameStyleExtent": 0,
+                    "m_iLeftMargin": 0,
+                    "m_iRightMargin": 0,
+                    "m_iTopMargin": 0,
+                    "m_iBottomMargin": 0,
+                    "m_bBackGroundTransparent": true,
+                    "m_bHideEmpty": false,
+                    "m_ParaValues": [
+                      {
+                        "m_iEditAreaNdx": -1,
+                        "iNumbering": 0,
+                        "iDefaultTab": 250,
+                        "iBulletFont": -1,
+                        "iJustification": 2
+                      }
+                    ],
+                    "m_TextFonts": [
+                      {
+                        "strName": "Lato",
+                        "iTracking": 0,
+                        "clrFontColor": {
+                          "m_eColorModel": 0,
+                          "m_lColor": 0
+                        },
+                        "iFontHeight10X": 100,
+                        "bBold": false,
+                        "bItalic": false,
+                        "bUnderline": false
+                      },
+                      {
+                        "oiFont": 95,
+                        "strName": "Lato",
+                        "iTracking": 0,
+                        "clrFontColor": {
+                          "m_eColorModel": 0,
+                          "m_lColor": 0
+                        },
+                        "iFontHeight10X": 100,
+                        "bBold": false,
+                        "bUnderline": false,
+                        "bItalic": false,
+                        "bStrikeThru": false,
+                        "uUnderWgt": 0,
+                        "sUnderPos": -32768,
+                        "iAscent": 41,
+                        "iDescent": 9,
+                        "iLeading": 0
+                      }
+                    ],
+                    "m_Colors": [
+                      {
+                        "m_eColorModel": 0,
+                        "m_lColor": 0
+                      },
+                      {
+                        "m_eColorModel": 0,
+                        "m_lColor": 12648192
+                      },
+                      {
+                        "m_eColorModel": 0,
+                        "m_lColor": 255
+                      }
+                    ],
+                    "m_cChars": [
+                      0,
+                      0,
+                      1,
+                      0,
+                      116,
+                      101,
+                      120,
+                      116,
+                      0
+                    ],
+                    "m_sXPos": [
+                      -244,
+                      0,
+                      -62,
+                      -63,
+                      0,
+                      0,
+                      0,
+                      0,
+                      -64
+                    ],
+                    "m_oiLayer": 0,
+                    "m_pObjs": [],
+                    "m_Objs": [],
+                    "m_Links": [],
+                    "m_iWidth": 477,
+                    "m_VarProps": [],
+                    "m_ppEditableAreas": [],
+                    "m_Rules": []
+                  },
+                  "iVersionDbTableCell": -105,
+                  "m_iColumn": 1,
+                  "m_iRow": 0,
+                  "m_sCellRule": "",
+                  "m_lFrameStyle": 0,
+                  "m_numCols": 1,
+                  "m_bOverlapCell": false,
+                  "m_iCellWidth": 0,
+                  "m_eComposeTime": 0,
+                  "m_eCellTotalVarUse": 0,
+                  "m_eCellSplit": 0,
+                  "m_eCellOverlapHdrPosition": 0,
+                  "m_oiAutoJoinEqual": 0,
+                  "m_FrameSegShape": {
+                    "iVersion": 101,
+                    "m_eShape": -1,
+                    "m_rect": {
+                      "left": 0,
+                      "top": 0,
+                      "right": 0,
+                      "bottom": 0
+                    },
+                    "m_ecpCornerMask": 0,
+                    "m_ppSegments": []
+                  },
+                  "m_iCurrentVarIndex": 0,
+                  "m_pMetaProps": {
+                    "iVersion": 103,
+                    "m_iOrder": 1,
+                    "m_eMetaOpts": 2,
+                    "m_strAltText": "",
+                    "m_eMetaLanguage": 0,
+                    "m_ePDFTag": 0
+                  }
+                }
+              ],
+              "m_Columns": [
+                {
+                  "iVersion": -103,
+                  "m_iWidth": 477,
+                  "m_iLineLeft": -1,
+                  "m_iLineRight": -1,
+                  "m_clrLeft": {
+                    "m_eColorModel": 0,
+                    "m_lColor": 0
+                  },
+                  "m_clrRight": {
+                    "m_eColorModel": 0,
+                    "m_lColor": 0
+                  },
+                  "m_iWeightLeft": 1,
+                  "m_iWeightRight": 1,
+                  "m_oiRuleSaved": 0,
+                  "m_eAutoWidth": 0,
+                  "m_iMaxAutoWidth": 100000,
+                  "m_iMinAutoWidth": 0,
+                  "m_eAutoColumnType": 0,
+                  "m_eRepeatMethod": 0,
+                  "m_iNumRepeat": 1,
+                  "m_oiRepeatVar": 0,
+                  "m_bPageBegin": false,
+                  "m_iOrphanColumns": 0,
+                  "m_oiBreakVar": 0,
+                  "m_bGrouped": false,
+                  "m_iGroupedColumnMode": 0,
+                  "m_eRuleStatus": 0,
+                  "m_pEditableProps": {
+                    "iVersion": 121,
+                    "m_eCanBeHidden": 0,
+                    "m_bCanBeResized": false,
+                    "m_bCanBeMoved": false,
+                    "m_eEditChangeType": 0,
+                    "m_bCanChangeFormat": false,
+                    "m_bCanType": false,
+                    "m_bCanChangeProperties": false,
+                    "m_eValidation, enumLiveValidation": 0,
+                    "m_oiContentVariable": 0,
+                    "m_iBegin": 0,
+                    "m_iEnd": 0,
+                    "m_eContentPickType": 6,
+                    "m_iCanDoObjProps": 0,
+                    "m_eListListType": 0,
+                    "m_msToolTip": "",
+                    "m_oiListReturnVariable": 0,
+                    "m_bLinkVisited": false,
+                    "m_oiListDisplayVariable": 0,
+                    "m_bAllowMultiselect": false,
+                    "m_bUseSortedList": false,
+                    "m_ListItems": {
+                      "iVersion": 101,
+                      "m_pListItems": []
+                    },
+                    "m_oiEnableVariable": 0,
+                    "m_bChanged": false,
+                    "m_msLink": "",
+                    "m_bCanBeRotated": false,
+                    "m_eTextField": 0,
+                    "m_iMinimumTextWidth": 100,
+                    "m_msName": "",
+                    "m_oiSelectionVariable": 0,
+                    "m_ePromptType": 0,
+                    "m_msSelectionValue": "",
+                    "m_bHiddenByUser": false,
+                    "m_bValid": true,
+                    "m_iContentVarIndex": 0,
+                    "m_eLinkType": 0,
+                    "m_oiLink": 0,
+                    "m_msFormMask": "",
+                    "m_eFormFieldSource": 0,
+                    "m_oiFormField": 0,
+                    "m_FormFieldInfoLocal": {
+                      "iVersion": 102,
+                      "m_eCombType": 1,
+                      "m_clrLine": {
+                        "m_eColorModel": 0,
+                        "m_lColor": 0
+                      },
+                      "m_clrFill": {
+                        "m_eColorModel": 0,
+                        "m_lColor": 12895428
+                      },
+                      "m_iLineWidth": 1,
+                      "m_bFill": false,
+                      "m_bAutoSize": true,
+                      "m_iFormSpace": 10,
+                      "m_iFormHeight": 200,
+                      "m_iFormWidth": 100,
+                      "m_bAllowFormInsert": true
+                    },
+                    "m_oiStartButtonFunction": 0,
+                    "m_oiEndButtonFunction": 0,
+                    "m_msLiveCaption": "",
+                    "m_eInheritance": 1,
+                    "m_iTabOrderID": 0,
+                    "m_bShowTabInDesigner": 1,
+                    "m_bAllowTabStop": 1,
+                    "m_msUploadPrompt": "",
+                    "m_bInLibrary": false,
+                    "m_lTableNumber": 270,
+                    "m_oi": 0,
+                    "m_strName": "",
+                    "m_dtExpires": {
+                      "m_dt": 0,
+                      "m_status": 2
+                    },
+                    "m_bIsDBCSMode": false,
+                    "m_ownsObjectRefMetadata": [],
+                    "m_bExcludeFromOutlineTree": false,
+                    "m_bCanChangeTextProperties": false,
+                    "m_bRequireComment": false,
+                    "m_oiObjPropsVarOIs": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    "m_ePageNameMethod": 0,
+                    "m_oiPageNameVariable": 0,
+                    "m_msPageNameStatic": ""
+                  }
+                },
+                {
+                  "iVersion": -103,
+                  "m_iWidth": 477,
+                  "m_iLineLeft": -1,
+                  "m_iLineRight": -1,
+                  "m_clrLeft": {
+                    "m_eColorModel": 0,
+                    "m_lColor": 0
+                  },
+                  "m_clrRight": {
+                    "m_eColorModel": 0,
+                    "m_lColor": 0
+                  },
+                  "m_iWeightLeft": 1,
+                  "m_iWeightRight": 1,
+                  "m_oiRuleSaved": 0,
+                  "m_eAutoWidth": 0,
+                  "m_iMaxAutoWidth": 100000,
+                  "m_iMinAutoWidth": 0,
+                  "m_eAutoColumnType": 0,
+                  "m_eRepeatMethod": 0,
+                  "m_iNumRepeat": 1,
+                  "m_oiRepeatVar": 0,
+                  "m_bPageBegin": false,
+                  "m_iOrphanColumns": 0,
+                  "m_oiBreakVar": 0,
+                  "m_bGrouped": false,
+                  "m_iGroupedColumnMode": 0,
+                  "m_eRuleStatus": 0,
+                  "m_pEditableProps": {
+                    "iVersion": 121,
+                    "m_eCanBeHidden": 0,
+                    "m_bCanBeResized": false,
+                    "m_bCanBeMoved": false,
+                    "m_eEditChangeType": 0,
+                    "m_bCanChangeFormat": false,
+                    "m_bCanType": false,
+                    "m_bCanChangeProperties": false,
+                    "m_eValidation, enumLiveValidation": 0,
+                    "m_oiContentVariable": 0,
+                    "m_iBegin": 0,
+                    "m_iEnd": 0,
+                    "m_eContentPickType": 6,
+                    "m_iCanDoObjProps": 0,
+                    "m_eListListType": 0,
+                    "m_msToolTip": "",
+                    "m_oiListReturnVariable": 0,
+                    "m_bLinkVisited": false,
+                    "m_oiListDisplayVariable": 0,
+                    "m_bAllowMultiselect": false,
+                    "m_bUseSortedList": false,
+                    "m_ListItems": {
+                      "iVersion": 101,
+                      "m_pListItems": []
+                    },
+                    "m_oiEnableVariable": 0,
+                    "m_bChanged": false,
+                    "m_msLink": "",
+                    "m_bCanBeRotated": false,
+                    "m_eTextField": 0,
+                    "m_iMinimumTextWidth": 100,
+                    "m_msName": "",
+                    "m_oiSelectionVariable": 0,
+                    "m_ePromptType": 0,
+                    "m_msSelectionValue": "",
+                    "m_bHiddenByUser": false,
+                    "m_bValid": true,
+                    "m_iContentVarIndex": 0,
+                    "m_eLinkType": 0,
+                    "m_oiLink": 0,
+                    "m_msFormMask": "",
+                    "m_eFormFieldSource": 0,
+                    "m_oiFormField": 0,
+                    "m_FormFieldInfoLocal": {
+                      "iVersion": 102,
+                      "m_eCombType": 1,
+                      "m_clrLine": {
+                        "m_eColorModel": 0,
+                        "m_lColor": 0
+                      },
+                      "m_clrFill": {
+                        "m_eColorModel": 0,
+                        "m_lColor": 12895428
+                      },
+                      "m_iLineWidth": 1,
+                      "m_bFill": false,
+                      "m_bAutoSize": true,
+                      "m_iFormSpace": 10,
+                      "m_iFormHeight": 200,
+                      "m_iFormWidth": 100,
+                      "m_bAllowFormInsert": true
+                    },
+                    "m_oiStartButtonFunction": 0,
+                    "m_oiEndButtonFunction": 0,
+                    "m_msLiveCaption": "",
+                    "m_eInheritance": 1,
+                    "m_iTabOrderID": 0,
+                    "m_bShowTabInDesigner": 1,
+                    "m_bAllowTabStop": 1,
+                    "m_msUploadPrompt": "",
+                    "m_bInLibrary": false,
+                    "m_lTableNumber": 270,
+                    "m_oi": 0,
+                    "m_strName": "",
+                    "m_dtExpires": {
+                      "m_dt": 0,
+                      "m_status": 2
+                    },
+                    "m_bIsDBCSMode": false,
+                    "m_ownsObjectRefMetadata": [],
+                    "m_bExcludeFromOutlineTree": false,
+                    "m_bCanChangeTextProperties": false,
+                    "m_bRequireComment": false,
+                    "m_oiObjPropsVarOIs": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    "m_ePageNameMethod": 0,
+                    "m_oiPageNameVariable": 0,
+                    "m_msPageNameStatic": ""
+                  }
+                }
+              ],
+              "m_Rows": [
+                {
+                  "iVersion": -109,
+                  "m_iHeight": 250,
+                  "m_iLineAbove": -1,
+                  "m_iLineBelow": -1,
+                  "m_clrAbove": {
+                    "m_eColorModel": 0,
+                    "m_lColor": 0
+                  },
+                  "m_clrBelow": {
+                    "m_eColorModel": 0,
+                    "m_lColor": 0
+                  },
+                  "m_iWeightAbove": 1,
+                  "m_iWeightBelow": 1,
+                  "m_eJoined": 0,
+                  "m_bRowSplit": false,
+                  "m_bCellsSized": false,
+                  "m_eRowType": 0,
+                  "m_eAutoSize": 0,
+                  "m_iRepeatVarCount": 1,
+                  "m_iSerpentineCells": 1,
+                  "m_eSectionUse": 0,
+                  "m_sSectionName": "",
+                  "m_oiSectionRefVar": 0,
+                  "m_bPageBegin": false,
+                  "m_eSpecialRowProps": 0,
+                  "m_oiRuleSaved": 0,
+                  "m_bGrouped": false,
+                  "m_eColumnFlow": 2,
+                  "m_bFixedSize": false,
+                  "m_iGroupedRowMode": 0,
+                  "m_sFilter": "",
+                  "m_bLegBox": false,
+                  "m_colorLegend": {
+                    "m_eColorModel": 0,
+                    "m_lColor": 0
+                  },
+                  "m_styleLegend": 0,
+                  "m_eOverlap": 0,
+                  "m_pTableCells": [],
+                  "m_bSectionCollapsed": false,
+                  "m_iRepeatVarIndex": false,
+                  "m_iNumDivRepeatRows": 4,
+                  "m_pRowIncludeInfo": [],
+                  "m_pEditableProps": {
+                    "iVersion": 121,
+                    "m_eCanBeHidden": 0,
+                    "m_bCanBeResized": false,
+                    "m_bCanBeMoved": false,
+                    "m_eEditChangeType": 0,
+                    "m_bCanChangeFormat": false,
+                    "m_bCanType": false,
+                    "m_bCanChangeProperties": false,
+                    "m_eValidation, enumLiveValidation": 0,
+                    "m_oiContentVariable": 0,
+                    "m_iBegin": 0,
+                    "m_iEnd": 0,
+                    "m_eContentPickType": 6,
+                    "m_iCanDoObjProps": 0,
+                    "m_eListListType": 0,
+                    "m_msToolTip": "",
+                    "m_oiListReturnVariable": 0,
+                    "m_bLinkVisited": false,
+                    "m_oiListDisplayVariable": 0,
+                    "m_bAllowMultiselect": false,
+                    "m_bUseSortedList": false,
+                    "m_ListItems": {
+                      "iVersion": 101,
+                      "m_pListItems": []
+                    },
+                    "m_oiEnableVariable": 0,
+                    "m_bChanged": false,
+                    "m_msLink": "",
+                    "m_bCanBeRotated": false,
+                    "m_eTextField": 0,
+                    "m_iMinimumTextWidth": 100,
+                    "m_msName": "",
+                    "m_oiSelectionVariable": 0,
+                    "m_ePromptType": 0,
+                    "m_msSelectionValue": "",
+                    "m_bHiddenByUser": false,
+                    "m_bValid": true,
+                    "m_iContentVarIndex": 0,
+                    "m_eLinkType": 0,
+                    "m_oiLink": 0,
+                    "m_msFormMask": "",
+                    "m_eFormFieldSource": 0,
+                    "m_oiFormField": 0,
+                    "m_FormFieldInfoLocal": {
+                      "iVersion": 102,
+                      "m_eCombType": 1,
+                      "m_clrLine": {
+                        "m_eColorModel": 0,
+                        "m_lColor": 0
+                      },
+                      "m_clrFill": {
+                        "m_eColorModel": 0,
+                        "m_lColor": 12895428
+                      },
+                      "m_iLineWidth": 1,
+                      "m_bFill": false,
+                      "m_bAutoSize": true,
+                      "m_iFormSpace": 10,
+                      "m_iFormHeight": 200,
+                      "m_iFormWidth": 100,
+                      "m_bAllowFormInsert": true
+                    },
+                    "m_oiStartButtonFunction": 0,
+                    "m_oiEndButtonFunction": 0,
+                    "m_msLiveCaption": "",
+                    "m_eInheritance": 1,
+                    "m_iTabOrderID": 0,
+                    "m_bShowTabInDesigner": 1,
+                    "m_bAllowTabStop": 1,
+                    "m_msUploadPrompt": "",
+                    "m_bInLibrary": false,
+                    "m_lTableNumber": 270,
+                    "m_oi": 0,
+                    "m_strName": "",
+                    "m_dtExpires": {
+                      "m_dt": 0,
+                      "m_status": 2
+                    },
+                    "m_bIsDBCSMode": false,
+                    "m_ownsObjectRefMetadata": [],
+                    "m_bExcludeFromOutlineTree": false,
+                    "m_bCanChangeTextProperties": false,
+                    "m_bRequireComment": false,
+                    "m_oiObjPropsVarOIs": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    "m_ePageNameMethod": 0,
+                    "m_oiPageNameVariable": 0,
+                    "m_msPageNameStatic": ""
+                  }
+                }
+              ],
+              "m_oiSortVar": 0,
+              "m_ndxSortVar": 1,
+              "m_eFrameStyle": 0,
+              "m_bEnableLegendBoxes": false,
+              "m_iLegendBoxPos": 200,
+              "m_iLegendBoxPosY": 100,
+              "m_iLegendBoxSize": 150,
+              "m_eLegendFrameStyle": 0,
+              "m_colorLegendFrame": {
+                "m_eColorModel": 0,
+                "m_lColor": 0
+              },
+              "m_pAllPageTotalVarInfo": [],
+              "m_bKeepGroupsTogether": false,
+              "m_eTableType": 1,
+              "m_bEnableDataSections": true,
+              "m_eBreakFlowHorz": 0,
+              "m_bAutoFitWidth": false,
+              "m_iAutoWidth": 6000,
+              "m_iTableBreakDelta": 0,
+              "m_bUsesSysTableCol": false,
+              "m_iFrameStyleExtent": 1,
+              "m_bIgnoreOrphansWithSerpentineRows": false,
+              "m_bRTFTable": false
+            }
+          ],
+          "m_Objs": [
+            {
+              "m_iObjType": 5,
+              "m_eAnchor": 6
+            }
+          ],
+          "m_Links": [],
+          "m_oiID": 0,
+          "m_VarProps": [],
+          "m_ppEditableAreas": [],
+          "m_Rules": []
+        }
+      }
+    ],
+    "m_FrontRelNdx": [],
+    "m_iFrontBottomMin": 101,
+    "m_iFrontStaticBottom": 750,
+    "m_iFrontDynBottom": 750,
+    "m_bHasFlowLists": false,
+    "m_FrontFlowControls": []
+  },
+  "rule": null
+}

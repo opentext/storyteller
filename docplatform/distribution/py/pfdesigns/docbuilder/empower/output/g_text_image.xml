@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+    <stl:page w="3.6in" h="2in">
+      <stl:text x="1in" y="0.5in" w="1in" h="0.198in" style="border: 1px solid #000000">
+        <stl:story>
+          <stl:p>
+            <stl:span style="font-family: Arial; font-size: 10pt">Hello</stl:span>
+          </stl:p>
+        </stl:story>
+      </stl:text>
+      <stl:image x="0.4in" y="1in" w="2.715in" h="0.5in" src="wd:/opentext.png"></stl:image>
+    </stl:page>
+  </stl:document>
+</stl:stl>

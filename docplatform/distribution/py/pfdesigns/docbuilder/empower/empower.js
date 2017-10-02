@@ -23,7 +23,7 @@ exports.convert = function convert(input, dump, raster) {
 	    // raster STL to a raster file
 	    var st = services.st(stl);
 	    var options = {
-		    selector: '/item[1]/item[1]', // select text item (first child of the first page)
+		    selector: '/item[1]', // select text item (first child of the first page)
 		    driver: {type: 'png', dpi: 96, pagemode: 'auto', compression: 6, background: 'white'},
 		    output: 'wd:/output/'+input+'.png'
 	    };

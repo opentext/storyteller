@@ -75,7 +75,7 @@ function css_format(css) {
     }).join('; ');
 }
 
-function css_color(col) {
+function css_color(col, map_black_as_null) {
     function hex(d) {
         return  ('0'+(d.toString(16))).slice(-2).toUpperCase();
     }
@@ -85,6 +85,8 @@ function css_color(col) {
     var r = col.m_lColor & 0xff;
     var g = (col.m_lColor>>8) & 0xff;
     var b = (col.m_lColor>>16) & 0xff;
+    if (map_black_as_null && !r && !b && !g)
+        return null;
     return '#'+hex(r)+hex(g)+hex(b);
 }
 
@@ -94,6 +96,7 @@ function unit2inch(v) {
 
 function css_reset() {
     return {
+        'color': null,
         'font-family': null,
         'font-size': null,
         'font-weight': null,
@@ -389,12 +392,17 @@ function StateStack(state) {
     };
 }
 
-function convert_bbox(rect, attrs) {
+function convert_pos(rect, attrs) {
     attrs = attrs || {};
     if (rect.left)
         attrs.x = unit2inch(rect.left);
     if (rect.top)
         attrs.y = unit2inch(rect.top);
+    return attrs;
+}
+
+function convert_dim(rect, attrs) {
+    attrs = attrs || {};
     if (rect.right)
         attrs.w = unit2inch(rect.right - rect.left);
     if (rect.bottom)
@@ -402,7 +410,14 @@ function convert_bbox(rect, attrs) {
     return attrs;
 }
 
-function convert_content(src, writer) {
+function convert_bbox(rect, attrs) {
+    attrs = attrs || {};
+    convert_pos(rect, attrs);
+    convert_dim(rect, attrs);
+    return attrs;
+}
+
+function convert_object(type, src, inserter) {
     function row_attrs(row) {
         var attrs = {};
         if (row.m_bFixedSize) {
@@ -418,58 +433,57 @@ function convert_content(src, writer) {
         return attrs;
     }
     
-    function convert_object(type, src, inserter) {
-        switch(type) {
-        case 5:  // table
-            var attrs = {};
-            // we do not convert table bbox, we convert row/column dimensions instead
-            //var attrs =convert_bbox(src.m_rectPosition);
-            var css = css_layout_item(src);
-            attrs.style = css_format(css);
-            inserter.push('table', attrs);
-            inserter.push('story');
-            src.m_Rows.forEach(function(row, r) {
-                inserter.push('row', row_attrs(row));
-                src.m_Columns.forEach(function(column, c) {
-                    var cell = src.m_Cells.find(function(cell) {
-                        return cell.m_iColumn === c && cell.m_iRow === r;
-                    });
-                    var attrs = {};
-                    if (r === 0)
-                        attrs.w = unit2inch(column.m_iWidth);
-                    var css = css_layout_item(cell.m_pTextDraw);
-                    css_cell_border(cell, row, column, css);
-                    attrs.style = css_format(css);
-                    inserter.push('cell', attrs);
-                    convert_content(cell.m_pTextDraw, inserter.writer());
-                    inserter.pop('cell');
+    switch(type) {
+    case 5:  // table
+        // we do not convert table width & height, we convert row/column dimensions instead
+        var attrs = convert_pos(src.m_rectPosition);
+        var css = css_layout_item(src);
+        attrs.style = css_format(css);
+        inserter.push('table', attrs);
+        inserter.push('story');
+        src.m_Rows.forEach(function(row, r) {
+            inserter.push('row', row_attrs(row));
+            src.m_Columns.forEach(function(column, c) {
+                var cell = src.m_Cells.find(function(cell) {
+                    return cell.m_iColumn === c && cell.m_iRow === r;
                 });
-                inserter.pop('row');
+                var attrs = {};
+                if (r === 0)
+                    attrs.w = unit2inch(column.m_iWidth);
+                var css = css_layout_item(cell.m_pTextDraw);
+                css_cell_border(cell, row, column, css);
+                attrs.style = css_format(css);
+                inserter.push('cell', attrs);
+                convert_content(cell.m_pTextDraw, inserter.writer());
+                inserter.pop('cell');
             });
-            inserter.pop('story');
-            inserter.pop('table');
-            break;
-        case 6:  // image
-            var attrs = convert_bbox(src.m_rectPosition);
-            attrs.src = 'cas:' + src.m_pDbBitmap.m_strCASId;
-            inserter.push('image', attrs);
-            inserter.pop('image');
-            break;
-        case 14: // text
-            var attrs = convert_bbox(src.m_rectPosition);
-            var css = css_layout_item(src);
-            attrs.style = css_format(css);
-            inserter.push('text', attrs);
-            inserter.push('story');
-            convert_content(src, inserter.writer());
-            inserter.pop('story');
-            inserter.pop('text');
-            break;
-        default:
-            throw new Error("Unsupported object type: " + type);
-        }
+            inserter.pop('row');
+        });
+        inserter.pop('story');
+        inserter.pop('table');
+        break;
+    case 6:  // image
+        var attrs = convert_bbox(src.m_rectPosition);
+        attrs.src = 'cas:' + src.m_pDbBitmap.m_strCASId;
+        inserter.push('image', attrs);
+        inserter.pop('image');
+        break;
+    case 14: // text
+        var attrs = convert_bbox(src.m_rectPosition);
+        var css = css_layout_item(src);
+        attrs.style = css_format(css);
+        inserter.push('text', attrs);
+        inserter.push('story');
+        convert_content(src, inserter.writer());
+        inserter.pop('story');
+        inserter.pop('text');
+        break;
+    default:
+        throw new Error("Unsupported object type: " + type);
     }
-    
+}
+
+function convert_content(src, writer) {    
     var inserter = ContentInserter(writer);
     src.m_cChars.forEach(function(code, index) {
         var cmd = src.m_sXPos[index];
@@ -505,7 +519,7 @@ function convert_content(src, writer) {
             inserter.paragraph_end();
             break;
         case -63: // set color
-            inserter.style_change({'color': css_color(src.m_Colors[code])});
+            inserter.style_change({'color': css_color(src.m_Colors[code], true)});
             break;
         case -62:  // font change
             inserter.style_change(css_charstyle(src.m_TextFonts[code]));
@@ -525,25 +539,70 @@ function convert_content(src, writer) {
 
 module.exports = function emp2stl(json, options) {
     options = options || {};
+
+    function content(writer, contents, options) {
+        var text = contents.m_pTextDraw;
+        
+        writer.start('story', {name: 'Main'});
+        convert_content(text, writer);
+        writer.end('story');
+        var attrs = convert_bbox(text.m_rectPosition);
+        if (options.page) {
+            writer.start('page', attrs);
+            var css = css_layout_item(text);
+            attrs.style = css_format(css);
+            attrs.story = 'Main';
+            writer.start('text', attrs);
+            writer.end('text');
+            writer.end('page');
+        }
+    }
+
+    function canvas(writer, contents, options) {       
+        var attrs = {
+            w: unit2inch(contents.m_lWidth),
+            h: unit2inch(contents.m_lHeight)
+        };
+        writer.start('page', attrs);
+        var inserter = ContentInserter(writer);
+        contents.m_DrawFront.forEach(function(obj) {
+            convert_object(obj.m_eComponentType, obj.m_pDrawObj, inserter);
+        });
+        writer.end('page');
+    }
     
     json = JSON.parse(json);
     var text = json.contents.m_pTextDraw;
     var writer = STLWriter(options.indent);
     writer.init();
     writer.start('document');
-    writer.start('story', {name: 'Main'});
-    convert_content(text, writer);
-    writer.end('story');
-    var attrs = convert_bbox(text.m_rectPosition);
-    if (options.page) {
-        writer.start('page', attrs);
-        var css = css_layout_item(text);
-        attrs.style = css_format(css);    
-        attrs.story = 'Main';
-        writer.start('text', attrs);
-        writer.end('text');    
-        writer.end('page');
+
+    if (json.contents.m_bTextOnly) {
+        content(writer, json.contents, options);
+    } else {
+        canvas(writer, json.contents, options);
     }
     writer.end('document');
     return writer.finish();
 }
+
+// TextDraw.handleCopy -> HTML
+// TextBox._textDraw -> TextDraw
+// TextboxWidget.textRenderable -> TextBox
+//
+// TextMessageWidget
+//a.prototype.save = function() {
+//    var a = this.serialize();
+//    console.log(this.textRenderable._textDraw.exportSTL());
+//    this.messageJson.contents.m_oiLanguage = 0;
+//    this.messageJson.contents.m_pTextDraw = a;
+//    this.serializeRule(this.messageJson);
+//    return this.messageJson
+//};
+
+// TextDraw
+//a.prototype.exportSTL = function() {
+//    var c = this._cursor;
+//    c.selectAll();
+//    return (new exporters.HtmlExporter).exportAsString(this, c.getSelRangeInOrder())
+//};
