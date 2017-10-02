@@ -190,6 +190,9 @@ The generated _STL_ is much more concise:
 	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/empty.xml">empty.xml</a></td>
   </tr>
   <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
     <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.png"/></td>
   </tr>
   <tr>
@@ -2104,6 +2107,9 @@ The generated _STL_ looks as follows:
 	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_empty.xml">g_empty.xml</a></td>
   </tr>
   <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
     <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.png"/></td>
   </tr>
   <tr>
@@ -2535,7 +2541,43 @@ content arrays and `m_pObjs` plus `m_Objs` arrays are changed.
 
 #### Text and Image inside a Table
 
-@TBD
+In the final test we will insert a _text frame_ and an _image_ inside a _table_. 
+
+The resulting JSON can be seen in the [g_table_text_image_nested.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_table_text_image_nested.json).
+
+##### Resulting STL
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_table_text_image_nested.xml?footer=minimal"></script>
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_table_text_image_nested.json">g_table_text_image_nested.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_table_text_image_nested.json">g_table_text_image_nested.diff</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_table_text_image_nested.xml">g_table_text_image_nested.xml</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_table_text_image_nested.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_table_text_image_nested.png"/></td>
+  </tr>
+</table>
+
 
 # Conclusion
 
