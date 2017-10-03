@@ -214,8 +214,8 @@ _STL definition_.
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/complex.xml?footer=minimal"></script>
 
-It is worth to mention the listed STL-based tests were also used for generating _STL_ fragments and rasters
-of all examples for this documentation.
+It is worth to mention that the listed STL-based tests were also used for generating _STL_ fragments
+and rasters for all examples within this documentation.
 
 # Technical details
 
@@ -1271,9 +1271,8 @@ If we compare the new [par_color.json](https://rawgit.com/opentext/storyteller/m
       ],
 ```
 
-The only change is the color index at the start of the text content.
-It means that cyurrent color spans across all the three paragraphs
-- there is no need to reestablish the font color for each individual
+The only change is the color index at the start of the text content. It means that cyurrent color spans
+across all the three paragraphs - there is no need to reestablish the font color for each individual
 paragraph separately.
 
 Another interesting thing is that unlike the _paragraph specs_ the
