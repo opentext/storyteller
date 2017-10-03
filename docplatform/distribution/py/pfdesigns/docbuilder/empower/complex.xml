@@ -1,7 +1,7 @@
 <stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
          xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:data>
-    <stl:source key="_default">
+    <stl:source>
       <data>
         <content>styles_char</content>
         <content>styles_par</content>
@@ -14,7 +14,7 @@
     <stl:story name="Body">
       <stl:repeater xpath="/data/content">
         <stl:story>
-          <stl:p>========================= <stl:field xpath="."/> =========================</stl:p>
+          <stl:p>======================= <stl:field xpath="."/> =======================</stl:p>
           <stl:content uri="wd:/empty.xml" selector="/story[1]">
             <stl:script language="js">
               'use strict';
@@ -27,7 +27,7 @@
       </stl:repeater>
       <stl:repeater xpath="/data/canvas">
         <stl:story>
-          <stl:p>========================= <stl:field xpath="."/> =========================</stl:p>
+          <stl:p>======================= <stl:field xpath="."/> =======================</stl:p>
           <stl:fragment src="wd:/empty.svg" selector="/item[1]">
             <stl:script language="js">
               'use strict';
