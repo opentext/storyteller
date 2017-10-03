@@ -19,7 +19,7 @@
       "m_bAutoSizeY": true,
       "m_rectPosition": {
         "left": 0,
-        "right": 8500,
+        "right": 4200,
         "top": 0,
         "bottom": 1000
       },
@@ -2902,7 +2902,7 @@
         }
       ],
       "m_Links": [],
-      "m_iMaxWidthDes": 8500,
+      "m_iMaxWidthDes": 4200,
       "m_oiID": 0,
       "m_VarProps": [],
       "m_ppEditableAreas": [],

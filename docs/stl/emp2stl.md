@@ -6,9 +6,9 @@
    * [Implementation](#implementation)
       * [Language](#language)
       * [Interface](#interface)
+      * [Usage](#usage)
       * [Libraries](#libraries)
       * [Source code](#source-code)
-      * [Usage](#usage)
    * [Technical details](#technical-details)
       * [Content Fragments](#content-fragments)
          * [Singleline Text](#singleline-text)
@@ -51,41 +51,54 @@ The editor window looks as follows:
 Currently converted _StoryTeller_ content fragments look as follows:
 
 <table style="background-color:#fff49c">
-  <tr><td><h3>Character styles</h3></td></tr>
-  <tr><td>Empower JSON render:</td></tr>
+  <tr><td colspan="2"><h3>Character styles</h3></td></tr>
   <tr>
-    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_char.png"/></td>
+	<td colspan="2">
+		Empower JSON render:<br/>
+		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_char.png"/>
+	</td>
   </tr>
-  <tr><td>StoryTeller STL render:</td></tr>
   <tr>
-    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_char.png"/></td>
+	<td colspan="2">
+		StoryTeller STL render:<br/>
+		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_char.png"/>
+	</td>
   </tr>
-  <tr><td><h3>Paragraph styles</h3></td></tr>
-  <tr><td>Empower JSON render:</td></tr>
+  
+  <tr><td colspan="2"><h3>Paragraph styles</h3></td></tr>
   <tr>
-    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.png"/></td>
+	<td>
+		Empower JSON render:<br/>
+    	<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.png"/>
+	</td>
+  	<td>
+		StoryTeller STL render:<br/>
+		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_par.png"/>
+	</td>
   </tr>
-  <tr><td>StoryTeller STL render:</td></tr>
+
+  <tr><td colspan="2"><h3>Table styles</h3></td></tr>
   <tr>
-    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_par.png"/></td>
+	<td>
+		Empower JSON render:<br/>
+    	<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.png"/>
+	</td>
+  	<td>
+		StoryTeller STL render:<br/>
+		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_table.png"/>
+	</td>
   </tr>
-  <tr><td><h3>Table styles</h3></td></tr>
-  <tr><td>Empower JSON render:</td></tr>
+
+  <tr><td colspan="2"><h3>Canvas</h3></td></tr>
   <tr>
-    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.png"/></td>
-  </tr>
-  <tr><td>StoryTeller STL render:</td></tr>
-  <tr>
-    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_table.png"/></td>
-  </tr>
-  <tr><td><h3>Canvas</h3></td></tr>
-  <tr><td>Empower JSON render:</td></tr>
-  <tr>
-    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.png"/></td>
-  </tr>
-  <tr><td>StoryTeller STL render:</td></tr>
-  <tr>
-    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_canvas.png"/></td>
+	<td>
+		Empower JSON render:<br/>
+    	<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.png"/>
+	</td>
+  	<td>
+		StoryTeller STL render:<br/>
+		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_canvas.png"/>
+	</td>
   </tr>
 </table>
 
@@ -117,23 +130,6 @@ which has the following interface:
 	- Following `options` are currently supported:
 	  - `indent` ... bool or a string used for indentation
 	  - `page` ... bool determining whether page type should be generated
-
-## Libraries
-
-All the parsing and translation is implemented inside this module, except low-level writing
-the resulting _STL XML_, for that purpose we use the 3rd party [XMLWriter](http://github.com/touv/node-xml-writer)
-implementation published under MIT software licence.
-
-## Source code
-
-The current implementation is available in the 
-[emp2stl.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emp2stl.js),
-usage example is visible in a test module
-[empower.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/empower.js)
-which is used in two _STL_ based regression tests
-[basic.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/basic.xml)
-and [complex.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/complex.xml).
-It is worth to mention that both mentioned STL-based tests were also used for generating _STL_ fragments and rasters of all examples for this documentation.
 
 ## Usage
 
@@ -178,6 +174,38 @@ And we can also generate a page & text boilerplate (via `emp2stl(json, {indent: 
   </stl:page>
 </stl:stl>
 ```
+
+## Libraries
+
+All the parsing and translation is implemented inside this module, except low-level writing
+the resulting _STL XML_, for that purpose we use the 3rd party [XMLWriter](http://github.com/touv/node-xml-writer)
+implementation published under MIT software licence.
+
+## Source code
+
+The current implementation is available in the 
+[emp2stl.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emp2stl.js).
+
+Usage example is visible in the [empower.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/empower.js) test module:
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/empower.js?footer=minimal"></script>
+
+The module above is used in several (_STL_ based) regression tests:
+
+- [basic.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/basic.xml)
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/basic.xml?footer=minimal"></script>
+
+- [complex.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/complex.xml)
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/complex.xml?footer=minimal"></script>
+
+- [canvas.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/canvas.xml)
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/canvas.xml?footer=minimal"></script>
+
+It is worth to mention the listed STL-based tests were also used for generating _STL_ fragments and rasters
+of all examples for this documentation.
 
 # Technical details
 

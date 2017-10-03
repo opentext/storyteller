@@ -59,5 +59,8 @@
         </stl:table>
       </stl:p>
     </stl:story>
+    <stl:page w="4.2in" h="1in">
+      <stl:text w="4.2in" h="1in" style="-stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: -0pt -max" story="Main"></stl:text>
+    </stl:page>
   </stl:document>
 </stl:stl>
