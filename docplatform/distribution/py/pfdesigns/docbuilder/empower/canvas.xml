@@ -3,18 +3,18 @@
   <stl:data>
     <stl:source>
       <data>
-        <input>g_empty</input>
-        <input>g_text</input>
-        <input>g_text_image_table</input>
-        <input>g_text_image_nested</input>
-        <input>g_text_table_nested</input>
-        <input>g_table_text_image_nested</input>
+        <canvas>g_empty</canvas>
+        <canvas>g_text</canvas>
+        <canvas>g_text_image_table</canvas>
+        <canvas>g_text_image_nested</canvas>
+        <canvas>g_text_table_nested</canvas>
+        <canvas>g_table_text_image_nested</canvas>
       </data>
     </stl:source>
   </stl:data>
   <stl:document>
     <stl:story name="Body">
-      <stl:repeater xpath="/data/input">
+      <stl:repeater xpath="/data/canvas">
         <stl:story>
           <stl:p>======================= <stl:field xpath="."/> =======================</stl:p>
           <stl:fragment src="wd:/empty.svg" selector="/item[1]">

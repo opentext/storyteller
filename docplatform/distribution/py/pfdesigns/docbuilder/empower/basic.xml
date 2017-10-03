@@ -3,31 +3,31 @@
   <stl:data>
     <stl:source>
       <data>
-        <input>empty</input>
-        <input>hello</input>
-        <input>font</input>
-        <input>euro</input>
-        <input>hello_opentext</input>
-        <input>sizes</input>
-        <input>colors</input>
-        <input>valign</input>
-        <input>hyperlink</input>
-        <input>image</input>
-        <input>text</input>
-        <input>table</input>
-        <input>paragraphs</input>
-        <input>par_color</input>
-        <input>par_indent</input>
-        <input>par_halign</input>
-        <input>par_bullets</input>
-        <input>par_numbering</input>
-        <input>par_numbering_indent</input>
+        <content>empty</content>
+        <content>hello</content>
+        <content>font</content>
+        <content>euro</content>
+        <content>hello_opentext</content>
+        <content>sizes</content>
+        <content>colors</content>
+        <content>valign</content>
+        <content>hyperlink</content>
+        <content>image</content>
+        <content>text</content>
+        <content>table</content>
+        <content>paragraphs</content>
+        <content>par_color</content>
+        <content>par_indent</content>
+        <content>par_halign</content>
+        <content>par_bullets</content>
+        <content>par_numbering</content>
+        <content>par_numbering_indent</content>
       </data>
     </stl:source>
   </stl:data>
   <stl:document>
     <stl:story name="Body">
-      <stl:repeater xpath="/data/input">
+      <stl:repeater xpath="/data/content">
         <stl:story>
           <stl:p>======================= <stl:field xpath="."/> =======================</stl:p>
           <stl:content uri="wd:/empty.xml" selector="/story[1]">
