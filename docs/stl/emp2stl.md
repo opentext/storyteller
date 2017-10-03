@@ -192,17 +192,25 @@ Usage example is visible in the [empower.js](https://github.com/opentext/storyte
 
 The module above is used in several (_STL_ based) regression tests:
 
-- [basic.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/basic.xml)
+The [basic.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/basic.xml) demonstrates a dynamic conversion of _content fragments_ (in Empower called _text messages_).
+There is a _repeater_ over input file names which repeats a _content substitution_ (`stl:content` element)
+dynamically modified a script.
+The script calls the `emp2stl` conversion, creates an _STL definition_, uploads it and modifies the substitution URI.
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/basic.xml?footer=minimal"></script>
 
-- [complex.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/complex.xml)
-
-<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/complex.xml?footer=minimal"></script>
-
-- [canvas.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/canvas.xml)
+The [canvas.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/canvas.xml) demonstrates a dynamic conversion of _page fragments_ (in Empower called _graphical messages_).
+There is a _repeater_ over input file names which repeats a _fragment reference_ (`stl:fragment` element)
+dynamically modified a script.
+The script calls the `emp2stl` conversion, creates an _STL definition_, uploads it and modifies the fragment URI.
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/canvas.xml?footer=minimal"></script>
+
+The [complex.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/complex.xml) demonstrates a combination of the above. You can see that the `emp2stl` conversion detects
+a type of the input JSON (whether the message is _textual_ or _graphical_) and creates an appropriate
+_STL definition_.
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/complex.xml?footer=minimal"></script>
 
 It is worth to mention the listed STL-based tests were also used for generating _STL_ fragments and rasters
 of all examples for this documentation.
