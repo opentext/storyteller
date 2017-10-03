@@ -50,21 +50,44 @@ The editor window looks as follows:
 
 Currently converted _StoryTeller_ content fragments look as follows:
 
-- **Character styles**
-
-![StoryTeller character styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_char.png)
-
-- **Paragraph styles**
-
-![StoryTeller character styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_par.png)
-
-- **Table styles**
-
-![StoryTeller character styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_table.png)
-
-- **Canvas**
-
-![StoryTeller canvas styles](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_canvas.png)
+<table style="background-color:#fff49c">
+  <tr><td><h3>Character styles</h3></td></tr>
+  <tr><td>Empower JSON render:</td></tr>
+  <tr>
+    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_char.png"/></td>
+  </tr>
+  <tr><td>StoryTeller STL render:</td></tr>
+  <tr>
+    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_char.png"/></td>
+  </tr>
+  <tr><td><h3>Paragraph styles</h3></td></tr>
+  <tr><td>Empower JSON render:</td></tr>
+  <tr>
+    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.png"/></td>
+  </tr>
+  <tr><td>StoryTeller STL render:</td></tr>
+  <tr>
+    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_par.png"/></td>
+  </tr>
+  <tr><td><h3>Table styles</h3></td></tr>
+  <tr><td>Empower JSON render:</td></tr>
+  <tr>
+    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.png"/></td>
+  </tr>
+  <tr><td>StoryTeller STL render:</td></tr>
+  <tr>
+    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_table.png"/></td>
+  </tr>
+  <tr><td><h3>Canvas</h3></td></tr>
+  <tr><td>Empower JSON render:</td></tr>
+  <tr>
+    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.png"/></td>
+  </tr>
+  <tr><td>StoryTeller STL render:</td></tr>
+  <tr>
+    <td style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_canvas.png"/></td>
+  </tr>
+</table>
 
 # Implementation
 
