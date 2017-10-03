@@ -122,8 +122,8 @@ good reasons), but for now we consider javascript the best choice.
 
 ## Interface
 
-Right now the interface is really simple, it is a single-method module called `emp2stl`
-which has the following interface:
+Right now the interface is really simple, it is a module called `empower` containing just a single
+method `emp2stl` which has the following interface:
 
 -   `emp2stl( json: string [, options: object] ) : string`
     - Parses _Empower JSON_ fragment and generates corresponding _STL_ fragment
@@ -131,17 +131,19 @@ which has the following interface:
 	  - `indent` ... bool or a string used for indentation
 	  - `page` ... bool determining whether page type should be generated
 
+Maybe there will be a complementary `stl2emp` method in future.
+
 ## Usage
 
 The usage of `emp2stl` conversion is very simple and looks as follows:
 
 ```js
     var streams = require('streams');
-    var emp2stl = require('wd:/emp2stl');
+    var empower = require('wd:/empower');
     // read JSON input from a file
     var json = streams.stream('wd:/input/hello.json').read();
     // convert Empower JSON to STL 
-    var stl = emp2stl(json);
+    var stl = empower.emp2stl(json);
     // write resulting STL to a file
     streams.stream('wd:/output/hello.xml').write(stl);
 ```
@@ -184,11 +186,11 @@ implementation published under MIT software licence.
 ## Source code
 
 The current implementation is available in the 
-[emp2stl.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emp2stl.js).
+[empower.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/empower.js).
 
-Usage example is visible in the [empower.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/empower.js) test module:
+Usage example is visible in the [emptools.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emptools.js) helper module:
 
-<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/empower.js?footer=minimal"></script>
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emptools.js?footer=minimal"></script>
 
 The module above is used in several (_STL_ based) regression tests:
 

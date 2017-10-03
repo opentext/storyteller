@@ -33,10 +33,9 @@
           <stl:content uri="wd:/empty.xml" selector="/story[1]">
             <stl:script language="js">
               'use strict';
-              var empower = require('wd:/empower');
-              var item = require('layout').item();
+              var tools = require('wd:/emptools');
               var input = require('data').dump('string(.)');
-              item.Uri = empower.convert(input); // {dump: true, raster: '/item[1]/item[1]'}
+              tools.empower_item(input); // {dump: true, raster: '/item[1]/item[1]'}
             </stl:script>
           </stl:content>
         </stl:story>
