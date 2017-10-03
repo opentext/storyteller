@@ -29,16 +29,16 @@
 This document describes a process of reverse-engineering the _Empower JSON_ format
 and converting it to _StoryTeller Layout_ (_STL_).
 
-An important think to note is that we got no documentation of the input format,
+An important thing to note is that we got no documentation of the input format,
 every insight is gained by interactively editing a fragment and comparing
 the changes in persistence developed by changes in editor.
 
-The JSON format is not very readable, it is clearly not designed like human readable
+The _Empower JSON_ format is not very readable, it is clearly not designed to be a human readable
 exchange format, instead it feels like a direct dump of internal implementation structures.
-It means that all enumeration are just numbers, instead of strings, all lengths
-are just integers in a decimal format with no units, text is just a sequence
+It means for example that all enumerations are just numbers, instead of strings, all lengths
+are just integers in a decimal format with no units, a text is just a sequence
 of unicode code points, etc. This complicates the conversion, makes the whole process
-more brittle and more prone to future inconsistencies when the JSON format changes.
+more brittle and prone to future inconsistencies when the JSON format changes.
 
 On the other hand the Empower WYSIWYG editor looks very nice and it is relatively easy
 to create a nice looking content. It reasonably limits the complexity of the fragments
@@ -48,7 +48,13 @@ The editor window looks as follows:
 
 ![Empower editor](empower-editor.png)
 
-Currently converted _StoryTeller_ content fragments look as follows:
+The goal for this POC is to implement a convertor supporting a reasonable subset of the
+functionality. Instead of trying to cover the formats 100% at all costs we try to find
+features for which there is a reasonable match between the formats and which are most
+valuable for end users.
+
+Currently the supported features lead to _STL content fragments_ and _page fragments_
+which look as follows:
 
 <table style="background-color:#fff49c">
   <tr><td colspan="2"><h3>Character styles</h3></td></tr>
@@ -115,7 +121,9 @@ There are several reasons why currently the javascript seems like a best choice:
   - It is a language for rapid prototyping and development (much faster than in C++)
   - It can form a dual-environment solution:
     - It can work as part of _StoryTeller_ scripting environment
+	  (this way we can test it easily as well as provide it to our users relatively soon as a javascript module extension).
 	- It can also work in browser as a part of _Opentext_ web applications like _StoryBoard_
+	  (in principle we could utilize the _Empower editor_ as a _Web STL fragment editor_)  
 
 It is possible that we decide to reimplement the conversion in C++ (only if we find really
 good reasons), but for now we consider javascript the best choice.
@@ -125,13 +133,20 @@ good reasons), but for now we consider javascript the best choice.
 Right now the interface is really simple, it is a module called `empower` containing just a single
 method `emp2stl` which has the following interface:
 
--   `emp2stl( json: string [, options: object] ) : string`
-    - Parses _Empower JSON_ fragment and generates corresponding _STL_ fragment
-	- Following `options` are currently supported:
-	  - `indent` ... bool or a string used for indentation
-	  - `page` ... bool determining whether page type should be generated
+-   `emp2stl( src: stream [, dst: stream, options: object] ) : stream` ... Parses _Empower JSON_ fragment and generates corresponding _STL_ fragment
+    - `src` ... input stream containing _Empower JSON_
+    - `dst` ... output stream to be filled with resulting _STL_ (memory stream is created by default)
+    - `options` ... following are currently supported:
+      - `indent` ... bool or a string used for indentation
+      - `page` ... bool determining whether page type should be generated
+    - `@return` ... output stream (the `dst` argument if passed, created memory stream otherwise)
+
+The interface is stream-based, which provides some efficiency advantages in case
+we decide to create a C++ implementation. 
 
 Maybe there will be a complementary `stl2emp` method in future.
+That way we would have a complete (two-way) conversion which could be
+used to solve very interesting use-cases.
 
 ## Usage
 
@@ -140,21 +155,22 @@ The usage of `emp2stl` conversion is very simple and looks as follows:
 ```js
     var streams = require('streams');
     var empower = require('wd:/empower');
-    // read JSON input from a file
-    var json = streams.stream('wd:/input/hello.json').read();
+    // create src and dst streams
+    var json = streams.stream('wd:/input/hello.json');
+    var stl = streams.stream('wd:/output/hello.xml');
     // convert Empower JSON to STL 
-    var stl = empower.emp2stl(json);
-    // write resulting STL to a file
-    streams.stream('wd:/output/hello.xml').write(stl);
+    empower.emp2stl(json, stl);
+    // log the resulting STL
+    console.log(stl.read());
 ```
 
-While this is an empty fragment generated by default (via `emp2stl(json)` call):
+This is an empty fragment generated by default (via `emp2stl(json, stl)` call):
 
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1"><stl:document><stl:story name="Main"/></stl:document></stl:stl>
 ```
 
-This is how it looks indented (via `emp2stl(json, {indent: '  '})` call):
+This is how it looks indented (via `emp2stl(json, stl, {indent: '  '})` call):
 
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
@@ -164,7 +180,7 @@ This is how it looks indented (via `emp2stl(json, {indent: '  '})` call):
 </stl:stl>
 ```
 
-And we can also generate a page & text boilerplate (via `emp2stl(json, {indent: '  ', page: true})` call):
+And we can also generate a page & text boilerplate (via `emp2stl(json, stl, {indent: '  ', page: true})` call):
 
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
@@ -180,8 +196,8 @@ And we can also generate a page & text boilerplate (via `emp2stl(json, {indent: 
 ## Libraries
 
 All the parsing and translation is implemented inside this module, except low-level writing
-the resulting _STL XML_, for that purpose we use the 3rd party [XMLWriter](http://github.com/touv/node-xml-writer)
-implementation published under MIT software licence.
+the resulting _STL XML_, for that purpose we use 3rd party [XMLWriter](http://github.com/touv/node-xml-writer)
+implementation published under [MIT software licence](https://en.wikipedia.org/wiki/MIT_License).
 
 ## Source code
 
@@ -196,14 +212,14 @@ The module above is used in several (_STL_ based) regression tests:
 
 The [basic.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/basic.xml) demonstrates a dynamic conversion of _content fragments_ (in Empower called _text messages_).
 There is a _repeater_ over input file names which repeats a _content substitution_ (`stl:content` element)
-dynamically modified a script.
+dynamically modified by a script.
 The script calls the `emp2stl` conversion, creates an _STL definition_, uploads it and modifies the substitution URI.
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/basic.xml?footer=minimal"></script>
 
 The [canvas.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/canvas.xml) demonstrates a dynamic conversion of _page fragments_ (in Empower called _graphical messages_).
 There is a _repeater_ over input file names which repeats a _fragment reference_ (`stl:fragment` element)
-dynamically modified a script.
+dynamically modified by a script.
 The script calls the `emp2stl` conversion, creates an _STL definition_, uploads it and modifies the fragment URI.
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/canvas.xml?footer=minimal"></script>

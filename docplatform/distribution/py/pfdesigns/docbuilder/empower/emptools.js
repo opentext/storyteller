@@ -7,17 +7,16 @@ exports.empower_item = function empower_item(input, options) {
     var streams = require('streams');
     var services = require('services');
     var item = require('layout').item();
-    // load empower JSON from file to string
-    var json = streams.stream('wd:/input/'+input+'.json').read();
+    // initialize src and dst streams
+    var json = streams.stream('wd:/input/'+input+'.json');
+    var stl = streams.stream(options.dump ? 'wd:/output/'+input+'.xml' : 'local:');
     // convert empower JSON to STL
-    var stl = empower.emp2stl(json, {indent: options.dump ? '  ' : false, page: !!options.raster});
+    empower.emp2stl(json, stl, {indent: options.dump ? '  ' : false, page: !!options.raster});
     // this is just a hack - replace CAS URI with a local URI 
-    stl = stl.replace(/cas:[a-zA-Z0-9+\/_=]+/g, 'wd:/opentext.png');
+    stl.write(stl.read().replace(/cas:[a-zA-Z0-9+\/_=]+/g, 'wd:/opentext.png'));
     // log name and resulting STL
     console.log(input);
-    console.log(stl);
-    // write STL to a file
-    stl = streams.stream(options.dump ? 'wd:/output/'+input+'.xml' : 'local:').write(stl);
+    console.log(stl.read());
     if (options.raster) {
         // raster STL to a raster file
         var st = services.st(stl);

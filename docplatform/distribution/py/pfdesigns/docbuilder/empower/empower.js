@@ -1,6 +1,9 @@
 // Copyright (c) 2017 Open Text. All Rights Reserved.
 'use strict';
 
+var util = require('util');
+var streams = require('streams');
+
 function STLWriter(indent) {
     var XMLWriter = require('wd:/xml-writer');
     var uri_stl = 'http://developer.opentext.com/schemas/storyteller/layout';
@@ -537,9 +540,8 @@ function convert_content(src, writer) {
     });
 }
 
-exports.emp2stl = function emp2stl(json, options) {
-    options = options || {};
-
+exports.emp2stl = function emp2stl(src, dst, options) {
+    
     function content(writer, contents, options) {
         var text = contents.m_pTextDraw;
         
@@ -570,8 +572,14 @@ exports.emp2stl = function emp2stl(json, options) {
         });
         writer.end('page');
     }
+
+    dst = dst || streams.stream();
+    options = options || {};
+
+    if (!util.isStream(src) || !util.isStream(dst))
+        throw new Error("Invalid argument, stream expected");
     
-    json = JSON.parse(json);
+    var json = JSON.parse(src.read());
     var text = json.contents.m_pTextDraw;
     var writer = STLWriter(options.indent);
     writer.init();
@@ -583,7 +591,8 @@ exports.emp2stl = function emp2stl(json, options) {
         canvas(writer, json.contents, options);
     }
     writer.end('document');
-    return writer.finish();
+    dst.write(writer.finish());
+    return dst;
 }
 
 
