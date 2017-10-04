@@ -22,7 +22,7 @@
    * [Conclusion](#conclusion)
       * [Fixes](#fixes)
       * [Optimizations](#optimizations)
-      * [Followup](#followup)
+      * [Follow-up](#follow-up)
 
 # Overview
 
@@ -136,13 +136,15 @@ method `emp2stl` which has the following interface:
 -   `emp2stl( src: stream [, dst: stream, options: object] ) : stream` ... Parses _Empower JSON_ fragment and generates corresponding _STL_ fragment
     - `src` ... input stream containing _Empower JSON_
     - `dst` ... output stream to be filled with resulting _STL_ (memory stream is created by default)
-    - `options` ... following are currently supported:
+    - `options` ... following options are currently supported:
       - `indent` ... bool or a string used for indentation
       - `page` ... bool determining whether page type should be generated
-    - `@return` ... output stream (the `dst` argument if passed, created memory stream otherwise)
+	  - `fonts` ... optional callback for font remap
+	  - `uris` ... optional callback for URI remap
+    - `@return` ... output stream (the `dst` argument if provided, temporary memory stream otherwise)
 
-The interface is stream-based, which provides some efficiency advantages in case
-we decide to create a C++ implementation. 
+The interface is _stream-based_ - this decision has a potential to provide some efficiency advantages
+in case we create a C++ implementation. 
 
 Maybe there will be a complementary `stl2emp` method in future.
 That way we would have a complete (two-way) conversion which could be
@@ -243,7 +245,8 @@ between individual enumeration values and codes.
 ## Content Fragments
 
 Text fragments represent an implicit text object as a top of hierarchy of objects.
-They typically grow with content.
+They typically grow horizontally with content. In the _Empower_ environment they
+are called _Text Messages_.
 
 ### Singleline Text
 
@@ -252,7 +255,7 @@ and individual _character style_ equivalents.
 
 #### Empty Fragment
 
-At the very beginning we start with an empty text fragment.
+At the very beginning we start with an absolutely empty _text fragment_.
 Even though it contains no visible content, the initial JSON boilerplate is relatively verbose -
 see [empty.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json).
 
@@ -2159,7 +2162,8 @@ The _emp2stl_ convertor generates the following STL equivalent:
 ## Canvas Fragments
 
 This type of fragments represents a canvas area containing one or more absolutely positioned
-objects like _images_, _tables_ or _text frames_.
+objects like _images_, _tables_ or _text frames_. In the _Empower_ environment they are called
+_Graphical Messages_.
 
 ### Flat Objects
 
@@ -2725,7 +2729,7 @@ Such optimization could be an interesting programming task, but we consider it
 outside the scope of this document. It would be better to expose it as a completely
 separate service independent on _emp2stl_ conversion - called something like _STL optimizer_.
 
-## Followup
+## Follow-up
 
 It is hard to tell without a documentation and more experience with _Empower product_,
 but we believe that the _Empower Editor_ used for this proof of concept was a stripped

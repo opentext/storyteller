@@ -1,3 +1,4 @@
+// Copyright (c) 2017 Open Text. All Rights Reserved.
 'use strict';
 
 exports.empower_item = function empower_item(input, options) {
@@ -10,10 +11,23 @@ exports.empower_item = function empower_item(input, options) {
     // initialize src and dst streams
     var json = streams.stream('wd:/input/'+input+'.json');
     var stl = streams.stream(options.dump ? 'wd:/output/'+input+'.xml' : 'local:');
+    var opts = {
+        fonts: function(name) {
+            // temporarily remap the fonts
+            var family = {'Lato': 'Arial', 'Wingdings': 'Wingdings'}[name];
+            if (!family)
+                throw new Error('Unknown font name: '+name);
+            return family;
+        },
+        uris: function(uri) {
+            // temporarily replace CAS URI with a local URI 
+            return uri.replace(/cas:[a-zA-Z0-9+\/_=]+/, 'wd:/opentext.png')
+        },
+        indent: options.dump ? '  ' : false,
+        page: !!options.raster
+    };
     // convert empower JSON to STL
-    empower.emp2stl(json, stl, {indent: options.dump ? '  ' : false, page: !!options.raster});
-    // this is just a hack - replace CAS URI with a local URI 
-    stl.write(stl.read().replace(/cas:[a-zA-Z0-9+\/_=]+/g, 'wd:/opentext.png'));
+    empower.emp2stl(json, stl, opts);
     // log name and resulting STL
     console.log(input);
     console.log(stl.read());
