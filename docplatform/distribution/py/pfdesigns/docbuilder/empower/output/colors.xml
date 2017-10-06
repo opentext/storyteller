@@ -1,15 +1,15 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document>
-    <stl:story name="Main">
+    <stl:story name="Main" w="8.5in">
       <stl:p>
-        <stl:span style="color: #FF0000; font-family: Arial; font-size: 10pt">Hello</stl:span>
-        <stl:span style="font-family: Arial; font-size: 10pt">
+        <stl:span style="color: #FF0000; font-family: Lato; font-size: 10pt">Hello</stl:span>
+        <stl:span style="font-family: Lato; font-size: 10pt">
           <stl:span/> 
           <stl:span/>
         </stl:span>
-        <stl:span style="color: #00FF00; font-family: Arial; font-size: 10pt">Open</stl:span>
-        <stl:span style="color: #0000FF; font-family: Arial; font-size: 10pt">text</stl:span>
-        <stl:span style="font-family: Arial; font-size: 10pt">!</stl:span>
+        <stl:span style="color: #00FF00; font-family: Lato; font-size: 10pt">Open</stl:span>
+        <stl:span style="color: #0000FF; font-family: Lato; font-size: 10pt">text</stl:span>
+        <stl:span style="font-family: Lato; font-size: 10pt">!</stl:span>
       </stl:p>
     </stl:story>
   </stl:document>

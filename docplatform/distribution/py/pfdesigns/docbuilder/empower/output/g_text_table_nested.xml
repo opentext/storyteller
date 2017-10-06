@@ -4,18 +4,18 @@
       <stl:text x="1in" y="0.5in" w="1in" h="0.198in" style="border: 1px solid #000000; -stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: -0pt -max">
         <stl:story>
           <stl:p>
-            <stl:span style="font-family: Arial; font-size: 10pt">Hello</stl:span>
+            <stl:span style="font-family: Lato; font-size: 10pt">Hello</stl:span>
             <stl:table style="border: 0.001in solid #000000">
               <stl:story>
                 <stl:row h="0pt" style="-stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: 0pt -max">
                   <stl:cell w="0.477in">
                     <stl:p style="text-align: center">
-                      <stl:span style="font-family: Arial; font-size: 10pt">Open</stl:span>
+                      <stl:span style="font-family: Lato; font-size: 10pt">Open</stl:span>
                     </stl:p>
                   </stl:cell>
                   <stl:cell w="0.477in">
                     <stl:p style="text-align: center">
-                      <stl:span style="font-family: Arial; font-size: 10pt">text</stl:span>
+                      <stl:span style="font-family: Lato; font-size: 10pt">text</stl:span>
                     </stl:p>
                   </stl:cell>
                 </stl:row>

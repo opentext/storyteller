@@ -4,7 +4,7 @@
       <stl:text x="1in" y="0.5in" w="1in" h="0.198in" style="border: 1px solid #000000; -stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: -0pt -max">
         <stl:story>
           <stl:p>
-            <stl:span style="font-family: Arial; font-size: 10pt">Hello 
+            <stl:span style="font-family: Lato; font-size: 10pt">Hello 
               <stl:span/>
             </stl:span>
             <stl:image w="0.979in" h="0.177in" src="wd:/opentext.png"></stl:image>

@@ -4,7 +4,7 @@
 exports.empower_item = function empower_item(input, options) {
     options = options || {};
 
-    var empower = require('wd:/empower');
+    var empower = require('empower');
     var streams = require('streams');
     var services = require('services');
     var item = require('layout').item();
@@ -12,13 +12,6 @@ exports.empower_item = function empower_item(input, options) {
     var json = streams.stream('wd:/input/'+input+'.json');
     var stl = streams.stream(options.dump ? 'wd:/output/'+input+'.xml' : 'local:');
     var opts = {
-        fonts: function(name) {
-            // temporarily remap the fonts
-            var family = {'Lato': 'Arial', 'Wingdings': 'Wingdings'}[name];
-            if (!family)
-                throw new Error('Unknown font name: '+name);
-            return family;
-        },
         uris: function(uri) {
             // temporarily replace CAS URI with a local URI 
             return uri.replace(/cas:[a-zA-Z0-9+\/_=]+/, 'wd:/opentext.png')

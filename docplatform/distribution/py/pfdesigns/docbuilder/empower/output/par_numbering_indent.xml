@@ -1,14 +1,14 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document>
-    <stl:story name="Main">
+    <stl:story name="Main" w="8.5in">
       <stl:p style="margin-left: 0in; -stl-list-counter: default_counter; -stl-list-mask: %0!1.\9; -stl-list-level: 0; -stl-tabs: 0.25in">
-        <stl:span style="font-family: Arial; font-size: 10pt">Hello</stl:span>
+        <stl:span style="font-family: Lato; font-size: 10pt">Hello</stl:span>
       </stl:p>
       <stl:p style="margin-left: 0.25in; -stl-list-counter: default_counter; -stl-list-mask: %1!1.\9; -stl-list-level: 1; -stl-tabs: 0.5in">
-        <stl:span style="font-family: Arial; font-size: 10pt">Opentext</stl:span>
+        <stl:span style="font-family: Lato; font-size: 10pt">Opentext</stl:span>
       </stl:p>
       <stl:p style="margin-left: 0.5in; -stl-list-counter: default_counter; -stl-list-mask: %2!r.\9; -stl-list-level: 2; -stl-tabs: 0.75in">
-        <stl:span style="font-family: Arial; font-size: 10pt">!</stl:span>
+        <stl:span style="font-family: Lato; font-size: 10pt">!</stl:span>
       </stl:p>
     </stl:story>
   </stl:document>
