@@ -1,4 +1,4 @@
-# Empower to STL Conversion
+# Empower Integration
 
 # Table of Contents
 
