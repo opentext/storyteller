@@ -61,7 +61,20 @@
           "iBulletFont": -1
         }
       ],
-      "m_TextFonts": [],
+      "m_TextFonts": [
+        {
+          "strName": "Lato",
+          "iTracking": 0,
+          "clrFontColor": {
+            "m_eColorModel": 0,
+            "m_lColor": 0
+          },
+          "iFontHeight10X": 100,
+          "bBold": false,
+          "bItalic": false,
+          "bUnderline": false
+        }
+      ],
       "m_Colors": [
         {
           "m_eColorModel": 0,
@@ -79,11 +92,13 @@
       "m_cChars": [
         0,
         0,
+        0,
         0
       ],
       "m_sXPos": [
         -244,
         0,
+        -63,
         -64
       ],
       "m_oiLayer": 0,

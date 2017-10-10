@@ -61,7 +61,21 @@
           "iBulletFont": -1
         }
       ],
-      "m_TextFonts": [],
+      "m_TextFonts": [
+        {
+          "strName": "Lato",
+          "iTracking": 0,
+          "clrFontColor": {
+            "m_eColorModel": 0,
+            "m_lColor": 0
+          },
+          "iFontHeight10X": 100,
+          "bBold": false,
+          "bItalic": false,
+          "bUnderline": false,
+          "bStrikeThru": false
+        }
+      ],
       "m_Colors": [
         {
           "m_eColorModel": 0,
@@ -74,15 +88,67 @@
         {
           "m_eColorModel": 0,
           "m_lColor": 255
+        },
+        {
+          "m_eColorModel": 0,
+          "m_lColor": 65280
+        },
+        {
+          "m_eColorModel": 0,
+          "m_lColor": 16711680
         }
       ],
       "m_cChars": [
         0,
         0,
+        0,
+        2,
+        72,
+        101,
+        108,
+        108,
+        111,
+        0,
+        3,
+        79,
+        112,
+        101,
+        110,
+        0,
+        4,
+        116,
+        101,
+        120,
+        116,
+        0,
+        4,
+        33,
         0
       ],
       "m_sXPos": [
         -244,
+        0,
+        -62,
+        -63,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -62,
+        -63,
+        0,
+        0,
+        0,
+        0,
+        -62,
+        -63,
+        0,
+        0,
+        0,
+        0,
+        -62,
+        -63,
         0,
         -64
       ],
