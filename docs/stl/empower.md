@@ -149,6 +149,7 @@ and `stl2emp` with following signatures:
     - `options` ... following options are currently supported:
       - `indent` ... bool or a string used for indentation
       - `permissive` ... determines whether the conversion fails or ignores unsupported constructs
+	  - `fonts` ... optional callback for font remap
       - `uris` ... optional callback for URI remap
     - `@return` ... output stream (the `dst` argument if provided, temporary memory stream otherwise)
 
@@ -230,8 +231,8 @@ in StoryTeller Javascript modules.
 ## Source code
 
 The current implementation is available in the 
-[empower.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/empower.js).
-For JSON creation we use a configuration file [empower.json](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/empower.json) containing variety of JSON skeletons for individual objects and structures.
+[empower.js](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/tools/empower.js).
+For JSON creation we use a configuration file [empower.json](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/tools/empower.json) containing variety of JSON skeletons for individual objects and structures.
 
 Usage example is visible in the [emptools.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emptools.js) helper module:
 

@@ -127,6 +127,9 @@ function disable_interactivity(chart) {
 }
 
 function generator(document, type, series, options, chart_object) {
+
+    //console.time("generator");
+
     options = options || {};
     if (!xpath) {
         throw new Error('Missing base data xpath');
@@ -152,14 +155,20 @@ function generator(document, type, series, options, chart_object) {
         .attr('width', box.W + 'pt')
         .attr('height', box.H + 'pt');
 
+    //console.time("call(chart)");
     svg.datum(series).call(chart);
+    //console.timeEnd("call(chart)");
 
     post_process_chart_object(document, svg, chart, chart_object, width, height);
+
+    //console.timeEnd("generator");
 
     return svg;
 }
 
 function finalizer(document, svg) {
+    //console.time("finalizer");
+
     // make all CSS styles inline
     juice.inlineDocument(document, css, {});
     //console.log( svg.node().outerHTML );
@@ -171,6 +180,9 @@ function finalizer(document, svg) {
     layout.item().Uri = uri;
     //svg.node().remove();
     //document.defaultView.close();
+
+    //console.timeEnd("finalizer");
+
 }
 
 function is_valid(obj) {
@@ -241,7 +253,7 @@ function process_chart_object(chart, chart_object, series) {
         if (chart_object.axisX.length > 0 && is_valid(chart_object.axisX[0].label)) {
             chart.xAxis.axisLabel(chart_object.axisX[0].label);
         }
-        if (chart_object.axisX.length > 0 && is_valid(chart_object.axisX[0].rotate)) {
+        if (chart_object.type !== "pieChart" && chart_object.axisX.length > 0 && is_valid(chart_object.axisX[0].rotate)) {
             chart.xAxis.rotateLabels(chart_object.axisX[0].rotate);
         }
     }
@@ -423,10 +435,11 @@ function chart_parser(document, ns, chart_object) {
                     chart_object.options.donutRatio = donut_ratio;
 
                 var start_angle = node.getAttribute("start_angle");
-                if (start_angle != "") {
-                    chart_object.options.startAngle = d => d.startAngle + ((Number(start_angle) + 90) * (Math.PI / 180));
-                    chart_object.options.endAngle = d => d.endAngle + ((Number(start_angle) + 90) * (Math.PI / 180));
-                }
+                if (start_angle == "")
+                    start_angle = "0";
+                
+                chart_object.options.startAngle = d => d.startAngle + ((-Number(start_angle) + 90) * (Math.PI / 180));
+                chart_object.options.endAngle = d => d.endAngle + ((-Number(start_angle) + 90) * (Math.PI / 180));
 
                 chart_object.options.showLabels = true;
                 var labels_offset = node.getAttribute("labels_offset");
@@ -623,7 +636,10 @@ function set_text_style(document, svg, chart_object, values, text_style) {
     d3.select(document.body).selectAll('.nv-label text')
           .each(function (d, i) {
               var row_node = chart_object.data_series[0].values[i];
-              var cell_label = row_node.childNodes[chart_object.columns[0].label -1];
+              var cell_label = row_node.childNodes[chart_object.columns[0].label - 1];
+              if (!is_valid(cell_label)) {
+                  cell_label = row_node.childNodes[chart_object.columns[0].x - 1];
+              }
 
               var label_style = {
                   fill: get_style_property_from_node(document, cell_label, "data_style", "color", text_style.fill),
@@ -696,8 +712,12 @@ function prepare_data(document, chart_object) {
             if (chart_object.axisX.length == 0) {
                 chart_object.axisX.push({});
             }
-
-            chart_object.axisX[0].rotate = get_attribute_value_from_node(document, cell_label, "label_rotation");
+            if (!is_valid(cell_label)) {
+                cell_label = row_node.childNodes[series_columns[c].x - 1];
+            }
+            if (is_valid(cell_label)) {
+                chart_object.axisX[0].rotate = get_attribute_value_from_node(document, cell_label, "label_rotation");
+            }
 
             var cell_x = row_node.childNodes[series_columns[c].x - 1];
             var cell_y = row_node.childNodes[series_columns[c].y - 1];
@@ -716,7 +736,8 @@ function prepare_data(document, chart_object) {
         var stroke_color = get_style_property_from_node(document, header_y, "data_style", "stroke");
 
         var chart_data_item = { key: get_value(header_y), color: stroke_color, values: chart_series };
-        chart_data_item.area = is_valid(chart_object.area);
+        if (is_valid(chart_object.area) && chart_object.area === "true" )
+            chart_data_item.area = is_valid(chart_object.area);
 
         chart_data.push(chart_data_item);
     }
@@ -741,20 +762,34 @@ module.exports = {
 
     stlchart : function(xml_def) {
         var doc = jsdom.jsdom();
+
+        //console.time("scd parsing");
+
         var chart_object = parse_chart_xml(doc, repo.load(xml_def));
 
-        var header_xpath = '/data' + chart_object.xpath + '/header';
-        var data_xpath = '/data' + chart_object.xpath + '/row';
+        //console.timeEnd("scd parsing");
+
+        //console.time("data parsing");
+
+        var header_xpath = '/data' + chart_object.xpath + '/ddi:header';
+        var data_xpath = '/data' + chart_object.xpath + '/ddi:row';
         var data_series = [{ key: header_xpath, values: data_xpath }];
 
         chart_object.data_series = process_data(process_data(data_series, "values"), "key");
 
         var chart_data = prepare_data(doc, chart_object);
 
+        //console.timeEnd("data parsing");
+
+        //console.time("addGraph");
+
         nv.addGraph(
             () => generator(doc, chart_object.type, chart_data, chart_object.options, chart_object),
             (svg) => finalizer(doc, svg)
         );
+
+        //console.timeEnd("addGraph");
+
     }
 };
 

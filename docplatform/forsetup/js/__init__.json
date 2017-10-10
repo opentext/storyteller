@@ -34,9 +34,11 @@
             "xmldom"     : "stinst:/js/core/xmldom/dom-parser.js",
             "xpath"      : "stinst:/js/core/xpath/xpath.js",
 
-            "charts"    : "stinst:/js/core/charts.js",
-
-            "jslint"     : "stinst:/js/core/jslint/jslint.js",
+            "charts"     : "stinst:/js/tools/charts.js",
+            "jslint"     : "stinst:/js/tools/jslint/jslint.js",
+            "stl"        : "stinst:/js/tools/stl.js",
+            "empower"    : "stinst:/js/tools/empower.js",
+            "empower.json": "stinst:/js/tools/empower.json",
 
             "accounting" : "stinst:/js/libs/accounting/accounting.js",
             "cheerio"    : "stinst:/js/libs/cheerio",
@@ -56,7 +58,8 @@
             "onecolor"   : "stinst:/js/libs/onecolor",
             "babyparse"  : "stinst:/js/libs/babyparse/babyparse.js",
             "png-js"     : "stinst:/js/libs/png-js/png.js",
-            "underscore" : "stinst:/js/libs/underscore/underscore.js"
+            "underscore" : "stinst:/js/libs/underscore/underscore.js",
+            "xml-writer" : "stinst:/js/libs/xml-writer"
         }
     },
     "data" : {

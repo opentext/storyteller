@@ -788,8 +788,11 @@ function json_factory(options) {
     function font(css) {
         css = css || {};
         var f = factory.font();
+        var family = css['font-family'] || "Lato";
+        if (options.fonts)
+            family = options.fonts(family);
         f.clrFontColor = color();
-        f.strName = css['font-family'] || "Lato";
+        f.strName = family;
         f.iFontHeight10X = convert_length(css['font-size'] || '10pt', 10);
         f.bBold = css['font-weight'] === 'bold';
         f.bItalic = css['font-style'] === 'italic';
@@ -853,13 +856,14 @@ function json_factory(options) {
     function image(attrs) {
         id += 2;
         var img = factory.image();
-        var casid = attrs.src.split(':')[1];
+        var uri = options.uris ? options.uris(attrs.src) : attrs.src;
+        var casid = uri.replace(/^(cas:)/,'');
         var width = convert_length(attrs.w);
         var height = convert_length(attrs.h);
         img.m_pDrawObj.m_oiID = id-1;
         img.m_pDrawObj.m_UNITSPERINCH = resolution;
         img.m_pDrawObj.m_pDbBitmap.m_oiDB = id-2;
-        img.m_pDrawObj.m_pDbBitmap.m_strCASId = casid;
+        img.m_pDrawObj.m_pDbBitmap.m_strCASId = casid; 
         img.m_pDrawObj.m_rectPosition.left = 0;
         img.m_pDrawObj.m_rectPosition.top = 0;
         img.m_pDrawObj.m_rectPosition.bottom = height;
@@ -1077,6 +1081,8 @@ function json_builder(nsmap, factory, stack, options) {
         var objs = textdraw.m_pObjs;
         var links = textdraw.m_Links;
         var styles = simple_stack({});
+        styles.dirty = true;
+        var inside = {};
 
         function insert_resource(resources, resource) {
             var id;
@@ -1103,18 +1109,21 @@ function json_builder(nsmap, factory, stack, options) {
             paragraphs.push(factory.paragraph());
         }
         
-        function insert_cstyle(css) {
-            commands.push(enums.content.FONT_CHANGE);
-            chars.push(insert_resource(fonts, factory.font(css)));
-            commands.push(enums.content.COLOR_CHANGE);
-            chars.push(insert_resource(colors, factory.color(css['color'])));
+        function flush_cstyle() {
+            if (styles.dirty) {
+                var css = styles.top();
+                commands.push(enums.content.FONT_CHANGE);
+                chars.push(insert_resource(fonts, factory.font(css)));
+                commands.push(enums.content.COLOR_CHANGE);
+                chars.push(insert_resource(colors, factory.color(css['color'])));
+                styles.dirty = false;
+            }
         }
-
+        
         ///////////////////////////////////////////////////////////////////
 
         
         function block_(start, attrs) {
-            styles.dirty = true;
             if (start) {
                 styles.push(split_css(attrs.style, styles.top()));
             } else {
@@ -1123,7 +1132,6 @@ function json_builder(nsmap, factory, stack, options) {
         }
 
         function p_(start, attrs) {
-            styles.dirty = true;
             if (start) {
                 insert_pstyle();
                 styles.push(split_css(attrs.style, styles.top()));
@@ -1134,7 +1142,7 @@ function json_builder(nsmap, factory, stack, options) {
 
         function story_(start, attrs) {
             if (start) {
-                if (!inside_hyperlink)
+                if (!inside.hyperlink)
                     return unsupported("stl:story");
             }
         }
@@ -1143,16 +1151,16 @@ function json_builder(nsmap, factory, stack, options) {
             if (start) {
                 if (!attrs.hyperlink)
                     return unsupported("stl:scope");
-                if (inside_hyperlink)
+                if (inside.hyperlink)
                     return unsupported("stl:scope nesting");
                 links.push(factory.link(attrs));
                 commands.push(enums.content.HYPERLINK_START);
                 chars.push(enums.content.NULL);
                 commands.push(links.length-1);
                 chars.push(enums.content.NULL);
-                inside_hyperlink = true;
+                inside.hyperlink = true;
             } else {
-                inside_hyperlink = false;
+                inside.hyperlink = false;
                 commands.push(enums.content.HYPERLINK_END);
                 chars.push(enums.content.NULL);
                 commands.push(enums.content.NULL);
@@ -1199,10 +1207,7 @@ function json_builder(nsmap, factory, stack, options) {
         function text(data) {
             data = data.trim();
             if (data.length) {
-                if (styles.dirty) {
-                    insert_cstyle(styles.top());
-                    styles.dirty = false;
-                }
+                flush_cstyle();
                 range(data.length).forEach(function(index) {
                     chars.push(data.charCodeAt(index));
                     commands.push(enums.content.NULL);
@@ -1220,6 +1225,7 @@ function json_builder(nsmap, factory, stack, options) {
             span_: span_,
             block_: block_,
             scope_: scope_,
+            story_: story_,
             image_: image_,
             table_: table_,
             text_: text_,
