@@ -11,12 +11,13 @@ exports.empower_item = function empower_item(input, options) {
     // initialize src and dst streams
     var json = streams.stream('wd:/input/'+input+'.json');
     var stl = streams.stream(options.dump ? 'wd:/output/'+input+'.xml' : 'local:');
+    var indent = options.dump ? '  ' : false;
     var opts = {
         uris: function(uri) {
             // temporarily replace CAS URI with a local URI 
             return uri.replace(/cas:[a-zA-Z0-9+\/_=]+/, 'wd:/opentext.png')
         },
-        indent: options.dump ? '  ' : false,
+        indent: indent,
         page: !!options.raster
     };
     // convert empower JSON to STL
@@ -33,6 +34,12 @@ exports.empower_item = function empower_item(input, options) {
             output: 'wd:/output/'+input+'.png'
         };
         st(options);
+    }
+
+    if (options.reverse) {
+        var json2 = streams.stream(options.dump ? 'wd:/output/'+input+'.json' : 'local:');
+        empower.stl2emp(stl, json2, {indent: indent});
+        console.log(json2.read());
     }
     item.Uri = stl.uri;
 };
