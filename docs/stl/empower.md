@@ -149,6 +149,7 @@ and `stl2emp` with following signatures:
     - `options` ... following options are currently supported:
       - `indent` ... bool or a string used for indentation
       - `permissive` ... determines whether the conversion fails or ignores unsupported constructs
+      - `uris` ... optional callback for URI remap
     - `@return` ... output stream (the `dst` argument if provided, temporary memory stream otherwise)
 
 The interface is _stream-based_ - this decision has a potential to provide some efficiency advantages
