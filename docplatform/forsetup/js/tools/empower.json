@@ -340,7 +340,7 @@
         },
         "row": {
             "iVersion": -109,
-            "m_iHeight": 250,
+            "m_iHeight": null,
             "m_iLineAbove": -1,
             "m_iLineBelow": -1,
             "m_clrAbove": null,
@@ -362,7 +362,7 @@
             "m_oiRuleSaved": 0,
             "m_bGrouped": false,
             "m_eColumnFlow": 2,
-            "m_bFixedSize": false,
+            "m_bFixedSize": null,
             "m_iGroupedRowMode": 0,
             "m_sFilter": "",
             "m_bLegBox": false,

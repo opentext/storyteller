@@ -59,6 +59,18 @@
           "iNumbering": 0,
           "iDefaultTab": 250,
           "iBulletFont": -1
+        },
+        {
+          "m_iEditAreaNdx": -1,
+          "iNumbering": 0,
+          "iDefaultTab": 250,
+          "iBulletFont": -1
+        },
+        {
+          "m_iEditAreaNdx": -1,
+          "iNumbering": 0,
+          "iDefaultTab": 250,
+          "iBulletFont": -1
         }
       ],
       "m_TextFonts": [
@@ -72,7 +84,8 @@
           "iFontHeight10X": 100,
           "bBold": false,
           "bItalic": false,
-          "bUnderline": false
+          "bUnderline": false,
+          "bStrikeThru": false
         }
       ],
       "m_Colors": [
@@ -93,12 +106,58 @@
         0,
         0,
         0,
+        2,
+        72,
+        101,
+        108,
+        108,
+        111,
+        0,
+        0,
+        0,
+        2,
+        79,
+        112,
+        101,
+        110,
+        116,
+        101,
+        120,
+        116,
+        0,
+        0,
+        0,
+        2,
+        33,
         0
       ],
       "m_sXPos": [
         -244,
         0,
+        -62,
         -63,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -244,
+        1,
+        -62,
+        -63,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -244,
+        2,
+        -62,
+        -63,
+        0,
         -64
       ],
       "m_oiLayer": 0,

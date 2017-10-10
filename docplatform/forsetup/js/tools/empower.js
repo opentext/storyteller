@@ -182,10 +182,8 @@ function css_converter(resolution, options) {
 
     function convert_rowbox(row, attrs) {
         attrs = attrs || {};
-        if (row.m_bFixedSize) {
-            attrs.h = convert_length(row.m_iHeight);
-        } else {
-            attrs.h = '0pt';
+        attrs.h = convert_length(row.m_iHeight);
+        if (!row.m_bFixedSize) {
             var css = {};
             css['-stl-shape-resize'] = 'free';
             css['-stl-shape-growth'] = '0pt max';
@@ -877,8 +875,8 @@ function json_factory(options) {
         height = convert_length(height);
         var txt = factory.text();
         txt.m_pDrawObj.m_oiID = id-1;
-        txt.m_pDrawObj.m_bAutoSizeX = asX;
-        txt.m_pDrawObj.m_bAutoSizeY = asY;
+        txt.m_pDrawObj.m_bAutoSizeX = !!asX;
+        txt.m_pDrawObj.m_bAutoSizeY = !!asY;
         txt.m_pDrawObj.m_rectPosition.left = 0;
         txt.m_pDrawObj.m_rectPosition.top = 0;
         txt.m_pDrawObj.m_rectPosition.right = width;
@@ -895,62 +893,67 @@ function json_factory(options) {
         return txt;
     }
 
-    function table(rows, columns, widths, heights) {
-        function column(c) {
-            var col = factory.column();
-            col.m_iWidth = widths[c];
-            col.m_clrLeft = color();
-            col.m_clrRight = color();
-            col.m_pEditableProps = columnprops();
-            return col;
-        }
+    function column(attrs) {
+        var col = factory.column();
+        col.m_iWidth = convert_length(attrs.w);
+        col.m_clrLeft = color();
+        col.m_clrRight = color();
+        col.m_pEditableProps = columnprops();
+        return col;
+    }
 
-        function row(r) {
-            var r = factory.row();
-            r.m_clrAbove = color();
-            r.m_clrBelow = color();
-            r.m_colorLegend = color();
-            r.m_pEditableProps = rowprops();
-            return r;
-        }
+    function row(attrs, css) {
+        var row = factory.row();
+        row.m_iHeight = convert_length(attrs.h);
+        row.m_clrAbove = color();
+        row.m_clrBelow = color();
+        row.m_colorLegend = color();
+        row.m_pEditableProps = rowprops();
+        row.m_bFixedSize = (css['-stl-shape-resize'] !== 'free');
+        return row;
+    }
 
-        function cell(c, r) {
-            var cell = factory.cell();
-            cell.m_pTextDraw = factory.text(widths[c], heights[r], false, false).m_pDrawObj;
-            cell.m_iColumn = c;
-            cell.m_iRow = r;
-            return c;
-        }
+    function cell(c, r, width, height) {
+        id += 1;
+        var txt = factory.text().m_pDrawObj;
+        txt.m_oiID = id-1;
+        txt.m_bAutoSizeX = false;
+        txt.m_bAutoSizeY = false;
+        txt.m_rectPosition.left = 0;
+        txt.m_rectPosition.top = 0;
+        txt.m_rectPosition.right = width;
+        txt.m_rectPosition.bottom = height;
+        txt.m_pEditableProps = textprops();
+        txt.m_UNITSPERINCH = resolution,
+        txt.m_iLogicalRes = resolution,
+        txt.m_iDesignRes = resolution,
+        txt.m_clrPen = color();
+        txt.m_iMaxWidthDes = width;
+        txt.m_Colors.push(color());
+        txt.m_Colors.push(color('#00ffc0'));
+        txt.m_Colors.push(color('#f00'));
 
-        function sum(values) {
-            return values.reduce((a, b) => a + b, 0);            
-        }
-        
+        var cell = factory.cell();
+        cell.m_pTextDraw = txt;
+        cell.m_iColumn = c;
+        cell.m_iRow = r;
+        return cell;
+    }
+    
+    function table() {
         id += 1;
         var tbl = factory.table();
         tbl.m_pDrawObj.m_oiID = id;
         tbl.m_pDrawObj.m_rectPosition.left = 0;
         tbl.m_pDrawObj.m_rectPosition.top = 0;
-        tbl.m_pDrawObj.m_rectPosition.right = sum(widths);
-        tbl.m_pDrawObj.m_rectPosition.bottom = sum(heights);
+        tbl.m_pDrawObj.m_rectPosition.right = null;
+        tbl.m_pDrawObj.m_rectPosition.bottom = null;
         tbl.m_pDrawObj.m_UNITSPERINCH = resolution;
         tbl.m_pDrawObj.m_clrPen = color();
         tbl.m_pDrawObj.m_clrBrushFill = color('#00c0c0');
         tbl.m_pDrawObj.m_clrShadow = color('#00c0c0');
         tbl.m_pDrawObj.m_pEditableProps = tableprops();
         tbl.m_pDrawObj.m_colorLegendFrame = color();
-        
-        rows = range(rows);
-        columns = range(rows);
-        rows.forEach(function(r) {
-            tbl.m_pDrawObj.m_Rows.push(factory.row(r));
-            columns.forEach(function(c) {
-                if (r === 0) {
-                    tbl.m_pDrawObj.m_Columns.push(factory.column(c));
-                }
-                tbl.m_pDrawObj.m_Cells.push(factory.cell(c, r));
-            });
-        });
         return tbl;
     }
 
@@ -987,6 +990,10 @@ function json_factory(options) {
         link: link,
         objref: objref,
         image: image,
+        table: table,
+        row: row,
+        column: column,
+        cell: cell,
         content: content
     };
 }
@@ -1039,47 +1046,63 @@ function json_builder(nsmap, factory, stack, options) {
         return css;
     }
     
-    function table_builder() {
-        function story_(start, attrs) {
-        }
-
-        function repeater_(start, attrs) {
-            return unsupported("Repeater");
-        }
-
+    function table_builder(draw) {
+        var columns = [];
+        var rows = [];
+        var cells = [];
+        var column = 0;
+            
         function row_(start, attrs) {
+            if (start) {
+                column = 0;
+                var css = split_css(attrs.style);
+                rows.push(factory.row(attrs, css));
+            }
         }
 
         function cell_(start, attrs) {
-            if (start)
-                return stl.handler_dispatcher(nsmap, story_builder());
-        }
-
-        function text(data) {
+            if (start) {
+                if (rows.length === 1) {
+                    columns.push(factory.column(attrs));
+                }
+                var row = rows.length - 1;
+                var cell = factory.cell(column, row, columns[column].m_iWidth, rows[row].m_iHeight);
+                cells.push(cell);
+                return stl.handler_dispatcher(nsmap, story_builder(cell.m_pTextDraw));
+            } else {
+                column += 1;
+            }
         }
 
         function finalize() {
+            var width = columns.reduce((acc,el) => acc+el.m_iWidth, 0);;
+            var height = rows.reduce((acc,el) => acc+el.m_iHeight, 0);
+            draw.m_Rows = rows;
+            draw.m_Columns = columns;
+            draw.m_Cells = cells;
+            draw.m_rectPosition.right = width;
+            draw.m_rectPosition.bottom = height;
         }
 
         return { 
-            story_: story_,
+            story_: () => {},
             row_: row_,
             cell_: cell_,
             repeater_: () => unsupported("stl:repeater"),
             text: unexpected_text,
-            finalize: () => {},
+            finalize: finalize,
         };
     }
     
-    function story_builder(textdraw) {
-        var paragraphs = textdraw.m_ParaValues;
-        var colors = textdraw.m_Colors;
-        var fonts = textdraw.m_TextFonts;
-        var chars = textdraw.m_cChars;
-        var commands = textdraw.m_sXPos;
-        var objrefs = textdraw.m_Objs;
-        var objs = textdraw.m_pObjs;
-        var links = textdraw.m_Links;
+    function story_builder(draw) {
+        var paragraphs = draw.m_ParaValues;
+        var colors = draw.m_Colors;
+        var fonts = draw.m_TextFonts;
+        var chars = draw.m_cChars;
+        var commands = draw.m_sXPos;
+        var objrefs = draw.m_Objs;
+        var objs = draw.m_pObjs;
+        var links = draw.m_Links;
         var styles = simple_stack({});
         styles.dirty = true;
         var inside = {};
@@ -1196,8 +1219,22 @@ function json_builder(nsmap, factory, stack, options) {
         }
 
         function table_(start, attrs) {
-            if (start)
-                return stl.handler_dispatcher(nsmap, table_builder());
+            if (start) {
+                var tbl = factory.table();
+                var draw = tbl.m_pDrawObj;
+                objrefs.push(factory.objref(tbl.m_eComponentType));
+                objs.push(draw);
+                commands.push(enums.content.OBJECT_START);
+                chars.push(enums.content.NULL);
+                commands.push(objrefs.length-1);
+                chars.push(enums.content.NULL);
+                return stl.handler_dispatcher(nsmap, table_builder(draw));
+            } else {
+                commands.push(enums.content.OBJECT_END);
+                chars.push(enums.content.NULL);
+                commands.push(enums.content.NULL);
+                chars.push(enums.content.NULL);
+            }
         }
 
         function text_(start, attrs) {
