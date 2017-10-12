@@ -3,7 +3,7 @@
     <stl:page w="3.6in" h="1in">
       <stl:table x="0.417in" y="0.302in" style="border: 0.001in solid #000000">
         <stl:story>
-          <stl:row h="0pt" style="-stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: 0pt -max">
+          <stl:row h="0.25in" style="-stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: 0pt -max">
             <stl:cell w="1in">
               <stl:p>
                 <stl:text w="0.978in" h="1in" style="-stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: -0pt -max">
@@ -17,7 +17,7 @@
             </stl:cell>
             <stl:cell w="1in">
               <stl:p>
-                <stl:image w="0.979in" h="0.177in" src="wd:/opentext.png"></stl:image>
+                <stl:image w="0.979in" h="0.177in" src="wd:/cas/Y3hyOi8_aWQ9Y2ZlMDkwN2UtZWFlMi00ZDlkLWFkNzQtYjUzYTA2ODAwYzliO3Y9MTt0PTdjNjk4ZTFlLTdhMDUtZjA5Ny00NTYwLTdjYTc0ZWIyOGZhYw=="></stl:image>
               </stl:p>
             </stl:cell>
           </stl:row>
