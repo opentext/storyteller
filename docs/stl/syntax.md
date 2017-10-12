@@ -697,7 +697,7 @@ so we used a CSS extension with `-stl` "vendor" prefix:
 
 ### Character Style Definition
 
-Content elements defining a `style` attribute (`stl:p`, `stl:list`, `stl:li` and `stl:span`) can use following optional CSS properties modifying current *character style*:
+Content elements defining a `style` attribute (`stl:p`, `stl:list`, `stl:block` and `stl:span`) can use following optional CSS properties modifying current *character style*:
 
 -   `font`
     -   `font-family` (string) ... maps to *Font.Name* property
@@ -1098,13 +1098,14 @@ This example demonstrates the usage of a *Span*:
 ## Lists
 
 A relatively frequent use-case is to create a bulleted or numbered list. 
-STL definition provides an `stl:list` element for that purpose.
+STL definition provides an `stl:list` element and also several `-stl-list-`
+prefixed CSS properties for that purpose.
 
-The fact is that there is no *List* object implemented in *StoryTeller Document Model* 
+The fact is that there is no *List* object implemented internally in *StoryTeller Document Model* 
 (list definitions are internally represented as *ListStyleSpec* resources and referenced 
 from individual paragraphs), but we believe that supporting more HTML-like list creation 
-is more user-friendly than exposing the internal *StoryTeller* representation (such approach
-also simplifies a direct STL -> HTML conversion).
+is more user-friendly than exposing the internal *StoryTeller* representation (a nice size-effect
+of such approach is that it also significantly simplifies a direct STL -> HTML conversion).
 
 It means that users can generally create an arbitrary hierarchy of
 nested `stl:list` elements (each element representing a definition of
@@ -1112,13 +1113,7 @@ the whole list) containing `stl:p` sub-elements with or without associated bulle
 style definition (each sub-element represents either a single list item or it is a plain 
 paragraph with no bullet/numbering).
 
-> :exclamation: 
-> Note that *Bullets & Numbering* are a subject of significant change in *STL syntax*.
-> Since version 16.2 Update 1 there are significant changes in the definition.
-
-### Since 16.2 Update 1
-
-The new bullets & numbering syntax is described in a [separate document](numbering.html).
+The _Bullets & Numbering_ syntax is described in a [separate document](numbering.html).
 
 #### Example
 
@@ -1128,118 +1123,6 @@ This example demonstrates the usage of *Lists*:
 -   [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/kitchen-sink-xml_000-m.png)
 
 ![List example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/kitchen-sink-xml_000-m.png)
-
-### Pre 16.2 Update 1
-
-Following (list-specific) attributes are supported for `stl:list`:
-
--   `numbering-id` (integral)
--   `start-at` (integral)
--   `list-mask` (string)
-
-A difference between *bulleted list* and *numbered list* is represented
-by a value of the `text` attribute.
-
-For example - this is a nested bulleted list:
-
-```xml
-...
-<stl:story>
-  <!-- Bulleted list -->
-  <stl:list list-mask="♣   " style="font-size:14pt">
-    <stl:li>First item</stl:li>
-    <stl:list list-mask="♠   " left-indent="10pt">
-      <stl:li>First nested item</stl:li>
-      <stl:li>Second nested item</stl:li>
-    </stl:list>
-    <stl:li>Second item</stl:li>
-    <stl:list list-mask="♠   " left-indent="10pt">
-      <stl:li>Another nested item</stl:li>
-    </stl:list>
-  </stl:list>
-  ...
-</stl:story>
-```
-
-And this is on the other hand an example of a numbered list:
-
-```xml
-...
-<stl:story>
-  <!-- Continuous numbered list -->
-  <stl:list list-mask="%0!1.%1!R&#9;" style="font-weight:bold">
-    <stl:li>First level, first item</stl:li>
-    <stl:li>First level, second item</stl:li>
-    <stl:list bold="true" italic="true">
-      <stl:li>Second level, first item</stl:li>
-      <stl:li>Second level, second item</stl:li>
-    </stl:list>
-  </stl:list>
-  ...
-</stl:story>
-```
-
-For any top-level continuous list the *DocBuilder++* creates a separate
-`numbering-id` automativcally unless it is explicitly specified. So for
-example if user wants to attach a list to a previous one and continue
-the numbering, he can pick a custom `numbering-id` and use it as an
-identifier representing a specific numbering sequence:
-
-```xml
-...
-<stl:story>
-  <!-- Divided numbered list -->
-  <stl:list list-mask="(%0!A.%1!a)&#9;" list-style="color:#aa44aa" numbering-id="10">
-    <stl:li>First level, first item</stl:li>
-    <stl:list foreground="#aa44aa">
-      <stl:li>Second level, first item</stl:li>
-      <stl:li>Second level, second item</stl:li>
-    </stl:list>
-  </stl:list>
-  <stl:p>This is an interleaving paragraph, but numbering still continues...</stl:p>
-  <stl:list list-mask="(%0!A.%1!a)&#9;" list-style="color:#aa44aa" numbering-id="10">
-    <stl:li>First level, second item</stl:li>
-    <stl:list list-style="color:#aa44aa">
-      <stl:li>Second level, first item</stl:li>
-      <stl:li>Second level, second item</stl:li>
-      <stl:li>Second level, third item</stl:li>
-    </stl:list>
-  </stl:list>
-</stl:story>
-...
-```
-
-It is possible to arbitrarily interleave bulleted/numbered paragraphs
-(`stl:li`) with plain normal paragraphs with no numbering (`stl:p`)
-inside a single `stl:list`:
-
-```xml
-...
-<stl:story>
-  <!-- Mixed numbered and plain paragraphs -->
-  <stl:list list-mask="%0!1. " list-style="font-weight:bold; font-style:italic">
-    <stl:li style="margin-top:5pt; text-indent:10pt; font-weight:bold">First Chapter</stl:li>
-    <stl:p>Text of the first chapter</stl:p>
-    <stl:li style="text-indent:10pt; font-weight:bold">Second Chapter</stl:li>
-    <stl:p>Text of the second chapter</stl:p>
-    <stl:li style="text-indent:10pt; font-weight:bold">Third Chapter</stl:li>
-    <stl:p>Text of the third chapter</stl:p>
-  </stl:list>
-</stl:story>
-...
-```
-
-For the bullet/numbering part of the paragraph a current `stl:span` style is used unless 
-it is changed explicitly. So user can associate any *character style* attribute with 
-a `stl:list` element and the resulting properties apply just for the bullet/numbering 
-part of the list (so it is possible for example make the bullet/numbering part `bold` 
-regardless of the paragraph content styling).
-
-User can also associate any *paragraph style* attribute with the `stl:list` element 
-and such properties are propagated to any nested paragraph (either `stl:li` or `stl:p`) 
-unless they are explicitly overriden (so it is for example possible to set `left-indent`,
-`space-before` and `space-after` globally for the whole list and override the values 
-for specific paragraph if necessary).
 
 ## Breaks
 
@@ -2993,12 +2876,3 @@ example enumerating all pages of an multipage TIFF image:
 
 ![Multipage Image example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png)
 
-# Load-time vs. Runtime
-
-TBD
-
-## Story References
-
-## Substitutions
-
-## Styling
