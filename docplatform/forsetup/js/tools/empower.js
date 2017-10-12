@@ -54,6 +54,12 @@ const enums = {
     }
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// JSON -> STL
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function stl_writer(indent) {
     const XMLWriter = require('xml-writer');
     var xw = null;
@@ -528,16 +534,9 @@ function content_inserter(writer) {
     };
 }
 
-exports.emp2stl = function emp2stl(src, dst, options) {
-    dst = dst || streams.stream();
-    options = options || {};
-
-    if (!util.isStream(src) || !util.isStream(dst)) {
-        throw new Error("Invalid argument, stream expected");
-    }
-    var contents = JSON.parse(src.read()).contents;
+function build_stl(contents, writer, options) {
     var converter = css_converter(contents.m_lResolution, options);
-    var writer = stl_writer(options.indent);
+
     var convert_object;
 
     function convert_content(draw, inserter) {
@@ -697,11 +696,13 @@ exports.emp2stl = function emp2stl(src, dst, options) {
     } else {
         convert_canvas_message(contents);
     }
-    writer.end('document');
-    dst.write(writer.finish());
-};
+    writer.end('document');    
+}
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// STL -> JSON
+//
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function css2rgb(input) {
@@ -1444,6 +1445,51 @@ function json_builder(nsmap, factory, root, options) {
     return root_builder();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+ * emp2stl( src: stream [, dst: stream, options: object] ) : stream
+ *
+ * Parses _Empower JSON_ fragment and generates corresponding *  _STL_ fragment
+ *
+ * Parameters:
+ *   - `src` ... input stream containing _Empower JSON_
+ *   - `dst` ... output stream to be filled with resulting _STL_ (memory stream is created by default)
+ *   - `options` ... following options are currently supported:
+ *     - `indent` ... bool or a string used for indentation
+ *     - `page` ... bool determining whether page type should be generated
+ * 	   - `fonts` ... optional callback for font remap
+ * 	   - `uris` ... optional callback for URI remap
+ *   - `@return` ... output stream (the `dst` argument if provided, temporary memory stream otherwise)
+ */
+exports.emp2stl = function emp2stl(src, dst, options) {
+    dst = dst || streams.stream();
+    options = options || {};
+
+    if (!util.isStream(src) || !util.isStream(dst)) {
+        throw new Error("Invalid argument, stream expected");
+    }
+    var contents = JSON.parse(src.read()).contents;
+    var writer = stl_writer(options.indent);
+    build_stl(contents, writer, options);
+    dst.write(writer.finish());
+};
+
+/*
+ *  stl2emp( src: stream [, dst: stream, options: object] ) : stream 
+ *
+ *  Parses _STL_ document and generates corresponding _Empower JSON_ fragment
+ *
+ *  Parameters:
+ *    - `src` ... input stream containing _STL_
+ *    - `dst` ... output stream to be filled with resulting _Empower JSON_ (memory stream is created by default)
+ *    - `options` ... following options are currently supported:
+ *      - `indent` ... bool or a string used for indentation
+ *      - `permissive` ... determines whether the conversion fails or ignores unsupported constructs
+ *	  - `fonts` ... optional callback for font remap
+ *      - `uris` ... optional callback for URI remap
+ *    - `@return` ... output stream (the `dst` argument if provided, temporary memory stream otherwise)
+ */
 exports.stl2emp = function emp2stl(src, dst, options) {
     options = options || {};
         
