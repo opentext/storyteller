@@ -461,7 +461,8 @@ because this is easier to demonstrate.
 
 ### Inline CSS
 
-Setting the style of a particular document element (line `stl:ellipse`, `stl:p` or `stl:span`), can be done with the `style` attribute. 
+Setting the style of a particular document element (like `stl:ellipse`, `stl:block`, `stl:p` or `stl:span`),
+can be done with the `style` attribute. 
 
 The `style` attribute has the following syntax:
 
@@ -653,9 +654,24 @@ In future we are going to support more advanced *Fill* and *Stroke* definitions,
     <stl:line x1="40pt" x2="120pt" y1="100pt" y2="100pt" style="stroke: black; stroke-width: 20pt; stroke-linecap: round;"/>
 ```
 
+There are also following additional *drawing style* related properties with no direct mapping to HTML CSS,
+so we used a CSS extension with `-stl` "vendor" prefix:
+
+-   `-stl-content-rescale`
+-   `-stl-content-growth`
+-   `-stl-content-shrink`
+-   `-stl-shape-rescale`
+-   `-stl-shape-growth`
+-   `-stl-shape-shrink`
+-   `-stl-placement-ratio`
+-   `-stl-alignment`
+-   `-stl-wrapping`
+-   `-stl-formatting`
+
 ### Paragraph Style Definition
 
-Content elements defining a `style` attribute (`stl:p`, `stl:list`, `stl:li` and `stl:span` outside a paragraph) can use following optional CSS properties modifying current *paragraph style*:
+Content elements defining a `style` attribute for paragraphs (`stl:p`, `stl:list` and `stl:block`)
+can use following optional CSS properties modifying current *paragraph style*:
 
 -   `text-align` (`left`, `right`, `center`, `justify`) ... maps to *Alignment* property
 -   `margin-top` (length) ... maps to the *ParagraphSpacingBefore* property
@@ -672,13 +688,12 @@ Content elements defining a `style` attribute (`stl:p`, `stl:list`, `stl:li` and
 -   `direction` (`ltr`, `rtl`) ... maps to *Direction* property
 -   `column-count` (integral), `column-width` (length), `column-gap` (length) ... maps to *ColumnSection* command
 
-Then there are following additional *paragraph style* related attributes with no meaningfull mapping to CSS:
+There are also following additional *paragraph style* related properties with no direct mapping to HTML CSS,
+so we used a CSS extension with `-stl` "vendor" prefix:
 
--   `bidi-and-shaping` (string)
--   `tabs` tab definition string (see *Tab Stops* section below)
--   `outline-level` (numeric)
-
-We can consider creating a CSS extension with a `storyteller` prefix (line `webkit` or `moz` prefixes).
+-   `-stl-shaping` (string)
+-   `-stl-tabs` tab definition string (see *Tab Stops* section below)
+-   `-stl-outline-level` (numeric)
 
 ### Character Style Definition
 
@@ -1025,15 +1040,17 @@ and toggled:
 ...
 ```
 
-A `stl:span` can span over several `stl:p` paragraphs as follows:
+## Block
+
+A `stl:block` can span over several `stl:p` paragraphs as follows:
 
 ```xml
 ...
 <stl:story>
-  <stl:span style="font-family:Courier New">
+  <stl:block style="font-family:Courier New">
     <stl:p>This is a monospace styled paragraph</stl:p>
     <stl:p>And this one is monospace too</stl:p>
-  </stl:span>
+  </stl:block>
 </stl:story>
 ...
 ```
@@ -1044,7 +1061,7 @@ nested stories:
 ```xml
 ...
 <stl:story>
-  <stl:span style="font-family:Courier New">
+  <stl:block style="font-family:Courier New">
     <stl:p>
       Span can <stl:span style="font-style:italic">span</stl:span> over several paragraphs and it's style propagates to nested sub-stories:
     </stl:p>
@@ -1063,7 +1080,7 @@ nested stories:
     <stl:p>
       <stl:content xpath="'&lt;html&gt;&lt;body&gt;c) &lt;b&gt;rich&lt;/b&gt; substitution&lt;/body&gt;&lt;/html&gt;'"/>
     </stl:p>
-  </stl:span>
+  </stl:block>
 </stl:story>
 ...
 ```
@@ -1447,9 +1464,9 @@ substitutions as separate elements:
 ...
 <stl:story>
   <stl:p>
-    <stl:content src='wd:/Fragment.rtf!/story[1]'/>
-    <stl:content src='wd:/Fragment.ssd!/story[3]'/>
-    <stl:content src='link:/fragments/content.xml!/story[@name="Main"]'/>
+    <stl:content uri='wd:/Fragment.rtf' selector='/story[1]'/>
+    <stl:content uri='wd:/Fragment.ssd' selector='/story[3]'/>
+    <stl:content uri='link:/fragments/content.xml' selector='/story[@name="Main"]'/>
   </stl:p>
 </stl:story>
 ...
@@ -1462,7 +1479,7 @@ external document (e.g. HTML) with no caching:
 ...
 <stl:story>
   <stl:p>
-    <stl:content src="wd:/Fragment.html"/>
+    <stl:content uri="wd:/Fragment.html"/>
   </stl:p>
 </stl:story>
 ...
@@ -1556,10 +1573,10 @@ the main story, for example as follows:
 
 ```xml
     <stl:story name="Sections" xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-      <stl:content src="strssec:section_html" />
-      <stl:content src="strssec:section_tables" />
-      <stl:content src="strssec:section_image" />
-      <stl:content src="strssec:section_mixed" />
+      <stl:content uri="strssec:section_html" />
+      <stl:content uri="strssec:section_tables" />
+      <stl:content uri="strssec:section_image" />
+      <stl:content uri="strssec:section_mixed" />
     </stl:story>
 ```
 
@@ -1589,7 +1606,7 @@ runtime. The top level design could look as follows:
 
       <stl:document>
         <stl:story name="ExternContent">
-          <stl:content src="link:/story-fragment.xml!/story[1]"/>
+          <stl:content uri="link:/story-fragment.xml" selector="/story[1]"/>
         </stl:story>
 
         <stl:page w="370pt" h="500pt">
@@ -2487,7 +2504,7 @@ and submit button:
     <stl:text x="140pt" y="20pt" w="150pt" h="115pt" style="fill:#ffddcc">
       <stl:story name="Shared">
         <stl:p>This is a story containing interactive form:</stl:p>
-        <stl:span style="font-family:Arial; font-size:10pt">
+        <stl:block style="font-family:Arial; font-size:10pt">
           <stl:p>
             <stl:scope relation="/data/ddi:form">
               <stl:story>
@@ -2505,7 +2522,7 @@ and submit button:
               </stl:story>
             </stl:scope>
           </stl:p>
-        </stl:span>
+        </stl:block>
       </stl:story>
     </stl:text>
     ...
