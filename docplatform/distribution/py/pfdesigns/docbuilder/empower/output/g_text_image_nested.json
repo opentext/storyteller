@@ -1,0 +1,179 @@
+{
+  "m_lTableNumber": 21,
+  "m_strName": "",
+  "m_ePageType": 1,
+  "m_iDesignResolution": 1000,
+  "m_Size": {
+    "width": 3600,
+    "height": 1000
+  },
+  "m_bSendDefault": true,
+  "m_refUsageRule": 0,
+  "m_scopedMessageTemplate": 1,
+  "contents": {
+    "m_lResolution": 1000,
+    "m_bTextOnly": false,
+    "m_lWidth": 3600,
+    "m_lHeight": 1000,
+    "m_lTopMargin": 0,
+    "m_lBottomMargin": 0,
+    "m_lGrowMaxY": 1000,
+    "m_bHasDynamicBottom": false,
+    "m_bAllStatic": false,
+    "m_bHasStatic": false,
+    "m_iGrowth": 0,
+    "m_DrawFront": [
+      {
+        "m_eComponentType": 14,
+        "m_eDynamic": 40,
+        "m_pDrawObj": {
+          "m_bAutoSizeX": false,
+          "m_bAutoSizeY": true,
+          "m_rectPosition": {
+            "left": 1000,
+            "right": 2000,
+            "top": 500,
+            "bottom": 698
+          },
+          "m_pEditableProps": {
+            "m_eEditChangeType": 1,
+            "m_bCanType": true,
+            "m_eTextField": 3,
+            "m_bCanChangeFormat": true,
+            "m_bCanChangeProperties": false,
+            "m_iCanDoObjProps": 0,
+            "m_msLink": "",
+            "m_eLinkType": 1,
+            "m_oiLink": 0,
+            "editor_isEdited": true
+          },
+          "m_UNITSPERINCH": 1000,
+          "m_iLogicalRes": 1000,
+          "m_iDesignRes": 1000,
+          "m_bPen": false,
+          "m_iPenWidth": 0,
+          "m_eFrameStyle": 0,
+          "m_iPenStyle": 0,
+          "m_clrPen": {
+            "m_eColorModel": 0,
+            "m_lColor": 0
+          },
+          "m_iFrameStyleExtent": 0,
+          "m_iLeftMargin": 0,
+          "m_iRightMargin": 0,
+          "m_iTopMargin": 0,
+          "m_iBottomMargin": 0,
+          "m_bBackGroundTransparent": true,
+          "m_bHideEmpty": false,
+          "m_ParaValues": [
+            {
+              "m_iEditAreaNdx": -1,
+              "iNumbering": 0,
+              "iDefaultTab": 250,
+              "iBulletFont": -1
+            }
+          ],
+          "m_TextFonts": [
+            {
+              "strName": "Lato",
+              "iTracking": 0,
+              "clrFontColor": {
+                "m_eColorModel": 0,
+                "m_lColor": 0
+              },
+              "iFontHeight10X": 100,
+              "bBold": false,
+              "bItalic": false,
+              "bUnderline": false,
+              "bStrikeThru": false
+            }
+          ],
+          "m_Colors": [
+            {
+              "m_eColorModel": 0,
+              "m_lColor": 0
+            },
+            {
+              "m_eColorModel": 0,
+              "m_lColor": 12648192
+            },
+            {
+              "m_eColorModel": 0,
+              "m_lColor": 255
+            }
+          ],
+          "m_cChars": [
+            0,
+            0,
+            0,
+            0,
+            72,
+            101,
+            108,
+            108,
+            111,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "m_sXPos": [
+            -244,
+            0,
+            -62,
+            -63,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -251,
+            0,
+            -106,
+            0,
+            -64
+          ],
+          "m_oiLayer": 0,
+          "m_pObjs": [
+            {
+              "m_oiID": 2,
+              "m_UNITSPERINCH": 1000,
+              "m_bPen": 0,
+              "m_pDbBitmap": {
+                "m_oiDB": 1,
+                "m_strCASId": "Y3hyOi8_aWQ9Y2ZlMDkwN2UtZWFlMi00ZDlkLWFkNzQtYjUzYTA2ODAwYzliO3Y9MTt0PTdjNjk4ZTFlLTdhMDUtZjA5Ny00NTYwLTdjYTc0ZWIyOGZhYw=="
+              },
+              "m_oiLayer": 0,
+              "m_rectPosition": {
+                "left": 0,
+                "right": 979,
+                "top": 0,
+                "bottom": 177
+              }
+            }
+          ],
+          "m_Objs": [
+            {
+              "m_iObjType": 6,
+              "m_eAnchor": 6
+            }
+          ],
+          "m_Links": [],
+          "m_iMaxWidthDes": 1000,
+          "m_oiID": 0,
+          "m_VarProps": [],
+          "m_ppEditableAreas": [],
+          "m_Rules": []
+        }
+      }
+    ],
+    "m_FrontRelNdx": [],
+    "m_iFrontBottomMin": 101,
+    "m_iFrontStaticBottom": 750,
+    "m_iFrontDynBottom": 750,
+    "m_bHasFlowLists": false,
+    "m_FrontFlowControls": []
+  },
+  "rule": null
+}

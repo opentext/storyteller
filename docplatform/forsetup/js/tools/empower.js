@@ -321,44 +321,44 @@ function css_converter(resolution, options) {
         return thickness + ' ' + pen_style(style) + ' ' + convert_color(color);
     }
 
-    function convert_padding(src, css) {
+    function convert_padding(draw, css) {
         css = css || css_reset();
-        if (src.m_iLeftMargin) {
-            css['padding-left'] = convert_length(src.m_iLeftMargin);
+        if (draw.m_iLeftMargin) {
+            css['padding-left'] = convert_length(draw.m_iLeftMargin);
         }
-        if (src.m_iRightMargin) {
-            css['padding-right'] = convert_length(src.m_iRightMargin);
+        if (draw.m_iRightMargin) {
+            css['padding-right'] = convert_length(draw.m_iRightMargin);
         }
-        if (src.m_iTopMargin) {
-            css['padding-top'] = convert_length(src.m_iTopMargin);
+        if (draw.m_iTopMargin) {
+            css['padding-top'] = convert_length(draw.m_iTopMargin);
         }
-        if (src.m_iBottomMargin) {
-            css['padding-bottom'] = convert_length(src.m_iBottomMargin);
+        if (draw.m_iBottomMargin) {
+            css['padding-bottom'] = convert_length(draw.m_iBottomMargin);
         }
         return css;
     }
 
-    function convert_item_style(src, css) {
+    function convert_item_style(draw, css) {
         css = css || css_reset();
-        if (src.m_bPen === true) {
-            css.border = convert_pen(src.m_iPenWidth, src.m_iPenStyle, src.m_clrPen);
+        if (draw.m_bPen === true) {
+            css.border = convert_pen(draw.m_iPenWidth, draw.m_iPenStyle, draw.m_clrPen);
         }
-        if (src.m_bBackGroundTransparent === false) {
-            css.fill = convert_color(src.m_clrBackGround);
+        if (draw.m_bBackGroundTransparent === false) {
+            css.fill = convert_color(draw.m_clrBackGround);
         }
-        convert_padding(src, css);
-        if (src.m_bAutoSizeX || src.m_bAutoSizeY) {
+        convert_padding(draw, css);
+        if (draw.m_bAutoSizeX || draw.m_bAutoSizeY) {
             css['-stl-shape-resize'] = 'free';
-            var x = src.m_bAutoSizeX
+            var x = draw.m_bAutoSizeX
                 ? 'max'
                 : '0pt';
-            var y = src.m_bAutoSizeY
+            var y = draw.m_bAutoSizeY
                 ? 'max'
                 : '0pt';
             css['-stl-shape-growth'] = x + ' ' + y;
             css['-stl-shape-shrink'] = '-' + x + ' -' + y;
         }
-        switch (src.m_eVertJust) {
+        switch (draw.m_eVertJust) {
         case undefined:
         case enums.valign.TOP:
             css['-stl-alignment'] = null;
@@ -370,7 +370,7 @@ function css_converter(resolution, options) {
             css['-stl-alignment'] = 'vertical 1';
             break;
         default:
-            throw new Error("Unsupported vertical justification: " + src.m_eVertJust);
+            throw new Error("Unsupported vertical justification: " + draw.m_eVertJust);
         }
         return css;
     }
@@ -540,21 +540,21 @@ exports.emp2stl = function emp2stl(src, dst, options) {
     var writer = stl_writer(options.indent);
     var convert_object;
 
-    function convert_content(src, inserter) {
+    function convert_content(draw, inserter) {
         inserter = inserter || content_inserter(writer);
-        src.m_cChars.forEach(function (code, index) {
-            var cmd = src.m_sXPos[index];
+        draw.m_cChars.forEach(function (code, index) {
+            var cmd = draw.m_sXPos[index];
             switch (cmd) {
             case enums.content.HYPERLINK_START:
-                inserter.push('scope', {'hyperlink': src.m_Links[code].msLink});
+                inserter.push('scope', {'hyperlink': draw.m_Links[code].msLink});
                 inserter.push('story');
                 break;
             case enums.content.OBJECT_START:
-                convert_object(src.m_Objs[code].m_iObjType, src.m_pObjs[code], inserter);
+                convert_object(draw.m_Objs[code].m_iObjType, draw.m_pObjs[code], inserter);
                 break;
             case enums.content.PARAGRAPH_BREAK:
                 inserter.paragraph_end();
-                inserter.paragraph_start(converter.parstyle(src.m_ParaValues[src.m_sXPos[index + 1]]));
+                inserter.paragraph_start(converter.parstyle(draw.m_ParaValues[draw.m_sXPos[index + 1]]));
                 break;
             case enums.content.SUPERSCRIPT_START:
                 inserter.style_change({'vertical-align': 'super'});
@@ -572,10 +572,10 @@ exports.emp2stl = function emp2stl(src, dst, options) {
                 inserter.paragraph_end();
                 break;
             case enums.content.COLOR_CHANGE:
-                inserter.style_change({'color': converter.color(src.m_Colors[code], true)});
+                inserter.style_change({'color': converter.color(draw.m_Colors[code], true)});
                 break;
             case enums.content.FONT_CHANGE:
-                inserter.style_change(converter.charstyle(src.m_TextFonts[code]));
+                inserter.style_change(converter.charstyle(draw.m_TextFonts[code]));
                 break;
             case enums.content.SUBSCRIPT_END:
             case enums.content.SUPERSCRIPT_END:
@@ -590,11 +590,11 @@ exports.emp2stl = function emp2stl(src, dst, options) {
         });
     }
 
-    function convert_table(src, inserter) {
+    function convert_table(draw, inserter) {
         function convert_row(row, r) {
             inserter.push('row', converter.rowbox(row));
-            src.m_Columns.forEach(function (column, c) {
-                var cell = src.m_Cells.find(function (cell) {
+            draw.m_Columns.forEach(function (column, c) {
+                var cell = draw.m_Cells.find(function (cell) {
                     return cell.m_iColumn === c && cell.m_iRow === r;
                 });
                 var attrs = {};
@@ -612,19 +612,19 @@ exports.emp2stl = function emp2stl(src, dst, options) {
         }
 
         // we do not convert table width & height, we convert row/column dimensions instead
-        var attrs = converter.pos(src.m_rectPosition);
-        var css = converter.item_style(src);
+        var attrs = converter.pos(draw.m_rectPosition);
+        var css = converter.item_style(draw);
         attrs.style = css_format(css);
         inserter.push('table', attrs);
         inserter.push('story');
-        src.m_Rows.forEach(convert_row);
+        draw.m_Rows.forEach(convert_row);
         inserter.pop('story');
         inserter.pop('table');
     }
 
-    function convert_image(src, inserter) {
-        var attrs = converter.bbox(src.m_rectPosition);
-        var uri = 'cas:' + src.m_pDbBitmap.m_strCASId;
+    function convert_image(draw, inserter) {
+        var attrs = converter.bbox(draw.m_rectPosition);
+        var uri = 'cas:' + draw.m_pDbBitmap.m_strCASId;
         attrs.src = options.uris
             ? options.uris(uri)
             : uri;
@@ -632,28 +632,28 @@ exports.emp2stl = function emp2stl(src, dst, options) {
         inserter.pop('image');
     }
 
-    function convert_text(src, inserter) {
-        var attrs = converter.bbox(src.m_rectPosition);
-        var css = converter.item_style(src);
+    function convert_text(draw, inserter) {
+        var attrs = converter.bbox(draw.m_rectPosition);
+        var css = converter.item_style(draw);
         attrs.style = css_format(css);
         inserter.push('text', attrs);
         inserter.push('story');
-        convert_content(src);
+        convert_content(draw);
         inserter.pop('story');
         inserter.pop('text');
     }
 
-    convert_object = function (type, src, inserter) {
+    convert_object = function (type, draw, inserter) {
         inserter = inserter || content_inserter(writer);
         switch (type) {
         case enums.item.TABLE:
-            convert_table(src, inserter);
+            convert_table(draw, inserter);
             break;
         case enums.item.IMAGE:
-            convert_image(src, inserter);
+            convert_image(draw, inserter);
             break;
         case enums.item.TEXT:
-            convert_text(src, inserter);
+            convert_text(draw, inserter);
             break;
         default:
             throw new Error("Unsupported object type: " + type);
@@ -661,14 +661,14 @@ exports.emp2stl = function emp2stl(src, dst, options) {
     };
 
     function convert_text_message(contents) {
-        var text = contents.m_pTextDraw;
-        var attrs = converter.bbox(text.m_rectPosition);
+        var draw = contents.m_pTextDraw;
+        var attrs = converter.bbox(draw.m_rectPosition);
         writer.start('story', {name: 'Main', w: attrs.w});
-        convert_content(text);
+        convert_content(draw);
         writer.end('story');
         if (options.page) {
             writer.start('page', attrs);
-            var css = converter.item_style(text);
+            var css = converter.item_style(draw);
             attrs.style = css_format(css);
             attrs.story = 'Main';
             writer.start('text', attrs);
@@ -757,7 +757,20 @@ function json_factory(options) {
             throw new Error("Unsupported unit: " + matches[2]);
         return Math.round(parseFloat(matches[1]) * multiplier * scale);
     }
-    
+
+    function convert_bbox(attrs) {
+        var x = convert_length(attrs.x || '0in');
+        var y = convert_length(attrs.y || '0in');
+        var w = convert_length(attrs.w || '1in');
+        var h = convert_length(attrs.h || '1in');
+        return {
+            left: x,
+            right: x+w,
+            top: y,
+            bottom: y+h
+        };
+    }
+
     function initialize() {
         if (!json_factory.cache) {
             var factory = require('empower.json').factory;
@@ -850,46 +863,51 @@ function json_factory(options) {
     function rowprops() {
         return columnprops();
     }
-
+    
     function image(attrs) {
         id += 2;
         var img = factory.image();
         var uri = options.uris ? options.uris(attrs.src) : attrs.src;
         var casid = uri.replace(/^(cas:)/,'');
-        var width = convert_length(attrs.w);
-        var height = convert_length(attrs.h);
-        img.m_pDrawObj.m_oiID = id-1;
-        img.m_pDrawObj.m_UNITSPERINCH = resolution;
-        img.m_pDrawObj.m_pDbBitmap.m_oiDB = id-2;
-        img.m_pDrawObj.m_pDbBitmap.m_strCASId = casid; 
-        img.m_pDrawObj.m_rectPosition.left = 0;
-        img.m_pDrawObj.m_rectPosition.top = 0;
-        img.m_pDrawObj.m_rectPosition.bottom = height;
-        img.m_pDrawObj.m_rectPosition.right = width;
+        var draw = img.m_pDrawObj;
+        draw.m_oiID = id-1;
+        draw.m_UNITSPERINCH = resolution;
+        draw.m_pDbBitmap.m_oiDB = id-2;
+        draw.m_pDbBitmap.m_strCASId = casid; 
+        draw.m_rectPosition = convert_bbox(attrs);
         return img;
     }
     
-    function text(width, height, asX, asY) {
+    function text(attrs, css) {
+        function is_autosize(css) {
+            var result = [false, false];
+            if (css['-stl-shape-resize'] === 'free') {
+                var growth = css['-stl-shape-growth'].split(' ');
+                if (growth.length === 1)
+                    growth.push(growth[0]);
+                result[0] = (growth[0] === 'max');
+                result[1] = (growth[1] === 'max');
+            }
+            return result;
+        }
+        
         id += 1;
-        width = convert_length(width);
-        height = convert_length(height);
+        var as = is_autosize(css);
         var txt = factory.text();
-        txt.m_pDrawObj.m_oiID = id-1;
-        txt.m_pDrawObj.m_bAutoSizeX = !!asX;
-        txt.m_pDrawObj.m_bAutoSizeY = !!asY;
-        txt.m_pDrawObj.m_rectPosition.left = 0;
-        txt.m_pDrawObj.m_rectPosition.top = 0;
-        txt.m_pDrawObj.m_rectPosition.right = width;
-        txt.m_pDrawObj.m_rectPosition.bottom = height;
-        txt.m_pDrawObj.m_pEditableProps = textprops();
-        txt.m_pDrawObj.m_UNITSPERINCH = resolution,
-        txt.m_pDrawObj.m_iLogicalRes = resolution,
-        txt.m_pDrawObj.m_iDesignRes = resolution,
-        txt.m_pDrawObj.m_clrPen = color();
-        txt.m_pDrawObj.m_iMaxWidthDes = width;
-        txt.m_pDrawObj.m_Colors.push(color());
-        txt.m_pDrawObj.m_Colors.push(color('#00ffc0'));
-        txt.m_pDrawObj.m_Colors.push(color('#f00'));
+        var draw = txt.m_pDrawObj;
+        draw.m_oiID = id-1;
+        draw.m_bAutoSizeX = as[0];
+        draw.m_bAutoSizeY = as[1];
+        draw.m_rectPosition = convert_bbox(attrs);
+        draw.m_pEditableProps = textprops();
+        draw.m_UNITSPERINCH = resolution,
+        draw.m_iLogicalRes = resolution,
+        draw.m_iDesignRes = resolution,
+        draw.m_clrPen = color();
+        draw.m_iMaxWidthDes = (draw.m_rectPosition.right - draw.m_rectPosition.left);
+        draw.m_Colors.push(color());
+        draw.m_Colors.push(color('#00ffc0'));
+        draw.m_Colors.push(color('#f00'));
         return txt;
     }
 
@@ -940,49 +958,68 @@ function json_factory(options) {
         return cell;
     }
     
-    function table() {
+    function table(attrs) {
         id += 1;
         var tbl = factory.table();
-        tbl.m_pDrawObj.m_oiID = id;
-        tbl.m_pDrawObj.m_rectPosition.left = 0;
-        tbl.m_pDrawObj.m_rectPosition.top = 0;
-        tbl.m_pDrawObj.m_rectPosition.right = null;
-        tbl.m_pDrawObj.m_rectPosition.bottom = null;
-        tbl.m_pDrawObj.m_UNITSPERINCH = resolution;
-        tbl.m_pDrawObj.m_clrPen = color();
-        tbl.m_pDrawObj.m_clrBrushFill = color('#00c0c0');
-        tbl.m_pDrawObj.m_clrShadow = color('#00c0c0');
-        tbl.m_pDrawObj.m_pEditableProps = tableprops();
-        tbl.m_pDrawObj.m_colorLegendFrame = color();
+        var draw = tbl.m_pDrawObj;
+        draw.m_oiID = id;
+        draw.m_rectPosition = convert_bbox(attrs);
+        draw.m_UNITSPERINCH = resolution;
+        draw.m_clrPen = color();
+        draw.m_clrBrushFill = color('#00c0c0');
+        draw.m_clrShadow = color('#00c0c0');
+        draw.m_pEditableProps = tableprops();
+        draw.m_colorLegendFrame = color();
         return tbl;
     }
 
-    function canvas(template_id, width, height) {
-        var c = factory.canvas();
-        c.m_iDesignResolution = resolution;
-        c.m_scopedMessageTemplate = template_id; 
-        c.m_Size.width = width;
-        c.m_Size.height = height;
-        c.contents.m_lResolution = resolution;
-        c.contents.m_lWidth = width;
-        c.contents.m_lHeight = height;
-        c.contents.m_lGrowMaxY = height;
-        c.contents.m_lTopMargin = 0;
-        c.contents.m_lBottomMargin = 0;
-        return c;
+    function canvas(root, template_id, attrs) {
+        const width = convert_length(attrs.w);
+        const height = convert_length(attrs.h);
+        root.m_ePageType = 1;
+        root.m_Size.width = width;
+        root.m_Size.height = height;
+        root.m_scopedMessageTemplate = template_id;
+        delete root.m_oi;
+        delete root.m_scopedMessageType;
+        delete root.m_bCanSplitText;
+        delete root.m_iWidowOrphan;
+        delete root.m_bRenumberText;
+        delete root.m_lBottomFlowMargin;
+        delete root.m_lTopFlowMargin ;
+        root.contents = factory.canvas();
+        root.contents.m_lResolution = resolution;
+        root.contents.m_lWidth = width;
+        root.contents.m_lHeight = height;
+        root.contents.m_lGrowMaxY = height;
+        root.contents.m_lTopMargin = 0;
+        root.contents.m_lBottomMargin = 0;
+        return root.contents;
     }
 
-    function content(template_id, width, height) {
-        height = height || '1in';
-        
-        var c = factory.content();
-        c.m_iDesignResolution = resolution;
-        c.m_scopedMessageType = template_id;
-        c.contents.m_lResolution = resolution;
-        c.contents.m_pTextDraw = text(width, height, false, true).m_pDrawObj;
-        return c;
+    function content(root, template_id, attrs) {
+        const css = {
+            '-stl-shape-resize': 'free',
+            '-stl-shape-growth': '0pt max'
+        };
+        root.m_oi = 0;
+        root.m_ePageType = 0;
+        root.m_scopedMessageType = template_id;
+        delete root.m_Size;
+        delete root.m_scopedMessageTemplate;
+        root.contents = factory.content();
+        root.contents.m_lResolution = resolution;
+        root.contents.m_pTextDraw = text(attrs, css).m_pDrawObj;
+        root.rule = null;
+        return root.contents;
     }
 
+    function root() {
+        var r = factory.root();
+        r.m_iDesignResolution = resolution;
+        return r;
+    }
+    
     return {
         color: color,
         font: font,
@@ -990,11 +1027,14 @@ function json_factory(options) {
         link: link,
         objref: objref,
         image: image,
+        text: text,
         table: table,
         row: row,
         column: column,
         cell: cell,
-        content: content
+        content: content,
+        canvas: canvas,
+        root: root
     };
 }
 
@@ -1009,7 +1049,7 @@ function simple_stack(item) {
     };
 }
 
-function json_builder(nsmap, factory, stack, options) {
+function json_builder(nsmap, factory, root, options) {
     const unsupported = function (item) {
         var message = "Unsupported " + item;
         if (options.permissive) {
@@ -1075,11 +1115,12 @@ function json_builder(nsmap, factory, stack, options) {
         }
 
         function finalize() {
-            var width = columns.reduce((acc,el) => acc+el.m_iWidth, 0);;
-            var height = rows.reduce((acc,el) => acc+el.m_iHeight, 0);
             draw.m_Rows = rows;
             draw.m_Columns = columns;
             draw.m_Cells = cells;
+            // we override table w,h with a sum of column widths and row heights
+            var width = columns.reduce((acc,el) => acc+el.m_iWidth, 0);;
+            var height = rows.reduce((acc,el) => acc+el.m_iHeight, 0);
             draw.m_rectPosition.right = width;
             draw.m_rectPosition.bottom = height;
         }
@@ -1142,6 +1183,30 @@ function json_builder(nsmap, factory, stack, options) {
                 styles.dirty = false;
             }
         }
+
+        function object_start(obj) {
+            if (inside.object)
+                return unsupported("object nesting");
+            var draw = obj.m_pDrawObj;
+            inside.object = draw;
+            objrefs.push(factory.objref(obj.m_eComponentType));
+            objs.push(draw);
+            commands.push(enums.content.OBJECT_START);
+            chars.push(enums.content.NULL);
+            commands.push(objrefs.length-1);
+            chars.push(enums.content.NULL);
+            return draw;
+        }
+
+        function object_end() {
+            if (!inside.object)
+                throw new Error("inconsistent object start/end");
+            commands.push(enums.content.OBJECT_END);
+            chars.push(enums.content.NULL);
+            commands.push(enums.content.NULL);
+            chars.push(enums.content.NULL);
+            inside.object = null;
+        }
         
         ///////////////////////////////////////////////////////////////////
 
@@ -1165,6 +1230,8 @@ function json_builder(nsmap, factory, stack, options) {
 
         function story_(start, attrs) {
             if (start) {
+                if (inside.object)
+                    return stl.handler_dispatcher(nsmap, story_builder(inside.object));
                 if (!inside.hyperlink)
                     return unsupported("stl:story");
             }
@@ -1202,43 +1269,31 @@ function json_builder(nsmap, factory, stack, options) {
 
         function image_(start, attrs) {
             if (start) {
-                var img = factory.image(attrs);
-                objrefs.push(factory.objref(img.m_eComponentType));
-                objs.push(img.m_pDrawObj);
-                commands.push(enums.content.OBJECT_START);
-                chars.push(enums.content.NULL);
-                commands.push(objrefs.length-1);
-                chars.push(enums.content.NULL);
+                object_start(factory.image(attrs));
                 return stl.empty_checker();
             } else {
-                commands.push(enums.content.OBJECT_END);
-                chars.push(enums.content.NULL);
-                commands.push(enums.content.NULL);
-                chars.push(enums.content.NULL);
+                object_end();
             }
         }
-
+        
         function table_(start, attrs) {
             if (start) {
-                var tbl = factory.table();
-                var draw = tbl.m_pDrawObj;
-                objrefs.push(factory.objref(tbl.m_eComponentType));
-                objs.push(draw);
-                commands.push(enums.content.OBJECT_START);
-                chars.push(enums.content.NULL);
-                commands.push(objrefs.length-1);
-                chars.push(enums.content.NULL);
+                var draw = object_start(factory.table(attrs));
                 return stl.handler_dispatcher(nsmap, table_builder(draw));
             } else {
-                commands.push(enums.content.OBJECT_END);
-                chars.push(enums.content.NULL);
-                commands.push(enums.content.NULL);
-                chars.push(enums.content.NULL);
+                object_end();
             }
         }
 
         function text_(start, attrs) {
-            return stl.ignorant();
+            if (start) {
+                if (attrs.story)
+                    return unsupported("stl:story reference");
+                var css = split_css(attrs.style);
+                object_start(factory.text(attrs, css));
+            } else {
+                object_end();
+            }
         }
         
         function text(data) {
@@ -1274,21 +1329,97 @@ function json_builder(nsmap, factory, stack, options) {
             finalize: finalize
         };
     }
+
+    function item_builder(objects) {
+        var inside = {};
+
+        function object_start(obj) {
+            if (inside.object)
+                return unsupported("object nesting");
+            objects.push(obj);
+            var draw = obj.m_pDrawObj;
+            inside.object = draw;
+            return draw;
+        }
+
+        function object_end() {
+            if (!inside.object)
+                throw new Error("inconsistent object start/end");
+            inside.object = null;
+        }
+        
+        function story_(start, attrs) {
+            if (start) {
+                if (inside.object)
+                    return stl.handler_dispatcher(nsmap, story_builder(inside.object));
+                return unsupported("stl:story");
+            }
+        }
+        
+        function text_(start, attrs) {
+            if (start) {
+                if (attrs.story)
+                    return unsupported("stl:story reference");
+                var css = split_css(attrs.style);
+                object_start(factory.text(attrs, css));
+            } else {
+                object_end();
+            }            
+        }
+
+        function image_(start, attrs) {
+            if (start) {
+                object_start(factory.image(attrs));
+                return stl.empty_checker();
+            } else {
+                object_end();
+            }
+        }
+
+        function table_(start, attrs) {
+            if (start) {
+                var draw = object_start(factory.table(attrs));
+                return stl.handler_dispatcher(nsmap, table_builder(draw));
+            } else {
+                object_end();
+            }
+        }
+        
+        return {
+            story_: story_,
+            text_: text_,
+            image_: image_,
+            table_: table_,
+            barcode_: () => unsupported("stl:barcode"),
+            chart_: () => unsupported("stl:chart"),
+            fragment_: () => unsupported("stl:fragment"),
+            text: unexpected_text, 
+            finalize: () => {}
+        };
+    }
     
     function doc_builder() {
         function story_(start, attrs) {
             if (start) {
-                var root = factory.content(4, attrs.w);
-                stack.push(root);
-                return stl.handler_dispatcher(nsmap, story_builder(root.contents.m_pTextDraw));
-            } else {
-                //stack.pop();
+                if (root.contents)
+                    return unsupported("multiple stl:story");
+                var contents = factory.content(root, 4, attrs);
+                return stl.handler_dispatcher(nsmap, story_builder(contents.m_pTextDraw));
             }
         }
 
+        function page_(start, attrs) {
+            if (start) {
+                if (root.contents)
+                    return unsupported("multiple stl:page");
+                var contents = factory.canvas(root, 1, attrs);
+                return stl.handler_dispatcher(nsmap, item_builder(contents.m_DrawFront));
+            }
+        }
+        
         return { 
             story_: story_,
-            page_: () => unsupported("stl:page"),
+            page_: page_,
             text: unexpected_text, 
             finalize: () => {}
         };
@@ -1299,7 +1430,7 @@ function json_builder(nsmap, factory, stack, options) {
             if (start)
                 return stl.handler_dispatcher(nsmap, doc_builder());
         }
-        return { 
+        return {
             stl_: () => {},
             data_: () => unsupported("stl:data"), 
             fixtures_: () => unsupported("stl:fixtures"),
@@ -1318,11 +1449,11 @@ exports.stl2emp = function emp2stl(src, dst, options) {
         
     var nsmap = stl.namespace_stack();
     var factory = json_factory(options);
-    var stack = simple_stack();
-    var root = json_builder(nsmap, factory, stack, options);
-    var parser = stl.parser(nsmap, root);
+    var root = factory.root();
+    var builder = json_builder(nsmap, factory, root, options);
+    var parser = stl.parser(nsmap, builder);
     parser.write(src.read()).close();
-    dst.write(JSON.stringify(stack.pop(), null, options.indent));
+    dst.write(JSON.stringify(root, null, options.indent));
 };
 
 

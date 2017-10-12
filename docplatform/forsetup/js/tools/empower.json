@@ -435,11 +435,38 @@
             "iLineVersion": 101,
             "m_elpPosition": null
         },
+        "content": {
+            "m_lResolution": 1000,
+            "m_pTextDraw": null,
+            "m_bTextOnly": true,
+            "m_oiLanguage": 0
+        },
         "canvas": {
+            "m_lResolution": null,
+            "m_bTextOnly": false,
+            "m_lWidth": null,
+            "m_lHeight": null,
+            "m_lTopMargin": null,
+            "m_lBottomMargin": null,
+            "m_lGrowMaxY": null,
+            "m_bHasDynamicBottom": false,
+            "m_bAllStatic": false,
+            "m_bHasStatic": false,
+            "m_iGrowth": 0,
+            "m_DrawFront": [],
+            "m_FrontRelNdx": [],
+            "m_iFrontBottomMin": 101,
+            "m_iFrontStaticBottom": 750,
+            "m_iFrontDynBottom": 750,
+            "m_bHasFlowLists": false,
+            "m_FrontFlowControls": []
+        },
+        "root": {
             "m_lTableNumber": 21,
+            "m_oi": null,
             "m_strName": "",
-            "m_ePageType": 1,
-            "m_iDesignResolution": 1000,
+            "m_ePageType": null,
+            "m_iDesignResolution": null,
             "m_Size": {
                 "width": null,
                 "height": null
@@ -447,47 +474,13 @@
             "m_bSendDefault": true,
             "m_refUsageRule": 0,
             "m_scopedMessageTemplate": null,
-            "contents": {
-                "m_lResolution": null,
-                "m_bTextOnly": false,
-                "m_lWidth": null,
-                "m_lHeight": null,
-                "m_lTopMargin": null,
-                "m_lBottomMargin": null,
-                "m_lGrowMaxY": null,
-                "m_bHasDynamicBottom": false,
-                "m_bAllStatic": false,
-                "m_bHasStatic": false,
-                "m_iGrowth": 0,
-                "m_DrawFront": [],
-                "m_FrontRelNdx": [],
-                "m_iFrontBottomMin": 101,
-                "m_iFrontStaticBottom": 750,
-                "m_iFrontDynBottom": 750,
-                "m_bHasFlowLists": false,
-                "m_FrontFlowControls": []
-            }
-        },
-        "content": {
-            "m_lTableNumber": 21,
-            "m_oi": 0,
-            "m_strName": "",
-            "m_ePageType": 0,
-            "m_iDesignResolution": 1000,
-            "m_bSendDefault": true,
-            "m_refUsageRule": 0,
             "m_scopedMessageType": null,
             "m_bCanSplitText": false,
             "m_iWidowOrphan": 0,
             "m_bRenumberText": false,
             "m_lBottomFlowMargin": 0,
             "m_lTopFlowMargin": 0,
-            "contents": {
-                "m_lResolution": 1000,
-                "m_pTextDraw": null,
-                "m_bTextOnly": true,
-                "m_oiLanguage": 0
-            },
+            "contents": null,
             "rule": null
         }
     }
