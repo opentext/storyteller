@@ -9,7 +9,6 @@ Table of Contents
    * [Content Items](#content-items)
    * [Layout Items](#layout-items)
    * [Runtime Behavior](#runtime-behavior)
-   * [Load-time vs. Runtime](#load-time-vs-runtime) 
 
 # STL definition syntax
 
