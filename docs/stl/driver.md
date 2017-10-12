@@ -68,20 +68,21 @@ The following figure demonstrates the surface pipeline created in order to gener
 As the *Page Layout XML* can be potentially embedded to a superior XML structure we use a unique XML namespace
 `http://developer.opentext.com/schemas/storyteller/layout` mapped to prefix `stl` (`stl` prefix stands for *StoryTeller Layout*).
 
-The `stl:root` element provides a `version` attribute in order to be able to change the XML format in future while keeping 
-existing XSLT transformations backward compatible.
+The `stl:stl` root element provides a `version` attribute in order to be able to change the XML format
+in future while keeping existing XSLT transformations backward compatible.
 
 Example:
 
 ```xml
-<stl:root xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   ...
-</stl:root>
+</stl:stl>
 ```
 
 :exclamation:
-Note that the root element is called `stl:stl` in *DocBuilder's* XML and it is very likely that we will
-rename `stl:root` to `stl:stl` in future.
+Note that the root element was initially called `stl:root` but later has been renamed to `stl:stl`
+in order to unify _Document Surface_ (DocBuilder++) and _Document Model_ (Page Layout Driver)
+STL syntaxes.
 
 ## Layout Hierarchy
 
@@ -95,7 +96,7 @@ hierarchy of nested building blocks:
 
 ### Document
 
-There is always a single `stl:doc` element per requested *Page Layout*
+There is always a single `stl:document` element per requested *Page Layout*
 and so it does not need a *Document ID* (or other mean to identify the
 processed document). If there is a need to include more than one
 document in a single request then we can introduce an `id` attribute
@@ -113,36 +114,36 @@ output).
 Example:
 
 ```xml
-<stl:root ...>
-  <stl:doc pages="2">
+<stl:stl ...>
+  <stl:document pages="2">
     ...
-  </stl:doc>
-</stl:root>
+  </stl:document>
+</stl:stl>
 ```
 
-:exclamation: 
-Note that the `stl:doc` element is called `stl:document` in *DocBuilder's* XML and 
-it is very likely that we will rename `stl:doc` to `stl:document` in future.
+:exclamation:
+Note that the root element was initially called `stl:doc` but later has been renamed to `stl:document`
+in order to unify _Document Surface_ (DocBuilder++) and _Document Model_ (Page Layout Driver)
+STL syntaxes.
 
 ### Pages
 
 Individual *pages* are represented as `stl:page` elements. Each `stl:page` contains following attributes:
 
--   `id` ... unique identifier of associated resource (image
-    representing rasterized page)
+-   `background` ... URI of associated resource (image representing rasterized page background)
 -   `index` ... zero-based index of the page inside the document
--   `w`, `h` ... dimension of the page represented in [point units
-    (pt)](https://en.wikipedia.org/wiki/Point_(typography))
+-   `w`, `h` ... dimension of the page represented in CSS length units
+                (typically [points (pt)](https://en.wikipedia.org/wiki/Point_(typography))
 
 Example:
 
 ```xml
 ...
-<stl:doc ...>
-  <stl:page id="page000" index="0" w="595.27559055118115" h="841.88976377952758">
+<stl:document ...>
+  <stl:page background="link:/background/page000.png" index="0" w="595.27559055118115pt" h="841.88976377952758pt">
     ...
   </stl:page>
-</stl:doc>
+</stl:document>
 ...
 ```
 
@@ -160,77 +161,78 @@ on a *Page*, but can be split across several *Areas* instead.
 Right now only *areas* containing any *editable fragments* are included, but in principle any *StoryTeller* area 
 can be included if there is a use case for it.
 
-*Areas* are stored to the XML as `stl:area` elements containing the
-following attributes:
+*Areas* are stored to the XML as `stl:box` elements containing the following attributes:
 
--   `x`, `y`, `w`, `h` ... area bounding box relative to page coordinates represented in [point units
-    (pt)](https://en.wikipedia.org/wiki/Point_(typography))
--   `mtx` ... \[optional\] [affine transformation](https://en.wikipedia.org/wiki/Transformation_matrix#Affine_transformations)
-    of the area represented as 6 homogeneous coordinates
+-   `class` ... type of box (in this case it is `area`)
+-   `x`, `y`, `w`, `h` ... area bounding box relative to page coordinates represented in CSS length units
+                          (typically [points (pt)](https://en.wikipedia.org/wiki/Point_(typography))
+-   `transform` ... \[optional\] [affine transformation](https://en.wikipedia.org/wiki/Transformation_matrix#Affine_transformations)
+    of the area represented as [CSS3 transform](https://www.w3schools.com/cssref/css3_pr_transform.asp)
 
-So an `stl:area` element can look as follows:
+So an `stl:box` element representing an area can look as follows:
 
 ```xml
 ...
 <stl:page ...>
-  <stl:area x="0" y="0" w="522" h="125" mtx="1 0 0 1 45 287.76922893356647">
+  <stl:box class="area" x="0pt" y="0pt" w="522pt" h="125pt" transform="matrix(1, 0, 0, 1, 45, 287.76922893356647)">
     ...
-  </stl:area>
+  </stl:box>
 </stl:page>
 ...
 ```
 
-The `@mtx` attribute is optional and is included only if matrix
+The `@transform` attribute is optional and is included only if matrix
 corresponding to the area represents a non-trivial transformation. Page
 layout driver performs a coordinate space normalization and if the
 matrix represents just a translation then the translation coefficient
-gets propagated to *bounding box* and *matrix* is reset as *identity*.
-So the `stl:area` above gets simplified as follows:
+gets propagated to *bounding box* and *transform* is omitted. 
+So the `stl:box` above gets simplified as follows:
 
 ```xml
 ...
 <stl:page ...>
-  <stl:area x="45" y="287.76922893356647" w="522" h="125">
+  <stl:box class="area" x="45pt" y="287.76922893356647pt" w="522pt" h="125pt">
     ...
-  </stl:area>
+  </stl:box>
 </stl:page>
 ...
 ```
 
-:exclamation: 
-Note that instead of a `@mtx` attribute there is a `@transform` attribute used in *DocBuilder's* XML.
-It is very likely that we will rename `stl:doc` to `stl:document` in future.
+:exclamation:
+Note that initially the transformation was represented as `@mtx` attribute but later has been changed
+to `@transform` attribute in order to unify _Document Surface_ (DocBuilder++) and _Document Model_
+(Page Layout Driver) STL syntaxes.
 
 ### Spans
 
-For *editable entities* the *Page Layout Driver* produces another kind of hierarchical elements: `stl:span`.
+For *editable entities* the *Page Layout Driver* produces another kind of hierarchical elements: `stl:box`.
 
-`std:span` elements form a *content span* hierarchies inside *areas* and currently correspond to two StoryTeller entities: 
+`std:box` elements form a *content span* hierarchies inside *areas* and currently correspond to two StoryTeller entities: 
 *Sections* and *Fragments*.
 
 *Sections* correspond to *StoryTeller Substitutions* introducing one or
 more editable *Fragments* to a *Story* flow. Resulting XML structure
-corresponding to a *Section* forms a hierarchy of nested `stl:span`
+corresponding to a *Section* forms a hierarchy of nested `stl:box`
 elements, each carrying its associated *data* and *bounding box*
 resulting from its content formatting inside a particular *area*.
 
-So *Sections* and *Fragments* generate `stl:span` elementes in resulting XML. 
-Each `stl:span` element contains following attributes:
+So *Sections* and *Fragments* generate `stl:box` elementes in resulting XML. 
+Each `stl:box` element contains following attributes:
 
--   `data` ... section or fragment data string provided by an *External Content Provider*
--   `x`, `y`, `w`, `h` ... *bounding box* relative to superior
-    (`stl:area` or `stl:span`) coordinates represented in 
-    [point units (pt)](https://en.wikipedia.org/wiki/Point_(typography))
+-   `class` ... type of the box (in this case it is `span`)
+-   `x`, `y`, `w`, `h` ... *bounding box* relative to superior `stl:box` coordinates
+    represented in CSS length units, typically [points (pt)](https://en.wikipedia.org/wiki/Point_(typography))
+-   `data` ... section or fragment data string - it can be any string provided by an *External Content Provider*
 
 Notes:
 
 Note that a single *Section* or even a single *Fragment* can overlap
 several *Areas* and so the resulting XML can contain (and typically does
-contain) more `stl:span` hierachies nested in various `stl:area`
+contain) more `stl:box` span hierachies nested in various `stl:box` area
 elements corresponding to a single *Section*.
 
 Specific details of how associated *data strings* of individual
-`stl:span` elements look like are outside the scope of the *Page Layout
+`stl:box` elements look like are outside the scope of the *Page Layout
 Driver* documentation. The driver just guarantees that incomming data
 are stored in the resulting XML but does not really understand its
 structure.
@@ -268,24 +270,31 @@ Let's say the source *Document Definition* looks as follows:
 
 ```xml
 ...
-<stl:page id="page000" index="0" w="595.27559055118115" h="841.88976377952758">
-  <stl:area x="45" y="287.76922893356647" w="522" h="513.23077106643359">
-    <stl:span data="s;Main" x="0" y="0" w="522" h="0">
-      <stl:span data="r;strs://cc/res/1;d7ac7fce-113b8275-0e697d8f-dd14e76f" x="0" y="0" w="522" h="0"/>
-    </stl:span>
-    <stl:area x="0" y="0" w="522" h="510.81386718749985">
-      <stl:area x="0" y="0" w="243" h="499.48628906249985">
-        <stl:span data="s;Main" x="0" y="0" w="243" h="499.48628906249985">
-          <stl:span data="r;strs://cc/res/2;92250a21-ba1e93d5-b8d0e8af-cffc0c38" x="0" y="0" w="243" h="369.1330664062499"/>
-          <stl:span data="f;strs://cc/res/3;28DC246C-61EC-9B45-91DE-A0D16AFFF3AA" x="0" y="369.1330664062499" w="243" h="11.4990234375"/>
-          <stl:span data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd" x="0" y="394.6320898437499" w="243" h="104.85419921874995"/>
-        </stl:span></stl:area><stl:area x="279" y="0" w="243" h="510.81386718749985">
-        <stl:span data="s;Main" x="0" y="0" w="243" h="510.81386718749985">
-          <stl:span data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd" x="0" y="0" w="243" h="510.81386718749985"/>
-        </stl:span>
-      </stl:area>
-    </stl:area>
-  </stl:area>
+<stl:page background="link:/background/page000.png" index="0" w="595.27559055118115pt" h="841.88976377952758pt">
+  <stl:box class="area" x="45pt" y="287.76922893356647pt" w="522pt" h="513.23077106643359pt">
+    <stl:box class="span" data="s;Main" w="522pt" h="0pt">
+      <stl:box class="span" w="522pt" h="0pt"
+               data="r;strs://cc/res/1;d7ac7fce-113b8275-0e697d8f-dd14e76f" />
+    </stl:box>
+    <stl:box class="area" w="522pt" h="510.81386718749985pt">
+      <stl:box class="area" w="243pt" h="499.48628906249985pt">
+        <stl:box class="span" data="s;Main" w="243pt" h="499.48628906249985pt">
+          <stl:box class="span" w="243pt" h="369.1330664062499pt"
+                   data="r;strs://cc/res/2;92250a21-ba1e93d5-b8d0e8af-cffc0c38"/>
+          <stl:box class="span" y="369.1330664062499pt" w="243pt" h="11.4990234375pt"
+                   data="f;strs://cc/res/3;28DC246C-61EC-9B45-91DE-A0D16AFFF3AA" />
+          <stl:box class="span" y="394.6320898437499pt" w="243pt" h="104.85419921874995pt"
+                   data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd" />
+        </stl:box>
+      </stl:box>
+	  <stl:box class="area" x="279pt" w="243pt" h="510.81386718749985pt">
+        <stl:box class="span" data="s;Main" w="243pt" h="510.81386718749985pt">
+          <stl:box class="span" w="243pt" h="510.81386718749985pt"
+                   data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd"/>
+        </stl:box>
+      </stl:box>
+    </stl:box>
+  </stl:box>
 </stl:page>
 ...
 ```
@@ -307,7 +316,7 @@ is reflected in page layout XML/HTML:
 -   [Layout XML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/HierarchyXml-py-m.layout.xml/stl.xml)
 -   [Layout HTML](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/preview/HierarchyHtml-py-m.layout.html/index.html)
 
-Note that generally there can be an arbitrary hierarchy of `stl:area` and `stl:span` elements:
+Note that generally there can be an arbitrary hierarchy of `stl:box` elements:
 
 -   If *Fragments* contain *Sections* then there can be:
     -   *Sections* containing *Fragments*
@@ -319,8 +328,9 @@ Note that generally there can be an arbitrary hierarchy of `stl:area` and `stl:s
 All described combinations are supported by the new version of the *Page Layout Driver* and are visible in the example above.
 
 :exclamation: 
-Note that the `stl:span` element has a very different meaning in *DocBuilder's* XML.
-It is very likely that we will address this conflict somehow in future.
+Note that previously the element was called `stl:span` which has a very different meaning
+in *DocBuilder's* XML. So finally it was renamed to `stl:box` and unified with `stl:area`
+(also renamed to `stl:box`).
 
 ### Empty Sections
 
@@ -393,26 +403,27 @@ user request).
 retained even in case of *Page Suppress* rules - they behave exactly
 like there **was** some actual *Content* in the *Section*.
 
-In the page layout XML the corresponding hierarchy of `stl:span` elements is generated as in the following example:
+In the page layout XML the corresponding hierarchy of `stl:box` elements
+is generated as in the following example:
 
 ```xml
-<stl:root xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-  <stl:doc>
-    <stl:page id="page000" index="0" w="595.27999999999997" h="841.88999999999999">
-      <stl:area x="50" y="10" w="400" h="600">
-        <stl:span data="s;section_group_empty" x="0" y="13.798828125" w="400" h="13.798828125"/>
-        <stl:span data="s;section_empty" x="0" y="55.1953125" w="400" h="13.798828125"/>
-        <stl:span data="s;section_empty_resource" x="0" y="96.591796875" w="400" h="13.798828125"/>
-        <stl:span data="s;section_empty_fragment" x="0" y="137.98828125" w="400" h="13.798828125">
-          <stl:span data="f;www.google.com?0;text_17" x="0" y="0" w="400" h="13.798828125"/>
-        </stl:span>
-        <stl:span data="s;section_storyref1" x="0" y="179.384765625" w="400" h="13.798828125">
-          <stl:span data="r;www.google.com?3;storyref_1" x="0" y="0" w="400" h="13.798828125"/>
-        </stl:span>
-      </stl:area>
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+    <stl:page background="link:/background/page000.png" index="0" w="595.27999999999997pt" h="841.88999999999999pt">
+      <stl:box class="area" x="50pt" y="10pt" w="400pt" h="600pt">
+        <stl:box class="span" data="s;section_group_empty" y="13.798828125pt" w="400pt" h="13.798828125pt"/>
+        <stl:box class="span" data="s;section_empty" y="55.1953125pt" w="400pt" h="13.798828125pt"/>
+        <stl:box class="span" data="s;section_empty_resource" y="96.591796875pt" w="400pt" h="13.798828125pt"/>
+        <stl:box class="span" data="s;section_empty_fragment" y="137.98828125pt" w="400pt" h="13.798828125pt">
+          <stl:box class="span" data="f;www.google.com?0;text_17" w="400pt" h="13.798828125pt"/>
+        </stl:box>
+        <stl:box class="span" data="s;section_storyref1" y="179.384765625pt" w="400pt" h="13.798828125pt">
+          <stl:box class="span" data="r;www.google.com?3;storyref_1" w="400pt" h="13.798828125pt"/>
+        </stl:box>
+      </stl:box>
     </stl:page>
-  </stl:doc>
-</stl:root>
+  </stl:document>
+</stl:stl>
 ```
 
 See the following links for the full example:
@@ -434,18 +445,18 @@ There must be some kind of a contract between *External Content Providers* and *
 ## Resources
 
 *Resources* represent mainly rasterized data - it can be rasterized *Pages* or alternatively more fine-grained 
-structures like *Areas*. All *Resources* are kept under the `stl:resources` element and `stl:resource` element 
+structures like *Areas*. All *Resources* are kept under the `stl:fixtures` element and `xp:fixture` element 
 represents individual resources.
 
 In current version *Resources* just represent rasterized page backgrounds, so right now there is a one-to-one correspondence between
-`stl:page` and `stl:resource` elements. Resources could in principle be embedded directly under the `stl:page` element, 
+`stl:page` and `xp:fixture` elements. Resources could in principle be embedded directly under the `stl:page` element, 
 but we chose to kept them separately from *Layout* hierarchy.
 
 There are several reasons why we decided to keep them separate in the XML structure:
 
 -   *Readability* - it is more human readable if we do not mix the layout hierachy information with raw image data
 -   *Flexibility* - there is a possibility to request just *layout info* without any raster. 
-    In such case the whole `stl:resources` section is omitted and `stl:page` structure remains intact
+    In such case the whole `stl:fixtures` section is omitted and `stl:page` structure remains intact
 -   *Addressability* - if there is a resource identification schema introduced in XML then it can be easily 
     reused in HTML (resource *IDs* are used as `#ids` for CSS selectors)
 -   *Implementation* - in rendering pipeline the *Layout Collector*
@@ -457,29 +468,29 @@ There are several reasons why we decided to keep them separate in the XML struct
 
 Example:
 
-The indirection of the resources is realized via automatically generated *Resource IDs* used to define 
-the correspondence between `stl:page` and `stl:resource` elements. The resulting XML looks as follows:
+The indirection of the resources is realized via automatically generated *Symlink URIs* used to define 
+the correspondence between `stl:page` and `xp:fixture` elements. The resulting XML looks as follows:
 
 ```xml
-<stl:root ...>
-  <stl:doc>
-    <stl:page id="page001" index="0" ...>
+<stl:stl ...>
+  <stl:document>
+    <stl:page background="link:/background/page001.png" index="0" ...>
       ...
     </stl:page>
-    <stl:page id="page002" index="1" ...>
+    <stl:page background="link:/background/page002.png" index="1" ...>
       ...
     </stl:page>
-  </stl:doc>
-  <stl:resources count="2">
-    <stl:resource id="page001" type="...">...</stl:resource>
-    <stl:resource id="page002" type="...">...</stl:resource>
-  </stl:resources>
-</stl:root>
+  </stl:document>
+  <stl:fixtures count="2">
+    <xp:fixture key="link:/background/page001.png" type="...">...</xp:fixture>
+    <xp:fixture key="link:/background/page002.png" type="...">...</xp:fixture>
+  </stl:fixtures>
+</stl:stl>
 ```
 
 This way the page layout structure is uniform and resources may or may not be included.
 
-There are many variants how to actually include the resources:
+There are many variants how to actually include the fixtures:
 
 -   No Resources
 -   Embedded Resources
@@ -491,8 +502,8 @@ different transfer of raster images soon enough and the XML will contain
 just IDs, URIs, hashes (you name it)
 
 :exclamation: 
-Note that semantics of the `stl:resources` element is very similar do *DocBuilder's* `stl:fixtures` 
-and it is very likely that we'll rename `stl:resources` to `stl:fixtures` in future.
+Note that semantics of the original `stl:resources` element was very similar to
+*DocBuilder's* `stl:fixtures` and so the syntax was unified between two formats.
 
 ### No resources
 
@@ -504,7 +515,8 @@ are available in which *Areas* of which *Pages*.
 In such case it is not necessary to rasterize the document and it is
 enough to just collect and generate *Layout Info*.
 
-The resulting XML does not contain the `stl:resources` sub-tree, it just contains the `stl:doc` sub-tree with layout information.
+The resulting XML does not contain the `stl:fixtures` sub-tree, it just contains
+the `stl:document` sub-tree with layout information.
 
 Here is a full example of the *Page Layout XML* with no embedded
 resources:
@@ -545,12 +557,12 @@ If we upload resources to *DocPlatform BlobManager* and get corresponding [SHA-1
 each resource then the resulting XML looks as follows:
 
 ```xml
-<stl:root ...>
-  <stl:resources count="2">
-    <stl:resource id="page001" type="hash">local:6a4a065e3f2ed5920f3722504bfd2d487a6b90ca</stl:resource>
-    <stl:resource id="page002" type="hash">local:3a2bb2c55590d810cd56f20ac219d8c34ccb5e9e</stl:resource>
-  </stl:resources>  
-</stl:root>
+<stl:stl ...>
+  <stl:fixtures count="2">
+    <xp:fixture key="link:/background/page000.svg" type="image/svg+xml" src="local:6a4a065e3f2ed5920f3722504bfd2d487a6b90ca"/>
+    <xp:fixture key="link:/background/page001.svg" type="image/svg+xml" src="local:3a2bb2c55590d810cd56f20ac219d8c34ccb5e9e"/>
+  </stl:fixtures>  
+</stl:stl>
 ```
 
 Here is a full example of the *Page Layout XML* with hash-based resource URLs:
@@ -576,12 +588,12 @@ side storage and client side caching.
 Example:
 
 ```xml
-<stl:root ...>
-  <stl:resources count="2">
-    <stl:resource id="page001" type="uri">wd:/page000.png</stl:resource>
-    <stl:resource id="page002" type="uri">wd:/page001.png</stl:resource>
-  </stl:resources>  
-</stl:root>
+<stl:stl ...>
+  <stl:fixtures count="2">
+    <xp:fixture key="link:/background/page000.png" type="image/png" src="wd:/page000.png"/>
+    <xp:fixture key="link:/background/page001.png" type="image/png" src="wd:/page001.png"/>
+  </stl:fixtures>  
+</stl:stl>
 ```
 
 Here are full examples of the *Page Layout XML* with mask based resource URLs:
@@ -621,12 +633,12 @@ deflating such data).
 Example:
 
 ```xml
-<stl:root ...>
-  <stl:resources count="2">
-    <stl:resource id="page001" type="data" mimetype="image/png" encoding="base64">iVBOR ... CYII=</stl:resource>
-    <stl:resource id="page002" type="data" mimetype="image/png" encoding="base64">iVBOR ... CYII=</stl:resource>
-  </stl:resources>  
-</stl:root>
+<stl:stl ...>
+  <stl:fixtures count="2">
+    <xp:fixture key="link:/background/page000.png" type="image/png" encoding="base64">iVBOR ... CYII=</stl:fixture>
+    <xp:fixture key="link:/background/page001.png" type="image/png" encoding="base64">iVBOR ... CYII=</stl:fixture>
+  </stl:fixtures>  
+</stl:stl>
 ```
 
 Here is a full example of the *Page Layout XML* with base64 encoded
@@ -651,9 +663,9 @@ Two kinds of changes were necessary in Cairo generated SVG files:
 Example:
 
 ```xml
-<stl:root ...>
-  <stl:resources count="2">
-    <stl:resource id="page001" type="data" mimetype="image/svg+xml" encoding="utf8">
+<stl:stl ...>
+  <stl:fixtures count="2">
+    <xp:fixture key="link:/background/page000.svg" type="image/svg+xml">
       <svg xmlns="http://www.w3.org/2000/svg" 
            xmlns:xlink="http://www.w3.org/1999/xlink" 
            width="595.275591pt" height="841.889764pt" 
@@ -662,8 +674,8 @@ Example:
         <g id="p0-surface23">...</g>
         ...
       </svg>
-    </stl:resource>
-    <stl:resource id="page002" type="data" mimetype="image/svg+xml" encoding="utf8">
+    </xp:fixture>
+    <xp:fixture key="link:/background/page001.svg" type="image/svg+xml">
       <svg xmlns="http://www.w3.org/2000/svg" 
            xmlns:xlink="http://www.w3.org/1999/xlink" 
            width="595.275591pt" height="841.889764pt" 
@@ -672,9 +684,9 @@ Example:
         <g id="p1-surface914">...</g>
         ...
       </svg>
-    </stl:resource>
-  </stl:resources>  
-</stl:root>
+    </xp:fixture>
+  </stl:fixtures>  
+</stl:stl>
 ```
 
 Here is a full example of the *Page Layout XML* with utf8 encoded text SVG data:
@@ -870,19 +882,19 @@ are rather defining programming API.
 Example:
 
 ```xml
-<stl:root xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-  <stl:doc pages="6" selection="2,4">
-    <stl:page id="page002" index="1" w="595.27559055118115" h="841.88976377952758">...</stl:page>
-    <stl:page id="page004" index="3" w="595.27559055118115" h="841.88976377952758">...</stl:page>
-  </stl:doc>
-</stl:doc>
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document pages="6" selection="2,4">
+    <stl:page background="link:/background/page002.png" index="1" w="595.27559055118115pt" h="841.88976377952758pt">...</stl:page>
+    <stl:page background="link:/background/page004.png" index="3" w="595.27559055118115pt" h="841.88976377952758pt">...</stl:page>
+  </stl:document>
+</stl:stl>
 ```
 
 Note several subtle details in the example above:
 
 -   *Set Selection* string used for partial rendering is added as
-    `stl:doc/@selection` attribute
--   Number of all pages in document (represented as `stl:doc/@pages`)
+    `stl:document/@selection` attribute
+-   Number of all pages in document (represented as `stl:document/@pages`)
     differs from number of `stl:page` elements
 -   While selection string is one-based (`2,4`), page indices are
     zero-based (`1`, `3`)
@@ -973,25 +985,25 @@ So newly it is possible to apply two levels of page filtering:
 Example:
 
 ```xml
-<stl:root xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-  <stl:doc pages="6" selection="2,4,6">
-    <stl:page id="page002" index="1" w="595.27559055118115" h="841.88976377952758">...</stl:page>
-    <stl:page id="page004" index="3" w="595.27559055118115" h="841.88976377952758">...</stl:page>
-    <stl:page id="page006" index="5" w="595.27559055118115" h="841.88976377952758">...</stl:page>
-  </stl:doc>
-  <stl:resources selection="4">
-    <stl:resource id="page004" type="uri">resource:/img/page000.png</stl:resource>
-  </stl:resources>
-</stl:doc>
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document pages="6" selection="2,4,6">
+    <stl:page background="link:/background/page002.png" index="1" w="595.27559055118115pt" h="841.88976377952758pt">...</stl:page>
+    <stl:page background="link:/background/page004.png" index="3" w="595.27559055118115pt" h="841.88976377952758pt">...</stl:page>
+    <stl:page background="link:/background/page006.png" index="5" w="595.27559055118115pt" h="841.88976377952758pt">...</stl:page>
+  </stl:document>
+  <stl:fixtures selection="4">
+    <xp:fixture key="link:/background/page004.png" type="image/png" src="resource:/img/page000.png"/>
+  </stl:fixtures>
+</stl:stl>
 ```
 
 Note several subtle details in the example above:
 
--   *Set Selection* string used for *partial rendering* is added as `stl:doc/@selection` attribute
--   Number of all pages in document (represented as `stl:doc/@pages`) differs from number of `stl:page` elements
+-   *Set Selection* string used for *partial rendering* is added as `stl:document/@selection` attribute
+-   Number of all pages in document (represented as `stl:document/@pages`) differs from number of `stl:page` elements
 -   While selection string is 1-based (`2,4,6`), page indices are zero-based (`1`, `3`, `5`)
--   *Page IDs* represented as `stl:page/@id` attributes (`page002`, `page004`, `page006`) are one-based
--   *Set Selection* string used for *partial rasterization* is added as `stl:resources/@selection` attribute
+-   *Page IDs* represented as `stl:page/@background` attributes (`page002`, `page004`, `page006`) are one-based
+-   *Set Selection* string used for *partial rasterization* is added as `stl:fixtures/@selection` attribute
 -   *Resource URIs* (`resource:/img/page000.png`) are generated sequentially and so their numbers 
     (`resource:/img/page000.png`) may generally differ from *resource or page IDs* (`page004`).
 
@@ -1065,7 +1077,7 @@ The associated CSS stylesheet contains several static style definitions
 
 ... and also styles representing page backgrounds are generated if the resources are embedded.
 
-All `stl:resource` `@type` variants are supported:
+All `xp:fixture` variants are supported:
 
 ####  Externally linked Resources
 
@@ -1259,32 +1271,33 @@ front-end filter could look like.
 For the following release we are working on a unification between *PageLayout driver* 
 output XML and *DocBuilder++* XML. Both formats should follow the STL definition syntax.
 
-If in current release the *Page Layout Driver* produces following XML:
+In one of previous releases the *Page Layout Driver* produced following XML:
 
 ```xml
 <stl:root xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:doc dpi="96 96">
     <stl:page id="page000" index="0" w="100" h="100">
-      <stl:area x="0" y="0" w="100" h="100" mtx="2 0 0 2 20 20">
-        <stl:span x="0" y="10" w="100" h="80" data="s;Main">
-          <stl:span x="0" y="0" w="100" h="80" 
-                    data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd"/>
-        </stl:span>
-      </stl:area>
-    </stl:page>
+	  <stl:area x="0" y="0" w="100" h="100" mtx="2 0 0 2 20 20">
+		<stl:span x="0" y="10" w="100" h="80" data="s;Main">
+		  <stl:span x="0" y="0" w="100" h="80"
+					data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd"/>
+		</stl:span>
+	  </stl:area>
+	</stl:page>
   </stl:doc>
   <stl:resources>
-    <stl:resource id='page000' mimetype='image/xml+svg' type='uri'>
-      local:abcdef
-    </stl:resource>
-    <stl:resource id='page001' mimetype='image/png' type='data' encoding='base64'>
-      AACiHWAoA ... RK5CYII=
-    </stl:resource>
+	<stl:resource id='page000' mimetype='image/xml+svg' type='uri'>
+	  local:abcdef
+	</stl:resource>
+	<stl:resource id='page001' mimetype='image/png' type='data' encoding='base64'>
+	  AACiHWAoA ... RK5CYII=
+	</stl:resource>
   </stl:resources>
 </stl:root>
 ```
 
-... it will produce the following XML (meaning the same thing but with little different syntax):
+... now it produces the following XML (meaning the same thing but with little different syntax
+- unified with *DocBuilder++* STL):
 
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 

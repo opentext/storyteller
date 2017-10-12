@@ -1,18 +1,64 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout"><head><title>Edit Area Layout</title><style type="text/css">
-					div.strs_page { position: relative; border-style: solid; }
-					div.strs_area { position: absolute; border: 1px dashed red; margin: -1px; }
-					div.strs_area:hover { background-color: RGBA(255,200,200,0.1); }
-					div.strs_section { position: absolute; border: 1px dashed green; margin: -1px; }
-					div.strs_section:hover { background-color: RGBA(200,255,200,0.2); }
-					div.strs_fragment { position: absolute; border: 1px dashed blue; margin: -1px; }
-					div.strs_fragment:hover { background-color: RGBA(200,200,255,0.3); }
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"><head><title>Preview</title><style type="text/css">
+					.strs-page { position: relative; border-style: solid; }
+					.strs-area { position: absolute; border: 1px dashed red; margin: -1px; }
+					.strs-area:hover { background-color: RGBA(255,200,200,0.1); }
+					.strs-section { position: absolute; border: 1px dashed green; margin: -1px; }
+					.strs-section:hover { background-color: RGBA(200,255,200,0.2); }
+					.strs-fragment { position: absolute; border: 1px dashed blue; margin: -1px; }
+					.strs-fragment:hover { background-color: RGBA(200,200,255,0.3); }
+
+					.strs-pages-container {
+						position:relative;
+						display:flex;
+						flex-direction:column;
+					}
+
+					.strs-page-container {
+						display: flex;
+						flex-direction: row;
+					}
+
+					.strs-page-number {
+						width: 4em;
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+						font-family: "Lato"
+						font-size: 0.875em;
+						color: #333;
+						align: left;
+					}
+
+					.strs-page-right {
+						width: 4em;
+					}
+
+					.strs-page-number-next {
+						margin-bottom: 0.5em;
+					}
+
+					.strs-page-number-previous {
+						margin-top:0.5em;
+					}
+
+					.strs-page-content {
+						box-shadow : 0 0 5px 0 rgba(0,0,0,.7);
+						background-repeat: no-repeat;
+					}
+
+					.strs-page-divider {
+						border: 0.0625em dashed #333;
+						margin: 0;
+					}
 					
-				#page000 {
-				background-image:url(img/page000.png);
-				}
+					#doc0-background-page000-png {
+						background-image:url(img/page000.png);
+					}
 			
-				#page001 {
-				background-image:url(img/page001.png);
-				}
-			</style></head><body><div class="strs_page" id="page000" style="width: 793.70078740157487px; height: 1122.5196850393702px; "><div class="strs_area" style="left: 60px; top: 383.69230524475529px; width: 696px; height: 684.30769475524482px; "><div class="strs_section" title="Section Main" data-section-id="Main" style="left: 0px; top: 0px; width: 696px; height: 0px; "><div class="strs_fragment" title="Fragment strs://cc/res/1" data-resource-id="d7ac7fce-113b8275-0e697d8f-dd14e76f" data-resource-uri="strs://cc/res/1" style="left: 0px; top: 0px; width: 696px; height: 0px; "></div></div><div class="strs_area" style="left: 0px; top: 0px; width: 696px; height: 681.08515624999973px; "><div class="strs_area" style="left: 0px; top: 0px; width: 324px; height: 665.9817187499998px; "><div class="strs_section" title="Section Main" data-section-id="Main" style="left: 0px; top: 0px; width: 324px; height: 665.9817187499998px; "><div class="strs_fragment" title="Fragment strs://cc/res/2" data-resource-id="92250a21-ba1e93d5-b8d0e8af-cffc0c38" data-resource-uri="strs://cc/res/2" style="left: 0px; top: 0px; width: 324px; height: 492.17742187499994px; "></div><div class="strs_fragment" title="Fragment strs://cc/res/3" data-resource-id="28DC246C-61EC-9B45-91DE-A0D16AFFF3AA" data-resource-uri="strs://cc/res/3" style="left: 0px; top: 492.17742187499994px; width: 324px; height: 15.33203125px; "></div><div class="strs_fragment" title="Fragment strs://cc/res/4" data-resource-id="fe3663de-1b35631d-d7e4a2c6-542eb6dd" data-resource-uri="strs://cc/res/4" style="left: 0px; top: 526.17611979166657px; width: 324px; height: 139.80559895833326px; "></div></div></div><div class="strs_area" style="left: 372px; top: 0px; width: 324px; height: 681.08515624999973px; "><div class="strs_section" title="Section Main" data-section-id="Main" style="left: 0px; top: 0px; width: 324px; height: 681.08515624999973px; "><div class="strs_fragment" title="Fragment strs://cc/res/4" data-resource-id="fe3663de-1b35631d-d7e4a2c6-542eb6dd" data-resource-uri="strs://cc/res/4" style="left: 0px; top: 0px; width: 324px; height: 681.08515624999973px; "></div></div></div></div></div></div><div class="strs_page" id="page001" style="width: 793.70078740157487px; height: 1122.5196850393702px; "><div class="strs_area" style="left: 60px; top: 60.000000000000114px; width: 696px; height: 1002.421564356972px; "><div class="strs_area" style="left: 0px; top: 0px; width: 696px; height: 880.66712239583308px; "><div class="strs_area" style="left: 0px; top: 0px; width: 324px; height: 880.66712239583308px; "><div class="strs_section" title="Section Main" data-section-id="Main" style="left: 0px; top: 0px; width: 324px; height: 880.66712239583308px; "><div class="strs_fragment" title="Fragment strs://cc/res/4" data-resource-id="fe3663de-1b35631d-d7e4a2c6-542eb6dd" data-resource-uri="strs://cc/res/4" style="left: 0px; top: 0px; width: 324px; height: 880.66712239583308px; "></div></div></div><div class="strs_area" style="left: 372px; top: 0px; width: 324px; height: 876.21230468749957px; "><div class="strs_section" title="Section Main" data-section-id="Main" style="left: 0px; top: 0px; width: 324px; height: 876.21230468749957px; "><div class="strs_fragment" title="Fragment strs://cc/res/4" data-resource-id="fe3663de-1b35631d-d7e4a2c6-542eb6dd" data-resource-uri="strs://cc/res/4" style="left: 0px; top: 0px; width: 324px; height: 876.21230468749957px; "></div></div></div></div></div></div></body></html>
+					#doc0-background-page001-png {
+						background-image:url(img/page001.png);
+					}
+			</style></head><body><div class="strs-pages-container" data-page-count="2"><div class="strs-page-container"><div class="strs-page-number"><div class="strs-page-number-previous"></div><div class="strs-page-number-next">
+					{{PREVIEW.PAGE.LABEL}}: 1</div></div><div class="strs-page-content strs-page" id="doc0-background-page000-png" data-page-number="1" style="width: 793.70078740157487px; min-width: 793.70078740157487px; height: 1122.5196850393702px; "><div class="strs-area" style="left: 60px; top: 383.69230524475529px; width: 696px; height: 684.30769475524482px; "><div class="strs-section" data-section-id="Main" style="left: 0; top: 0; width: 696px; height: 0px; position:absolute;"><div class="strs-fragment" data-resource-id="d7ac7fce-113b8275-0e697d8f-dd14e76f" data-resource-uri="strs://cc/res/1" style="left: 0; top: 0; width: 696px; height: 0px; position:absolute;"></div></div><div class="strs-area" style="left: 0; top: 0; width: 696px; height: 681.08515624999973px; "><div class="strs-area" style="left: 0; top: 0; width: 324px; height: 665.9817187499998px; "><div class="strs-section" data-section-id="Main" style="left: 0; top: 0; width: 324px; height: 665.9817187499998px; position:absolute;"><div class="strs-fragment" data-resource-id="92250a21-ba1e93d5-b8d0e8af-cffc0c38" data-resource-uri="strs://cc/res/2" style="left: 0; top: 0; width: 324px; height: 492.17742187499994px; position:absolute;"></div><div class="strs-fragment" data-resource-id="28DC246C-61EC-9B45-91DE-A0D16AFFF3AA" data-resource-uri="strs://cc/res/3" style="left: 0; top: 492.17742187499994px; width: 324px; height: 15.33203125px; position:absolute;"></div><div class="strs-fragment" data-resource-id="fe3663de-1b35631d-d7e4a2c6-542eb6dd" data-resource-uri="strs://cc/res/4" style="left: 0; top: 526.17611979166657px; width: 324px; height: 139.80559895833326px; position:absolute;"></div></div></div><div class="strs-area" style="left: 372px; top: 0; width: 324px; height: 681.08515624999973px; "><div class="strs-section" data-section-id="Main" style="left: 0; top: 0; width: 324px; height: 681.08515624999973px; position:absolute;"><div class="strs-fragment" data-resource-id="fe3663de-1b35631d-d7e4a2c6-542eb6dd" data-resource-uri="strs://cc/res/4" style="left: 0; top: 0; width: 324px; height: 681.08515624999973px; position:absolute;"></div></div></div></div></div></div><div class="strs-page-right"></div></div><div class="strs-page-divider" style="width:873.700787401575px;"></div><div class="strs-page-container"><div class="strs-page-number"><div class="strs-page-number-previous">
+					{{PREVIEW.PAGE.LABEL}}: 2</div><div class="strs-page-number-next"></div></div><div class="strs-page-content strs-page" id="doc0-background-page001-png" data-page-number="2" style="width: 793.70078740157487px; min-width: 793.70078740157487px; height: 1122.5196850393702px; "><div class="strs-area" style="left: 60px; top: 60.000000000000114px; width: 696px; height: 1002.421564356972px; "><div class="strs-area" style="left: 0; top: 0; width: 696px; height: 880.66712239583308px; "><div class="strs-area" style="left: 0; top: 0; width: 324px; height: 880.66712239583308px; "><div class="strs-section" data-section-id="Main" style="left: 0; top: 0; width: 324px; height: 880.66712239583308px; position:absolute;"><div class="strs-fragment" data-resource-id="fe3663de-1b35631d-d7e4a2c6-542eb6dd" data-resource-uri="strs://cc/res/4" style="left: 0; top: 0; width: 324px; height: 880.66712239583308px; position:absolute;"></div></div></div><div class="strs-area" style="left: 372px; top: 0; width: 324px; height: 876.21230468749957px; "><div class="strs-section" data-section-id="Main" style="left: 0; top: 0; width: 324px; height: 876.21230468749957px; position:absolute;"><div class="strs-fragment" data-resource-id="fe3663de-1b35631d-d7e4a2c6-542eb6dd" data-resource-uri="strs://cc/res/4" style="left: 0; top: 0; width: 324px; height: 876.21230468749957px; position:absolute;"></div></div></div></div></div></div><div class="strs-page-right"></div></div></div></body></html>
