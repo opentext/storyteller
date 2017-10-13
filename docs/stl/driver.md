@@ -245,21 +245,25 @@ Let's say the source *Document Definition* looks as follows:
 <document:definition xmlns:document="http://schemas.streamserve.com/document/2.0" ...>
   ...
   <section id="Main" displayName="Main">
-    <reference id="d7ac7fce-113b8275-0e697d8f-dd14e76f" displayName="SwitchTo2Columns" uri="strs://cc/res/1">
+    <reference id="d7ac7fce-113b8275-0e697d8f-dd14e76f" displayName="SwitchTo2Columns"
+               uri="strs://cc/res/1">
       <property key="editable" value="false"/>
       <property key="deletable" value="true"/>
     </reference>
-    <reference id="92250a21-ba1e93d5-b8d0e8af-cffc0c38" displayName="Brief" uri="strs://cc/res/2">
+    <reference id="92250a21-ba1e93d5-b8d0e8af-cffc0c38" displayName="Brief"
+               uri="strs://cc/res/2">
       <property key="editable" value="false"/>
       <property key="deletable" value="true"/>
     </reference>
-    <resource id="28DC246C-61EC-9B45-91DE-A0D16AFFF3AA" displayName="Embedded text" uri="strs://cc/res/3">
+    <resource id="28DC246C-61EC-9B45-91DE-A0D16AFFF3AA" displayName="Embedded text"
+              uri="strs://cc/res/3">
       <property key="highlight" value="false"/>
       <property key="editable" value="true"/>
       <property key="deletable" value="true"/>
       <property key="Shared" value="true"/>
     </resource>
-    <reference id="fe3663de-1b35631d-d7e4a2c6-542eb6dd" displayName="Erwartung" uri="strs://cc/res/4">
+    <reference id="fe3663de-1b35631d-d7e4a2c6-542eb6dd" displayName="Erwartung"
+               uri="strs://cc/res/4">
       <property key="editable" value="false"/>
       <property key="deletable" value="true"/>
     </reference>
@@ -270,26 +274,26 @@ Let's say the source *Document Definition* looks as follows:
 
 ```xml
 ...
-<stl:page background="link:/background/page000.png" index="0" w="595.27559055118115pt" h="841.88976377952758pt">
-  <stl:box class="area" x="45pt" y="287.76922893356647pt" w="522pt" h="513.23077106643359pt">
+<stl:page background="link:/background/page000.png" index="0" w="595.275pt" h="841.889pt">
+  <stl:box class="area" x="45pt" y="287.769pt" w="522pt" h="513.230pt">
     <stl:box class="span" data="s;Main" w="522pt" h="0pt">
       <stl:box class="span" w="522pt" h="0pt"
                data="r;strs://cc/res/1;d7ac7fce-113b8275-0e697d8f-dd14e76f" />
     </stl:box>
-    <stl:box class="area" w="522pt" h="510.81386718749985pt">
-      <stl:box class="area" w="243pt" h="499.48628906249985pt">
-        <stl:box class="span" data="s;Main" w="243pt" h="499.48628906249985pt">
-          <stl:box class="span" w="243pt" h="369.1330664062499pt"
+    <stl:box class="area" w="522pt" h="510.813pt">
+      <stl:box class="area" w="243pt" h="499.486pt">
+        <stl:box class="span" data="s;Main" w="243pt" h="499.486pt">
+          <stl:box class="span" w="243pt" h="369.133pt"
                    data="r;strs://cc/res/2;92250a21-ba1e93d5-b8d0e8af-cffc0c38"/>
-          <stl:box class="span" y="369.1330664062499pt" w="243pt" h="11.4990234375pt"
+          <stl:box class="span" y="369.133pt" w="243pt" h="11.499pt"
                    data="f;strs://cc/res/3;28DC246C-61EC-9B45-91DE-A0D16AFFF3AA" />
-          <stl:box class="span" y="394.6320898437499pt" w="243pt" h="104.85419921874995pt"
+          <stl:box class="span" y="394.632pt" w="243pt" h="104.854pt"
                    data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd" />
         </stl:box>
       </stl:box>
-	  <stl:box class="area" x="279pt" w="243pt" h="510.81386718749985pt">
-        <stl:box class="span" data="s;Main" w="243pt" h="510.81386718749985pt">
-          <stl:box class="span" w="243pt" h="510.81386718749985pt"
+      <stl:box class="area" x="279pt" w="243pt" h="510.813pt">
+        <stl:box class="span" data="s;Main" w="243pt" h="510.813pt">
+          <stl:box class="span" w="243pt" h="510.813pt"
                    data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd"/>
         </stl:box>
       </stl:box>
@@ -409,16 +413,16 @@ is generated as in the following example:
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document>
-    <stl:page background="link:/background/page000.png" index="0" w="595.27999999999997pt" h="841.88999999999999pt">
+    <stl:page background="link:/background/page000.png" index="0" w="595.279pt" h="841.889pt">
       <stl:box class="area" x="50pt" y="10pt" w="400pt" h="600pt">
-        <stl:box class="span" data="s;section_group_empty" y="13.798828125pt" w="400pt" h="13.798828125pt"/>
-        <stl:box class="span" data="s;section_empty" y="55.1953125pt" w="400pt" h="13.798828125pt"/>
-        <stl:box class="span" data="s;section_empty_resource" y="96.591796875pt" w="400pt" h="13.798828125pt"/>
-        <stl:box class="span" data="s;section_empty_fragment" y="137.98828125pt" w="400pt" h="13.798828125pt">
-          <stl:box class="span" data="f;www.google.com?0;text_17" w="400pt" h="13.798828125pt"/>
+        <stl:box class="span" data="s;section_group_empty" y="13.798pt" w="400pt" h="13.798pt"/>
+        <stl:box class="span" data="s;section_empty" y="55.195pt" w="400pt" h="13.798pt"/>
+        <stl:box class="span" data="s;section_empty_resource" y="96.591pt" w="400pt" h="13.798pt"/>
+        <stl:box class="span" data="s;section_empty_fragment" y="137.988pt" w="400pt" h="13.798pt">
+          <stl:box class="span" data="f;www.google.com?0;text_17" w="400pt" h="13.798pt"/>
         </stl:box>
-        <stl:box class="span" data="s;section_storyref1" y="179.384765625pt" w="400pt" h="13.798828125pt">
-          <stl:box class="span" data="r;www.google.com?3;storyref_1" w="400pt" h="13.798828125pt"/>
+        <stl:box class="span" data="s;section_storyref1" y="179.384pt" w="400pt" h="13.798pt">
+          <stl:box class="span" data="r;www.google.com?3;storyref_1" w="400pt" h="13.798pt"/>
         </stl:box>
       </stl:box>
     </stl:page>
@@ -559,8 +563,10 @@ each resource then the resulting XML looks as follows:
 ```xml
 <stl:stl ...>
   <stl:fixtures count="2">
-    <xp:fixture key="link:/background/page000.svg" type="image/svg+xml" src="local:6a4a065e3f2ed5920f3722504bfd2d487a6b90ca"/>
-    <xp:fixture key="link:/background/page001.svg" type="image/svg+xml" src="local:3a2bb2c55590d810cd56f20ac219d8c34ccb5e9e"/>
+    <xp:fixture key="link:/background/page000.svg" type="image/svg+xml"
+                src="local:6a4a065e3f2ed5920f3722504bfd2d487a6b90ca"/>
+    <xp:fixture key="link:/background/page001.svg" type="image/svg+xml"
+                src="local:3a2bb2c55590d810cd56f20ac219d8c34ccb5e9e"/>
   </stl:fixtures>  
 </stl:stl>
 ```
@@ -635,8 +641,12 @@ Example:
 ```xml
 <stl:stl ...>
   <stl:fixtures count="2">
-    <xp:fixture key="link:/background/page000.png" type="image/png" encoding="base64">iVBOR ... CYII=</stl:fixture>
-    <xp:fixture key="link:/background/page001.png" type="image/png" encoding="base64">iVBOR ... CYII=</stl:fixture>
+    <xp:fixture key="link:/background/page000.png" type="image/png" encoding="base64">
+      iVBOR ... CYII=
+    </xp:fixture>
+    <xp:fixture key="link:/background/page001.png" type="image/png" encoding="base64">
+      iVBOR ... CYII=
+    </xp:fixture>
   </stl:fixtures>  
 </stl:stl>
 ```
@@ -823,7 +833,7 @@ The normalization function then looks roughly as follows:
         return stream_replacer( 
             std::move(stream), 
             g_svg_id_search_regex,
-            [page = format_string("p%d-", page ), counters = counters_t()]( auto match ) mutable
+            [page = format_string("p%d-", page), counters = counters_t()](auto match) mutable
             {
                 auto const prefix = match[1];
                 auto const type = match[2];
@@ -884,8 +894,8 @@ Example:
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document pages="6" selection="2,4">
-    <stl:page background="link:/background/page002.png" index="1" w="595.27559055118115pt" h="841.88976377952758pt">...</stl:page>
-    <stl:page background="link:/background/page004.png" index="3" w="595.27559055118115pt" h="841.88976377952758pt">...</stl:page>
+    <stl:page background="link:/background/page002.png" index="1" w="595.275pt" h="841.889pt">...</stl:page>
+    <stl:page background="link:/background/page004.png" index="3" w="595.275pt" h="841.889pt">...</stl:page>
   </stl:document>
 </stl:stl>
 ```
@@ -987,9 +997,9 @@ Example:
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document pages="6" selection="2,4,6">
-    <stl:page background="link:/background/page002.png" index="1" w="595.27559055118115pt" h="841.88976377952758pt">...</stl:page>
-    <stl:page background="link:/background/page004.png" index="3" w="595.27559055118115pt" h="841.88976377952758pt">...</stl:page>
-    <stl:page background="link:/background/page006.png" index="5" w="595.27559055118115pt" h="841.88976377952758pt">...</stl:page>
+    <stl:page background="link:/background/page002.png" index="1" w="595.275pt" h="841.889pt">...</stl:page>
+    <stl:page background="link:/background/page004.png" index="3" w="595.275pt" h="841.889pt">...</stl:page>
+    <stl:page background="link:/background/page006.png" index="5" w="595.275pt" h="841.889pt">...</stl:page>
   </stl:document>
   <stl:fixtures selection="4">
     <xp:fixture key="link:/background/page004.png" type="image/png" src="resource:/img/page000.png"/>
@@ -1277,27 +1287,27 @@ In one of previous releases the *Page Layout Driver* produced following XML:
 <stl:root xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:doc dpi="96 96">
     <stl:page id="page000" index="0" w="100" h="100">
-	  <stl:area x="0" y="0" w="100" h="100" mtx="2 0 0 2 20 20">
-		<stl:span x="0" y="10" w="100" h="80" data="s;Main">
-		  <stl:span x="0" y="0" w="100" h="80"
-					data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd"/>
-		</stl:span>
-	  </stl:area>
-	</stl:page>
+      <stl:area x="0" y="0" w="100" h="100" mtx="2 0 0 2 20 20">
+        <stl:span x="0" y="10" w="100" h="80" data="s;Main">
+          <stl:span x="0" y="0" w="100" h="80"
+                    data="r;strs://cc/res/4;fe3663de-1b35631d-d7e4a2c6-542eb6dd"/>
+        </stl:span>
+      </stl:area>
+    </stl:page>
   </stl:doc>
   <stl:resources>
-	<stl:resource id='page000' mimetype='image/xml+svg' type='uri'>
-	  local:abcdef
-	</stl:resource>
-	<stl:resource id='page001' mimetype='image/png' type='data' encoding='base64'>
-	  AACiHWAoA ... RK5CYII=
-	</stl:resource>
+    <stl:resource id='page000' mimetype='image/xml+svg' type='uri'>
+      local:abcdef
+    </stl:resource>
+    <stl:resource id='page001' mimetype='image/png' type='data' encoding='base64'>
+      AACiHWAoA ... RK5CYII=
+    </stl:resource>
   </stl:resources>
 </stl:root>
 ```
 
-... now it produces the following XML (meaning the same thing but with little different syntax
-- unified with *DocBuilder++* STL):
+... now it produces the following XML (meaning the same thing but with little different
+syntax - unified with *DocBuilder++* STL):
 
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
