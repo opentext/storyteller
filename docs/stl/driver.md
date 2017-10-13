@@ -140,7 +140,7 @@ Example:
 ```xml
 ...
 <stl:document ...>
-  <stl:page background="link:/background/page000.png" index="0" w="595.27559055118115pt" h="841.88976377952758pt">
+  <stl:page background="link:/background/page000.png" index="0" w="595.275pt" h="841.889pt">
     ...
   </stl:page>
 </stl:document>
@@ -174,7 +174,7 @@ So an `stl:box` element representing an area can look as follows:
 ```xml
 ...
 <stl:page ...>
-  <stl:box class="area" x="0pt" y="0pt" w="522pt" h="125pt" transform="matrix(1, 0, 0, 1, 45, 287.76922893356647)">
+  <stl:box class="area" w="522pt" h="125pt" transform="matrix(1, 0, 0, 1, 45, 287.769)">
     ...
   </stl:box>
 </stl:page>
@@ -191,7 +191,7 @@ So the `stl:box` above gets simplified as follows:
 ```xml
 ...
 <stl:page ...>
-  <stl:box class="area" x="45pt" y="287.76922893356647pt" w="522pt" h="125pt">
+  <stl:box class="area" x="45pt" y="287.769pt" w="522pt" h="125pt">
     ...
   </stl:box>
 </stl:page>
@@ -894,8 +894,12 @@ Example:
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document pages="6" selection="2,4">
-    <stl:page background="link:/background/page002.png" index="1" w="595.275pt" h="841.889pt">...</stl:page>
-    <stl:page background="link:/background/page004.png" index="3" w="595.275pt" h="841.889pt">...</stl:page>
+    <stl:page background="link:/background/page002.png" index="1" w="595.275pt" h="841.889pt">
+      ...
+    </stl:page>
+    <stl:page background="link:/background/page004.png" index="3" w="595.275pt" h="841.889pt">
+      ...
+    </stl:page>
   </stl:document>
 </stl:stl>
 ```
@@ -997,12 +1001,19 @@ Example:
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document pages="6" selection="2,4,6">
-    <stl:page background="link:/background/page002.png" index="1" w="595.275pt" h="841.889pt">...</stl:page>
-    <stl:page background="link:/background/page004.png" index="3" w="595.275pt" h="841.889pt">...</stl:page>
-    <stl:page background="link:/background/page006.png" index="5" w="595.275pt" h="841.889pt">...</stl:page>
+    <stl:page background="link:/background/page002.png" index="1" w="595.275pt" h="841.889pt">
+      ...
+    </stl:page>
+    <stl:page background="link:/background/page004.png" index="3" w="595.275pt" h="841.889pt">
+      ...
+    </stl:page>
+    <stl:page background="link:/background/page006.png" index="5" w="595.275pt" h="841.889pt">
+      ...
+    </stl:page>
   </stl:document>
   <stl:fixtures selection="4">
-    <xp:fixture key="link:/background/page004.png" type="image/png" src="resource:/img/page000.png"/>
+    <xp:fixture key="link:/background/page004.png" type="image/png"
+                src="resource:/img/page000.png"/>
   </stl:fixtures>
 </stl:stl>
 ```
@@ -1051,11 +1062,15 @@ top of the rasterized page backgrounds:
 ```html
 ... 
 <body>
-  <div class="strs_page" id="page000" style="width: 793.700767559055px; height: 1122.51965697638px; ">
-    <div class="strs_area" style="left: 59.9999985px; top: 383.692295652448px; width: 695.9999826px; height: 684.307677647552px; ">
-      <div class="strs_section" title="Section Main" style="left: 0px; top: 0px; width: 695.9999826px; height: 0px; " data-section-id="Main">
-        <div class="strs_fragment" title="Fragment strs://cc/res/1" style="left: 0px; top: 0px; width: 695.9999826px; height: 0px; "
-             data-resource-id="d7ac7fce-113b8275-0e697d8f-dd14e76f" data-resource-uri="strs://cc/res/1">
+  <div class="strs_page" id="page000" style="width: 793.700px; height: 1122.519px">
+    <div class="strs_area" style="left: 60px; top: 383.692px; width: 696px; height: 684.307px">
+      <div class="strs_section" title="Section Main"
+           style="left: 0px; top: 0px; width: 695.999px; height: 0px"
+           data-section-id="Main">
+        <div class="strs_fragment" title="Fragment strs://cc/res/1"
+             style="left: 0px; top: 0px; width: 696px; height: 0px"
+             data-resource-id="d7ac7fce-113b8275-0e697d8f-dd14e76f"
+             data-resource-uri="strs://cc/res/1">
         </div>
       </div>
       ...
@@ -1139,9 +1154,9 @@ Embedded utf8 encoded SVG pages are included directly to the HTML markup:
 ```html
 ...
 <body>
-  <div class="background" id="page000" style="width: 793.700767559055px; height: 1122.51965697638px;">
+  <div class="background" id="page000" style="width: 793.7px; height: 1122.519px;">
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-         width="595.275591pt" height="841.889764pt" viewBox="0 0 595.275591 841.889764" version="1.1">
+         width="595.275pt" height="841.889pt" viewBox="0 0 595.275 841.889" version="1.1">
       <defs>
         <g>
           <symbol overflow="visible" id="p0-glyph0-0">...</symbol>
@@ -1150,9 +1165,10 @@ Embedded utf8 encoded SVG pages are included directly to the HTML markup:
       <g id="p0-surface23">
       </g>
     </svg>
-    <div class="area" style="left: 0px; top: -323.692297152448px; width: 323.9999919px; height: 880.667100379155px; 
-                             transform: scale(1.3333333) matrix( 1, 0, 0, 1, 45, 287.76922893356647 ) scale(0.75000001875);">
-      <div class="fragment" style="left: 0px; top: 0px; width: 323.9999919px; height: 880.667100379155px;" 
+    <div class="area"
+         style="left: 0px; top: -323.692px; width: 324px; height: 880.667px; 
+                transform: scale(1.3333333) matrix( 1, 0, 0, 1, 45, 287.769) scale(0.75);">
+      <div class="fragment" style="left: 0px; top: 0px; width: 324px; height: 880.667px;" 
            title="Main - strs://cc/res/4">
       </div>
     </div>
