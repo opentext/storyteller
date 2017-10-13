@@ -412,21 +412,21 @@ is generated as in the following example:
 
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-  <stl:document>
-    <stl:page background="link:/background/page000.png" index="0" w="595.279pt" h="841.889pt">
-      <stl:box class="area" x="50pt" y="10pt" w="400pt" h="600pt">
-        <stl:box class="span" data="s;section_group_empty" y="13.798pt" w="400pt" h="13.798pt"/>
-        <stl:box class="span" data="s;section_empty" y="55.195pt" w="400pt" h="13.798pt"/>
-        <stl:box class="span" data="s;section_empty_resource" y="96.591pt" w="400pt" h="13.798pt"/>
-        <stl:box class="span" data="s;section_empty_fragment" y="137.988pt" w="400pt" h="13.798pt">
-          <stl:box class="span" data="f;www.google.com?0;text_17" w="400pt" h="13.798pt"/>
-        </stl:box>
-        <stl:box class="span" data="s;section_storyref1" y="179.384pt" w="400pt" h="13.798pt">
-          <stl:box class="span" data="r;www.google.com?3;storyref_1" w="400pt" h="13.798pt"/>
-        </stl:box>
-      </stl:box>
-    </stl:page>
-  </stl:document>
+ <stl:document>
+  <stl:page background="link:/background/page000.png" index="0" w="595.28pt" h="841.9pt">
+   <stl:box class="area" x="50pt" y="10pt" w="400pt" h="600pt">
+    <stl:box class="span" data="s;section_group_empty" y="13.798pt" w="400pt" h="13.8pt"/>
+    <stl:box class="span" data="s;section_empty" y="55.195pt" w="400pt" h="13.798pt"/>
+    <stl:box class="span" data="s;section_empty_resource" y="96.6pt" w="400pt" h="13.8pt"/>
+    <stl:box class="span" data="s;section_empty_fragment" y="138pt" w="400pt" h="13.8pt">
+     <stl:box class="span" data="f;www.google.com?0;text_17" w="400pt" h="13.8pt"/>
+    </stl:box>
+    <stl:box class="span" data="s;section_storyref1" y="179.384pt" w="400pt" h="13.8pt">
+     <stl:box class="span" data="r;www.google.com?3;storyref_1" w="400pt" h="13.8pt"/>
+    </stl:box>
+   </stl:box>
+  </stl:page>
+ </stl:document>
 </stl:stl>
 ```
 
@@ -894,10 +894,10 @@ Example:
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document pages="6" selection="2,4">
-    <stl:page background="link:/background/page002.png" index="1" w="595.275pt" h="841.889pt">
+    <stl:page background="link:/background/page002.png" index="1" w="595.275pt" h="841.89pt">
       ...
     </stl:page>
-    <stl:page background="link:/background/page004.png" index="3" w="595.275pt" h="841.889pt">
+    <stl:page background="link:/background/page004.png" index="3" w="595.275pt" h="841.89pt">
       ...
     </stl:page>
   </stl:document>
@@ -1001,13 +1001,13 @@ Example:
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document pages="6" selection="2,4,6">
-    <stl:page background="link:/background/page002.png" index="1" w="595.275pt" h="841.889pt">
+    <stl:page background="link:/background/page002.png" index="1" w="595.275pt" h="841.89pt">
       ...
     </stl:page>
-    <stl:page background="link:/background/page004.png" index="3" w="595.275pt" h="841.889pt">
+    <stl:page background="link:/background/page004.png" index="3" w="595.275pt" h="841.89pt">
       ...
     </stl:page>
-    <stl:page background="link:/background/page006.png" index="5" w="595.275pt" h="841.889pt">
+    <stl:page background="link:/background/page006.png" index="5" w="595.275pt" h="841.89pt">
       ...
     </stl:page>
   </stl:document>
@@ -1062,8 +1062,10 @@ top of the rasterized page backgrounds:
 ```html
 ... 
 <body>
-  <div class="strs_page" id="page000" style="width: 793.700px; height: 1122.519px">
-    <div class="strs_area" style="left: 60px; top: 383.692px; width: 696px; height: 684.307px">
+  <div class="strs_page" id="page000"
+       style="width: 793.700px; height: 1122.519px">
+    <div class="strs_area"
+         style="left: 60px; top: 383.692px; width: 696px; height: 684.307px">
       <div class="strs_section" title="Section Main"
            style="left: 0px; top: 0px; width: 695.999px; height: 0px"
            data-section-id="Main">
