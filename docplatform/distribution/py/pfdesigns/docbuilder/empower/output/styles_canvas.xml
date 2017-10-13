@@ -1,7 +1,7 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document>
     <stl:page w="3.6in" h="1in">
-      <stl:text x="2.229in" y="0.083in" w="1.198in" h="0.458in" style="border: 1px solid #000000; -stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: -0pt -max">
+      <stl:text x="2.229in" y="0.083in" w="1.198in" h="0.458in" style="border: 1px solid #000000; -stl-shape-resize: free 0pt max 0pt max">
         <stl:story>
           <stl:p>
             <stl:span style="color: #FF0000; font-family: Lato; font-size: 10pt; font-weight: bold; font-style: italic">Text frame</stl:span>
@@ -10,7 +10,7 @@
             </stl:span>
             <stl:table style="border: 0.05in solid #FF00D4">
               <stl:story>
-                <stl:row h="0.25in" style="-stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: 0pt -max">
+                <stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max">
                   <stl:cell w="0.477in">
                     <stl:p style="text-align: center">
                       <stl:span style="font-family: Lato; font-size: 10pt">nested</stl:span>
@@ -29,7 +29,7 @@
       </stl:text>
       <stl:table x="0.104in" y="0.021in" style="border: 0.01in solid #000000">
         <stl:story>
-          <stl:row h="0.25in" style="-stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: 0pt -max">
+          <stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max">
             <stl:cell w="1in">
               <stl:p>
                 <stl:span style="font-family: Lato; font-size: 10pt">This is a 
@@ -49,7 +49,7 @@
               </stl:p>
             </stl:cell>
           </stl:row>
-          <stl:row h="0.25in" style="-stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: 0pt -max">
+          <stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max">
             <stl:cell>
               <stl:p>
                 <stl:span style="font-family: Lato; font-size: 10pt; font-style: italic">image</stl:span>

@@ -7,7 +7,7 @@
       <stl:p>
         <stl:table style="border: 0.001in solid #000000">
           <stl:story>
-            <stl:row h="0.25in" style="-stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: 0pt -max">
+            <stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max">
               <stl:cell w="1in">
                 <stl:p style="text-align: center">
                   <stl:span style="font-family: Lato; font-size: 10pt">Open</stl:span>

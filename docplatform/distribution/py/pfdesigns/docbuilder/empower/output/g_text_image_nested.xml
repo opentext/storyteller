@@ -1,7 +1,7 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document>
     <stl:page w="3.6in" h="1in">
-      <stl:text x="1in" y="0.5in" w="1in" h="0.198in" style="border: 1px solid #000000; -stl-shape-resize: free; -stl-shape-growth: 0pt max; -stl-shape-shrink: -0pt -max">
+      <stl:text x="1in" y="0.5in" w="1in" h="0.198in" style="border: 1px solid #000000; -stl-shape-resize: free 0pt max 0pt max">
         <stl:story>
           <stl:p>
             <stl:span style="font-family: Lato; font-size: 10pt">Hello 

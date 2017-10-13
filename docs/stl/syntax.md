@@ -654,14 +654,10 @@ In future we are going to support more advanced *Fill* and *Stroke* definitions,
 ```
 
 There are also following additional *drawing style* related properties with no direct mapping to HTML CSS,
-so we used a CSS extension with `-stl` "vendor" prefix:
+so we used a CSS extension with `-stl-` "vendor" prefix:
 
 -   `-stl-content-rescale`
--   `-stl-content-growth`
--   `-stl-content-shrink`
--   `-stl-shape-rescale`
--   `-stl-shape-growth`
--   `-stl-shape-shrink`
+-   `-stl-shape-resize`
 -   `-stl-placement-ratio`
 -   `-stl-alignment`
 -   `-stl-wrapping`
