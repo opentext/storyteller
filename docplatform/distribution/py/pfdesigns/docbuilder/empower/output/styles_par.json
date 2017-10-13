@@ -64,97 +64,209 @@
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iJustification": 2
         },
         {
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iJustification": 1
         },
         {
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iJustification": 3
         },
         {
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iLeftIndent": 300,
+          "iJustification": 3,
+          "iRightIndent": 400,
+          "iSpaceBefore": 100,
+          "iSpaceAfter": 200
         },
         {
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iLeftIndent": 300,
+          "iJustification": 3,
+          "iRightIndent": 400,
+          "iSpaceBefore": 100,
+          "iSpaceAfter": 200
         },
         {
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iLeftIndent": 250,
+          "iJustification": 3,
+          "iRightIndent": 400,
+          "iSpaceBefore": 100,
+          "iSpaceAfter": 200
         },
         {
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iLeftIndent": 500,
+          "iJustification": 3,
+          "iRightIndent": 400,
+          "iSpaceBefore": 100,
+          "iSpaceAfter": 200
         },
         {
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iLeftIndent": 750,
+          "iJustification": 3,
+          "iRightIndent": 400,
+          "iSpaceBefore": 100,
+          "iSpaceAfter": 200
         },
         {
           "m_iEditAreaNdx": -1,
-          "iNumbering": 0,
+          "iNumbering": 1,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": 2,
+          "iNumberIndent": 1,
+          "iLeftIndent": 250,
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "eUserSetNumber": 0,
+          "iJustification": 3,
+          "iRightIndent": 400,
+          "iSpaceBefore": 100,
+          "iSpaceAfter": 200,
+          "pszNumberString": 168
         },
         {
           "m_iEditAreaNdx": -1,
-          "iNumbering": 0,
+          "iNumbering": 1,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": 2,
+          "iNumberIndent": 2,
+          "iLeftIndent": 500,
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "eUserSetNumber": 0,
+          "iJustification": 3,
+          "iRightIndent": 400,
+          "iSpaceBefore": 100,
+          "iSpaceAfter": 200,
+          "pszNumberString": 168
         },
         {
           "m_iEditAreaNdx": -1,
-          "iNumbering": 0,
+          "iNumbering": 1,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": 2,
+          "iNumberIndent": 3,
+          "iLeftIndent": 750,
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "eUserSetNumber": 0,
+          "iJustification": 3,
+          "iRightIndent": 400,
+          "iSpaceBefore": 100,
+          "iSpaceAfter": 200,
+          "pszNumberString": 168
         },
         {
           "m_iEditAreaNdx": -1,
-          "iNumbering": 0,
+          "iNumbering": 1,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": 2,
+          "iNumberIndent": 4,
+          "iLeftIndent": 1000,
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "eUserSetNumber": 0,
+          "iJustification": 3,
+          "iRightIndent": 400,
+          "iSpaceBefore": 100,
+          "iSpaceAfter": 200,
+          "pszNumberString": 168
         },
         {
           "m_iEditAreaNdx": -1,
-          "iNumbering": 0,
+          "iNumbering": 2,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iNumberIndent": 1,
+          "iLeftIndent": 250,
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "bUserSetColor": false,
+          "eNumberType": 0,
+          "eUserSetNumber": 0,
+          "iJustification": 3,
+          "iRightIndent": 400,
+          "iSpaceBefore": 100,
+          "iSpaceAfter": 200
         },
         {
           "m_iEditAreaNdx": -1,
-          "iNumbering": 0,
+          "iNumbering": 2,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iNumberIndent": 2,
+          "iLeftIndent": 500,
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "bUserSetColor": false,
+          "eNumberType": 0,
+          "eUserSetNumber": 0,
+          "iJustification": 3,
+          "iRightIndent": 400,
+          "iSpaceBefore": 100,
+          "iSpaceAfter": 200
         },
         {
           "m_iEditAreaNdx": -1,
-          "iNumbering": 0,
+          "iNumbering": 2,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iNumberIndent": 3,
+          "iLeftIndent": 750,
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "bUserSetColor": false,
+          "eNumberType": 5,
+          "eUserSetNumber": 0,
+          "iJustification": 3,
+          "iRightIndent": 400,
+          "iSpaceBefore": 100,
+          "iSpaceAfter": 200
         },
         {
           "m_iEditAreaNdx": -1,
-          "iNumbering": 0,
+          "iNumbering": 2,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iNumberIndent": 4,
+          "iLeftIndent": 1000,
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "bUserSetColor": false,
+          "eNumberType": 6,
+          "eUserSetNumber": 0,
+          "iJustification": 3,
+          "iRightIndent": 400,
+          "iSpaceBefore": 100,
+          "iSpaceAfter": 200
         }
       ],
       "m_TextFonts": [

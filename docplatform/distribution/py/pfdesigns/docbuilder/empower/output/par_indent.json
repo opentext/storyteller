@@ -64,13 +64,15 @@
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iLeftIndent": 250
         },
         {
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": -1,
+          "iLeftIndent": 500
         }
       ],
       "m_TextFonts": [

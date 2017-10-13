@@ -407,7 +407,8 @@
                     "m_iEditAreaNdx": -1,
                     "iNumbering": 0,
                     "iDefaultTab": 250,
-                    "iBulletFont": -1
+                    "iBulletFont": -1,
+                    "iJustification": 2
                   }
                 ],
                 "m_TextFonts": [
@@ -551,7 +552,8 @@
                     "m_iEditAreaNdx": -1,
                     "iNumbering": 0,
                     "iDefaultTab": 250,
-                    "iBulletFont": -1
+                    "iBulletFont": -1,
+                    "iJustification": 2
                   }
                 ],
                 "m_TextFonts": [

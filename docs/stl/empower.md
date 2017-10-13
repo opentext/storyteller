@@ -479,6 +479,24 @@ If we compare the new [font.json](https://rawgit.com/opentext/storyteller/master
       ],
 ```
 
+It is obvious that font and typeface metrics are stored as part of font specification -
+there are `uUnderWgt`, `sUnderPos`, `iAscent`, `iDescent` and `iLeading` properties
+which are clearly not part of the font specification - it should not be necessary
+to persist them as all the values can be dynamically retrieved from an associated
+_Font Manager_ instance. We believe that such information is reduntant, too specific
+and also very brittle - it can be changed with a new typeface version etc.
+
+That's why we do not store such kind of information to _STL definition file_.
+
+On the other hand during the _STL_ to _Empower_ conversion we would have to retrieve
+such information from somewhere, but ideally we would like to avoid any dependence on
+a _Font Manager_ instance, we would prefere to convert the formats statically with
+a minimal dependencies.
+
+Thankfully it seems that the font metrics are not necessary, only optional inside
+the _Empower JSON_ format. If we omit all the metrics the generated JSON file
+still opens succesfully in _Empower Web Editor_ with no obvious issues.
+
 ##### Resulting STL
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/font.xml?footer=minimal"></script>
@@ -1882,7 +1900,7 @@ If we compare the new [par_numbering_indent.json](https://rawgit.com/opentext/st
           "bUserSetType": false,
           "iNumberColor": 0,
           "bUserSetColor": false,
-          "eNumberType": 0,
+          "eNumberType": 0, // numbering type decimal
           "eUserSetNumber": 0,
           "iNumberValue": 1
         },
@@ -1898,7 +1916,7 @@ If we compare the new [par_numbering_indent.json](https://rawgit.com/opentext/st
           "bUserSetType": false,
           "iNumberColor": 0,
           "bUserSetColor": false,
-          "eNumberType": 0,
+          "eNumberType": 0, // numbering type decimal
 +         "iNumberValue": 1
         },
         {
@@ -1913,7 +1931,7 @@ If we compare the new [par_numbering_indent.json](https://rawgit.com/opentext/st
           "bUserSetType": false,
           "iNumberColor": 0,
           "bUserSetColor": false,
-          "eNumberType": 0,
++         "eNumberType": 5, // numbering type lower-roman
 +         "iNumberValue": 1
         }
       ],
@@ -1922,6 +1940,40 @@ If we compare the new [par_numbering_indent.json](https://rawgit.com/opentext/st
 field, there is also independent `iLeftIndent` field defining the indentation
 and then there is `iNumberValue` field defining the actual numbering value along
 with the `pszNumberString` representing the resulting formatted numbering marker.
+
+The `iNumberValue` property stores statically a current numbering value. 
+
+We can also figure out that not only there is a formatted string for the numbering
+marker (`pszNumberString` property), but there is also a numbering type definition
+represented as enumeration stored in the `eNumberType` property. Following
+lookup can be used for numbering masks we have determined so far:
+
+```js
+const numbering = {
+  0: '1.', // decimal
+  2: 'A.', // upper-alpha
+  3: 'a.', // lower-alpha
+  4: 'R.', // upper-roman
+  5: 'r.', // lower-roman
+  6: '1)',
+  7: 'A)',
+  8: 'a)',
+  9: 'R)',
+  10: 'r)',
+  15: '(1)',
+  16: '(A)',
+  17: '(a)',
+  18: '(R)',
+  19: '(r)',
+};
+
+```
+
+The important thing is that when we generate the _Empower JSON_ back from an _STL_ fragment
+then neither storing a static value of the `iNumberValue` property nor computing the
+presentation string stored in the `pszNumberString` property is not necessary. It is OK
+to persist just a numbering definition (`iNumbering`, `eNumberType` and `iNumberIndent`
+properties) and the rest is computed in the web editor.
 
 ##### Resulting STL
 

@@ -56,21 +56,39 @@
       "m_ParaValues": [
         {
           "m_iEditAreaNdx": -1,
-          "iNumbering": 0,
+          "iNumbering": 1,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": 2,
+          "iNumberIndent": 1,
+          "iLeftIndent": 250,
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "eUserSetNumber": 0,
+          "pszNumberString": 168
         },
         {
           "m_iEditAreaNdx": -1,
-          "iNumbering": 0,
+          "iNumbering": 1,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": 2,
+          "iNumberIndent": 1,
+          "iLeftIndent": 250,
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "eUserSetNumber": 0,
+          "pszNumberString": 168
         },
         {
           "m_iEditAreaNdx": -1,
-          "iNumbering": 0,
+          "iNumbering": 1,
           "iDefaultTab": 250,
-          "iBulletFont": -1
+          "iBulletFont": 2,
+          "iNumberIndent": 1,
+          "iLeftIndent": 250,
+          "bUserSetType": false,
+          "iNumberColor": 0,
+          "eUserSetNumber": 0,
+          "pszNumberString": 168
         }
       ],
       "m_TextFonts": [
