@@ -16,9 +16,16 @@
         },
         "paragraph": {
             "m_iEditAreaNdx": -1,
-            "iNumbering": 0,
-            "iDefaultTab": 250,
-            "iBulletFont": -1
+            "iNumbering": null,
+            "iDefaultTab": null,
+            "iBulletFont": null,
+            "iNumberIndent": null,
+            "iLeftIndent": null,
+            "bUserSetType": null,
+            "iNumberColor": null,
+            "bUserSetColor": null,
+            "eNumberType": null,
+            "eUserSetNumber": null
         },
         "link": {
             "eLinkType": 0,

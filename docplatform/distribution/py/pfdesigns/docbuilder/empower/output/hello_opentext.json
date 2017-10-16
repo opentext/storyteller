@@ -142,7 +142,8 @@
       "m_oiID": 0,
       "m_VarProps": [],
       "m_ppEditableAreas": [],
-      "m_Rules": []
+      "m_Rules": [],
+      "m_eVertJust": 0
     },
     "m_bTextOnly": true,
     "m_oiLanguage": 0

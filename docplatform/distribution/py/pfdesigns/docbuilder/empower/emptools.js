@@ -3,7 +3,7 @@
 
 exports.empower_item = function empower_item(input, options) {
     options = options || {};
-
+    
     function get_uri(dir, extension, blob) {
         return blob
             ? 'local:'
@@ -26,9 +26,27 @@ exports.empower_item = function empower_item(input, options) {
     };
     // convert empower JSON to STL
     empower.emp2stl(json, stl, input_options);
+
     // log name and resulting STL
     console.log(input);
     console.log(stl.read());
+
+    if (options.reverse) {
+        var json2 = streams.stream(get_uri('output', 'json', !options.dump));
+        var output_options = {
+            uris: (uri) => uri.replace(/^(wd:\/cas\/)/, 'cas:'),
+            indent: indent
+        };
+        empower.stl2emp(stl, json2, output_options);
+        //console.log(json2.read());
+
+        var stl2 = streams.stream(get_uri('output', 'xml', true));
+        // convert generated empower JSON back to STL
+        empower.emp2stl(json2, stl2, input_options);
+        console.log(stl2.read());
+        stl = stl2;
+    }
+
     if (options.raster) {
         // raster STL to a raster file
         var st = services.st(stl);
@@ -40,14 +58,5 @@ exports.empower_item = function empower_item(input, options) {
         st(st_options);
     }
 
-    if (options.reverse) {
-        var json2 = streams.stream(get_uri('output', 'json', !options.dump));
-        var output_options = {
-            uris: (uri) => uri.replace(/^(wd:\/cas\/)/, 'cas:'),
-            indent: indent
-        };
-        empower.stl2emp(stl, json2, output_options);
-        console.log(json2.read());
-    }
     item.Uri = stl.uri;
 };

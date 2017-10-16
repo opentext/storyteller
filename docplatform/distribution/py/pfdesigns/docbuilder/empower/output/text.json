@@ -100,6 +100,7 @@
         108,
         108,
         111,
+        32,
         0,
         0,
         0,
@@ -114,6 +115,7 @@
         0,
         -62,
         -63,
+        0,
         0,
         0,
         0,
@@ -154,20 +156,19 @@
           "m_UNITSPERINCH": 1000,
           "m_iLogicalRes": 1000,
           "m_iDesignRes": 1000,
-          "m_bPen": false,
-          "m_iPenWidth": 0,
+          "m_bPen": true,
           "m_eFrameStyle": 0,
           "m_iPenStyle": 0,
           "m_clrPen": {
             "m_eColorModel": 0,
-            "m_lColor": 0
+            "m_lColor": 16711680
           },
           "m_iFrameStyleExtent": 0,
-          "m_iLeftMargin": 0,
-          "m_iRightMargin": 0,
-          "m_iTopMargin": 0,
-          "m_iBottomMargin": 0,
-          "m_bBackGroundTransparent": true,
+          "m_iLeftMargin": 100,
+          "m_iRightMargin": 250,
+          "m_iTopMargin": 200,
+          "m_iBottomMargin": 150,
+          "m_bBackGroundTransparent": false,
           "m_bHideEmpty": false,
           "m_ParaValues": [
             {
@@ -244,7 +245,12 @@
           "m_oiID": 1,
           "m_VarProps": [],
           "m_ppEditableAreas": [],
-          "m_Rules": []
+          "m_Rules": [],
+          "m_clrBackGround": {
+            "m_eColorModel": 0,
+            "m_lColor": 13158655
+          },
+          "m_eVertJust": 0
         }
       ],
       "m_Objs": [
@@ -258,7 +264,8 @@
       "m_oiID": 0,
       "m_VarProps": [],
       "m_ppEditableAreas": [],
-      "m_Rules": []
+      "m_Rules": [],
+      "m_eVertJust": 0
     },
     "m_bTextOnly": true,
     "m_oiLanguage": 0

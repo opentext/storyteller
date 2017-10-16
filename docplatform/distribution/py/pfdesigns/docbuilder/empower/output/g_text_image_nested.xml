@@ -1,16 +1,1 @@
-<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-  <stl:document>
-    <stl:page w="3.6in" h="1in">
-      <stl:text x="1in" y="0.5in" w="1in" h="0.198in" style="border: 1px solid #000000; -stl-shape-resize: free 0pt max 0pt max">
-        <stl:story>
-          <stl:p>
-            <stl:span style="font-family: Lato; font-size: 10pt">Hello 
-              <stl:span/>
-            </stl:span>
-            <stl:image w="0.979in" h="0.177in" src="wd:/cas/Y3hyOi8_aWQ9Y2ZlMDkwN2UtZWFlMi00ZDlkLWFkNzQtYjUzYTA2ODAwYzliO3Y9MTt0PTdjNjk4ZTFlLTdhMDUtZjA5Ny00NTYwLTdjYTc0ZWIyOGZhYw=="></stl:image>
-          </stl:p>
-        </stl:story>
-      </stl:text>
-    </stl:page>
-  </stl:document>
-</stl:stl>
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1"><stl:document><stl:page w="3.6in" h="1in"><stl:text x="1in" y="0.5in" w="1in" h="0.198in" style="border: 1px solid #000000; -stl-shape-resize: free 0pt max 0pt max"><stl:story><stl:p><stl:span style="font-family: Lato; font-size: 10pt">Hello <stl:span/></stl:span><stl:image w="0.979in" h="0.177in" src="wd:/cas/Y3hyOi8_aWQ9Y2ZlMDkwN2UtZWFlMi00ZDlkLWFkNzQtYjUzYTA2ODAwYzliO3Y9MTt0PTdjNjk4ZTFlLTdhMDUtZjA5Ny00NTYwLTdjYTc0ZWIyOGZhYw=="/></stl:p></stl:story></stl:text></stl:page></stl:document></stl:stl>

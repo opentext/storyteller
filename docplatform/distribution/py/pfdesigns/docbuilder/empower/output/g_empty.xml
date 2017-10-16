@@ -1,5 +1,1 @@
-<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-  <stl:document>
-    <stl:page w="3.6in" h="0.5in"></stl:page>
-  </stl:document>
-</stl:stl>
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1"><stl:document><stl:page w="3.6in" h="0.5in"/></stl:document></stl:stl>

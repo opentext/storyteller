@@ -50,8 +50,7 @@
           "m_UNITSPERINCH": 1000,
           "m_iLogicalRes": 1000,
           "m_iDesignRes": 1000,
-          "m_bPen": false,
-          "m_iPenWidth": 0,
+          "m_bPen": true,
           "m_eFrameStyle": 0,
           "m_iPenStyle": 0,
           "m_clrPen": {
@@ -134,7 +133,8 @@
           "m_oiID": 0,
           "m_VarProps": [],
           "m_ppEditableAreas": [],
-          "m_Rules": []
+          "m_Rules": [],
+          "m_eVertJust": 0
         }
       }
     ],

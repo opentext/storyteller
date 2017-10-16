@@ -257,6 +257,60 @@ function preprocessor(nsmap, next, callback) {
     };
 }
 
+function normalizer(next) {
+    var data = '';
+    var last_start = true;
+
+    function normalize_space(str, left_trim, right_trim) {
+        if (str) {
+            str = str.replace(/\s+/g, ' ');
+            if (left_trim) {
+                str = str.replace(/^\s+/, '');
+            }
+            if (right_trim) {
+                str = str.replace(/\s+$/, '');
+            }
+        }
+        return str;
+    }
+
+    function flush(start) {
+        data = normalize_space(data, last_start, !start);
+        if (data) {
+            next.text(data);
+            data = '';
+        }
+        last_start = start;
+    }
+
+    function start(name, attrs) {
+        flush(true);
+        next.start(name, attrs);
+    }
+
+    function end(name, attrs) {
+        flush(false);
+        next.end(name, attrs);
+    }
+
+    function text(txt) {
+        data += txt;
+    }
+
+    function finalize() {
+        if (data.trim()) {
+            throw new Error("Dangling text: " + data);
+        }
+    }
+
+    return {
+        start: start,
+        end: end,
+        text: text,
+        finalize: finalize
+    };
+}
+
 function dispatch_stack(next) {
     var dispatchers = [next];
 
@@ -343,7 +397,8 @@ function sax_parser(nsmap, builder, cfg) {
 
     var dispatcher = dispatch_stack(handler_dispatcher(nsmap, builder));
     var preprocess = preprocessor(nsmap, dispatcher, cfg.fixture);
-    var elements = element_stack(nsmap, preprocess);
+    var normalize = normalizer(preprocess);
+    var elements = element_stack(nsmap, normalize);
 
     var parser = sax.parser(true);
     parser.onopentag = elements.start;

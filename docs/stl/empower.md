@@ -11,8 +11,8 @@
       * [Source code](#source-code)
    * [Technical details](#technical-details)
       * [Content Fragments](#content-fragments)
-         * [Singleline Text](#singleline-text)
-         * [Multiline Text](#multiline-text)
+         * [Single-line Text](#single-line-text)
+         * [Multi-line Text](#multi-line-text)
          * [Lists](#lists)
          * [Objects](#objects)
          * [Variables](#variables)
@@ -276,9 +276,9 @@ Text fragments represent an implicit text object as a top of hierarchy of object
 They typically grow horizontally with content. In the _Empower_ environment they
 are called _Text Messages_.
 
-### Singleline Text
+### Single-line Text
 
-We start with singleline texts, in order to determine simple constructs
+We start with single-line texts, in order to determine simple constructs
 and individual _character style_ equivalents.
 
 #### Empty Fragment
@@ -1036,14 +1036,14 @@ If we compare the new [valign.json](https://rawgit.com/opentext/storyteller/mast
         0,
         0,
 +       -240,  // superscript start
-+       0,     // ?
-+       0,     // ?
++       0,     // padding ?
+        0,
         0,
         0,
         0,
 +       -59,   // superscript end
 +       -239,  // subscript start
-        0,
++       0,     // padding ?
         0,
         0,
         0,
@@ -1239,9 +1239,9 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
   </tr>
 </table>
 
-### Multiline Text
+### Multi-line Text
 
-Multiline texts help us to understand a concept of _paragraphs_ and associated
+Multi-line texts help us to understand a concept of _paragraphs_ and associated
 _paragraph styles_ as well as _lists_ (_bullets_ and _numbering_). 
 
 #### Plain Paragraphs

@@ -50,8 +50,7 @@
           "m_UNITSPERINCH": 1000,
           "m_iLogicalRes": 1000,
           "m_iDesignRes": 1000,
-          "m_bPen": false,
-          "m_iPenWidth": 0,
+          "m_bPen": true,
           "m_eFrameStyle": 0,
           "m_iPenStyle": 0,
           "m_clrPen": {
@@ -134,7 +133,8 @@
           "m_oiID": 0,
           "m_VarProps": [],
           "m_ppEditableAreas": [],
-          "m_Rules": []
+          "m_Rules": [],
+          "m_eVertJust": 0
         }
       },
       {
@@ -470,7 +470,8 @@
                 "m_oiID": 4,
                 "m_VarProps": [],
                 "m_ppEditableAreas": [],
-                "m_Rules": []
+                "m_Rules": [],
+                "m_eVertJust": 0
               },
               "iVersionDbTableCell": -105,
               "m_iColumn": 0,
@@ -495,7 +496,120 @@
                   "bottom": 0
                 },
                 "m_ecpCornerMask": 0,
-                "m_ppSegments": []
+                "m_ppSegments": [
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 2,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iCornerVersion": 101,
+                    "m_ecpCorner": 2,
+                    "m_ecsStyle": 0,
+                    "m_iRadius": 0
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 1,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iLineVersion": 101,
+                    "m_elpPosition": 1
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 2,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iCornerVersion": 101,
+                    "m_ecpCorner": 2,
+                    "m_ecsStyle": 0,
+                    "m_iRadius": 0
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 1,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iLineVersion": 101,
+                    "m_elpPosition": 2
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 2,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iCornerVersion": 101,
+                    "m_ecpCorner": 2,
+                    "m_ecsStyle": 0,
+                    "m_iRadius": 0
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 1,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iLineVersion": 101,
+                    "m_elpPosition": 4
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 2,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iCornerVersion": 101,
+                    "m_ecpCorner": 2,
+                    "m_ecsStyle": 0,
+                    "m_iRadius": 0
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 1,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iLineVersion": 101,
+                    "m_elpPosition": 8
+                  }
+                ]
               },
               "m_iCurrentVarIndex": 0,
               "m_pMetaProps": {
@@ -615,7 +729,8 @@
                 "m_oiID": 5,
                 "m_VarProps": [],
                 "m_ppEditableAreas": [],
-                "m_Rules": []
+                "m_Rules": [],
+                "m_eVertJust": 0
               },
               "iVersionDbTableCell": -105,
               "m_iColumn": 1,
@@ -640,7 +755,120 @@
                   "bottom": 0
                 },
                 "m_ecpCornerMask": 0,
-                "m_ppSegments": []
+                "m_ppSegments": [
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 2,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iCornerVersion": 101,
+                    "m_ecpCorner": 2,
+                    "m_ecsStyle": 0,
+                    "m_iRadius": 0
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 1,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iLineVersion": 101,
+                    "m_elpPosition": 1
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 2,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iCornerVersion": 101,
+                    "m_ecpCorner": 2,
+                    "m_ecsStyle": 0,
+                    "m_iRadius": 0
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 1,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iLineVersion": 101,
+                    "m_elpPosition": 2
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 2,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iCornerVersion": 101,
+                    "m_ecpCorner": 2,
+                    "m_ecsStyle": 0,
+                    "m_iRadius": 0
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 1,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iLineVersion": 101,
+                    "m_elpPosition": 4
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 2,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iCornerVersion": 101,
+                    "m_ecpCorner": 2,
+                    "m_ecsStyle": 0,
+                    "m_iRadius": 0
+                  },
+                  {
+                    "iSegmentVersion": 101,
+                    "m_estType": 1,
+                    "m_iLineStyle": 0,
+                    "m_iLineWeight": 0,
+                    "m_clrLine": {
+                      "m_eColorModel": 0,
+                      "m_lColor": 0
+                    },
+                    "m_bVisible": false,
+                    "iLineVersion": 101,
+                    "m_elpPosition": 8
+                  }
+                ]
               },
               "m_iCurrentVarIndex": 0,
               "m_pMetaProps": {
@@ -1080,7 +1308,10 @@
           "m_bUsesSysTableCol": false,
           "m_iFrameStyleExtent": 1,
           "m_bIgnoreOrphansWithSerpentineRows": false,
-          "m_bRTFTable": false
+          "m_bRTFTable": false,
+          "m_bAutoSizeX": false,
+          "m_bAutoSizeY": false,
+          "m_eVertJust": 0
         }
       }
     ],

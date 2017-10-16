@@ -36,6 +36,23 @@ const enums = {
         BULLETS: 1,
         NUMBERING: 2
     },
+    numbering: {
+        0: '1.', // decimal
+        2: 'A.', // upper-alpha
+        3: 'a.', // lower-alpha
+        4: 'R.', // upper-roman
+        5: 'r.', // lower-roman
+        6: '1)',
+        7: 'A)',
+        8: 'a)',
+        9: 'R)',
+        10: 'r)',
+        15: '(1)',
+        16: '(A)',
+        17: '(a)',
+        18: '(R)',
+        19: '(r)',
+    },
     pen: {
         SOLID: 0,
         DASHED: 1,
@@ -51,8 +68,28 @@ const enums = {
         RIGHT: 2,
         BOTTOM: 4,
         LEFT: 8
+    },
+    defaults: {
+        bullets: ['•', '◦', '▪'],
+        numberings: ['1.', '1.', 'r.', '1)']
     }
 };
+
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+}
+
+function simple_stack(item) {
+    var items = [];
+    if (item !== undefined)
+        items.push(item);
+    return {
+        push: (item) => items.push(item),
+        pop: () => items.pop(),
+        top: () => items[items.length-1],
+        length: () => items.length
+    };
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -60,71 +97,133 @@ const enums = {
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function stl_writer(indent) {
-    const XMLWriter = require('xml-writer');
-    var xw = null;
+function xml_writer(stream, fn_indent) {
     var tags = [];
-    var self;
+    var no_children;
+    var content = '';
 
-    function start(tag, attrs) {
-        //console.log('<'+tag+'>');
-        tags.push(tag);
-        xw.startElementNS('stl', tag, stl.namespaces.stl);
-        if (attrs) {
-            xw.startAttributes();
-            Object.keys(attrs).forEach(function (key) {
-                xw.writeAttribute(key, attrs[key]);
-            });
-            xw.endAttributes();
+    function format_start(tag, attrs) {
+        attrs = attrs || {};
+        var result = '<' + tag;
+        var keys = Object.keys(attrs);
+        if (keys.length) {
+            result += ' ' + keys.map(function(key) {
+                return key + '="' + attrs[key] + '"'; 
+            }).join(' ');
         }
-        return self;
+        return result + '>';
+    }
+
+    function format_end(tag) {
+        return '</' + tag + '>';
+    }
+
+    function flush() {
+        content += cache;
+        cache = '';
+    }
+    
+    function start(tag, attrs) {
+        var line = format_start(tag, attrs);
+        var indent = fn_indent(tag, tags, true);
+        if (indent) {
+            line = '\n' + indent.repeat(tags.length) + line;
+        }
+        content += line;
+        no_children = true;
+        tags.push(tag);
     }
 
     function end(tag) {
-        //console.log('</'+tag+'>');
         var top = tags.pop();
         if (top !== tag) {
             throw new Error("Tag mismatch (trying to close '" + tag + "' while top element is '" + top + "')");
         }
-        xw.endElement();
-        return self;
+        if (no_children) {
+            content = content.slice(0, -1) + '/>';
+            no_children = false;
+        } else {
+            var line = format_end(tag);
+            var indent = fn_indent(tag, tags, false);
+            if (indent) {
+                line = '\n' + indent.repeat(tags.length) + line;
+            }
+            content += line;            
+        }
     }
-
+    
     function text(data) {
-        //console.log("'" + data + "'");
         if (!tags.length) {
             throw new Error("Cannot write text '" + data + "' outside elements");
         }
-        xw.text(data);
-        return self;
+        no_children = false;
+        content += data;
     }
 
-    function init() {
-        xw = new XMLWriter(indent);
-        //xw.startDocument();
-        var attrs = {
-            'xmlns:stl': stl.namespaces.stl,
-            version: stl.version
-        };
-        self.start('stl', attrs);
-        return self;
+    function finalize() {
+        stream.write(content);
     }
 
-    function finish() {
-        //xw.endDocument();
-        var markup = xw.toString();
-        xw = null;
-        return markup;
-    }
-
-    self = {
-        init: init,
-        finish: finish,
+    return {
         start: start,
         end: end,
-        text: text
+        text: text,
+        finalize: finalize
     };
-    return self;
+}
+
+function stl_writer(stream, indent) {
+    function fn_indent(tag, tags, start) {
+        function is_flat(t) {
+            return t === 'stl:span' || t === 'stl:p';
+        }
+
+        if (start) {
+            if (tag === 'stl:span' || !tags.length || is_flat(tags[tags.length-1])) {
+                return '';
+            }
+        } else {
+            if (is_flat(tag)) {
+                return '';
+            }
+        }
+        return indent;
+    }
+
+    var writer = xml_writer(stream, fn_indent);
+
+    function start(tag, attrs) {
+        if (attrs && attrs.style === '') {
+            delete attrs.style;
+        }
+        writer.start('stl:' + tag, attrs);
+    }
+
+    function end(tag) {
+        writer.end('stl:' + tag);
+    }
+
+    function text(data) {
+        writer.text(data);
+    }
+
+    function finalize() {
+        end('stl');
+        writer.finalize();
+        writer = null;
+    }
+
+    var attrs = {
+        'xmlns:stl': stl.namespaces.stl,
+        version: stl.version
+    };
+    start('stl', attrs);
+    return {
+        start: start,
+        end: end,
+        text: text,
+        finalize: finalize
+    };
 }
 
 function css_format(css) {
@@ -190,10 +289,9 @@ function css_converter(resolution, options) {
         attrs = attrs || {};
         attrs.h = convert_length(row.m_iHeight);
         if (!row.m_bFixedSize) {
-            var css = {};
-            css['-stl-shape-resize'] = 'free';
-            css['-stl-shape-growth'] = '0pt max';
-            css['-stl-shape-shrink'] = '0pt -max';
+            var css = {
+                '-stl-shape-resize': 'free 0pt max 0pt max'
+            };
             attrs.style = css_format(css);
         }
         return attrs;
@@ -222,15 +320,13 @@ function css_converter(resolution, options) {
             'border-bottom': null,
             'border-left': null,
             'fill': null,
-            'vertical-align': null,
             '-stl-list-counter': null,
             '-stl-list-mask': null,
             '-stl-list-level': null,
             '-stl-tabs': null,
             '-stl-shape-resize': null,
-            '-stl-shape-growth': null,
-            '-stl-shape-shrink': null,
             '-stl-alignment': null
+            //'vertical-align': null // handled specially (@todo fixit)
         };
     }
 
@@ -252,8 +348,6 @@ function css_converter(resolution, options) {
         if (ps.iSpaceAfter) {
             css['margin-bottom'] = convert_length(ps.iSpaceAfter);
         }
-        var bullets = ['•', '◦', '▪'];
-        var numberings = ['1.', '1.', 'r.', '1)'];
         var level;
         var format;
         switch (ps.iNumbering) {
@@ -261,7 +355,7 @@ function css_converter(resolution, options) {
             break;
         case enums.list.BULLETS:
             level = ps.iNumberIndent - 1;
-            format = bullets[level % 3];
+            format = enums.defaults.bullets[level % 3];
             css['-stl-list-mask'] = format + '\\9';
             css['-stl-list-level'] = level;
             css['-stl-tabs'] = convert_length(250 * (level + 1));
@@ -269,7 +363,10 @@ function css_converter(resolution, options) {
             break;
         case enums.list.NUMBERING:
             level = ps.iNumberIndent - 1;
-            format = numberings[level % 4];
+            format = enums.numbering[ps.eNumberType];
+            if (format === undefined) {
+                throw new Error("Unknown eNumberType: " + ps.eNumberType);
+            }
             css['-stl-list-counter'] = 'default_counter';
             css['-stl-list-mask'] = '%' + level + '!' + format + '\\9';
             css['-stl-list-level'] = level;
@@ -309,16 +406,11 @@ function css_converter(resolution, options) {
 
     function convert_pen(thickness, style, color) {
         function pen_style(src) {
-            switch (src) {
-            case enums.pen.SOLID:
-                return 'solid';
-            case enums.pen.DASHED:
-                return 'dashed';
-            case enums.pen.DOTTED:
-                return 'dotted';
-            default:
+            var key = getKeyByValue(enums.pen, src);
+            if (!key) {
                 throw new Error('Unsupported pen style: ' + src);
             }
+            return key.toLowerCase();
         }
 
         thickness = thickness
@@ -354,15 +446,13 @@ function css_converter(resolution, options) {
         }
         convert_padding(draw, css);
         if (draw.m_bAutoSizeX || draw.m_bAutoSizeY) {
-            css['-stl-shape-resize'] = 'free';
             var x = draw.m_bAutoSizeX
                 ? 'max'
                 : '0pt';
             var y = draw.m_bAutoSizeY
                 ? 'max'
                 : '0pt';
-            css['-stl-shape-growth'] = x + ' ' + y;
-            css['-stl-shape-shrink'] = '-' + x + ' -' + y;
+            css['-stl-shape-resize'] = ['free', x, y, x, y].join(' ');
         }
         switch (draw.m_eVertJust) {
         case undefined:
@@ -453,7 +543,7 @@ function content_inserter(writer) {
     }
 
     function flush() {
-        if (blackspace === false) {
+        if (blackspace === false && paragraph) {
             padding();
         }
         if (style.state === states.OPEN) {
@@ -688,7 +778,6 @@ function build_stl(contents, writer, options) {
         writer.end('page');
     }
 
-    writer.init();
     writer.start('document');
 
     if (contents.m_bTextOnly) {
@@ -772,6 +861,18 @@ function json_factory(options) {
         };
     }
 
+    function is_autosize(css) {
+        var result = [false, false];
+        if (css['-stl-shape-resize']) {
+            var mode = css['-stl-shape-resize'].split(' ');
+            if (mode[0] === 'free') {
+                result[0] = (mode.length === 1) || (mode[1] === 'max');
+                result[1] = (mode.length === 1) || (mode[2] === 'max');
+            }
+        }
+        return result;
+    }
+
     function initialize() {
         if (!json_factory.cache) {
             var factory = require('empower.json').factory;
@@ -809,13 +910,67 @@ function json_factory(options) {
         f.bBold = css['font-weight'] === 'bold';
         f.bItalic = css['font-style'] === 'italic';
         f.bUnderline = css['text-decoration'] === 'underline';
-        f.bStrikeThru = css['text-decoration'] === 'strike-through';
+        f.bStrikeThru = css['text-decoration'] === 'line-through';
         return f;
     }
     
-    function paragraph() {
+    function paragraph(css) {
+        function convert_prop(property, par, key) {
+            if (property) {
+                par[key] = convert_length(property);
+            }
+        }
+        function get_numbering_type(level, mask) {
+            if (mask) {
+                var match = /%\d!(.+)\\9/.exec(mask);
+                var mask = match
+                    ? match[1]
+                    : enums.defaults.numberings[level];
+                var type = getKeyByValue(enums.numbering, mask);
+                if (type) {
+                    return +type;
+                }
+            }
+            throw new Error("XXX Unsupported numbering mask: " + mask);
+        }
+        
         var p = factory.paragraph();
         p.iDefaultTab = resolution/4;
+        p.iBulletFont = -1;
+        
+        var alignments = ['left', 'right', 'center', 'justify'];
+        var align = alignments.indexOf(css['text-align']);
+        if (align !== -1)
+            p.iJustification = align;
+        convert_prop(css['margin-left'], p, 'iLeftIndent');
+        convert_prop(css['margin-right'], p, 'iRightIndent');
+        convert_prop(css['margin-top'], p, 'iSpaceBefore');
+        convert_prop(css['margin-bottom'], p, 'iSpaceAfter');
+
+        if (css['-stl-list-level']) {
+            var level = parseInt(css['-stl-list-level']);
+            p.iNumberIndent = level + 1;
+            p.iLeftIndent += p.iDefaultTab;
+            p.bUserSetType = false;
+            p.iNumberColor = 0;
+            p.eUserSetNumber = 0;
+            if (css['-stl-list-counter']) {
+                p.iNumbering = enums.list.NUMBERING;
+                p.bUserSetColor =  false;
+                p.eNumberType = get_numbering_type(level, css['-stl-list-mask']);
+            } else {
+                p.iNumbering = enums.list.BULLETS;
+                p.iBulletFont = 2;
+                p.pszNumberString = 168;
+            }
+        } else {
+            p.iNumbering = enums.list.NONE;
+        }
+        Object.keys(p).forEach(function (key) {
+            if (p[key] === null) {
+                delete p[key];
+            }
+        });
         return p;
     }
 
@@ -878,27 +1033,115 @@ function json_factory(options) {
         draw.m_rectPosition = convert_bbox(attrs);
         return img;
     }
+
+    function convert_pen(border) {
+        var parts = border.split(' ');
+        var style = enums.pen[parts[1].toUpperCase()];
+        if (style === undefined) {
+            throw new Error("Unsupported pen style: " + parts[1]);
+        }
+        var result = {
+            style: style,
+            color: color(parts[2])
+        };
+        if (parts[0] !== '1px') { // handle thickness device dependent specially (@todo fixme)
+            result.thickness = convert_length(parts[0]);
+        }
+        return result;
+    }
     
-    function text(attrs, css) {
-        function is_autosize(css) {
-            var result = [false, false];
-            if (css['-stl-shape-resize'] === 'free') {
-                var growth = css['-stl-shape-growth'].split(' ');
-                if (growth.length === 1)
-                    growth.push(growth[0]);
-                result[0] = (growth[0] === 'max');
-                result[1] = (growth[1] === 'max');
+    function apply_item_style(draw, css) {        
+        function convert_alignment(alignment) {
+            if (!alignment) {
+                return enums.valign.TOP;
             }
-            return result;
+            var parts = alignment.split(' ');
+            if (parts[0] === 'vertical') {
+                switch (+(parts[1])) {
+                case 0:
+                    return enums.valign.TOP;
+                case 0.5:
+                    return enums.valign.CENTER;
+                case 1:
+                    return enums.valign.BOTTOM;
+                }
+            }
+            throw new Error("Unsupported alignment: ", alignment);
+        }
+
+        if (css.border) {
+            var pen = convert_pen(css.border);
+            draw.m_iPenWidth = pen.thickness;
+            draw.m_iPenStyle = pen.style;
+            draw.m_clrPen = pen.color;
+            draw.m_bPen = true;
+        }
+        if (css.fill) {
+            draw.m_clrBackGround = color(css.fill);
+            draw.m_bBackGroundTransparent = false;
+        }
+        if (css['padding-left']) {
+            draw.m_iLeftMargin = convert_length(css['padding-left']);
+        }
+        if (css['padding-right']) {
+             draw.m_iRightMargin = convert_length(css['padding-right']);
+        }
+        if (css['padding-top']) {
+             draw.m_iTopMargin = convert_length(css['padding-top']);
+        }
+        if (css['padding-bottom']) {
+             draw.m_iBottomMargin = convert_length(css['padding-bottom']);
+        }
+        var as = is_autosize(css);
+        draw.m_bAutoSizeX = as[0];
+        draw.m_bAutoSizeY = as[1];
+        draw.m_eVertJust = convert_alignment(css['-stl-alignment']);
+    }
+
+    function apply_cell_borders(shape, css) {
+        function convert_edge(border, pos) {
+            var edge = factory.cell_edge();
+            edge.m_elpPosition = pos;
+            if (border) {
+                var pen = convert_pen(border);
+                edge.m_iLineWeight = pen.thickness;
+                edge.m_iLineStyle = pen.style;
+                edge.m_clrLine = pen.color;
+                edge.m_bVisible = true;
+            } else {
+                edge.m_iLineWeight = 0;
+                edge.m_iLineStyle = enums.pen.SOLID;
+                edge.m_clrLine = color();
+                edge.m_bVisible = false;
+            }
+            return edge;
+        }
+
+        function convert_corner(pos) {
+            var corner = factory.cell_corner();
+            corner.m_iLineStyle = enums.pen.SOLID;
+            corner.m_iLineWeight = 0;
+            corner.m_clrLine = color();
+            corner.m_ecpCorner = 2;
+            return corner;
         }
         
+        var segments = shape.m_ppSegments;
+        segments.push(convert_corner(enums.segmentpos.TOP));
+        segments.push(convert_edge(css['border-top'], enums.segmentpos.TOP));
+        segments.push(convert_corner(enums.segmentpos.RIGHT));
+        segments.push(convert_edge(css['border-right'], enums.segmentpos.RIGHT));
+        segments.push(convert_corner(enums.segmentpos.BOTTOM));
+        segments.push(convert_edge(css['border-bottom'], enums.segmentpos.BOTTOM));
+        segments.push(convert_corner(enums.segmentpos.LEFT));
+        segments.push(convert_edge(css['border-left'], enums.segmentpos.LEFT));
+    }
+    
+    function text(attrs, css) {        
         id += 1;
-        var as = is_autosize(css);
         var txt = factory.text();
         var draw = txt.m_pDrawObj;
         draw.m_oiID = id-1;
-        draw.m_bAutoSizeX = as[0];
-        draw.m_bAutoSizeY = as[1];
         draw.m_rectPosition = convert_bbox(attrs);
         draw.m_pEditableProps = textprops();
         draw.m_UNITSPERINCH = resolution,
@@ -909,6 +1152,7 @@ function json_factory(options) {
         draw.m_Colors.push(color());
         draw.m_Colors.push(color('#00ffc0'));
         draw.m_Colors.push(color('#f00'));
+        apply_item_style(draw, css);
         return txt;
     }
 
@@ -928,38 +1172,42 @@ function json_factory(options) {
         row.m_clrBelow = color();
         row.m_colorLegend = color();
         row.m_pEditableProps = rowprops();
-        row.m_bFixedSize = (css['-stl-shape-resize'] !== 'free');
+        var as = is_autosize(css);
+        row.m_bFixedSize = !(as[0] || as[1]);
         return row;
     }
 
-    function cell(c, r, width, height) {
+    function cell(css, c, r, width, height) {
         id += 1;
-        var txt = factory.text().m_pDrawObj;
-        txt.m_oiID = id-1;
-        txt.m_bAutoSizeX = false;
-        txt.m_bAutoSizeY = false;
-        txt.m_rectPosition.left = 0;
-        txt.m_rectPosition.top = 0;
-        txt.m_rectPosition.right = width;
-        txt.m_rectPosition.bottom = height;
-        txt.m_pEditableProps = textprops();
-        txt.m_UNITSPERINCH = resolution,
-        txt.m_iLogicalRes = resolution,
-        txt.m_iDesignRes = resolution,
-        txt.m_clrPen = color();
-        txt.m_iMaxWidthDes = width;
-        txt.m_Colors.push(color());
-        txt.m_Colors.push(color('#00ffc0'));
-        txt.m_Colors.push(color('#f00'));
+        var draw = factory.text().m_pDrawObj;
+        draw.m_oiID = id-1;
+        draw.m_bAutoSizeX = false;
+        draw.m_bAutoSizeY = false;
+        draw.m_rectPosition.left = 0;
+        draw.m_rectPosition.top = 0;
+        draw.m_rectPosition.right = width;
+        draw.m_rectPosition.bottom = height;
+        draw.m_pEditableProps = textprops();
+        draw.m_UNITSPERINCH = resolution,
+        draw.m_iLogicalRes = resolution,
+        draw.m_iDesignRes = resolution,
+        draw.m_clrPen = color();
+        draw.m_iMaxWidthDes = width;
+        draw.m_Colors.push(color());
+        draw.m_Colors.push(color('#00ffc0'));
+        draw.m_Colors.push(color('#f00'));
+        apply_item_style(draw, css);
 
         var cell = factory.cell();
-        cell.m_pTextDraw = txt;
+        cell.m_pTextDraw = draw;
         cell.m_iColumn = c;
         cell.m_iRow = r;
+        apply_cell_borders(cell.m_FrameSegShape, css);
+        
         return cell;
     }
     
-    function table(attrs) {
+    function table(attrs, css) {
         id += 1;
         var tbl = factory.table();
         var draw = tbl.m_pDrawObj;
@@ -971,6 +1219,7 @@ function json_factory(options) {
         draw.m_clrShadow = color('#00c0c0');
         draw.m_pEditableProps = tableprops();
         draw.m_colorLegendFrame = color();
+        apply_item_style(draw, css);
         return tbl;
     }
 
@@ -1000,8 +1249,7 @@ function json_factory(options) {
 
     function content(root, template_id, attrs) {
         const css = {
-            '-stl-shape-resize': 'free',
-            '-stl-shape-growth': '0pt max'
+            '-stl-shape-resize': 'free 0pt max 0pt max',
         };
         root.m_oi = 0;
         root.m_ePageType = 0;
@@ -1039,17 +1287,6 @@ function json_factory(options) {
     };
 }
 
-function simple_stack(item) {
-    var items = [];
-    if (item !== undefined)
-        items.push(item);
-    return {
-        push: items.push,
-        pop: items.pop,
-        top: () => items[items.length-1]
-    };
-}
-
 function json_builder(nsmap, factory, root, options) {
     const unsupported = function (item) {
         var message = "Unsupported " + item;
@@ -1072,6 +1309,9 @@ function json_builder(nsmap, factory, root, options) {
             unexpected("stl:stl", "text");
     }
 
+    function clone_css(css) {
+        return JSON.parse(JSON.stringify(css));
+    }
     function split_css(style, css) {
         css = css || {};
         if (style) {
@@ -1107,7 +1347,8 @@ function json_builder(nsmap, factory, root, options) {
                     columns.push(factory.column(attrs));
                 }
                 var row = rows.length - 1;
-                var cell = factory.cell(column, row, columns[column].m_iWidth, rows[row].m_iHeight);
+                var css = split_css(attrs.style);               
+                var cell = factory.cell(css, column, row, columns[column].m_iWidth, rows[row].m_iHeight);
                 cells.push(cell);
                 return stl.handler_dispatcher(nsmap, story_builder(cell.m_pTextDraw));
             } else {
@@ -1171,7 +1412,8 @@ function json_builder(nsmap, factory, root, options) {
             commands.push(paragraphs.length);
             chars.push(enums.content.NULL);
             chars.push(enums.content.NULL);
-            paragraphs.push(factory.paragraph());
+            var css = styles.top();
+            paragraphs.push(factory.paragraph(css));
         }
         
         function flush_cstyle() {
@@ -1208,13 +1450,45 @@ function json_builder(nsmap, factory, root, options) {
             chars.push(enums.content.NULL);
             inside.object = null;
         }
-        
+
+        function vertical_align(oldalign, newalign) {
+            if (oldalign !== newalign) {
+                switch(oldalign) {
+                case 'super':
+                    commands.push(enums.content.SUPERSCRIPT_END);
+                    chars.push(enums.content.NULL);
+                    break;
+                case 'sub':
+                    commands.push(enums.content.SUBSCRIPT_END);
+                    chars.push(enums.content.NULL);
+                    break;
+                default:
+                    break;
+                }
+                switch(newalign) {
+                case 'super':
+                    commands.push(enums.content.SUPERSCRIPT_START);
+                    chars.push(enums.content.NULL);
+                    commands.push(enums.content.NULL);
+                    chars.push(enums.content.NULL);
+                    break;
+                case 'sub':
+                    commands.push(enums.content.SUBSCRIPT_START);
+                    chars.push(enums.content.NULL);
+                    commands.push(enums.content.NULL);
+                    chars.push(enums.content.NULL);
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
+
         ///////////////////////////////////////////////////////////////////
 
-        
         function block_(start, attrs) {
             if (start) {
-                styles.push(split_css(attrs.style, styles.top()));
+                styles.push(split_css(attrs.style, clone_css(styles.top())));
             } else {
                 styles.pop();
             }
@@ -1222,10 +1496,12 @@ function json_builder(nsmap, factory, root, options) {
 
         function p_(start, attrs) {
             if (start) {
+                styles.push(split_css(attrs.style, clone_css(styles.top())));
                 insert_pstyle();
-                styles.push(split_css(attrs.style, styles.top()));
+                inside.paragraph = true;
             } else {
                 styles.pop();
+                inside.paragraph = false;
             }
         }
 
@@ -1260,11 +1536,16 @@ function json_builder(nsmap, factory, root, options) {
         }
 
         function span_(start, attrs) {
-            styles.dirty = true;
-            if (start) {
-                styles.push(split_css(attrs.style, styles.top()));
-            } else {
-                styles.pop();
+            if (Object.keys(attrs).length) { // treat empty span as a special case
+                var oldcss;
+                styles.dirty = true;
+                if (start) {
+                    oldcss = styles.top();
+                    styles.push(split_css(attrs.style, clone_css(styles.top())));
+                } else {
+                    oldcss = styles.pop();
+                }
+                vertical_align(oldcss['vertical-align'], styles.top()['vertical-align']);
             }
         }
 
@@ -1279,7 +1560,8 @@ function json_builder(nsmap, factory, root, options) {
         
         function table_(start, attrs) {
             if (start) {
-                var draw = object_start(factory.table(attrs));
+                var css = split_css(attrs.style);
+                var draw = object_start(factory.table(attrs, css));
                 return stl.handler_dispatcher(nsmap, table_builder(draw));
             } else {
                 object_end();
@@ -1298,13 +1580,17 @@ function json_builder(nsmap, factory, root, options) {
         }
         
         function text(data) {
-            data = data.trim();
-            if (data.length) {
-                flush_cstyle();
-                range(data.length).forEach(function(index) {
-                    chars.push(data.charCodeAt(index));
-                    commands.push(enums.content.NULL);
-                });
+            if (data) {
+                if (inside.paragraph) {
+                    flush_cstyle();
+                    range(data.length).forEach(function(index) {
+                        chars.push(data.charCodeAt(index));
+                        commands.push(enums.content.NULL);
+                    });
+                } else {
+                    if (data.trim())
+                        unexpected("text outside paragraph");
+                }
             }
         }
 
@@ -1379,7 +1665,8 @@ function json_builder(nsmap, factory, root, options) {
 
         function table_(start, attrs) {
             if (start) {
-                var draw = object_start(factory.table(attrs));
+                var css = split_css(attrs.style);
+                var draw = object_start(factory.table(attrs, css));
                 return stl.handler_dispatcher(nsmap, table_builder(draw));
             } else {
                 object_end();
@@ -1470,9 +1757,10 @@ exports.emp2stl = function emp2stl(src, dst, options) {
         throw new Error("Invalid argument, stream expected");
     }
     var contents = JSON.parse(src.read()).contents;
-    var writer = stl_writer(options.indent);
+    var writer = stl_writer(dst, options.indent);
     build_stl(contents, writer, options);
-    dst.write(writer.finish());
+    writer.finalize();
+    return dst;
 };
 
 /*
@@ -1500,6 +1788,7 @@ exports.stl2emp = function emp2stl(src, dst, options) {
     var parser = stl.parser(nsmap, builder);
     parser.write(src.read()).close();
     dst.write(JSON.stringify(root, null, options.indent));
+    return dst;
 };
 
 

@@ -96,45 +96,28 @@
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
-          "iBulletFont": -1,
-          "iLeftIndent": 300,
-          "iJustification": 3,
-          "iRightIndent": 400,
-          "iSpaceBefore": 100,
-          "iSpaceAfter": 200
+          "iBulletFont": -1
         },
         {
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
           "iBulletFont": -1,
-          "iLeftIndent": 250,
-          "iJustification": 3,
-          "iRightIndent": 400,
-          "iSpaceBefore": 100,
-          "iSpaceAfter": 200
+          "iLeftIndent": 250
         },
         {
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
           "iBulletFont": -1,
-          "iLeftIndent": 500,
-          "iJustification": 3,
-          "iRightIndent": 400,
-          "iSpaceBefore": 100,
-          "iSpaceAfter": 200
+          "iLeftIndent": 500
         },
         {
           "m_iEditAreaNdx": -1,
           "iNumbering": 0,
           "iDefaultTab": 250,
           "iBulletFont": -1,
-          "iLeftIndent": 750,
-          "iJustification": 3,
-          "iRightIndent": 400,
-          "iSpaceBefore": 100,
-          "iSpaceAfter": 200
+          "iLeftIndent": 750
         },
         {
           "m_iEditAreaNdx": -1,
@@ -146,10 +129,6 @@
           "bUserSetType": false,
           "iNumberColor": 0,
           "eUserSetNumber": 0,
-          "iJustification": 3,
-          "iRightIndent": 400,
-          "iSpaceBefore": 100,
-          "iSpaceAfter": 200,
           "pszNumberString": 168
         },
         {
@@ -162,10 +141,6 @@
           "bUserSetType": false,
           "iNumberColor": 0,
           "eUserSetNumber": 0,
-          "iJustification": 3,
-          "iRightIndent": 400,
-          "iSpaceBefore": 100,
-          "iSpaceAfter": 200,
           "pszNumberString": 168
         },
         {
@@ -178,10 +153,6 @@
           "bUserSetType": false,
           "iNumberColor": 0,
           "eUserSetNumber": 0,
-          "iJustification": 3,
-          "iRightIndent": 400,
-          "iSpaceBefore": 100,
-          "iSpaceAfter": 200,
           "pszNumberString": 168
         },
         {
@@ -194,10 +165,6 @@
           "bUserSetType": false,
           "iNumberColor": 0,
           "eUserSetNumber": 0,
-          "iJustification": 3,
-          "iRightIndent": 400,
-          "iSpaceBefore": 100,
-          "iSpaceAfter": 200,
           "pszNumberString": 168
         },
         {
@@ -211,11 +178,7 @@
           "iNumberColor": 0,
           "bUserSetColor": false,
           "eNumberType": 0,
-          "eUserSetNumber": 0,
-          "iJustification": 3,
-          "iRightIndent": 400,
-          "iSpaceBefore": 100,
-          "iSpaceAfter": 200
+          "eUserSetNumber": 0
         },
         {
           "m_iEditAreaNdx": -1,
@@ -228,11 +191,7 @@
           "iNumberColor": 0,
           "bUserSetColor": false,
           "eNumberType": 0,
-          "eUserSetNumber": 0,
-          "iJustification": 3,
-          "iRightIndent": 400,
-          "iSpaceBefore": 100,
-          "iSpaceAfter": 200
+          "eUserSetNumber": 0
         },
         {
           "m_iEditAreaNdx": -1,
@@ -245,11 +204,7 @@
           "iNumberColor": 0,
           "bUserSetColor": false,
           "eNumberType": 5,
-          "eUserSetNumber": 0,
-          "iJustification": 3,
-          "iRightIndent": 400,
-          "iSpaceBefore": 100,
-          "iSpaceAfter": 200
+          "eUserSetNumber": 0
         },
         {
           "m_iEditAreaNdx": -1,
@@ -262,11 +217,7 @@
           "iNumberColor": 0,
           "bUserSetColor": false,
           "eNumberType": 6,
-          "eUserSetNumber": 0,
-          "iJustification": 3,
-          "iRightIndent": 400,
-          "iSpaceBefore": 100,
-          "iSpaceAfter": 200
+          "eUserSetNumber": 0
         }
       ],
       "m_TextFonts": [
@@ -990,7 +941,8 @@
       "m_oiID": 0,
       "m_VarProps": [],
       "m_ppEditableAreas": [],
-      "m_Rules": []
+      "m_Rules": [],
+      "m_eVertJust": 0
     },
     "m_bTextOnly": true,
     "m_oiLanguage": 0

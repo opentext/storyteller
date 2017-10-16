@@ -126,6 +126,7 @@
         108,
         108,
         111,
+        32,
         1,
         0,
         79,
@@ -148,6 +149,7 @@
         0,
         -62,
         -63,
+        0,
         0,
         0,
         0,
@@ -178,7 +180,8 @@
       "m_oiID": 0,
       "m_VarProps": [],
       "m_ppEditableAreas": [],
-      "m_Rules": []
+      "m_Rules": [],
+      "m_eVertJust": 0
     },
     "m_bTextOnly": true,
     "m_oiLanguage": 0
