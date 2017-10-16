@@ -33,8 +33,8 @@ function correct_indenter(tag, tags, start) {
 
 exports.empower_item = function empower_item(input, options) {
     options = options || {};
-    options.dump = true;
-    options.indent = correct_indenter; //pretty_indenter;
+    //options.dump = true;
+    //options.indent = correct_indenter; //pretty_indenter;
 
     function get_uri(dir, extension, blob) {
         return blob
@@ -62,7 +62,7 @@ exports.empower_item = function empower_item(input, options) {
     console.log(input);
     console.log(stl.read());
 
-    if (options.reverse) {
+    if (options.roundtrip) {
         var json2 = streams.stream(get_uri('output', 'json', !options.dump));
         var output_options = {
             uris: (uri) => uri.replace(/^(wd:\/cas\/)/, 'cas:'),
