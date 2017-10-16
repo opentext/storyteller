@@ -1754,8 +1754,6 @@ function json_builder(nsmap, factory, root, options) {
 exports.emp2stl = function emp2stl(src, dst, options) {
     dst = dst || streams.stream();
     options = options || {};
-    var indenter = options.indent;
-    options.indent
 
     if (!util.isStream(src) || !util.isStream(dst)) {
         throw new Error("Invalid argument, stream expected");
