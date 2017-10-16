@@ -19,7 +19,7 @@
               'use strict';
               var tools = require('wd:/emptools');
               var input = require('data').dump('string(.)');
-              tools.empower_item(input, {reverse: true, dump: true}); // raster: '/item[1]/item[1]'
+              tools.empower_item(input, {roundtrip: true}); // dump: true, raster: '/item[1]/item[1]'
             </stl:script>
           </stl:content>
         </stl:story>
@@ -32,7 +32,7 @@
               'use strict';
               var tools = require('wd:/emptools');
               var input = require('data').dump('string(.)');
-              tools.empower_item(input, {reverse: true, dump: true}); //  raster: '/item[1]'
+              tools.empower_item(input, {roundtrip: true}); // dump: true, raster: '/item[1]'
             </stl:script>
           </stl:fragment>
         </stl:story>

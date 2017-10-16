@@ -137,7 +137,7 @@ and `stl2emp` with following signatures:
     - `src` ... input stream containing _Empower JSON_
     - `dst` ... output stream to be filled with resulting _STL_ (memory stream is created by default)
     - `options` ... following options are currently supported:
-      - `indent` ... bool or a string used for indentation
+      - `indent` ... bool, string, number (of spaces) or a function(tag, tags, is_start) used for indentation
       - `page` ... bool determining whether page type should be generated
 	  - `fonts` ... optional callback for font remap
 	  - `uris` ... optional callback for URI remap
@@ -147,7 +147,7 @@ and `stl2emp` with following signatures:
     - `src` ... input stream containing _STL_
     - `dst` ... output stream to be filled with resulting _Empower JSON_ (memory stream is created by default)
     - `options` ... following options are currently supported:
-      - `indent` ... bool or a string used for indentation
+      - `indent` ... bool, string or a number (of spaces) used for indentation
       - `permissive` ... determines whether the conversion fails or ignores unsupported constructs
 	  - `fonts` ... optional callback for font remap
       - `uris` ... optional callback for URI remap

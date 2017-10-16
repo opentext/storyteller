@@ -97,11 +97,30 @@ function simple_stack(item) {
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function xml_writer(stream, fn_indent) {
+function make_indenter(indent, default_indent) {
+    if (util.isFunction(indent)) {
+        return indent;
+    }
+    if (indent) {
+        if (util.isBoolean(indent)) {
+            indent = default_indent || '  ';
+        }
+        if (util.isNumber(indent)) {
+            indent = ' '.repeat(indent);
+        }
+        if (util.isString(indent)) {
+            return () => indent;
+        }
+        throw new Error("Unsupported indent: " + indent);
+    }
+    return () => '';
+}
+
+function xml_writer(stream, indenter) {
     var tags = [];
     var no_children;
     var content = '';
-
+    
     function format_start(tag, attrs) {
         attrs = attrs || {};
         var result = '<' + tag;
@@ -125,7 +144,7 @@ function xml_writer(stream, fn_indent) {
     
     function start(tag, attrs) {
         var line = format_start(tag, attrs);
-        var indent = fn_indent(tag, tags, true);
+        var indent = indenter(tag, tags, true);
         if (indent) {
             line = '\n' + indent.repeat(tags.length) + line;
         }
@@ -144,7 +163,7 @@ function xml_writer(stream, fn_indent) {
             no_children = false;
         } else {
             var line = format_end(tag);
-            var indent = fn_indent(tag, tags, false);
+            var indent = indenter(tag, tags, false);
             if (indent) {
                 line = '\n' + indent.repeat(tags.length) + line;
             }
@@ -173,24 +192,7 @@ function xml_writer(stream, fn_indent) {
 }
 
 function stl_writer(stream, indent) {
-    function fn_indent(tag, tags, start) {
-        function is_flat(t) {
-            return t === 'stl:span' || t === 'stl:p';
-        }
-
-        if (start) {
-            if (tag === 'stl:span' || !tags.length || is_flat(tags[tags.length-1])) {
-                return '';
-            }
-        } else {
-            if (is_flat(tag)) {
-                return '';
-            }
-        }
-        return indent;
-    }
-
-    var writer = xml_writer(stream, fn_indent);
+    var writer = xml_writer(stream, make_indenter(indent));
 
     function start(tag, attrs) {
         if (attrs && attrs.style === '') {
@@ -1743,7 +1745,7 @@ function json_builder(nsmap, factory, root, options) {
  *   - `src` ... input stream containing _Empower JSON_
  *   - `dst` ... output stream to be filled with resulting _STL_ (memory stream is created by default)
  *   - `options` ... following options are currently supported:
- *     - `indent` ... bool or a string used for indentation
+ *     - `indent` ... bool, string or a function(tag, tags, is_start) used for indentation
  *     - `page` ... bool determining whether page type should be generated
  * 	   - `fonts` ... optional callback for font remap
  * 	   - `uris` ... optional callback for URI remap
@@ -1752,6 +1754,8 @@ function json_builder(nsmap, factory, root, options) {
 exports.emp2stl = function emp2stl(src, dst, options) {
     dst = dst || streams.stream();
     options = options || {};
+    var indenter = options.indent;
+    options.indent
 
     if (!util.isStream(src) || !util.isStream(dst)) {
         throw new Error("Invalid argument, stream expected");

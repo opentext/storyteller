@@ -1,1 +1,18 @@
-<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1"><stl:document><stl:story name="Main" w="8.5in"><stl:p><stl:span style="font-family: Lato; font-size: 10pt">Hello <stl:span/></stl:span><stl:text w="1in" h="1in" style="padding-left: 0.1in; padding-right: 0.25in; padding-top: 0.2in; padding-bottom: 0.15in; border: 1px solid #0000FF; fill: #FFC8C8; -stl-shape-resize: free 0pt max 0pt max"><stl:story><stl:p><stl:span style="font-family: Lato; font-size: 10pt">Opentext</stl:span></stl:p></stl:story></stl:text><stl:span style="font-family: Lato; font-size: 10pt">!</stl:span></stl:p></stl:story></stl:document></stl:stl>
+
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+    <stl:story name="Main" w="8.5in">
+      <stl:p>
+        <stl:span style="font-family: Lato; font-size: 10pt">Hello <stl:span/></stl:span>
+        <stl:text w="1in" h="1in" style="padding-left: 0.1in; padding-right: 0.25in; padding-top: 0.2in; padding-bottom: 0.15in; border: 1px solid #0000FF; fill: #FFC8C8; -stl-shape-resize: free 0pt max 0pt max">
+          <stl:story>
+            <stl:p>
+              <stl:span style="font-family: Lato; font-size: 10pt">Opentext</stl:span>
+            </stl:p>
+          </stl:story>
+        </stl:text>
+        <stl:span style="font-family: Lato; font-size: 10pt">!</stl:span>
+      </stl:p>
+    </stl:story>
+  </stl:document>
+</stl:stl>

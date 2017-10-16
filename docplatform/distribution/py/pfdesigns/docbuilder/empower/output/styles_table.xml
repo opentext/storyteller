@@ -1,1 +1,64 @@
-<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1"><stl:document><stl:story name="Main" w="4.2in"><stl:p><stl:table style="border: 0.02in dotted #FF0000"><stl:story><stl:row h="0.3in"><stl:cell w="0.8in" style="padding-right: 0.05in; padding-bottom: 0.02in; border-bottom: 0.02in dotted #00FF00; fill: #DBFF3B; -stl-alignment: vertical 1"><stl:p style="text-align: right"><stl:span style="font-family: Lato; font-size: 10pt">Top Left</stl:span></stl:p></stl:cell><stl:cell w="1.6in" style="padding-bottom: 0.02in; border-bottom: 0.02in dotted #00FF00; border-left: 0.001in solid #FF0000; -stl-alignment: vertical 1"><stl:p style="text-align: center"><stl:span style="font-family: Lato; font-size: 10pt">Top center</stl:span></stl:p></stl:cell><stl:cell w="0.7in" style="padding-bottom: 0.02in; border-bottom: 0.02in dotted #00FF00; fill: #FFC8C8; -stl-alignment: vertical 1"><stl:p><stl:span style="font-family: Lato; font-size: 10pt">Top right</stl:span></stl:p></stl:cell></stl:row><stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max"><stl:cell style="padding-right: 0.05in; -stl-alignment: vertical 0.5"><stl:p style="text-align: right"><stl:span style="font-family: Lato; font-size: 10pt">Middle left</stl:span></stl:p></stl:cell><stl:cell style="border-top: 0.05in dashed #000000; border-right: 0.02in solid #000000; border-bottom: 0.04in dotted #000000; border-left: 0.03in solid #000000; fill: #B4FCFF; -stl-alignment: vertical 0.5"><stl:p style="text-align: center"><stl:span style="font-family: Lato; font-size: 10pt">Center</stl:span></stl:p></stl:cell><stl:cell style="padding-left: 0.05in; -stl-alignment: vertical 0.5"><stl:p><stl:span style="font-family: Lato; font-size: 10pt">Middle right</stl:span></stl:p></stl:cell></stl:row><stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max"><stl:cell style="padding-right: 0.05in; padding-top: 0.02in; fill: #79FF7E"><stl:p style="text-align: right"><stl:span style="font-family: Lato; font-size: 10pt">Bottom left</stl:span></stl:p></stl:cell><stl:cell style="padding-top: 0.02in; border-left: 0.001in solid #FF0000"><stl:p style="text-align: center"><stl:span style="font-family: Lato; font-size: 10pt">Bottom center</stl:span></stl:p></stl:cell><stl:cell style="padding-left: 0.05in; padding-top: 0.02in; fill: #FF74F9"><stl:p><stl:span style="font-family: Lato; font-size: 10pt">Bottom right</stl:span></stl:p></stl:cell></stl:row></stl:story></stl:table></stl:p></stl:story></stl:document></stl:stl>
+
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+    <stl:story name="Main" w="4.2in">
+      <stl:p>
+        <stl:table style="border: 0.02in dotted #FF0000">
+          <stl:story>
+            <stl:row h="0.3in">
+              <stl:cell w="0.8in" style="padding-right: 0.05in; padding-bottom: 0.02in; border-bottom: 0.02in dotted #00FF00; fill: #DBFF3B; -stl-alignment: vertical 1">
+                <stl:p style="text-align: right">
+                  <stl:span style="font-family: Lato; font-size: 10pt">Top Left</stl:span>
+                </stl:p>
+              </stl:cell>
+              <stl:cell w="1.6in" style="padding-bottom: 0.02in; border-bottom: 0.02in dotted #00FF00; border-left: 0.001in solid #FF0000; -stl-alignment: vertical 1">
+                <stl:p style="text-align: center">
+                  <stl:span style="font-family: Lato; font-size: 10pt">Top center</stl:span>
+                </stl:p>
+              </stl:cell>
+              <stl:cell w="0.7in" style="padding-bottom: 0.02in; border-bottom: 0.02in dotted #00FF00; fill: #FFC8C8; -stl-alignment: vertical 1">
+                <stl:p>
+                  <stl:span style="font-family: Lato; font-size: 10pt">Top right</stl:span>
+                </stl:p>
+              </stl:cell>
+            </stl:row>
+            <stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max">
+              <stl:cell style="padding-right: 0.05in; -stl-alignment: vertical 0.5">
+                <stl:p style="text-align: right">
+                  <stl:span style="font-family: Lato; font-size: 10pt">Middle left</stl:span>
+                </stl:p>
+              </stl:cell>
+              <stl:cell style="border-top: 0.05in dashed #000000; border-right: 0.02in solid #000000; border-bottom: 0.04in dotted #000000; border-left: 0.03in solid #000000; fill: #B4FCFF; -stl-alignment: vertical 0.5">
+                <stl:p style="text-align: center">
+                  <stl:span style="font-family: Lato; font-size: 10pt">Center</stl:span>
+                </stl:p>
+              </stl:cell>
+              <stl:cell style="padding-left: 0.05in; -stl-alignment: vertical 0.5">
+                <stl:p>
+                  <stl:span style="font-family: Lato; font-size: 10pt">Middle right</stl:span>
+                </stl:p>
+              </stl:cell>
+            </stl:row>
+            <stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max">
+              <stl:cell style="padding-right: 0.05in; padding-top: 0.02in; fill: #79FF7E">
+                <stl:p style="text-align: right">
+                  <stl:span style="font-family: Lato; font-size: 10pt">Bottom left</stl:span>
+                </stl:p>
+              </stl:cell>
+              <stl:cell style="padding-top: 0.02in; border-left: 0.001in solid #FF0000">
+                <stl:p style="text-align: center">
+                  <stl:span style="font-family: Lato; font-size: 10pt">Bottom center</stl:span>
+                </stl:p>
+              </stl:cell>
+              <stl:cell style="padding-left: 0.05in; padding-top: 0.02in; fill: #FF74F9">
+                <stl:p>
+                  <stl:span style="font-family: Lato; font-size: 10pt">Bottom right</stl:span>
+                </stl:p>
+              </stl:cell>
+            </stl:row>
+          </stl:story>
+        </stl:table>
+      </stl:p>
+    </stl:story>
+  </stl:document>
+</stl:stl>
