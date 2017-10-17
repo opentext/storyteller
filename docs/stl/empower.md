@@ -200,7 +200,7 @@ And we can also generate a page & text boilerplate (via `emp2stl(json, stl, {ind
     <stl:story name="Main" w="8.5in"/>
   </stl:document>
   <stl:page w="8.5in" h="1in">
-    <stl:text w="8.5in" h="1in" style="-stl-shape-resize: free 0pt max -0pt -max" story="Main"/>
+    <stl:text w="8.5in" h="1in" style="-stl-shape-resize: free 0pt max 0pt max" story="Main"/>
   </stl:page>
 </stl:stl>
 ```
