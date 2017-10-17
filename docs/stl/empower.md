@@ -9,6 +9,7 @@
       * [Usage](#usage)
       * [Libraries](#libraries)
       * [Source code](#source-code)
+      * [Tests](#tests)
    * [Technical details](#technical-details)
       * [Content Fragments](#content-fragments)
          * [Single-line Text](#single-line-text)
@@ -230,11 +231,9 @@ The current implementation is available in the
 [empower.js](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/tools/empower.js).
 For JSON creation we use a configuration file [empower.json](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/tools/empower.json) containing variety of JSON skeletons for individual objects and structures.
 
-Usage example is visible in the [emptools.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emptools.js) helper module:
+## Tests
 
-<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emptools.js?footer=minimal"></script>
-
-The module above is used in several (_STL_ based) regression tests:
+For development testing we use several (_STL_ based) regression tests:
 
 The [basic.xml](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/basic.xml) demonstrates a dynamic conversion of _content fragments_ (in Empower called _text messages_).
 There is a _repeater_ over input file names which repeats a _content substitution_ (`stl:content` element)
@@ -258,6 +257,10 @@ _STL definition_.
 
 It is worth to mention that the listed STL-based tests were also used for generating _STL_ fragments
 and rasters for all examples within this documentation.
+
+All the tests above use common helper module [emptools.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emptools.js):
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/emptools.js?footer=minimal"></script>
 
 # Technical details
 
