@@ -229,7 +229,9 @@ All the parsing and translation is implemented inside this module, except for XM
 
 The current implementation is available in the 
 [empower.js](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/tools/empower.js).
-For JSON creation we use a configuration file [empower.json](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/tools/empower.json) containing variety of JSON skeletons for individual objects and structures.
+For JSON creation we use a configuration file [empower.json](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/tools/empower.json) containing variety of JSON skeletons for individual objects and structures. All generic STL parsing related
+functionality goes to a separate module called [stl.js](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/js/tools/stl.js)
+(that area of functionality is not _Empower_ specific, it is also used for the [Dynamic HTML](https://opentext.github.io/storyteller/stl/usecases.html#dynamic-html) usecase in the [stl2html.js](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/stl2html/stl2html.js) javascript filter.
 
 ## Tests
 
