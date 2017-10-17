@@ -30,6 +30,8 @@
 This document describes a process of reverse-engineering the _Empower JSON_ format
 and converting it to _StoryTeller Layout_ (_STL_) and back.
 
+![STL integration schema](docbuilder-pipeline.png)
+
 An important thing to note is that we got no documentation of the input format,
 every insight is gained by interactively editing a fragment and comparing
 the changes in persistence developed by changes in editor.
