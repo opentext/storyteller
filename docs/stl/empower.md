@@ -221,12 +221,8 @@ The usage of `stl2emp` conversion is also very simple and looks as follows:
 
 ## Libraries
 
-All the parsing and translation is implemented inside this module, except low-level writing
-the resulting _STL XML_, for that purpose we use 3rd party [XMLWriter](http://github.com/touv/node-xml-writer)
-implementation published under [MIT software licence](https://en.wikipedia.org/wiki/MIT_License).
-
-For XML parsing we are using the [sax.js](https://github.com/isaacs/sax-js) which is already included
-in StoryTeller Javascript modules.
+All the parsing and translation is implemented inside this module, except for XML parsing we are using the
+[sax.js](https://github.com/isaacs/sax-js) which is already included in StoryTeller Javascript modules.
 
 ## Source code
 
