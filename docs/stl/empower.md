@@ -63,7 +63,7 @@ functionality. Instead of trying to cover the formats 100% at all costs we try t
 features for which there is a reasonable match between the formats and which are most
 valuable for end users. That way we could utilize the _Empower Web Editor_ for editting
 _STL fragments_ (as an alternative for a
-[Native STL Editor](https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor)
+[Native STL Editor](https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html)
 which does not completely exist yet).
 
 The current implementation of the conversion supports features of _Content Fragments_
