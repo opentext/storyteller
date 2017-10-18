@@ -43,6 +43,13 @@ are just integers in a decimal format with no units, a text is just a sequence
 of unicode code points, etc. This complicates the conversion, makes the whole process
 more brittle and prone to future inconsistencies when the JSON format changes.
 
+There is also a big question whether the _Empower_ JSON format is meant to be backward
+compatible and thus suitable for this kind of job. It would be too hard to update
+the conversion whenever the input format changes. However as in the _Content Authoring_
+solution JSON fragments are persisted as _CAS Resources_ we believe that there must be
+some kind of backward compatibility guarantee. Anyway, this kind of questions must be
+answered before we promote this solution for production.
+
 On the other hand the Empower WYSIWYG editor looks very nice and it is relatively easy
 to create a nice looking content. It reasonably limits the complexity of the fragments
 (e.g. there are only two levels of object nesting) and thus makes our job easier.
@@ -54,10 +61,14 @@ The editor window looks as follows:
 The goal for this POC is to implement a convertor supporting a reasonable subset of the
 functionality. Instead of trying to cover the formats 100% at all costs we try to find
 features for which there is a reasonable match between the formats and which are most
-valuable for end users.
+valuable for end users. That way we could utilize the _Empower Web Editor_ for editting
+_STL fragments_ (as an alternative for a
+[Native STL Editor](https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor)
+which does not completely exist yet).
 
-Currently the supported features lead to _STL content fragments_ and _page fragments_
-which look as follows:
+The current implementation of the conversion supports features of _Content Fragments_
+and _Canvas Fragments_ which look as follows (you can compare _Empower_ and _StoryTeller_
+rendered variants side-by-side):
 
 <table style="background-color:#fff49c">
   <tr><td colspan="2"><h3>Character styles</h3></td></tr>
