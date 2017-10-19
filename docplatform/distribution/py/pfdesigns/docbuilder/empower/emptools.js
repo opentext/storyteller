@@ -51,12 +51,13 @@ exports.empower_item = function empower_item(input, options) {
     var stl = streams.stream(get_uri('output', 'xml', !options.dump));
 
     var input_options = {
+        output: stl,
         uris: (uri) => uri.replace(/^(cas:)/, 'wd:/cas/'),
         indent: options.indent,
         page: !!options.raster
     };
     // convert empower JSON to STL
-    empower.emp2stl(json, stl, input_options);
+    empower.emp2stl(json, input_options);
 
     // log name and resulting STL
     console.log(input);
@@ -65,17 +66,20 @@ exports.empower_item = function empower_item(input, options) {
     if (options.roundtrip) {
         var json2 = streams.stream(get_uri('output', 'json', !options.dump));
         var output_options = {
+            output: json2,
             uris: (uri) => uri.replace(/^(wd:\/cas\/)/, 'cas:'),
             indent: options.indent
                 ? '  '
-                : ''
+                : '',
+            permissive: !!options.raster
         };
-        empower.stl2emp(stl, json2, output_options);
+        empower.stl2emp(stl, output_options);
         //console.log(json2.read());
 
         var stl2 = streams.stream(get_uri('output', 'xml', true));
         // convert generated empower JSON back to STL
-        empower.emp2stl(json2, stl2, input_options);
+        input_options.output = stl2;
+        empower.emp2stl(json2, input_options);
         console.log(stl2.read());
         stl = stl2;
     }

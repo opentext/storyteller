@@ -1294,7 +1294,7 @@ function json_builder(nsmap, factory, root, options) {
         var message = "Unsupported " + item;
         if (options.permissive) {
             console.error(message + " (ignored)");
-            return ignorant();
+            return stl.ignorant();
         }
         throw new Error(message);
     };
@@ -1737,23 +1737,23 @@ function json_builder(nsmap, factory, root, options) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
- * emp2stl( src: stream [, dst: stream, options: object] ) : stream
+ * emp2stl( src: stream [options: object] ) : stream
  *
  * Parses _Empower JSON_ fragment and generates corresponding *  _STL_ fragment
  *
  * Parameters:
  *   - `src` ... input stream containing _Empower JSON_
- *   - `dst` ... output stream to be filled with resulting _STL_ (memory stream is created by default)
  *   - `options` ... following options are currently supported:
+ *     - `output` ... output stream to be filled with resulting _STL_ (memory stream is created if no stream is specified)
  *     - `indent` ... bool, string or a function(tag, tags, is_start) used for indentation
  *     - `page` ... bool determining whether page type should be generated
  * 	   - `fonts` ... optional callback for font remap
  * 	   - `uris` ... optional callback for URI remap
- *   - `@return` ... output stream (the `dst` argument if provided, temporary memory stream otherwise)
+ *   - `@return` ... output stream (the `output` option if provided, temporary memory stream otherwise)
  */
-exports.emp2stl = function emp2stl(src, dst, options) {
-    dst = dst || streams.stream();
+exports.emp2stl = function emp2stl(src, options) {
     options = options || {};
+    var dst = options.output || streams.stream();
 
     if (!util.isStream(src) || !util.isStream(dst)) {
         throw new Error("Invalid argument, stream expected");
@@ -1766,22 +1766,23 @@ exports.emp2stl = function emp2stl(src, dst, options) {
 };
 
 /*
- *  stl2emp( src: stream [, dst: stream, options: object] ) : stream 
+ *  stl2emp( src: stream [, options: object] ) : stream 
  *
  *  Parses _STL_ document and generates corresponding _Empower JSON_ fragment
  *
  *  Parameters:
  *    - `src` ... input stream containing _STL_
- *    - `dst` ... output stream to be filled with resulting _Empower JSON_ (memory stream is created by default)
  *    - `options` ... following options are currently supported:
+ *      - `output` ... output stream to be filled with resulting _Empower JSON_ (memory stream is created if no stream is specified)
  *      - `indent` ... bool or a string used for indentation
  *      - `permissive` ... determines whether the conversion fails or ignores unsupported constructs
  *	  - `fonts` ... optional callback for font remap
  *      - `uris` ... optional callback for URI remap
- *    - `@return` ... output stream (the `dst` argument if provided, temporary memory stream otherwise)
+ *    - `@return` ... output stream (the `output` option if provided, temporary memory stream otherwise)
  */
-exports.stl2emp = function emp2stl(src, dst, options) {
+exports.stl2emp = function emp2stl(src, options) {
     options = options || {};
+    var dst = options.output || streams.stream();
         
     var nsmap = stl.namespace_stack();
     var factory = json_factory(options);
