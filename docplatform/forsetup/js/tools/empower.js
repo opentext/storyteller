@@ -18,11 +18,13 @@ const enums = {
     },
     content: {
         NULL: 0,
+        VARIABLE_START: -384,
         HYPERLINK_START: -252,
         OBJECT_START: -251,
         PARAGRAPH_BREAK: -244,
         SUPERSCRIPT_START: -240,
         SUBSCRIPT_START: -239,
+        VARIABLE_END: -111,
         HYPERLINK_END: -109,
         OBJECT_END: -106,
         CONTENT_END: -64,
@@ -89,6 +91,15 @@ function simple_stack(item) {
         top: () => items[items.length-1],
         length: () => items.length
     };
+}
+
+function init_options(options) {
+    options = options || {};
+    options.maps = options.maps || {};
+    options.maps.uri = options.maps.uri || ((uri) => uri);
+    options.maps.xpath = options.maps.xpath || ((xpath) => xpath);
+    options.maps.font = options.maps.font || ((font) => font);
+    return options;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -381,15 +392,9 @@ function css_converter(resolution, options) {
         return css;
     }
 
-    function convert_font(name) {
-        return options.fonts
-            ? options.fonts(name)
-            : name;
-    }
-
     function convert_charstyle(cs, css) {
         css = css || css_reset();
-        css['font-family'] = convert_font(cs.strName);
+        css['font-family'] = options.maps.font(cs.strName);
         css['font-size'] = cs.iFontHeight10X / 10 + 'pt';
         if (cs.bBold) {
             css['font-weight'] = 'bold';
@@ -631,11 +636,32 @@ function build_stl(contents, writer, options) {
 
     var convert_object;
 
+    function var_args(id) {
+        function find_var(resources, id) {
+            return resources
+                ? resources.resourcePack.variables.find((v) => v.m_oi === id)
+                : null;
+        }
+        
+        var variable = find_var(options.resources, id);
+        if (variable) {
+            return { xpath: options.maps.xpath('string($' + variable.m_strName + ')'), sample: variable.nickname };
+        }
+        var name = 'empower_variable_' + id;
+        return { xpath: options.maps.xpath('string($' + name + ')') };
+    }
+    
     function convert_content(draw, inserter) {
         inserter = inserter || content_inserter(writer);
         draw.m_cChars.forEach(function (code, index) {
             var cmd = draw.m_sXPos[index];
             switch (cmd) {
+            case enums.content.VARIABLE_START:
+                inserter.push('field', var_args(draw.m_sXPos[index + 1]));
+                break;
+            case enums.content.VARIABLE_END:
+            inserter.pop('field');
+                break;
             case enums.content.HYPERLINK_START:
                 inserter.push('scope', {'hyperlink': draw.m_Links[code].msLink});
                 inserter.push('story');
@@ -716,9 +742,7 @@ function build_stl(contents, writer, options) {
     function convert_image(draw, inserter) {
         var attrs = converter.bbox(draw.m_rectPosition);
         var uri = 'cas:' + draw.m_pDbBitmap.m_strCASId;
-        attrs.src = options.uris
-            ? options.uris(uri)
-            : uri;
+        attrs.src = options.maps.uri(uri);
         inserter.push('image', attrs);
         inserter.pop('image');
     }
@@ -903,11 +927,8 @@ function json_factory(options) {
     function font(css) {
         css = css || {};
         var f = factory.font();
-        var family = css['font-family'] || "Lato";
-        if (options.fonts)
-            family = options.fonts(family);
         f.clrFontColor = color();
-        f.strName = family;
+        f.strName = options.maps.font(css['font-family'] || "Lato");
         f.iFontHeight10X = convert_length(css['font-size'] || '10pt', 10);
         f.bBold = css['font-weight'] === 'bold';
         f.bItalic = css['font-style'] === 'italic';
@@ -992,6 +1013,12 @@ function json_factory(options) {
         return factory.textprops();
     }
 
+    function varprops() {
+        var vp = factory.varprops();
+        vp.clrFrameLine = color();
+        return vp;
+    }
+    
     function tableprops() {
         var p = factory.tableprops();
         p.m_eEditChangeType = 1;
@@ -1025,7 +1052,7 @@ function json_factory(options) {
     function image(attrs) {
         id += 2;
         var img = factory.image();
-        var uri = options.uris ? options.uris(attrs.src) : attrs.src;
+        var uri = options.maps.uri(attrs.src);
         var casid = uri.replace(/^(cas:)/,'');
         var draw = img.m_pDrawObj;
         draw.m_oiID = id-1;
@@ -1276,6 +1303,7 @@ function json_factory(options) {
         font: font,
         paragraph: paragraph,
         link: link,
+        varprops: varprops,
         objref: objref,
         image: image,
         text: text,
@@ -1388,6 +1416,7 @@ function json_builder(nsmap, factory, root, options) {
         var objrefs = draw.m_Objs;
         var objs = draw.m_pObjs;
         var links = draw.m_Links;
+        var varprops = draw.m_VarProps;
         var styles = simple_stack({});
         styles.dirty = true;
         var inside = {};
@@ -1486,6 +1515,26 @@ function json_builder(nsmap, factory, root, options) {
             }
         }
 
+        function add_variable(id) {
+            var vp = factory.varprops();
+            varprops.push(vp);
+            
+            commands.push(enums.content.VARIABLE_START);
+            chars.push(enums.content.NULL);
+            commands.push(id);
+            chars.push(enums.content.NULL);
+            commands.push(enums.content.NULL);
+            chars.push(enums.content.NULL);
+            commands.push(varprops.length);
+            chars.push(enums.content.NULL);
+            commands.push(enums.content.VARIABLE_END);
+            chars.push(enums.content.NULL);
+            commands.push(enums.content.NULL);
+            chars.push(enums.content.NULL);
+
+            return stl.empty_checker();
+        }
+        
         ///////////////////////////////////////////////////////////////////
 
         function block_(start, attrs) {
@@ -1536,7 +1585,31 @@ function json_builder(nsmap, factory, root, options) {
                 chars.push(enums.content.NULL);
             }
         }
-
+        
+        function field_(start, attrs) {
+            function parse_variable(xpath) {
+                var match = /^string\(\$([a-zA-Z0-9_]+)\)$/.exec(xpath);
+                if (match) {
+                    var name = match[1];
+                    match = /^empower_variable_(\d+)$/.exec(name);
+                    return match
+                        ? +match[1]
+                        : name;
+                }
+                return null;
+            }
+            
+            if (start) {
+                var xpath = attrs.xpath;
+                if (xpath) {
+                    var v = parse_variable(options.maps.xpath(xpath));
+                    return (v !== null)
+                        ? add_variable(v)
+                        : unsupported("non-variable stl:field");
+                }
+            }
+        }
+        
         function span_(start, attrs) {
             if (Object.keys(attrs).length) { // treat empty span as a special case
                 var oldcss;
@@ -1610,7 +1683,7 @@ function json_builder(nsmap, factory, root, options) {
             image_: image_,
             table_: table_,
             text_: text_,
-            field_: () => unsupported("stl:field"),
+            field_: field_,
             chart_: () => unsupported("stl:chart"),
             fragment_: () => unsupported("stl:fragment"),
             script_: () => unsupported("stl:script"),
@@ -1747,12 +1820,14 @@ function json_builder(nsmap, factory, root, options) {
  *     - `output` ... output stream to be filled with resulting _STL_ (memory stream is created if no stream is specified)
  *     - `indent` ... bool, string or a function(tag, tags, is_start) used for indentation
  *     - `page` ... bool determining whether page type should be generated
- * 	   - `fonts` ... optional callback for font remap
- * 	   - `uris` ... optional callback for URI remap
+ *     - `maps` ... object containing hooks for mapping various entities
+ *       - `font` ... optional remap callback for font
+ *       - `xpath` ... optional remap callback for XPath
+ *       - `uri` ... optional remap callback for URI
  *   - `@return` ... output stream (the `output` option if provided, temporary memory stream otherwise)
  */
 exports.emp2stl = function emp2stl(src, options) {
-    options = options || {};
+    options = init_options(options);
     var dst = options.output || streams.stream();
 
     if (!util.isStream(src) || !util.isStream(dst)) {
@@ -1776,12 +1851,14 @@ exports.emp2stl = function emp2stl(src, options) {
  *      - `output` ... output stream to be filled with resulting _Empower JSON_ (memory stream is created if no stream is specified)
  *      - `indent` ... bool or a string used for indentation
  *      - `permissive` ... determines whether the conversion fails or ignores unsupported constructs
- *	  - `fonts` ... optional callback for font remap
- *      - `uris` ... optional callback for URI remap
+ *      - `maps` ... object containing hooks for mapping various entities
+ *        - `font` ... optional remap callback for font
+ *        - `xpath` ... optional remap callback for XPath
+ *        - `uri` ... optional remap callback for URI
  *    - `@return` ... output stream (the `output` option if provided, temporary memory stream otherwise)
  */
 exports.stl2emp = function emp2stl(src, options) {
-    options = options || {};
+    options = init_options(options);
     var dst = options.output || streams.stream();
         
     var nsmap = stl.namespace_stack();

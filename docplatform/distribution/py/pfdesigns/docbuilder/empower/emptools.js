@@ -52,7 +52,9 @@ exports.empower_item = function empower_item(input, options) {
 
     var input_options = {
         output: stl,
-        uris: (uri) => uri.replace(/^(cas:)/, 'wd:/cas/'),
+        maps: {
+            uri: (uri) => uri.replace(/^(cas:)/, 'wd:/cas/')
+        },
         indent: options.indent,
         page: !!options.raster
     };
@@ -67,7 +69,9 @@ exports.empower_item = function empower_item(input, options) {
         var json2 = streams.stream(get_uri('output', 'json', !options.dump));
         var output_options = {
             output: json2,
-            uris: (uri) => uri.replace(/^(wd:\/cas\/)/, 'cas:'),
+            maps: {
+                uri: (uri) => uri.replace(/^(wd:\/cas\/)/, 'cas:')
+            },
             indent: options.indent
                 ? '  '
                 : '',

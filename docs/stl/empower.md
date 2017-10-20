@@ -153,8 +153,10 @@ and `stl2emp` with following signatures:
       - `output` ... output stream to be filled with resulting _STL_ (memory stream is created if no stream is specified)
       - `indent` ... bool, string, number (of spaces) or a function(tag, tags, is_start) used for indentation
       - `page` ... bool determining whether page type should be generated
-	  - `fonts` ... optional callback for font remap
-	  - `uris` ... optional callback for URI remap
+      - `maps` ... object containing hooks for mapping various entities
+        - `font` ... optional remap callback for font
+        - `xpath` ... optional remap callback for XPath
+        - `uri` ... optional remap callback for URI
     - `@return` ... output stream (the `output` option if provided, temporary memory stream otherwise)
 
 - `stl2emp( src: stream [, options: object] ) : stream` ... Parses _STL_ document and generates corresponding _Empower JSON_ fragment
@@ -163,8 +165,10 @@ and `stl2emp` with following signatures:
       - `output` ... output stream to be filled with resulting _Empower JSON_ (memory stream is created if no stream is specified)
       - `indent` ... bool, string or a number (of spaces) used for indentation
       - `permissive` ... determines whether the conversion fails or ignores unsupported constructs
-	  - `fonts` ... optional callback for font remap
-      - `uris` ... optional callback for URI remap
+      - `maps` ... object containing hooks for mapping various entities
+        - `font` ... optional remap callback for font
+        - `xpath` ... optional remap callback for XPath
+        - `uri` ... optional remap callback for URI
     - `@return` ... output stream (the `output` option if provided, temporary memory stream otherwise)
 
 The interface is _stream-based_ - this decision has a potential to provide some efficiency advantages
