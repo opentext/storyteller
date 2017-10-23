@@ -153,6 +153,7 @@ and `stl2emp` with following signatures:
       - `output` ... output stream to be filled with resulting _STL_ (memory stream is created if no stream is specified)
       - `indent` ... bool, string, number (of spaces) or a function(tag, tags, is_start) used for indentation
       - `page` ... bool determining whether page type should be generated
+      - `resources` ... optional object representing resources (typically parsed from `designpack.json`)
       - `maps` ... object containing hooks for mapping various entities
         - `font` ... optional remap callback for font
         - `xpath` ... optional remap callback for XPath
@@ -165,6 +166,7 @@ and `stl2emp` with following signatures:
       - `output` ... output stream to be filled with resulting _Empower JSON_ (memory stream is created if no stream is specified)
       - `indent` ... bool, string or a number (of spaces) used for indentation
       - `permissive` ... determines whether the conversion fails or ignores unsupported constructs
+      - `resources` ... optional object representing resources (typically parsed from `designpack.json`)
       - `maps` ... object containing hooks for mapping various entities
         - `font` ... optional remap callback for font
         - `xpath` ... optional remap callback for XPath
@@ -2405,7 +2407,250 @@ The _emp2stl_ convertor generates the following STL equivalent:
 
 ### Variables
 
-@TBD
+Let's add two variables to a content - write the following text containing two variables:
+
+    Hello {Supplier Name} and {Car Dealer Name}!
+
+And look what corresponding JSON structures got created:
+
+```js
+      "m_cChars": [
+        0,
+        0,
+        1,
+        0,
+        72,   // chr(72)  == 'H'
+        101,  // chr(101) == 'e'
+        108,  // chr(108) == 'l'
+        108,  // chr(108) == 'l'
+        111,  // chr(111) == 'o'
+        32,   // chr(32)  == ' '
++       0,
++       0,
++       0,
++       0,
++       0,
++       0,
+        32,   // chr(32)  == ' '
+        97,   // chr(97)  == 'a'
+        110,  // chr(97)  == 'n'
+        100,  // chr(97)  == 'd'
+        32,   // chr(32)  == ' '
++       0,
++       0,
++       0,
++       0,
++       0,
++       0,
+        33,   // chr(111) == '!'
+        0
+      ],
+      "m_sXPos": [
+        -244,
+        0,
+        -62,
+        -63,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
++       -384, // varaible start
++       501,  // variable id
++       0,    // padding zero
++       1,    // var props index+1 (#0)
++       -111, // variable end
++       0,    // padding zero
+        0,
+        0,
+        0,
+        0,
+        0,
++       -384, // varaible start
++       580,  // variable id
++       0,    // padding zero
++       2,    // var props index+1 (#1)
++       -111, // variable end
++       0,    // padding zero
+        0,
+        -64
+      ],
+      "m_VarProps": [
++       {
++         "iArrayUse": 0,
++         "iArrayNdx": 0,
++         "iFormat": 1,
++         "msCustom": "",
++         "iNumDigits": 2,
++         "iConvMask": 0,
++         "bConvYen": false,
++         "iLength": 0,
++         "eJustify": 0,
++         "ePadChar": 0,
++         "iSizeType": 0,
++         "iHeight": 0,
++         "iWidth": 0,
++         "iOffset": 0,
++         "m_eEncoding": 0,
++         "msDisplay": "",
++         "iFrameStyle": 0,
++         "iFrameWt": 0,
++         "clrFrameLine": {
++           "m_eColorModel": 0,
++           "m_lColor": 0
++         },
++         "iFrameLineStyle": 0,
++         "iRotate": 0,
++         "oiLocSearchKey": 0,
++         "eSubstitutionTime": -1,
++         "eAggregateDataVarUse": 0,
++         "m_eFitting": 0,
++         "m_oiFittingVar": 0,
++         "m_eAlignFrom": 0,
++         "m_oiAlignFromVar": 0,
++         "m_bSnapBoundingBoxToImage": false,
++         "m_bUseAspectRatio": false
++       },
++       {
++         "iArrayUse": 0,
++         "iArrayNdx": 0,
++         "iFormat": 1,
++         "msCustom": "",
++         "iNumDigits": 2,
++         "iConvMask": 0,
++         "bConvYen": false,
++         "iLength": 0,
++         "eJustify": 0,
++         "ePadChar": 0,
++         "iSizeType": 0,
++         "iHeight": 0,
++         "iWidth": 0,
++         "iOffset": 0,
++         "m_eEncoding": 0,
++         "msDisplay": "",
++         "iFrameStyle": 0,
++         "iFrameWt": 0,
++         "clrFrameLine": {
++           "m_eColorModel": 0,
++           "m_lColor": 0
++         },
++         "iFrameLineStyle": 0,
++         "iRotate": 0,
++         "oiLocSearchKey": 0,
++         "eSubstitutionTime": -1,
++         "eAggregateDataVarUse": 0,
++         "m_eFitting": 0,
++         "m_oiFittingVar": 0,
++         "m_eAlignFrom": 0,
++         "m_oiAlignFromVar": 0,
++         "m_bSnapBoundingBoxToImage": false,
++         "m_bUseAspectRatio": false
++       }
+      ],
+```
+
+The problem is that there is not enough information in the input JSON file.
+There is only a varaible index (`501` and `580`) along with a set of `m_VarProps`
+properties, but no variable name or sample data.
+
+That means that by default the converter only synthesizes variable name as `$empower_variable_<id>`
+and adds no more user friendly information:
+
+```xml
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+    <stl:story name="Main" w="8.5in">
+      <stl:p>
+        <stl:span style="font-family: Lato; font-size: 10pt">Hello <stl:span/></stl:span>
+        <stl:field xpath="string($empower_variable_501)"/>
+        <stl:span style="font-family: Lato; font-size: 10pt"><stl:span/> and <stl:span/></stl:span>
+        <stl:field xpath="string($empower_variable_580)"/>
+        <stl:span style="font-family: Lato; font-size: 10pt">!</stl:span>
+      </stl:p>
+    </stl:story>
+  </stl:document>
+</stl:stl>
+```
+
+Thankfully besides individual JSON fragments there is an additional JSON file
+representing all associated resources:
+[resources.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/resources.json).
+It contains additional information about _fonts_, _colors_, _variables_, etc.
+
+If we have such file then we can parse it and pass the resulting object
+as `resources` property of the `options` parameter:
+
+```js
+  var json = streams.stream('wd:/input.json');
+  var resources = streams.stream('wd:/resources.json');
+  var stl = empower.emp2stl(json, {resources: JSON.parse(resources.read())});
+```
+.., then we get following (much better) alternative:
+
+```xml
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+    <stl:story name="Main" w="8.5in">
+      <stl:p>
+        <stl:span style="font-family: Lato; font-size: 10pt">Hello <stl:span/></stl:span>
+        <stl:field xpath="string($UB_SupplierName_S)" sample="Supplier Name"/>
+        <stl:span style="font-family: Lato; font-size: 10pt"><stl:span/> and <stl:span/></stl:span>
+        <stl:field xpath="string($UB_FordDealer_S)" sample="Car Dealer Name"/>
+        <stl:span style="font-family: Lato; font-size: 10pt">!</stl:span>
+      </stl:p>
+    </stl:story>
+  </stl:document>
+</stl:stl>
+```
+
+Similar holds for the opposite `stl2emp` coversion. If no resources are involved then
+variable `$empower_variable_<id>` gets converted back to `id`, but if actual variable
+names like `$UB_SupplierName_S` are used then `resources` option should be passed to
+the conversion, otherwise we gen a conversion error.
+
+```js
+  var stl = streams.stream('wd:/input.xml');
+  var resources = streams.stream('wd:/resources.json');
+  var json = empower.stl2emp(stl, {resources: JSON.parse(resources.read())});
+```
+
+##### Summary
+
+<table style="background-color:#fff49c">
+  <tr>
+	<td>JSON input:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json">input/variables.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json">hello.json vs. variables.json</a></td>
+  </tr>
+  <tr>
+	<td>STL output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/variables.xml">output/variables.xml</a></td>
+  </tr>
+  <tr>
+	<td>JSON output:</td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/variables.json">output/variables.json</a></td>
+  </tr>
+  <tr>
+    <td>JSON diff:</td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/variables.json">input vs. output</a></td>
+  </tr>
+  <tr>
+    <td colspan="2">Empower JSON render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">StoryTeller STL render:</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding: 0.4rem"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/variables.png"/></td>
+  </tr>
+</table>
 
 ## Canvas Fragments
 

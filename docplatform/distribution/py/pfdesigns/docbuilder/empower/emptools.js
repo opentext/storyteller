@@ -1,40 +1,8 @@
 // Copyright (c) 2017 Open Text. All Rights Reserved.
 'use strict';
 
-function pretty_indenter(tag, tags, start) {
-    if (start) {
-        if (tag === 'stl:span' && tags[tags.length - 1] === 'stl:span') {
-            return '';
-        }
-    } else {
-        if (tag === 'stl:span') {
-            return '';
-        }
-    }
-    return '  ';
-}
-
-function correct_indenter(tag, tags, start) {
-    function is_flat(t) {
-        return t === 'stl:span' || t === 'stl:p';
-    }
-
-    if (start) {
-        if (tag === 'stl:span' || !tags.length || is_flat(tags[tags.length - 1])) {
-            return '';
-        }
-    } else {
-        if (is_flat(tag)) {
-            return '';
-        }
-    }
-    return '  ';
-}
-
 exports.empower_item = function empower_item(input, options) {
     options = options || {};
-    //options.dump = true;
-    //options.indent = correct_indenter; //pretty_indenter;
 
     function get_uri(dir, extension, blob) {
         return blob
@@ -49,14 +17,16 @@ exports.empower_item = function empower_item(input, options) {
     // initialize src and dst streams
     var json = streams.stream(get_uri('input', 'json'));
     var stl = streams.stream(get_uri('output', 'xml', !options.dump));
-
+    var resources = JSON.parse(streams.stream('wd:/resources.json').read());
+        
     var input_options = {
         output: stl,
         maps: {
             uri: (uri) => uri.replace(/^(cas:)/, 'wd:/cas/')
         },
         indent: options.indent,
-        page: !!options.raster
+        page: !!options.raster,
+        resources: resources
     };
     // convert empower JSON to STL
     empower.emp2stl(json, input_options);
@@ -75,7 +45,8 @@ exports.empower_item = function empower_item(input, options) {
             indent: options.indent
                 ? '  '
                 : '',
-            permissive: !!options.raster
+            permissive: !!options.raster,
+            resources: resources
         };
         empower.stl2emp(stl, output_options);
         //console.log(json2.read());

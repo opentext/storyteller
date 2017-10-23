@@ -9,6 +9,27 @@ var namespaces = {
     xp: "http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
 };
 
+function xml_escaper(pattern) {
+    function encoder(c) {
+        switch (c) {
+        case '<':
+            return '&lt;';
+        case '>':
+            return '&gt;';
+        case '&':
+            return '&amp;';
+        case '"':
+            return '&quot;';
+        default:
+            return '&#' + c.charCodeAt() + ';';
+        }
+    }
+    return function (value) {
+        return value.replace(pattern, encoder);
+    };
+}
+
+
 function namespace_stack() {
     var aliases = [];
     var uris = [];
@@ -149,31 +170,18 @@ function text_accumulator(callback) {
 function xml_accumulator(callback, dont_escape) {
     var accumulated = '';
 
-    function escaper(value, pattern) {
-        function encoder(c) {
-            switch (c) {
-            case '<':
-                return '&lt;';
-            case '>':
-                return '&gt;';
-            case '&':
-                return '&amp;';
-            case '"':
-                return '&quot;';
-            default:
-                return '&#' + c.charCodeAt() + ';';
-            }
-        }
-        return value.replace(pattern, encoder);
+    var attr_escape = (data) => data;
+    var text_escape = (data) => data;
+    if (!dont_escape) {
+        attr_escape = xml_escaper(/[<&"]/g);
+        text_escape = xml_escaper(/[<&]/g);
     }
-    var escape = dont_escape
-        ? (data) => data
-        : escaper;
+
     return {
         start: function (tag, attrs) {
             accumulated += '<' + tag;
             Object.keys(attrs).forEach(function (key) {
-                accumulated += ' ' + key + '="' + escape(attrs[key], /[<&"]/g) + '"';
+                accumulated += ' ' + key + '="' + attr_escape(attrs[key]) + '"';
             });
             accumulated += '>';
         },
@@ -181,7 +189,7 @@ function xml_accumulator(callback, dont_escape) {
             accumulated += '</' + tag + '>';
         },
         text: function (data) {
-            accumulated += escape(data, /[<&]/g);
+            accumulated += text_escape(data);
         },
         finalize: function () {
             callback(accumulated);
@@ -418,3 +426,4 @@ exports.empty_checker = empty_checker;
 exports.text_accumulator = text_accumulator;
 exports.xml_accumulator = xml_accumulator;
 exports.parser = sax_parser;
+exports.xml_escaper = xml_escaper;

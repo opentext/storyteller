@@ -131,6 +131,8 @@ function xml_writer(stream, indenter) {
     var tags = [];
     var no_children;
     var content = '';
+    var attr_escape = stl.xml_escaper(/[<&"]/g);
+    var text_escape = stl.xml_escaper(/[<&]/g);
     
     function format_start(tag, attrs) {
         attrs = attrs || {};
@@ -138,7 +140,7 @@ function xml_writer(stream, indenter) {
         var keys = Object.keys(attrs);
         if (keys.length) {
             result += ' ' + keys.map(function(key) {
-                return key + '="' + attrs[key] + '"'; 
+                return key + '="' + attr_escape(attrs[key]) + '"'; 
             }).join(' ');
         }
         return result + '>';
@@ -187,7 +189,7 @@ function xml_writer(stream, indenter) {
             throw new Error("Cannot write text '" + data + "' outside elements");
         }
         no_children = false;
-        content += data;
+        content += text_escape(data);
     }
 
     function finalize() {
@@ -312,7 +314,6 @@ function css_converter(resolution, options) {
 
     function css_reset() {
         return {
-            'color': null,
             'font-family': null,
             'font-size': null,
             'font-weight': null,
@@ -339,7 +340,9 @@ function css_converter(resolution, options) {
             '-stl-tabs': null,
             '-stl-shape-resize': null,
             '-stl-alignment': null
-            //'vertical-align': null // handled specially (@todo fixit)
+            // handled specially (@todo fixit)
+            // 'color': null,
+            // 'vertical-align': null
         };
     }
 
@@ -348,6 +351,9 @@ function css_converter(resolution, options) {
         var alignments = ['left', 'right', 'center', 'justify'];
         if (ps.iJustification) {
             css['text-align'] = alignments[ps.iJustification];
+        }
+        if (ps.iFirstIndent) {
+            css['text-indent'] = convert_length(ps.iFirstIndent);
         }
         if (ps.iLeftIndent) {
             css['margin-left'] = convert_length(ps.iLeftIndent);
@@ -655,23 +661,24 @@ function build_stl(contents, writer, options) {
         inserter = inserter || content_inserter(writer);
         draw.m_cChars.forEach(function (code, index) {
             var cmd = draw.m_sXPos[index];
+            var id = draw.m_sXPos[index + 1];
             switch (cmd) {
             case enums.content.VARIABLE_START:
-                inserter.push('field', var_args(draw.m_sXPos[index + 1]));
+                inserter.push('field', var_args(id));
                 break;
             case enums.content.VARIABLE_END:
             inserter.pop('field');
                 break;
             case enums.content.HYPERLINK_START:
-                inserter.push('scope', {'hyperlink': draw.m_Links[code].msLink});
+                inserter.push('scope', {'hyperlink': draw.m_Links[id].msLink});
                 inserter.push('story');
                 break;
             case enums.content.OBJECT_START:
-                convert_object(draw.m_Objs[code].m_iObjType, draw.m_pObjs[code], inserter);
+                convert_object(draw.m_Objs[id].m_iObjType, draw.m_pObjs[id], inserter);
                 break;
             case enums.content.PARAGRAPH_BREAK:
                 inserter.paragraph_end();
-                inserter.paragraph_start(converter.parstyle(draw.m_ParaValues[draw.m_sXPos[index + 1]]));
+                inserter.paragraph_start(converter.parstyle(draw.m_ParaValues[id]));
                 break;
             case enums.content.SUPERSCRIPT_START:
                 inserter.style_change({'vertical-align': 'super'});
@@ -965,6 +972,7 @@ function json_factory(options) {
         var align = alignments.indexOf(css['text-align']);
         if (align !== -1)
             p.iJustification = align;
+        convert_prop(css['text-indent'], p, 'iFirstIndent');
         convert_prop(css['margin-left'], p, 'iLeftIndent');
         convert_prop(css['margin-right'], p, 'iRightIndent');
         convert_prop(css['margin-top'], p, 'iSpaceBefore');
@@ -1587,6 +1595,12 @@ function json_builder(nsmap, factory, root, options) {
         }
         
         function field_(start, attrs) {
+            function find_var(resources, name) {
+                return resources
+                    ? resources.resourcePack.variables.find((v) => v.m_strName === name)
+                    : null;
+            }
+            
             function parse_variable(xpath) {
                 var match = /^string\(\$([a-zA-Z0-9_]+)\)$/.exec(xpath);
                 if (match) {
@@ -1603,9 +1617,17 @@ function json_builder(nsmap, factory, root, options) {
                 var xpath = attrs.xpath;
                 if (xpath) {
                     var v = parse_variable(options.maps.xpath(xpath));
-                    return (v !== null)
-                        ? add_variable(v)
-                        : unsupported("non-variable stl:field");
+                    if (v === null) {
+                        return unsupported("non-variable stl:field");
+                    }
+                    if (util.isString(v)) {
+                        var spec = find_var(options.resources, v);
+                        if (spec === null) {
+                            throw new Error("Variable " + v + "not found");
+                        }
+                        v = spec.m_oi;
+                    }
+                    return add_variable(v);
                 }
             }
         }
@@ -1812,19 +1834,20 @@ function json_builder(nsmap, factory, root, options) {
 /*
  * emp2stl( src: stream [options: object] ) : stream
  *
- * Parses _Empower JSON_ fragment and generates corresponding *  _STL_ fragment
+ * Parses _Empower JSON_ fragment and generates corresponding  _STL_ fragment
  *
  * Parameters:
- *   - `src` ... input stream containing _Empower JSON_
- *   - `options` ... following options are currently supported:
- *     - `output` ... output stream to be filled with resulting _STL_ (memory stream is created if no stream is specified)
- *     - `indent` ... bool, string or a function(tag, tags, is_start) used for indentation
- *     - `page` ... bool determining whether page type should be generated
- *     - `maps` ... object containing hooks for mapping various entities
- *       - `font` ... optional remap callback for font
- *       - `xpath` ... optional remap callback for XPath
- *       - `uri` ... optional remap callback for URI
- *   - `@return` ... output stream (the `output` option if provided, temporary memory stream otherwise)
+ *    - `src` ... input stream containing _Empower JSON_
+ *    - `options` ... following options are currently supported:
+ *      - `output` ... output stream to be filled with resulting _STL_ (memory stream is created if no stream is specified)
+ *      - `indent` ... bool, string or a function(tag, tags, is_start) used for indentation
+ *      - `page` ... bool determining whether page type should be generated
+ *      - `resources` ... optional object representing resources (typically parsed from `designpack.json`)
+ *      - `maps` ... object containing hooks for mapping various entities
+ *        - `font` ... optional remap callback for font
+ *        - `xpath` ... optional remap callback for XPath
+ *        - `uri` ... optional remap callback for URI
+ *    - `@return` ... output stream (the `output` option if provided, temporary memory stream otherwise)
  */
 exports.emp2stl = function emp2stl(src, options) {
     options = init_options(options);
@@ -1843,7 +1866,7 @@ exports.emp2stl = function emp2stl(src, options) {
 /*
  *  stl2emp( src: stream [, options: object] ) : stream 
  *
- *  Parses _STL_ document and generates corresponding _Empower JSON_ fragment
+ *  Parses _STL_ fragment and generates corresponding _Empower JSON_ fragment
  *
  *  Parameters:
  *    - `src` ... input stream containing _STL_
@@ -1851,6 +1874,7 @@ exports.emp2stl = function emp2stl(src, options) {
  *      - `output` ... output stream to be filled with resulting _Empower JSON_ (memory stream is created if no stream is specified)
  *      - `indent` ... bool or a string used for indentation
  *      - `permissive` ... determines whether the conversion fails or ignores unsupported constructs
+ *      - `resources` ... optional object representing resources (typically parsed from `designpack.json`)
  *      - `maps` ... object containing hooks for mapping various entities
  *        - `font` ... optional remap callback for font
  *        - `xpath` ... optional remap callback for XPath
