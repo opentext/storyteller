@@ -18,7 +18,7 @@ exports.empower_item = function empower_item(input, options) {
     var json = streams.stream(get_uri('input', 'json'));
     var stl = streams.stream(get_uri('output', 'xml', !options.dump));
     var resources = JSON.parse(streams.stream('wd:/resources.json').read());
-        
+
     var input_options = {
         output: stl,
         maps: {

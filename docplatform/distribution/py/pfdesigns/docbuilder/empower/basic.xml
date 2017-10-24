@@ -11,6 +11,7 @@
         <content>colors</content>
         <content>valign</content>
         <content>hyperlink</content>
+        <content>variables</content>
         <content>image</content>
         <content>text</content>
         <content>table</content>
@@ -40,8 +41,8 @@
         </stl:story>
       </stl:repeater>
     </stl:story>
-    <stl:page w="540pt" h="820pt">
-      <stl:text x="20pt" y="20pt" w="500pt" h="780pt" story="Body" style="fill:lightcyan"/>
+    <stl:page w="540pt" h="850pt">
+      <stl:text x="20pt" y="20pt" w="500pt" h="810pt" story="Body" style="fill:lightcyan"/>
     </stl:page>
   </stl:document>
 </stl:stl>

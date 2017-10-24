@@ -2551,11 +2551,11 @@ And look what corresponding JSON structures got created:
 ```
 
 The problem is that there is not enough information in the input JSON file.
-There is only a varaible index (`501` and `580`) along with a set of `m_VarProps`
+There is only a varaible `id` (`501` and `580`) along with a set of `m_VarProps`
 properties, but no variable name or sample data.
 
-That means that by default the converter only synthesizes variable name as `$empower_variable_<id>`
-and adds no more user friendly information:
+That means that under such circumstances the converter only synthesizes variable name
+as `$empower_variable_<id>` and can add no more user friendly information:
 
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
@@ -2578,15 +2578,15 @@ representing all associated resources:
 [resources.json](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/resources.json).
 It contains additional information about _fonts_, _colors_, _variables_, etc.
 
-If we have such file then we can parse it and pass the resulting object
-as `resources` property of the `options` parameter:
+If we have such file then we can parse it and provide the resulting object
+to the converter as `resources` property of the `options` parameter:
 
 ```js
   var json = streams.stream('wd:/input.json');
   var resources = streams.stream('wd:/resources.json');
   var stl = empower.emp2stl(json, {resources: JSON.parse(resources.read())});
 ```
-.., then we get following (much better) alternative:
+With such additional source of information the converter produces following (much better) alternative:
 
 ```xml
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
@@ -2604,10 +2604,12 @@ as `resources` property of the `options` parameter:
 </stl:stl>
 ```
 
-Similar holds for the opposite `stl2emp` coversion. If no resources are involved then
-variable `$empower_variable_<id>` gets converted back to `id`, but if actual variable
-names like `$UB_SupplierName_S` are used then `resources` option should be passed to
-the conversion, otherwise we gen a conversion error.
+Similar holds for the opposite `stl2emp` conversion.
+
+If no `resources` are involved then converter can convert a variable `$empower_variable_<id>`
+back to corresponding `id`, but unable to convert actual variable names like `$UB_SupplierName_S`.
+Such variable names are converted correctly to a corresponding `id` only with a proper `resources`
+option passed as a parameter. Otherwise a conversion error is raised.
 
 ```js
   var stl = streams.stream('wd:/input.xml');

@@ -90,7 +90,9 @@
           "iJustification": 3,
           "iRightIndent": 400,
           "iSpaceBefore": 100,
-          "iSpaceAfter": 200
+          "iSpaceAfter": 200,
+          "eSpacing": 4,
+          "iSpaceBetween": 150
         },
         {
           "m_iEditAreaNdx": -1,
