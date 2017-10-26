@@ -2656,17 +2656,11 @@ If no attribute is specified the support lines are created with default settings
 Users can specify following attributes
 
 -   `type` ... type of chart (line/bar/pie/stackedLine\*/stackedArea\*), modern types includes also (stackedAreaChart, multiBarHorizontalChart)
-
 -   `xpath` ... xpath to data for chart
-
 -   `labels_offset` ... offset of labels from axis in points
-
 -   `labels_line` ... style of lines connection to labels (for 16.2 just for bar/line charts)
-
 -   `line` ... default style of lines around chart segments (for 16.2 just for pie chart)
-
 -   `mask_label`* ... format mask of data labels
-
 -   `mask_legend`* ... format mask of legend labels
 
     \* *since 16.3 update 1*
@@ -2696,19 +2690,12 @@ Attributes for a line chart
 Attributes for a bar chart
 
 -   `offset_left` ... left offset of the first bar (in logical coordinates)
-
 -   `offset_right` ... right offset of the first bar (in logical coordinates)
-
 -   `bar_width` ... width of bars (in logical coordinates)
-
 -   `gap` ... gap between bars (in logical coordinates)
-
 -   `rx` *... x radius of bar chart rounded corners
-
 -   `ry` *... y radius of bar chart rounded corners
-
 -   `connected_axis_x` ... index (from 1) of axis x used for showing labels and getting logical coordinates
-
 -   `connected_axis_y` ... index (from 1) of axis y used for showing labels and getting logical coordinates
 
     \* *since 16.3 update 1*
