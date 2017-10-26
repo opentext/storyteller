@@ -2533,8 +2533,8 @@ inline chart.
 Following chart specific attributes are supported:
 
 -   `modern` ... defines what charting library is used.  
-		- "false" - use StreamServe library (default)
-		- "true" - creates svg charts using NVD3 javascript library. Some settings are limited.
+   - "false" - use StreamServe library (default)
+   - "true" - creates svg charts using NVD3 javascript library. Some settings are limited.
 
 ```xml
  <stl:chart w="311.81pt" h="99.54pt" modern="false">
@@ -2622,7 +2622,7 @@ Users can specify following attributes
 axis_x specific:
 -   `label_rotation` ... data labels rotation in degrees
 -   `data_labels_position_h` ... data labels default horizontal position (alignment) (left/center/right)
--   `data_labess_position_v` ... data labels default vertical position (top/center/bottom)
+-   `data_labels_position_v` ... data labels default vertical position (top/center/bottom)
 
 
 If no attribute is specified the axis x/y is created with default settings.
@@ -2632,11 +2632,11 @@ If no attribute is specified the axis x/y is created with default settings.
 Users can specify following attributes
 
 -   `label_alignment` ... label alignment (left/center/right)
--   `label_v_position` ... label vertical position (top/center/bottom)
+-   `label_position_v` ... label vertical position (top/center/bottom)
 -   `label_placement` ... label placement (start/end)
 
--   `logical_x_position` ... logical x value, where the lines start is positioned to
--   `logical_y_position` ... logical y value, where the lines start is positioned to
+-   `logical_position_x` ... logical x value, where the lines start is positioned to
+-   `logical_position_y` ... logical y value, where the lines start is positioned to
 -   `logical_width` ... logical width value defines width of lines
 -   `logical_step` ... logical coordinates value defines step between lines
 
@@ -2655,11 +2655,21 @@ If no attribute is specified the support lines are created with default settings
 
 Users can specify following attributes
 
--   `type` ... type of chart (line/bar/pie), modern types includes also (stackedAreaChart, multiBarHorizontalChart)
+-   `type` ... type of chart (line/bar/pie/stackedLine\*/stackedArea\*), modern types includes also (stackedAreaChart, multiBarHorizontalChart)
+
 -   `xpath` ... xpath to data for chart
+
 -   `labels_offset` ... offset of labels from axis in points
--   `line` ... default style of lines around chart segments (for 16.2 just for pie chart)
+
 -   `labels_line` ... style of lines connection to labels (for 16.2 just for bar/line charts)
+
+-   `line` ... default style of lines around chart segments (for 16.2 just for pie chart)
+
+-   `mask_label`* ... format mask of data labels
+
+-   `mask_legend`* ... format mask of legend labels
+
+    \* *since 16.3 update 1*
 
 Attributes for a pie chart
 
@@ -2668,7 +2678,7 @@ Attributes for a pie chart
 -   `center_x` ... logical coord. x of center
 -   `center_y` ... logical coord. y of center
 -   `start_angle` ... start angle in degrees
--   `clockwise` ... logical coord. x of center
+-   `clockwise` ... true for clockwise pie slices placement
 -   `height3d` ... height of 3D chart in logical coord.
 -   `xyratio` ... inclination of of chart (0..1)
 -   `donut_ratio` ... ratio of radius for donut hole (0..1), 0 means no hole, 1 - hole has the same radius as pie chart
@@ -2678,7 +2688,7 @@ Attributes for a pie chart
 Attributes for a line chart
 
 -   `node_type` ... type of data values nodes (none/dot/square)
--   `node_size` ... data values nodes size
+-   `node_size` ... data values nodes size (radius for dot or half of square width)
 -   `connected_axis_x` ... index (from 1) of axis x used for showing labels and getting logical coordinates
 -   `connected_axis_y` ... index (from 1) of axis y used for showing labels and getting logical coordinates
 -   `area` ... "true" for area color from data or directly fill color of area under line
@@ -2686,11 +2696,22 @@ Attributes for a line chart
 Attributes for a bar chart
 
 -   `offset_left` ... left offset of the first bar (in logical coordinates)
+
 -   `offset_right` ... right offset of the first bar (in logical coordinates)
+
 -   `bar_width` ... width of bars (in logical coordinates)
+
 -   `gap` ... gap between bars (in logical coordinates)
+
+-   `rx` *... x radius of bar chart rounded corners
+
+-   `ry` *... y radius of bar chart rounded corners
+
 -   `connected_axis_x` ... index (from 1) of axis x used for showing labels and getting logical coordinates
+
 -   `connected_axis_y` ... index (from 1) of axis y used for showing labels and getting logical coordinates
+
+    \* *since 16.3 update 1*
 
 Subelement `scd:series` for data definition
 
