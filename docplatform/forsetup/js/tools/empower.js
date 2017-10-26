@@ -6,76 +6,9 @@
 'use strict';
 
 const util = require('util');
-const streams = require('streams');
 const stl = require('stl');
-const range = require('range');
-
-const enums = {
-    item: {
-        TABLE: 5,
-        IMAGE: 6,
-        TEXT: 14
-    },
-    content: {
-        NULL: 0,
-        VARIABLE_START: -384,
-        HYPERLINK_START: -252,
-        OBJECT_START: -251,
-        PARAGRAPH_BREAK: -244,
-        SUPERSCRIPT_START: -240,
-        SUBSCRIPT_START: -239,
-        VARIABLE_END: -111,
-        HYPERLINK_END: -109,
-        OBJECT_END: -106,
-        CONTENT_END: -64,
-        COLOR_CHANGE: -63,
-        FONT_CHANGE: -62,
-        SUBSCRIPT_END: -58,
-        SUPERSCRIPT_END: -59
-    },
-    list: {
-        NONE: 0,
-        BULLETS: 1,
-        NUMBERING: 2
-    },
-    numbering: {
-        0: '1.', // decimal
-        2: 'A.', // upper-alpha
-        3: 'a.', // lower-alpha
-        4: 'R.', // upper-roman
-        5: 'r.', // lower-roman
-        6: '1)',
-        7: 'A)',
-        8: 'a)',
-        9: 'R)',
-        10: 'r)',
-        15: '(1)',
-        16: '(A)',
-        17: '(a)',
-        18: '(R)',
-        19: '(r)',
-    },
-    pen: {
-        SOLID: 0,
-        DASHED: 1,
-        DOTTED: 3
-    },
-    valign: {
-        TOP: 0,
-        CENTER: 1,
-        BOTTOM: 2
-    },
-    segmentpos: {
-        TOP: 1,
-        RIGHT: 2,
-        BOTTOM: 4,
-        LEFT: 8
-    },
-    defaults: {
-        bullets: ['•', '◦', '▪'],
-        numberings: ['1.', '1.', 'r.', '1)']
-    }
-};
+const defs = require('empower.json');
+const enums = defs.enums;
 
 function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
@@ -93,13 +26,26 @@ function simple_stack(item) {
     };
 }
 
-function init_options(options) {
+function check_options(options) {
     options = options || {};
     options.maps = options.maps || {};
     options.maps.uri = options.maps.uri || ((uri) => uri);
     options.maps.xpath = options.maps.xpath || ((xpath) => xpath);
     options.maps.font = options.maps.font || ((font) => font);
+    if (options.output && !util.isStream(options.output)) {
+        throw new Error("Invalid 'output' parameter, stream expected");
+    }
     return options;
+}
+
+function check_input(input) {
+    if (util.isStream(input)) {
+        input = input.read();
+    }
+    if (!util.isString(input)) {
+        throw new Error("Invalid 'input' parameter, string or stream expected");
+    }
+    return input;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -127,7 +73,7 @@ function make_indenter(indent, default_indent) {
     return () => '';
 }
 
-function xml_writer(stream, indenter) {
+function xml_writer(indenter) {
     var tags = [];
     var no_children;
     var content = '';
@@ -193,7 +139,7 @@ function xml_writer(stream, indenter) {
     }
 
     function finalize() {
-        stream.write(content);
+        return content;
     }
 
     return {
@@ -204,8 +150,8 @@ function xml_writer(stream, indenter) {
     };
 }
 
-function stl_writer(stream, indent) {
-    var writer = xml_writer(stream, make_indenter(indent));
+function stl_writer(indent) {
+    var writer = xml_writer(make_indenter(indent));
 
     function start(tag, attrs) {
         if (attrs && attrs.style === '') {
@@ -224,8 +170,9 @@ function stl_writer(stream, indent) {
 
     function finalize() {
         end('stl');
-        writer.finalize();
+        var content = writer.finalize();
         writer = null;
+        return content;
     }
 
     var attrs = {
@@ -366,6 +313,12 @@ function css_converter(resolution, options) {
         }
         if (ps.iSpaceAfter) {
             css['margin-bottom'] = convert_length(ps.iSpaceAfter);
+        }
+        if (ps.eSpacing) {
+            if (ps.eSpacing !== enums.linespacing.EXACT) {
+                throw new Error("Unsupported line spacing mode: " + ps.eSpacing);
+            }
+            css['line-height'] = convert_length(ps.iSpaceBetween);
         }
         var level;
         var format;
@@ -908,7 +861,7 @@ function json_factory(options) {
 
     function initialize() {
         if (!json_factory.cache) {
-            var factory = require('empower.json').factory;
+            var factory = defs.factory;
             var instance = {};
             Object.keys(factory).forEach(function(key) {
                 var src = null;
@@ -977,7 +930,11 @@ function json_factory(options) {
         convert_prop(css['margin-right'], p, 'iRightIndent');
         convert_prop(css['margin-top'], p, 'iSpaceBefore');
         convert_prop(css['margin-bottom'], p, 'iSpaceAfter');
-
+        if (css['line-height'] !== undefined) {
+            p.eSpacing = enums.linespacing.EXACT;
+            p.iSpaceBetween = convert_length(css['line-height']);
+        }
+        
         if (css['-stl-list-level']) {
             var level = parseInt(css['-stl-list-level']);
             p.iNumberIndent = level + 1;
@@ -1680,13 +1637,12 @@ function json_builder(nsmap, factory, root, options) {
             if (data) {
                 if (inside.paragraph) {
                     flush_cstyle();
-                    range(data.length).forEach(function(index) {
-                        chars.push(data.charCodeAt(index));
+                    for (var i=0; i<data.length; i++) {
+                        chars.push(data.charCodeAt(i));
                         commands.push(enums.content.NULL);
-                    });
-                } else {
-                    if (data.trim())
-                        unexpected("text outside paragraph");
+                    }
+                } else if (data.trim()) {
+                    return unexpected("text outside paragraph");
                 }
             }
         }
@@ -1832,14 +1788,14 @@ function json_builder(nsmap, factory, root, options) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
- * emp2stl( src: stream [options: object] ) : stream
+ * emp2stl( input: string|stream [, options: object] ) : string|stream
  *
  * Parses _Empower JSON_ fragment and generates corresponding  _STL_ fragment
  *
  * Parameters:
- *    - `src` ... input stream containing _Empower JSON_
+ *    - `input` ... input string or stream containing _Empower JSON_
  *    - `options` ... following options are currently supported:
- *      - `output` ... output stream to be filled with resulting _STL_ (memory stream is created if no stream is specified)
+ *      - `output` ... optional output stream to be filled with resulting _STL_
  *      - `indent` ... bool, string or a function(tag, tags, is_start) used for indentation
  *      - `page` ... bool determining whether page type should be generated
  *      - `resources` ... optional object representing resources (typically parsed from `designpack.json`)
@@ -1847,31 +1803,32 @@ function json_builder(nsmap, factory, root, options) {
  *        - `font` ... optional remap callback for font
  *        - `xpath` ... optional remap callback for XPath
  *        - `uri` ... optional remap callback for URI
- *    - `@return` ... output stream (the `output` option if provided, temporary memory stream otherwise)
+ *    - `@return` ... output stream (if provided as `options.output`) or string
  */
-exports.emp2stl = function emp2stl(src, options) {
-    options = init_options(options);
-    var dst = options.output || streams.stream();
+exports.emp2stl = function emp2stl(input, options) {
+    input = check_input(input);
+    options = check_options(options);
 
-    if (!util.isStream(src) || !util.isStream(dst)) {
-        throw new Error("Invalid argument, stream expected");
-    }
-    var contents = JSON.parse(src.read()).contents;
-    var writer = stl_writer(dst, options.indent);
+    var contents = JSON.parse(input).contents;
+    var writer = stl_writer(options.indent);
     build_stl(contents, writer, options);
-    writer.finalize();
-    return dst;
+    var stl = writer.finalize();
+    if (!options.output) {
+        return stl; // return the string directly
+    }
+    options.output.write(stl);
+    return options.output;
 };
 
 /*
- *  stl2emp( src: stream [, options: object] ) : stream 
+ *  stl2emp( input: string|stream [, options: object] ) : string|stream 
  *
  *  Parses _STL_ fragment and generates corresponding _Empower JSON_ fragment
  *
  *  Parameters:
- *    - `src` ... input stream containing _STL_
+ *    - `input` ... input stream containing _STL_
  *    - `options` ... following options are currently supported:
- *      - `output` ... output stream to be filled with resulting _Empower JSON_ (memory stream is created if no stream is specified)
+ *      - `output` ... optional output stream to be filled with resulting _Empower JSON_
  *      - `indent` ... bool or a string used for indentation
  *      - `permissive` ... determines whether the conversion fails or ignores unsupported constructs
  *      - `resources` ... optional object representing resources (typically parsed from `designpack.json`)
@@ -1879,20 +1836,24 @@ exports.emp2stl = function emp2stl(src, options) {
  *        - `font` ... optional remap callback for font
  *        - `xpath` ... optional remap callback for XPath
  *        - `uri` ... optional remap callback for URI
- *    - `@return` ... output stream (the `output` option if provided, temporary memory stream otherwise)
+ *    - `@return` ... output stream (if provided as `options.output`) or string
  */
-exports.stl2emp = function emp2stl(src, options) {
-    options = init_options(options);
-    var dst = options.output || streams.stream();
+exports.stl2emp = function emp2stl(input, options) {
+    input = check_input(input);
+    options = check_options(options);
         
     var nsmap = stl.namespace_stack();
     var factory = json_factory(options);
     var root = factory.root();
     var builder = json_builder(nsmap, factory, root, options);
     var parser = stl.parser(nsmap, builder);
-    parser.write(src.read()).close();
-    dst.write(JSON.stringify(root, null, options.indent));
-    return dst;
+    parser.write(input).close();
+    var json = JSON.stringify(root, null, options.indent);
+    if (!options.output) {
+        return json;  // return the string directly
+    }
+    options.output.write(json);
+    return options.output;
 };
 
 

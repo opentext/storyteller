@@ -2,8 +2,6 @@
 
 'use strict';
 
-var streams = require('streams');
-
 var namespaces = {
     stl: "http://developer.opentext.com/schemas/storyteller/layout",
     xp: "http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
@@ -228,7 +226,7 @@ function preprocessor(nsmap, next, callback) {
         if (is_fixture(name)) {
             var src = attrs.src;
             if (src) {
-                callback(attrs, streams.stream(src).read());
+                callback(attrs, require('streams').stream(src).read());
                 fixture = empty_checker();
             } else {
                 fixture = xml_accumulator(function (data) {

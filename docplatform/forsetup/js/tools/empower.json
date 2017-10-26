@@ -1,4 +1,74 @@
 {
+    "enums": {
+        "item": {
+            "TABLE": 5,
+            "IMAGE": 6,
+            "TEXT": 14
+        },
+        "content": {
+            "NULL": 0,
+            "VARIABLE_START": -384,
+            "HYPERLINK_START": -252,
+            "OBJECT_START": -251,
+            "PARAGRAPH_BREAK": -244,
+            "SUPERSCRIPT_START": -240,
+            "SUBSCRIPT_START": -239,
+            "VARIABLE_END": -111,
+            "HYPERLINK_END": -109,
+            "OBJECT_END": -106,
+            "CONTENT_END": -64,
+            "COLOR_CHANGE": -63,
+            "FONT_CHANGE": -62,
+            "SUBSCRIPT_END": -58,
+            "SUPERSCRIPT_END": -59
+        },
+        "list": {
+            "NONE": 0,
+            "BULLETS": 1,
+            "NUMBERING": 2
+        },
+        "numbering": {
+            "0": "1.",
+            "2": "A.",
+            "3": "a.",
+            "4": "R.",
+            "5": "r.",
+            "6": "1)",
+            "7": "A)",
+            "8": "a)",
+            "9": "R)",
+            "10": "r)",
+            "15": "(1)",
+            "16": "(A)",
+            "17": "(a)",
+            "18": "(R)",
+            "19": "(r)"
+        },
+        "linespacing": {
+            "SINGLE": 0,
+            "EXACT": 4
+        },
+        "pen": {
+            "SOLID": 0,
+            "DASHED": 1,
+            "DOTTED": 3
+        },
+        "valign": {
+            "TOP": 0,
+            "CENTER": 1,
+            "BOTTOM": 2
+        },
+        "segmentpos": {
+            "TOP": 1,
+            "RIGHT": 2,
+            "BOTTOM": 4,
+            "LEFT": 8
+        },
+        "defaults": {
+            "bullets": ["•", "◦", "▪"],
+            "numberings": ["1.", "1.", "r.", "1)"]
+        }
+    },
     "factory": {
         "color": {
             "m_eColorModel": 0,
