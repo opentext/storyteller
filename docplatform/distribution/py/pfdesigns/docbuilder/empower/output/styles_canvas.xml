@@ -7,7 +7,7 @@
           <stl:p>
             <stl:span style="font-family: Lato; font-size: 10pt; font-weight: bold; font-style: italic; color: #FF0000">Text frame</stl:span>
             <stl:span style="font-family: Lato; font-size: 10pt"><stl:span/> with a</stl:span>
-            <stl:table style="border: 0.05in solid #FF00D4">
+            <stl:table style="border: 0.05in solid #FF00D4; display: table">
               <stl:story>
                 <stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max">
                   <stl:cell w="0.477in">
@@ -26,7 +26,7 @@
           </stl:p>
         </stl:story>
       </stl:text>
-      <stl:table x="0.104in" y="0.021in" style="border: 0.01in solid #000000">
+      <stl:table x="0.104in" y="0.021in" style="border: 0.01in solid #000000; display: table">
         <stl:story>
           <stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max">
             <stl:cell w="1in">

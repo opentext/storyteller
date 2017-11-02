@@ -8,6 +8,8 @@ var namespaces = {
 };
 
 function xml_escaper(pattern) {
+    var he = require('he');
+    
     function encoder(c) {
         switch (c) {
         case '<':
@@ -23,7 +25,7 @@ function xml_escaper(pattern) {
         }
     }
     return function (value) {
-        return value.replace(pattern, encoder);
+        return he.encode(value.replace(pattern, encoder));
     };
 }
 
@@ -415,6 +417,143 @@ function sax_parser(nsmap, builder, cfg) {
     return parser;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////
+
+function make_indenter(indent, default_indent) {
+    var util = require('util');
+    if (util.isFunction(indent)) {
+        return indent;
+    }
+    if (indent) {
+        if (util.isBoolean(indent)) {
+            indent = default_indent || '  ';
+        }
+        if (util.isNumber(indent)) {
+            indent = ' '.repeat(indent);
+        }
+        if (util.isString(indent)) {
+            return () => indent;
+        }
+        throw new Error("Unsupported indent: " + indent);
+    }
+    return () => '';
+}
+
+function xml_writer(indenter) {
+    var tags = [];
+    var no_children;
+    var content = '';
+    var attr_escape = xml_escaper(/[<&"]/g);
+    var text_escape = xml_escaper(/[<&]/g);
+    
+    function format_start(tag, attrs) {
+        attrs = attrs || {};
+        var result = '<' + tag;
+        var keys = Object.keys(attrs).filter((key) => attrs[key] !== undefined);
+        if (keys.length) {
+            result += ' ' + keys.map(function(key) {
+                return key + '="' + attr_escape(attrs[key]) + '"'; 
+            }).join(' ');
+        }
+        return result + '>';
+    }
+
+    function format_end(tag) {
+        return '</' + tag + '>';
+    }
+
+    function flush() {
+        content += cache;
+        cache = '';
+    }
+    
+    function start(tag, attrs) {
+        var line = format_start(tag, attrs);
+        var indent = indenter(tag, tags, true);
+        if (indent) {
+            line = '\n' + indent.repeat(tags.length) + line;
+        }
+        content += line;
+        no_children = true;
+        tags.push(tag);
+    }
+
+    function end(tag) {
+        var top = tags.pop();
+        if (top !== tag) {
+            throw new Error("Tag mismatch (trying to close '" + tag + "' while top element is '" + top + "')");
+        }
+        if (no_children) {
+            content = content.slice(0, -1) + '/>';
+            no_children = false;
+        } else {
+            var line = format_end(tag);
+            var indent = indenter(tag, tags, false);
+            if (indent) {
+                line = '\n' + indent.repeat(tags.length) + line;
+            }
+            content += line;            
+        }
+    }
+    
+    function text(data) {
+        if (!tags.length) {
+            throw new Error("Cannot write text '" + data + "' outside elements");
+        }
+        no_children = false;
+        content += text_escape(data);
+    }
+
+    function finalize() {
+        return content;
+    }
+
+    return {
+        start: start,
+        end: end,
+        text: text,
+        finalize: finalize
+    };
+}
+
+function stl_writer(indent) {
+    var writer = xml_writer(make_indenter(indent));
+
+    function start(tag, attrs) {
+        if (attrs && attrs.style === '') {
+            delete attrs.style;
+        }
+        writer.start('stl:' + tag, attrs);
+    }
+
+    function end(tag) {
+        writer.end('stl:' + tag);
+    }
+
+    function text(data) {
+        writer.text(data);
+    }
+
+    function finalize() {
+        end('stl');
+        var content = writer.finalize();
+        writer = null;
+        return content;
+    }
+
+    var attrs = {
+        'xmlns:stl': exports.namespaces.stl,
+        version: exports.version
+    };
+    start('stl', attrs);
+    return {
+        start: start,
+        end: end,
+        text: text,
+        finalize: finalize
+    };
+}
+
 exports.version = '0.1';
 exports.namespaces = namespaces;
 exports.namespace_stack = namespace_stack;
@@ -425,3 +564,7 @@ exports.text_accumulator = text_accumulator;
 exports.xml_accumulator = xml_accumulator;
 exports.parser = sax_parser;
 exports.xml_escaper = xml_escaper;
+
+exports.make_indenter = make_indenter;
+exports.xml_writer = xml_writer;
+exports.stl_writer = stl_writer;

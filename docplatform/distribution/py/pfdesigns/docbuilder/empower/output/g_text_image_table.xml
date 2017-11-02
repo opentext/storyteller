@@ -10,7 +10,7 @@
         </stl:story>
       </stl:text>
       <stl:image x="0.4in" y="1in" w="2.715in" h="0.5in" src="wd:/cas/Y3hyOi8_aWQ9Y2ZlMDkwN2UtZWFlMi00ZDlkLWFkNzQtYjUzYTA2ODAwYzliO3Y9MTt0PTdjNjk4ZTFlLTdhMDUtZjA5Ny00NTYwLTdjYTc0ZWIyOGZhYw=="/>
-      <stl:table x="0.6in" y="2in" style="border: 0.001in solid #000000">
+      <stl:table x="0.6in" y="2in" style="border: 0.001in solid #000000; display: table">
         <stl:story>
           <stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max">
             <stl:cell w="1in">

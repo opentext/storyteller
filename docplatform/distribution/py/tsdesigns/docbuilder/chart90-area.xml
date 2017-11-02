@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="stl2html.xslt"?>
 <stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" 
 		 xmlns:scd="http://developer.opentext.com/schemas/storyteller/chart/definition"
 		 xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">

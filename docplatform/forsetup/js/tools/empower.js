@@ -54,139 +54,6 @@ function check_input(input) {
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function make_indenter(indent, default_indent) {
-    if (util.isFunction(indent)) {
-        return indent;
-    }
-    if (indent) {
-        if (util.isBoolean(indent)) {
-            indent = default_indent || '  ';
-        }
-        if (util.isNumber(indent)) {
-            indent = ' '.repeat(indent);
-        }
-        if (util.isString(indent)) {
-            return () => indent;
-        }
-        throw new Error("Unsupported indent: " + indent);
-    }
-    return () => '';
-}
-
-function xml_writer(indenter) {
-    var tags = [];
-    var no_children;
-    var content = '';
-    var attr_escape = stl.xml_escaper(/[<&"]/g);
-    var text_escape = stl.xml_escaper(/[<&]/g);
-    
-    function format_start(tag, attrs) {
-        attrs = attrs || {};
-        var result = '<' + tag;
-        var keys = Object.keys(attrs);
-        if (keys.length) {
-            result += ' ' + keys.map(function(key) {
-                return key + '="' + attr_escape(attrs[key]) + '"'; 
-            }).join(' ');
-        }
-        return result + '>';
-    }
-
-    function format_end(tag) {
-        return '</' + tag + '>';
-    }
-
-    function flush() {
-        content += cache;
-        cache = '';
-    }
-    
-    function start(tag, attrs) {
-        var line = format_start(tag, attrs);
-        var indent = indenter(tag, tags, true);
-        if (indent) {
-            line = '\n' + indent.repeat(tags.length) + line;
-        }
-        content += line;
-        no_children = true;
-        tags.push(tag);
-    }
-
-    function end(tag) {
-        var top = tags.pop();
-        if (top !== tag) {
-            throw new Error("Tag mismatch (trying to close '" + tag + "' while top element is '" + top + "')");
-        }
-        if (no_children) {
-            content = content.slice(0, -1) + '/>';
-            no_children = false;
-        } else {
-            var line = format_end(tag);
-            var indent = indenter(tag, tags, false);
-            if (indent) {
-                line = '\n' + indent.repeat(tags.length) + line;
-            }
-            content += line;            
-        }
-    }
-    
-    function text(data) {
-        if (!tags.length) {
-            throw new Error("Cannot write text '" + data + "' outside elements");
-        }
-        no_children = false;
-        content += text_escape(data);
-    }
-
-    function finalize() {
-        return content;
-    }
-
-    return {
-        start: start,
-        end: end,
-        text: text,
-        finalize: finalize
-    };
-}
-
-function stl_writer(indent) {
-    var writer = xml_writer(make_indenter(indent));
-
-    function start(tag, attrs) {
-        if (attrs && attrs.style === '') {
-            delete attrs.style;
-        }
-        writer.start('stl:' + tag, attrs);
-    }
-
-    function end(tag) {
-        writer.end('stl:' + tag);
-    }
-
-    function text(data) {
-        writer.text(data);
-    }
-
-    function finalize() {
-        end('stl');
-        var content = writer.finalize();
-        writer = null;
-        return content;
-    }
-
-    var attrs = {
-        'xmlns:stl': stl.namespaces.stl,
-        version: stl.version
-    };
-    start('stl', attrs);
-    return {
-        start: start,
-        end: end,
-        text: text,
-        finalize: finalize
-    };
-}
 
 function css_format(css) {
     return Object.keys(css).filter(function (key) {
@@ -280,7 +147,7 @@ function css_converter(resolution, options) {
             'border-right': null,
             'border-bottom': null,
             'border-left': null,
-            'fill': null,
+            'background-color': null,
             '-stl-list-counter': null,
             '-stl-list-mask': null,
             '-stl-list-level': null,
@@ -408,7 +275,7 @@ function css_converter(resolution, options) {
             css.border = convert_pen(draw.m_iPenWidth, draw.m_iPenStyle, draw.m_clrPen);
         }
         if (draw.m_bBackGroundTransparent === false) {
-            css.fill = convert_color(draw.m_clrBackGround);
+            css['background-color'] = convert_color(draw.m_clrBackGround);
         }
         convert_padding(draw, css);
         if (draw.m_bAutoSizeX || draw.m_bAutoSizeY) {
@@ -691,6 +558,7 @@ function build_stl(contents, writer, options) {
         // we do not convert table width & height, we convert row/column dimensions instead
         var attrs = converter.pos(draw.m_rectPosition);
         var css = converter.item_style(draw);
+        css.display = 'table';
         attrs.style = css_format(css);
         inserter.push('table', attrs);
         inserter.push('story');
@@ -1070,8 +938,8 @@ function json_factory(options) {
             draw.m_clrPen = pen.color;
             draw.m_bPen = true;
         }
-        if (css.fill) {
-            draw.m_clrBackGround = color(css.fill);
+        if (css['background-color']) {
+            draw.m_clrBackGround = color(css['background-color']);
             draw.m_bBackGroundTransparent = false;
         }
         if (css['padding-left']) {
@@ -1119,16 +987,18 @@ function json_factory(options) {
             corner.m_ecpCorner = 2;
             return corner;
         }
-        
-        var segments = shape.m_ppSegments;
-        segments.push(convert_corner(enums.segmentpos.TOP));
-        segments.push(convert_edge(css['border-top'], enums.segmentpos.TOP));
-        segments.push(convert_corner(enums.segmentpos.RIGHT));
-        segments.push(convert_edge(css['border-right'], enums.segmentpos.RIGHT));
-        segments.push(convert_corner(enums.segmentpos.BOTTOM));
-        segments.push(convert_edge(css['border-bottom'], enums.segmentpos.BOTTOM));
-        segments.push(convert_corner(enums.segmentpos.LEFT));
-        segments.push(convert_edge(css['border-left'], enums.segmentpos.LEFT));
+
+        if (css['border-top'] || css['border-right'] || css['border-bottom'] || css['border-left']) {
+            var segments = shape.m_ppSegments;
+            segments.push(convert_corner(enums.segmentpos.TOP));
+            segments.push(convert_edge(css['border-top'], enums.segmentpos.TOP));
+            segments.push(convert_corner(enums.segmentpos.RIGHT));
+            segments.push(convert_edge(css['border-right'], enums.segmentpos.RIGHT));
+            segments.push(convert_corner(enums.segmentpos.BOTTOM));
+            segments.push(convert_edge(css['border-bottom'], enums.segmentpos.BOTTOM));
+            segments.push(convert_corner(enums.segmentpos.LEFT));
+            segments.push(convert_edge(css['border-left'], enums.segmentpos.LEFT));
+        }
     }
     
     function text(attrs, css) {        
@@ -1186,6 +1056,7 @@ function json_factory(options) {
         draw.m_iLogicalRes = resolution,
         draw.m_iDesignRes = resolution,
         draw.m_clrPen = color();
+        draw.m_iWidth = width;
         draw.m_iMaxWidthDes = width;
         draw.m_Colors.push(color());
         draw.m_Colors.push(color('#00ffc0'));
@@ -1292,7 +1163,7 @@ function json_builder(nsmap, factory, root, options) {
         throw new Error(message);
     };
     const unexpected = function(tag, what) {
-        var message = "Unexpected " + text + " inside " + tag;
+        var message = "Unexpected " + what + " inside " + tag;
         if (options.permissive) {
             console.error(message + " (ignored)");
         }
@@ -1358,8 +1229,8 @@ function json_builder(nsmap, factory, root, options) {
             // we override table w,h with a sum of column widths and row heights
             var width = columns.reduce((acc,el) => acc+el.m_iWidth, 0);;
             var height = rows.reduce((acc,el) => acc+el.m_iHeight, 0);
-            draw.m_rectPosition.right = width;
-            draw.m_rectPosition.bottom = height;
+            draw.m_rectPosition.right = draw.m_rectPosition.left+width;
+            draw.m_rectPosition.bottom = draw.m_rectPosition.top+height;
         }
 
         return { 
@@ -1424,6 +1295,7 @@ function json_builder(nsmap, factory, root, options) {
         }
 
         function object_start(obj) {
+            flush_cstyle();
             if (inside.object)
                 return unsupported("object nesting");
             var draw = obj.m_pDrawObj;
@@ -1512,10 +1384,13 @@ function json_builder(nsmap, factory, root, options) {
 
         function p_(start, attrs) {
             if (start) {
+                if (inside.paragraph)
+                    return unsupported("stl:p nesting");
                 styles.push(split_css(attrs.style, clone_css(styles.top())));
                 insert_pstyle();
                 inside.paragraph = true;
             } else {
+                flush_cstyle();
                 styles.pop();
                 inside.paragraph = false;
             }
@@ -1526,7 +1401,7 @@ function json_builder(nsmap, factory, root, options) {
                 if (inside.object)
                     return stl.handler_dispatcher(nsmap, story_builder(inside.object));
                 if (!inside.hyperlink)
-                    return unsupported("stl:story");
+                    return unsupported("stl:story nesting");
             }
         }
         
@@ -1810,13 +1685,13 @@ exports.emp2stl = function emp2stl(input, options) {
     options = check_options(options);
 
     var contents = JSON.parse(input).contents;
-    var writer = stl_writer(options.indent);
+    var writer = stl.stl_writer(options.indent);
     build_stl(contents, writer, options);
-    var stl = writer.finalize();
+    var output = writer.finalize();
     if (!options.output) {
-        return stl; // return the string directly
+        return output; // return the string directly
     }
-    options.output.write(stl);
+    options.output.write(output);
     return options.output;
 };
 
@@ -1848,11 +1723,11 @@ exports.stl2emp = function emp2stl(input, options) {
     var builder = json_builder(nsmap, factory, root, options);
     var parser = stl.parser(nsmap, builder);
     parser.write(input).close();
-    var json = JSON.stringify(root, null, options.indent);
+    var output = JSON.stringify(root, null, options.indent);
     if (!options.output) {
-        return json;  // return the string directly
+        return output;  // return the string directly
     }
-    options.output.write(json);
+    options.output.write(output);
     return options.output;
 };
 

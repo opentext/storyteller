@@ -112,8 +112,7 @@
             "m_iCanDoObjProps": 0,
             "m_msLink": "",
             "m_eLinkType": 1,
-            "m_oiLink": 0,
-            "editor_isEdited": true
+            "m_oiLink": 0
         },
         "varprops" : {
             "iArrayUse": 0,
@@ -209,6 +208,7 @@
                 "m_pObjs": [],
                 "m_Objs": [],
                 "m_Links": [],
+                "m_iWidth": null,
                 "m_iMaxWidthDes": null,
                 "m_oiID": null,
                 "m_VarProps": [],

@@ -2,7 +2,7 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document>
     <stl:page w="3.6in" h="1in">
-      <stl:table x="0.417in" y="0.302in" style="border: 0.001in solid #000000">
+      <stl:table x="0.417in" y="0.302in" style="border: 0.001in solid #000000; display: table">
         <stl:story>
           <stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max">
             <stl:cell w="1in">

@@ -1,6 +1,6 @@
 'use strict';
 
-var api_url = null;
+var api_url;// = 'http://wprgpfi01l:9000/api';
 
 function uploadData(api_url, data, type, callback) {
     var url = api_url + '/storage/upload';
@@ -211,7 +211,7 @@ function js2xml(js, schema, skipRoot) {
             if (name.length > 1) {
                 var prefix = 'xmlns:'+name[0];
                 if (!namespaces[prefix]) {
-                    var uri = Xonomy.namespaces[prefix];
+                    var uri = schema.namespaces[prefix];
                     namespaces[prefix] = uri;
                 }
             }
@@ -274,7 +274,7 @@ function js2xml(js, schema, skipRoot) {
     }
 
     function innerXML(js, writer) {
-        var type = schema[js.name];
+        var type = types[js.name];
         var fnNext = (type && type.serializer)
             ? (js) => writer.raw(type.serializer(js))
             : (js) => outerXML(js, writer);
@@ -286,7 +286,7 @@ function js2xml(js, schema, skipRoot) {
 	    });
     }
 
-    schema = schema ? schema.elements: {};
+    var types = schema ? schema.elements: {};
     var writer = make_writer();
     if (skipRoot)
         innerXML(js, writer);
@@ -653,8 +653,7 @@ function customAction(htmlID, handler) {
 		    Xonomy.clickoff();
 		    Xonomy.changed();
         } catch(err) {
-            var pre = document.getElementById("msgout");
-            pre.innerHTML = pre.innerHTML + '\n' + xmlEscapeText(err.message);
+            $("#right").text(err.message);
         }
 	};
 
@@ -1610,12 +1609,10 @@ stl_schema.elements = {
     },
 };
 
-stl_schema.unknown = defaultSpec;
-
-if (api_url) {
-    stl_schema.onchange = function() {
-        var js = harvestRootElement();
-        var xml = js2xml(js, stl_schema);
+function show_preview() {
+    var js = harvestRootElement();
+    var xml = js2xml(js, stl_schema);
+    if (api_url) {
         var format = 'png';
         uploadData(api_url, xml, 'text/xml', function (response) {
             formatData(api_url, response.hash, format, function (response) {
@@ -1628,18 +1625,55 @@ if (api_url) {
                 });
             });
         });
-    };
-}
+    } else {
+        var stl2html = require('html').stl2html;
+        try {
+            var html = stl2html(xml);
+            $('#right').html(html);
+            // adjust all rotated items
+            $("#right .stl-wrap").each(function() {
+                var $this = $(this);
+                var child = $this.children(":first")[0];
+                var transform = $(child).css('transform');
+                if (transform) {
+                    var pbox = this.getBoundingClientRect();
+                    var box = child.getBoundingClientRect();
+                    var tx = pbox.x-box.x;
+                    var ty = pbox.y-box.y;
+                    transform = 'translate('+tx+'px, '+ty+'px) ' + transform;
+                    console.log(pbox, box, transform);
+                    $this.css("minWidth", box.width);
+                    $this.css("minHeight", box.height);
+                    $(child).css('transform', transform);
+                }
+            });
+            
+        } catch(e) {
+            $('#right').text(e);
+        }
+    }
+};
 
-var stl_markup = XonomyBuilder.xml('stl:stl', {version: '0.1'}, '', stl_schema.namespaces);
+stl_schema.unknown = defaultSpec;
+stl_schema.onchange = show_preview;
 
 function init_editors() {
+    function init_markup(markup) {
+        var js = Xonomy.xml2js(markup);
+        jsNormalize(js);
+        Xonomy.render(js, xonomy, xschema);
+        show_preview();
+    }
+    
     Split(['#left', '#right']);
-    Split(['#editor', '#messages'], {
-        sizes: [85, 15],
-        direction: 'vertical'
-    });
     var xschema = XonomyBuilder.convertSchema(stl_schema, stlPreprocess, stlPostprocess);
 	var xonomy = document.getElementById("xonomy");
-	Xonomy.render(stl_markup, xonomy, xschema);
+    var url = window.location.href;
+    var stl = /\?stl=([^&]+)/.exec(url);
+    if (stl) {
+        $.get(decodeURIComponent(stl[1]), init_markup);
+    } else {
+        var markup = XonomyBuilder.xml('stl:stl', {version: '0.1'}, '', stl_schema.namespaces);
+	    init_markup(markup);
+    }
 }

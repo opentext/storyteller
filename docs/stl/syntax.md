@@ -1886,7 +1886,7 @@ like in this case:
 
 ```xml
 ...
-<stl:fragment x="20pt" y="220pt" w="80pt" h="80pt" transform="scale(10)" category="loading-time" src="wd:/fragment.lxf!/item[1]" style="stroke:#ff0000"/>
+<stl:fragment x="20pt" y="220pt" w="80pt" h="80pt" transform="scale(10)" category="load-time" src="wd:/fragment.lxf!/item[1]" style="stroke:#ff0000"/>
 ...
 ```
 
@@ -1908,7 +1908,7 @@ like in this case:
 ...
 <stl:document>
   ...
-  <stl:fragment x="120pt" y="220pt" category="loading-time" src="link:/fragments/embedded.xml!/item[1]" style="fill:#ffaaff"/>
+  <stl:fragment x="120pt" y="220pt" category="load-time" src="link:/fragments/embedded.xml!/item[1]" style="fill:#ffaaff"/>
 </stl:document>
 ...
 ```
@@ -1918,7 +1918,7 @@ Fragments can be absolute positioned on a page:
 ```xml
 ...
 <stl:page w="120pt" h="120pt">
-  <stl:fragment x="20pt" y="20pt" category="loading-time" src="link:/fragments/embedded.xml!/item[1]" style="fill:#ffaaff"/>
+  <stl:fragment x="20pt" y="20pt" category="load-time" src="link:/fragments/embedded.xml!/item[1]" style="fill:#ffaaff"/>
 </stl:page>
 ...
 ```
@@ -1929,7 +1929,7 @@ Fragments can be absolute positioned on a page:
 ...
 <stl:story>
   <stl:p>
-    <stl:fragment category="loading-time" src="link:/fragments/embedded.xml!/item[1]" style="fill:#ffaaff"/>
+    <stl:fragment category="load-time" src="link:/fragments/embedded.xml!/item[1]" style="fill:#ffaaff"/>
   </stl:p>
 </stl:story>
 ...

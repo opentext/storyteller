@@ -230,7 +230,7 @@ There is a `src` attribute specifying an URI of the stream to be included.
 
 So user can for example define some story content once and use it
 several times in the course of the *STL File* and even change it's
-styling properties. This way usetrs can achieve a simple loading-time
+styling properties. This way users can achieve a simple loading-time
 styling without introducing runtime stylesheet machinery:
 
 ```xml
