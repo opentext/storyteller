@@ -30,6 +30,12 @@ div.tab button.active {
     background-color: #ccc;
 }
 
+#footer {
+	font-family: arial;
+	font-size: 65%;
+	text-align: center;
+}
+
 /* Style the tab content */
 .tabcontent {
     display: none;
