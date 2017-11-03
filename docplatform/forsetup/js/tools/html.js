@@ -529,33 +529,49 @@ function html_builder(nsmap, writer, options) {
     }
     
     function root_builder(writer) {
+        var inside;
+
+        function section(name) {
+            if (inside !== name) {
+                if (inside)
+                    writer.end(inside);
+                inside = name;
+                writer.start(name);
+            }
+        }
+
+        function finalize() {
+            if (inside) {
+                writer.end(inside);
+            }
+        }
+        
         function document_(start, attrs) {
             if (start) {
-                writer.start('body');
+                section('body');
                 return stl.handler_dispatcher(nsmap, doc_builder(writer));
-            } else {
-                writer.end('body');
             }
         }
 
         function style_(start, attrs) {
             if (start) {
-                writer.start('head');
+                section('head');
                 if (attrs.src) {
                     writer.start('link', {rel: 'stylesheet', type: 'text/css', href: attrs.src});
                     writer.end('link');
                 } else {
                     writer.start('style');
                     return stl.text_accumulator(function(css) {
-                        writer.inject(stl.css_escape(css_postprocess(css)));
+                        writer.text(css_postprocess(css));
                         writer.end('style');
                     });
                 }
             }
-            else {
-                writer.end('head');
-            }
         }
+
+        section('head');
+        writer.start('meta', {charset: "UTF-8"});
+        writer.end('meta');
         
         return {
             stl_: () => {},
@@ -564,7 +580,7 @@ function html_builder(nsmap, writer, options) {
             style_: style_,
             document_: document_,
             text: unexpected_text, 
-            finalize: () => {}
+            finalize: finalize
         };
     }
 

@@ -9,11 +9,7 @@ var namespaces = {
     xp: "http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
 };
 
-function xml_escaper(pattern, css) {
-    const fallback = css
-          ? (c) => '\\' + Number(c.charCodeAt()).toString(16)
-          : (c) => '&#x' + Number(c.charCodeAt()).toString(16) + ';'
-    
+function xml_escaper(pattern) {
     function encoder(c) {
         switch (c) {
         case '<':
@@ -34,8 +30,7 @@ function xml_escaper(pattern, css) {
 }
 
 const attr_escape = xml_escaper(/[<>&"]/g);
-const text_escape = xml_escaper(/[<>&]|[^\x00-\x7F]/g);
-const css_escape = xml_escaper(/[<>&]|[^\x00-\x7F]/g, true);
+const text_escape = xml_escaper(/[<>&]/g);
 
 function namespace_stack() {
     var aliases = [];
@@ -333,6 +328,7 @@ function stl_normalizer(nsmap, next) {
         if (data.trim()) {
             throw new Error("Dangling text: " + data);
         }
+        next.finalize();
     }
 
     return {
@@ -708,4 +704,3 @@ exports.make_indenter = make_indenter;
 exports.xml_writer = xml_writer;
 exports.stl_writer = stl_writer;
 exports.css_parse = css_parse;
-exports.css_escape = css_escape;

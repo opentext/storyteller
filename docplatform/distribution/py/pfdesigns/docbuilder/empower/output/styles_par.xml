@@ -32,25 +32,25 @@
     }
     .p8 {
       -stl-list-level: 0;
-      -stl-list-mask: &#x2022;\9;
+      -stl-list-mask: •\9;
       -stl-tabs: 0.25in;
       margin-left: 0in
     }
     .p9 {
       -stl-list-level: 1;
-      -stl-list-mask: &#x25E6;\9;
+      -stl-list-mask: ◦\9;
       -stl-tabs: 0.5in;
       margin-left: 0.25in
     }
     .p10 {
       -stl-list-level: 2;
-      -stl-list-mask: &#x25AA;\9;
+      -stl-list-mask: ▪\9;
       -stl-tabs: 0.75in;
       margin-left: 0.5in
     }
     .p11 {
       -stl-list-level: 3;
-      -stl-list-mask: &#x2022;\9;
+      -stl-list-mask: •\9;
       -stl-tabs: 1in;
       margin-left: 0.75in
     }

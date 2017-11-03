@@ -7,7 +7,7 @@
   </stl:style>
   <stl:document>
     <stl:story name="Main" w="8.5in">
-      <stl:p><stl:span class="span1">Hello &#x20AC;</stl:span></stl:p>
+      <stl:p><stl:span class="span1">Hello €</stl:span></stl:p>
     </stl:story>
   </stl:document>
 </stl:stl>

@@ -2671,33 +2671,49 @@ function html_builder(nsmap, writer, options) {
     }
     
     function root_builder(writer) {
+        var inside;
+
+        function section(name) {
+            if (inside !== name) {
+                if (inside)
+                    writer.end(inside);
+                inside = name;
+                writer.start(name);
+            }
+        }
+
+        function finalize() {
+            if (inside) {
+                writer.end(inside);
+            }
+        }
+        
         function document_(start, attrs) {
             if (start) {
-                writer.start('body');
+                section('body');
                 return stl.handler_dispatcher(nsmap, doc_builder(writer));
-            } else {
-                writer.end('body');
             }
         }
 
         function style_(start, attrs) {
             if (start) {
-                writer.start('head');
+                section('head');
                 if (attrs.src) {
                     writer.start('link', {rel: 'stylesheet', type: 'text/css', href: attrs.src});
                     writer.end('link');
                 } else {
                     writer.start('style');
                     return stl.text_accumulator(function(css) {
-                        writer.inject(stl.css_escape(css_postprocess(css)));
+                        writer.text(css_postprocess(css));
                         writer.end('style');
                     });
                 }
             }
-            else {
-                writer.end('head');
-            }
         }
+
+        section('head');
+        writer.start('meta', {charset: "UTF-8"});
+        writer.end('meta');
         
         return {
             stl_: () => {},
@@ -2706,7 +2722,7 @@ function html_builder(nsmap, writer, options) {
             style_: style_,
             document_: document_,
             text: unexpected_text, 
-            finalize: () => {}
+            finalize: finalize
         };
     }
 
@@ -4262,11 +4278,7 @@ var namespaces = {
     xp: "http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
 };
 
-function xml_escaper(pattern, css) {
-    const fallback = css
-          ? (c) => '\\' + Number(c.charCodeAt()).toString(16)
-          : (c) => '&#x' + Number(c.charCodeAt()).toString(16) + ';'
-    
+function xml_escaper(pattern) {
     function encoder(c) {
         switch (c) {
         case '<':
@@ -4287,8 +4299,7 @@ function xml_escaper(pattern, css) {
 }
 
 const attr_escape = xml_escaper(/[<>&"]/g);
-const text_escape = xml_escaper(/[<>&]|[^\x00-\x7F]/g);
-const css_escape = xml_escaper(/[<>&]|[^\x00-\x7F]/g, true);
+const text_escape = xml_escaper(/[<>&]/g);
 
 function namespace_stack() {
     var aliases = [];
@@ -4586,6 +4597,7 @@ function stl_normalizer(nsmap, next) {
         if (data.trim()) {
             throw new Error("Dangling text: " + data);
         }
+        next.finalize();
     }
 
     return {
@@ -4961,7 +4973,6 @@ exports.make_indenter = make_indenter;
 exports.xml_writer = xml_writer;
 exports.stl_writer = stl_writer;
 exports.css_parse = css_parse;
-exports.css_escape = css_escape;
 
 },{"css":"css","sax":"sax","streams":false,"util":"util"}],"util":[function(require,module,exports){
 // NOTE: These type checking functions intentionally don't use `instanceof`

@@ -2,7 +2,7 @@
   <stl:style>
     .p1 {
       -stl-list-level: 0;
-      -stl-list-mask: &#x2022;\9;
+      -stl-list-mask: •\9;
       -stl-tabs: 0.25in;
       margin-left: 0in
     }
