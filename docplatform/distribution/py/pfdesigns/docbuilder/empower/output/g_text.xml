@@ -1,12 +1,18 @@
-
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:style>
+    .text1 {
+      border: 1px solid #000000
+    }
+    .span1 {
+      font-family: Lato;
+      font-size: 10pt
+    }
+  </stl:style>
   <stl:document>
     <stl:page w="3.6in" h="1in">
-      <stl:text x="1in" y="0.5in" w="1in" h="0.198in" style="border: 1px solid #000000">
+      <stl:text x="1in" y="0.5in" w="1in" h="0.198in" class="text1">
         <stl:story>
-          <stl:p>
-            <stl:span style="font-family: Lato; font-size: 10pt">Hello</stl:span>
-          </stl:p>
+          <stl:p><stl:span class="span1">Hello</stl:span></stl:p>
         </stl:story>
       </stl:text>
     </stl:page>

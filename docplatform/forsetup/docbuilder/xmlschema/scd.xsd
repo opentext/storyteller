@@ -94,6 +94,11 @@
 	<xsd:element name="axis_x">
 		<xsd:complexType>
 			<xsd:attributeGroup ref="scd:axisxy-attrs"/>
+			<xsd:attribute name="logical_x_low" type="xsd:decimal" />
+			<xsd:attribute name="logical_x_high" type="xsd:decimal" />
+			<xsd:attribute name="data_labels_rotation" type="xsd:integer" />
+			<xsd:attribute name="data_labels_position_v" type="scd:alignment_vertical"/>
+			<xsd:attribute name="data_labels_position_h" type="scd:alignment_horizontal"/>
 		</xsd:complexType>
 	</xsd:element>
 
@@ -141,6 +146,10 @@
 			<xsd:attribute name="node_type" type="scd:node_type" />
 			<xsd:attribute name="node_size" type="xsd:decimal" />
 			<xsd:attribute name="area" type="xsd:string" />
+			<xsd:attribute name="rx" type="scd:length" />
+			<xsd:attribute name="ry" type="scd:length" />
+			<xsd:attribute name="mask_label" type="xsd:string" />
+			<xsd:attribute name="mask_legend" type="xsd:string" />
 		</xsd:complexType>
 	</xsd:element>
 

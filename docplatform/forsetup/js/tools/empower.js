@@ -1154,6 +1154,10 @@ function json_factory(options) {
 }
 
 function json_builder(nsmap, factory, root, options) {
+    var ctx = {
+        stylesheet: {}
+    };
+
     const unsupported = function (item) {
         var message = "Unsupported " + item;
         if (options.permissive) {
@@ -1174,24 +1178,40 @@ function json_builder(nsmap, factory, root, options) {
         if (data.trim())
             unexpected("stl:stl", "text");
     }
-
-    function clone_css(css) {
-        return JSON.parse(JSON.stringify(css));
-    }
-    function split_css(style, css) {
-        css = css || {};
-        if (style) {
-            style.trim().split(';').forEach(function(property) {
-                var parts = property.trim().split(':');
-                if (parts.length === 2) {
-                    css[parts[0].trim()] = parts[1].trim();
-                } else if (parts[0].length) {
-                    throw new Error("Invalid CSS property: "+parts[0]);
-                }
-            });
+    
+    function get_css(attrs, basecss) {
+        function clone_css(css) {
+            return JSON.parse(JSON.stringify(css));
         }
+        
+        function split_css(style, css) {
+            css = css || {};
+            if (style) {
+                style.trim().split(';').forEach(function(property) {
+                    var parts = property.trim().split(':');
+                    if (parts.length === 2) {
+                        css[parts[0].trim()] = parts[1].trim();
+                    } else if (parts[0].length) {
+                        throw new Error("Invalid CSS property: "+parts[0]);
+                    }
+                });
+            }
+            return css;
+        }
+        var css = basecss ? clone_css(basecss) : {};
+        var cls = attrs['class'];
+        if (cls) {
+            var style = ctx.stylesheet['.'+cls];
+            if (style) {
+                Object.keys(style).forEach(function (prop) {
+                    css[prop] = style[prop];
+                });
+            }
+        }
+        split_css(attrs.style, css);
         return css;
     }
+    
     
     function table_builder(draw) {
         var columns = [];
@@ -1202,7 +1222,7 @@ function json_builder(nsmap, factory, root, options) {
         function row_(start, attrs) {
             if (start) {
                 column = 0;
-                var css = split_css(attrs.style);
+                var css = get_css(attrs);
                 rows.push(factory.row(attrs, css));
             }
         }
@@ -1213,7 +1233,7 @@ function json_builder(nsmap, factory, root, options) {
                     columns.push(factory.column(attrs));
                 }
                 var row = rows.length - 1;
-                var css = split_css(attrs.style);               
+                var css = get_css(attrs);               
                 var cell = factory.cell(css, column, row, columns[column].m_iWidth, rows[row].m_iHeight);
                 cells.push(cell);
                 return stl.handler_dispatcher(nsmap, story_builder(cell.m_pTextDraw));
@@ -1376,7 +1396,7 @@ function json_builder(nsmap, factory, root, options) {
 
         function block_(start, attrs) {
             if (start) {
-                styles.push(split_css(attrs.style, clone_css(styles.top())));
+                styles.push(get_css(attrs, styles.top()));
             } else {
                 styles.pop();
             }
@@ -1386,7 +1406,7 @@ function json_builder(nsmap, factory, root, options) {
             if (start) {
                 if (inside.paragraph)
                     return unsupported("stl:p nesting");
-                styles.push(split_css(attrs.style, clone_css(styles.top())));
+                styles.push(get_css(attrs, styles.top()));
                 insert_pstyle();
                 inside.paragraph = true;
             } else {
@@ -1470,7 +1490,7 @@ function json_builder(nsmap, factory, root, options) {
                 styles.dirty = true;
                 if (start) {
                     oldcss = styles.top();
-                    styles.push(split_css(attrs.style, clone_css(styles.top())));
+                    styles.push(get_css(attrs, styles.top()));
                 } else {
                     oldcss = styles.pop();
                 }
@@ -1489,7 +1509,7 @@ function json_builder(nsmap, factory, root, options) {
         
         function table_(start, attrs) {
             if (start) {
-                var css = split_css(attrs.style);
+                var css = get_css(attrs);
                 var draw = object_start(factory.table(attrs, css));
                 return stl.handler_dispatcher(nsmap, table_builder(draw));
             } else {
@@ -1501,7 +1521,7 @@ function json_builder(nsmap, factory, root, options) {
             if (start) {
                 if (attrs.story)
                     return unsupported("stl:story reference");
-                var css = split_css(attrs.style);
+                var css = get_css(attrs);
                 object_start(factory.text(attrs, css));
             } else {
                 object_end();
@@ -1575,7 +1595,7 @@ function json_builder(nsmap, factory, root, options) {
             if (start) {
                 if (attrs.story)
                     return unsupported("stl:story reference");
-                var css = split_css(attrs.style);
+                var css = get_css(attrs);
                 object_start(factory.text(attrs, css));
             } else {
                 object_end();
@@ -1593,7 +1613,7 @@ function json_builder(nsmap, factory, root, options) {
 
         function table_(start, attrs) {
             if (start) {
-                var css = split_css(attrs.style);
+                var css = get_css(attrs);
                 var draw = object_start(factory.table(attrs, css));
                 return stl.handler_dispatcher(nsmap, table_builder(draw));
             } else {
@@ -1641,16 +1661,27 @@ function json_builder(nsmap, factory, root, options) {
         };
     }
     
-    function root_builder() {
+    function root_builder(stylesheet) {
         function document_(start, attrs) {
             if (start)
                 return stl.handler_dispatcher(nsmap, doc_builder());
         }
+
+        function style_(start, attrs) {
+            if (start) {
+                return attrs.src
+                    ? unsupported('linked stylesheet')
+                    : stl.text_accumulator(function(css) {
+                        ctx.stylesheet = stl.css_parse(css);
+                    });
+            }
+        }
+        
         return {
             stl_: () => {},
             data_: () => unsupported("stl:data"), 
             fixtures_: () => unsupported("stl:fixtures"),
-            style_: () => unsupported("stl:style"),
+            style_: style_,
             document_: document_,
             text: unexpected_text, 
             finalize: () => {}
@@ -1671,6 +1702,7 @@ function json_builder(nsmap, factory, root, options) {
  *    - `input` ... input string or stream containing _Empower JSON_
  *    - `options` ... following options are currently supported:
  *      - `output` ... optional output stream to be filled with resulting _STL_
+ *      - `css` ... `false` => inline styles, `true` => internal stylesheet, `stream` => external stylesheet
  *      - `indent` ... bool, string or a function(tag, tags, is_start) used for indentation
  *      - `page` ... bool determining whether page type should be generated
  *      - `resources` ... optional object representing resources (typically parsed from `designpack.json`)
@@ -1685,7 +1717,7 @@ exports.emp2stl = function emp2stl(input, options) {
     options = check_options(options);
 
     var contents = JSON.parse(input).contents;
-    var writer = stl.stl_writer(options.indent);
+    var writer = stl.stl_writer(options.indent, options.css);
     build_stl(contents, writer, options);
     var output = writer.finalize();
     if (!options.output) {

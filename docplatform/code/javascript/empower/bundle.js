@@ -1534,7 +1534,612 @@ function decodeUtf8Char (str) {
   }
 }
 
-},{"base64-js":"base64-js","ieee754":"ieee754"}],"empower.json":[function(require,module,exports){
+},{"base64-js":"base64-js","ieee754":"ieee754"}],"css":[function(require,module,exports){
+// http://www.w3.org/TR/CSS21/grammar.html
+// https://github.com/visionmedia/css-parse/pull/49#issuecomment-30088027
+var commentre = /\/\*[^*]*\*+([^/*][^*]*\*+)*\//g
+
+exports.parse = function(css, options){
+  options = options || {};
+
+  /**
+   * Positional.
+   */
+
+  var lineno = 1;
+  var column = 1;
+
+  /**
+   * Update lineno and column based on `str`.
+   */
+
+  function updatePosition(str) {
+    var lines = str.match(/\n/g);
+    if (lines) lineno += lines.length;
+    var i = str.lastIndexOf('\n');
+    column = ~i ? str.length - i : column + str.length;
+  }
+
+  /**
+   * Mark position and patch `node.position`.
+   */
+
+  function position() {
+    var start = { line: lineno, column: column };
+    return function(node){
+      node.position = new Position(start);
+      whitespace();
+      return node;
+    };
+  }
+
+  /**
+   * Store position information for a node
+   */
+
+  function Position(start) {
+    this.start = start;
+    this.end = { line: lineno, column: column };
+    this.source = options.source;
+  }
+
+  /**
+   * Non-enumerable source string
+   */
+
+  Position.prototype.content = css;
+
+  /**
+   * Error `msg`.
+   */
+
+  var errorsList = [];
+
+  function error(msg) {
+    var err = new Error(options.source + ':' + lineno + ':' + column + ': ' + msg);
+    err.reason = msg;
+    err.filename = options.source;
+    err.line = lineno;
+    err.column = column;
+    err.source = css;
+
+    if (options.silent) {
+      errorsList.push(err);
+    } else {
+      throw err;
+    }
+  }
+
+  /**
+   * Parse stylesheet.
+   */
+
+  function stylesheet() {
+    var rulesList = rules();
+
+    return {
+      type: 'stylesheet',
+      stylesheet: {
+        source: options.source,
+        rules: rulesList,
+        parsingErrors: errorsList
+      }
+    };
+  }
+
+  /**
+   * Opening brace.
+   */
+
+  function open() {
+    return match(/^{\s*/);
+  }
+
+  /**
+   * Closing brace.
+   */
+
+  function close() {
+    return match(/^}/);
+  }
+
+  /**
+   * Parse ruleset.
+   */
+
+  function rules() {
+    var node;
+    var rules = [];
+    whitespace();
+    comments(rules);
+    while (css.length && css.charAt(0) != '}' && (node = atrule() || rule())) {
+      if (node !== false) {
+        rules.push(node);
+        comments(rules);
+      }
+    }
+    return rules;
+  }
+
+  /**
+   * Match `re` and return captures.
+   */
+
+  function match(re) {
+    var m = re.exec(css);
+    if (!m) return;
+    var str = m[0];
+    updatePosition(str);
+    css = css.slice(str.length);
+    return m;
+  }
+
+  /**
+   * Parse whitespace.
+   */
+
+  function whitespace() {
+    match(/^\s*/);
+  }
+
+  /**
+   * Parse comments;
+   */
+
+  function comments(rules) {
+    var c;
+    rules = rules || [];
+    while (c = comment()) {
+      if (c !== false) {
+        rules.push(c);
+      }
+    }
+    return rules;
+  }
+
+  /**
+   * Parse comment.
+   */
+
+  function comment() {
+    var pos = position();
+    if ('/' != css.charAt(0) || '*' != css.charAt(1)) return;
+
+    var i = 2;
+    while ("" != css.charAt(i) && ('*' != css.charAt(i) || '/' != css.charAt(i + 1))) ++i;
+    i += 2;
+
+    if ("" === css.charAt(i-1)) {
+      return error('End of comment missing');
+    }
+
+    var str = css.slice(2, i - 2);
+    column += 2;
+    updatePosition(str);
+    css = css.slice(i);
+    column += 2;
+
+    return pos({
+      type: 'comment',
+      comment: str
+    });
+  }
+
+  /**
+   * Parse selector.
+   */
+
+  function selector() {
+    var m = match(/^([^{]+)/);
+    if (!m) return;
+    /* @fix Remove all comments from selectors
+     * http://ostermiller.org/findcomment.html */
+    return trim(m[0])
+      .replace(/\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*\/+/g, '')
+      .replace(/"(?:\\"|[^"])*"|'(?:\\'|[^'])*'/g, function(m) {
+        return m.replace(/,/g, '\u200C');
+      })
+      .split(/\s*(?![^(]*\)),\s*/)
+      .map(function(s) {
+        return s.replace(/\u200C/g, ',');
+      });
+  }
+
+  /**
+   * Parse declaration.
+   */
+
+  function declaration() {
+    var pos = position();
+
+    // prop
+    var prop = match(/^(\*?[-#\/\*\\\w]+(\[[0-9a-z_-]+\])?)\s*/);
+    if (!prop) return;
+    prop = trim(prop[0]);
+
+    // :
+    if (!match(/^:\s*/)) return error("property missing ':'");
+
+    // val
+    var val = match(/^((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^\)]*?\)|[^};])+)/);
+
+    var ret = pos({
+      type: 'declaration',
+      property: prop.replace(commentre, ''),
+      value: val ? trim(val[0]).replace(commentre, '') : ''
+    });
+
+    // ;
+    match(/^[;\s]*/);
+
+    return ret;
+  }
+
+  /**
+   * Parse declarations.
+   */
+
+  function declarations() {
+    var decls = [];
+
+    if (!open()) return error("missing '{'");
+    comments(decls);
+
+    // declarations
+    var decl;
+    while (decl = declaration()) {
+      if (decl !== false) {
+        decls.push(decl);
+        comments(decls);
+      }
+    }
+
+    if (!close()) return error("missing '}'");
+    return decls;
+  }
+
+  /**
+   * Parse keyframe.
+   */
+
+  function keyframe() {
+    var m;
+    var vals = [];
+    var pos = position();
+
+    while (m = match(/^((\d+\.\d+|\.\d+|\d+)%?|[a-z]+)\s*/)) {
+      vals.push(m[1]);
+      match(/^,\s*/);
+    }
+
+    if (!vals.length) return;
+
+    return pos({
+      type: 'keyframe',
+      values: vals,
+      declarations: declarations()
+    });
+  }
+
+  /**
+   * Parse keyframes.
+   */
+
+  function atkeyframes() {
+    var pos = position();
+    var m = match(/^@([-\w]+)?keyframes\s*/);
+
+    if (!m) return;
+    var vendor = m[1];
+
+    // identifier
+    var m = match(/^([-\w]+)\s*/);
+    if (!m) return error("@keyframes missing name");
+    var name = m[1];
+
+    if (!open()) return error("@keyframes missing '{'");
+
+    var frame;
+    var frames = comments();
+    while (frame = keyframe()) {
+      frames.push(frame);
+      frames = frames.concat(comments());
+    }
+
+    if (!close()) return error("@keyframes missing '}'");
+
+    return pos({
+      type: 'keyframes',
+      name: name,
+      vendor: vendor,
+      keyframes: frames
+    });
+  }
+
+  /**
+   * Parse supports.
+   */
+
+  function atsupports() {
+    var pos = position();
+    var m = match(/^@supports *([^{]+)/);
+
+    if (!m) return;
+    var supports = trim(m[1]);
+
+    if (!open()) return error("@supports missing '{'");
+
+    var style = comments().concat(rules());
+
+    if (!close()) return error("@supports missing '}'");
+
+    return pos({
+      type: 'supports',
+      supports: supports,
+      rules: style
+    });
+  }
+
+  /**
+   * Parse host.
+   */
+
+  function athost() {
+    var pos = position();
+    var m = match(/^@host\s*/);
+
+    if (!m) return;
+
+    if (!open()) return error("@host missing '{'");
+
+    var style = comments().concat(rules());
+
+    if (!close()) return error("@host missing '}'");
+
+    return pos({
+      type: 'host',
+      rules: style
+    });
+  }
+
+  /**
+   * Parse media.
+   */
+
+  function atmedia() {
+    var pos = position();
+    var m = match(/^@media *([^{]+)/);
+
+    if (!m) return;
+    var media = trim(m[1]);
+
+    if (!open()) return error("@media missing '{'");
+
+    var style = comments().concat(rules());
+
+    if (!close()) return error("@media missing '}'");
+
+    return pos({
+      type: 'media',
+      media: media,
+      rules: style
+    });
+  }
+
+
+  /**
+   * Parse custom-media.
+   */
+
+  function atcustommedia() {
+    var pos = position();
+    var m = match(/^@custom-media\s+(--[^\s]+)\s*([^{;]+);/);
+    if (!m) return;
+
+    return pos({
+      type: 'custom-media',
+      name: trim(m[1]),
+      media: trim(m[2])
+    });
+  }
+
+  /**
+   * Parse paged media.
+   */
+
+  function atpage() {
+    var pos = position();
+    var m = match(/^@page */);
+    if (!m) return;
+
+    var sel = selector() || [];
+
+    if (!open()) return error("@page missing '{'");
+    var decls = comments();
+
+    // declarations
+    var decl;
+    while (decl = declaration()) {
+      decls.push(decl);
+      decls = decls.concat(comments());
+    }
+
+    if (!close()) return error("@page missing '}'");
+
+    return pos({
+      type: 'page',
+      selectors: sel,
+      declarations: decls
+    });
+  }
+
+  /**
+   * Parse document.
+   */
+
+  function atdocument() {
+    var pos = position();
+    var m = match(/^@([-\w]+)?document *([^{]+)/);
+    if (!m) return;
+
+    var vendor = trim(m[1]);
+    var doc = trim(m[2]);
+
+    if (!open()) return error("@document missing '{'");
+
+    var style = comments().concat(rules());
+
+    if (!close()) return error("@document missing '}'");
+
+    return pos({
+      type: 'document',
+      document: doc,
+      vendor: vendor,
+      rules: style
+    });
+  }
+
+  /**
+   * Parse font-face.
+   */
+
+  function atfontface() {
+    var pos = position();
+    var m = match(/^@font-face\s*/);
+    if (!m) return;
+
+    if (!open()) return error("@font-face missing '{'");
+    var decls = comments();
+
+    // declarations
+    var decl;
+    while (decl = declaration()) {
+      decls.push(decl);
+      decls = decls.concat(comments());
+    }
+
+    if (!close()) return error("@font-face missing '}'");
+
+    return pos({
+      type: 'font-face',
+      declarations: decls
+    });
+  }
+
+  /**
+   * Parse import
+   */
+
+  var atimport = _compileAtrule('import');
+
+  /**
+   * Parse charset
+   */
+
+  var atcharset = _compileAtrule('charset');
+
+  /**
+   * Parse namespace
+   */
+
+  var atnamespace = _compileAtrule('namespace');
+
+  /**
+   * Parse non-block at-rules
+   */
+
+
+  function _compileAtrule(name) {
+    var re = new RegExp('^@' + name + '\\s*([^;]+);');
+    return function() {
+      var pos = position();
+      var m = match(re);
+      if (!m) return;
+      var ret = { type: name };
+      ret[name] = m[1].trim();
+      return pos(ret);
+    }
+  }
+
+  /**
+   * Parse at rule.
+   */
+
+  function atrule() {
+    if (css[0] != '@') return;
+
+    return atkeyframes()
+      || atmedia()
+      || atcustommedia()
+      || atsupports()
+      || atimport()
+      || atcharset()
+      || atnamespace()
+      || atdocument()
+      || atpage()
+      || athost()
+      || atfontface();
+  }
+
+  /**
+   * Parse rule.
+   */
+
+  function rule() {
+    var pos = position();
+    var sel = selector();
+
+    if (!sel) return error('selector missing');
+    comments();
+
+    return pos({
+      type: 'rule',
+      selectors: sel,
+      declarations: declarations()
+    });
+  }
+
+  return addParent(stylesheet());
+};
+
+/**
+ * Trim `str`.
+ */
+
+function trim(str) {
+  return str ? str.replace(/^\s+|\s+$/g, '') : '';
+}
+
+/**
+ * Adds non-enumerable parent node reference to each node.
+ */
+
+function addParent(obj, parent) {
+  var isNode = obj && typeof obj.type === 'string';
+  var childParent = isNode ? obj : parent;
+
+  for (var k in obj) {
+    var value = obj[k];
+    if (Array.isArray(value)) {
+      value.forEach(function(v) { addParent(v, childParent); });
+    } else if (value && typeof value === 'object') {
+      addParent(value, childParent);
+    }
+  }
+
+  if (isNode) {
+    Object.defineProperty(obj, 'parent', {
+      configurable: true,
+      writable: true,
+      enumerable: false,
+      value: parent || null
+    });
+  }
+
+  return obj;
+}
+
+},{}],"empower.json":[function(require,module,exports){
 module.exports={
     "enums": {
         "item": {
@@ -3289,6 +3894,10 @@ function json_factory(options) {
 }
 
 function json_builder(nsmap, factory, root, options) {
+    var ctx = {
+        stylesheet: {}
+    };
+
     const unsupported = function (item) {
         var message = "Unsupported " + item;
         if (options.permissive) {
@@ -3309,24 +3918,40 @@ function json_builder(nsmap, factory, root, options) {
         if (data.trim())
             unexpected("stl:stl", "text");
     }
-
-    function clone_css(css) {
-        return JSON.parse(JSON.stringify(css));
-    }
-    function split_css(style, css) {
-        css = css || {};
-        if (style) {
-            style.trim().split(';').forEach(function(property) {
-                var parts = property.trim().split(':');
-                if (parts.length === 2) {
-                    css[parts[0].trim()] = parts[1].trim();
-                } else if (parts[0].length) {
-                    throw new Error("Invalid CSS property: "+parts[0]);
-                }
-            });
+    
+    function get_css(attrs, basecss) {
+        function clone_css(css) {
+            return JSON.parse(JSON.stringify(css));
         }
+        
+        function split_css(style, css) {
+            css = css || {};
+            if (style) {
+                style.trim().split(';').forEach(function(property) {
+                    var parts = property.trim().split(':');
+                    if (parts.length === 2) {
+                        css[parts[0].trim()] = parts[1].trim();
+                    } else if (parts[0].length) {
+                        throw new Error("Invalid CSS property: "+parts[0]);
+                    }
+                });
+            }
+            return css;
+        }
+        var css = basecss ? clone_css(basecss) : {};
+        var cls = attrs['class'];
+        if (cls) {
+            var style = ctx.stylesheet['.'+cls];
+            if (style) {
+                Object.keys(style).forEach(function (prop) {
+                    css[prop] = style[prop];
+                });
+            }
+        }
+        split_css(attrs.style, css);
         return css;
     }
+    
     
     function table_builder(draw) {
         var columns = [];
@@ -3337,7 +3962,7 @@ function json_builder(nsmap, factory, root, options) {
         function row_(start, attrs) {
             if (start) {
                 column = 0;
-                var css = split_css(attrs.style);
+                var css = get_css(attrs);
                 rows.push(factory.row(attrs, css));
             }
         }
@@ -3348,7 +3973,7 @@ function json_builder(nsmap, factory, root, options) {
                     columns.push(factory.column(attrs));
                 }
                 var row = rows.length - 1;
-                var css = split_css(attrs.style);               
+                var css = get_css(attrs);               
                 var cell = factory.cell(css, column, row, columns[column].m_iWidth, rows[row].m_iHeight);
                 cells.push(cell);
                 return stl.handler_dispatcher(nsmap, story_builder(cell.m_pTextDraw));
@@ -3511,7 +4136,7 @@ function json_builder(nsmap, factory, root, options) {
 
         function block_(start, attrs) {
             if (start) {
-                styles.push(split_css(attrs.style, clone_css(styles.top())));
+                styles.push(get_css(attrs, styles.top()));
             } else {
                 styles.pop();
             }
@@ -3521,7 +4146,7 @@ function json_builder(nsmap, factory, root, options) {
             if (start) {
                 if (inside.paragraph)
                     return unsupported("stl:p nesting");
-                styles.push(split_css(attrs.style, clone_css(styles.top())));
+                styles.push(get_css(attrs, styles.top()));
                 insert_pstyle();
                 inside.paragraph = true;
             } else {
@@ -3605,7 +4230,7 @@ function json_builder(nsmap, factory, root, options) {
                 styles.dirty = true;
                 if (start) {
                     oldcss = styles.top();
-                    styles.push(split_css(attrs.style, clone_css(styles.top())));
+                    styles.push(get_css(attrs, styles.top()));
                 } else {
                     oldcss = styles.pop();
                 }
@@ -3624,7 +4249,7 @@ function json_builder(nsmap, factory, root, options) {
         
         function table_(start, attrs) {
             if (start) {
-                var css = split_css(attrs.style);
+                var css = get_css(attrs);
                 var draw = object_start(factory.table(attrs, css));
                 return stl.handler_dispatcher(nsmap, table_builder(draw));
             } else {
@@ -3636,7 +4261,7 @@ function json_builder(nsmap, factory, root, options) {
             if (start) {
                 if (attrs.story)
                     return unsupported("stl:story reference");
-                var css = split_css(attrs.style);
+                var css = get_css(attrs);
                 object_start(factory.text(attrs, css));
             } else {
                 object_end();
@@ -3710,7 +4335,7 @@ function json_builder(nsmap, factory, root, options) {
             if (start) {
                 if (attrs.story)
                     return unsupported("stl:story reference");
-                var css = split_css(attrs.style);
+                var css = get_css(attrs);
                 object_start(factory.text(attrs, css));
             } else {
                 object_end();
@@ -3728,7 +4353,7 @@ function json_builder(nsmap, factory, root, options) {
 
         function table_(start, attrs) {
             if (start) {
-                var css = split_css(attrs.style);
+                var css = get_css(attrs);
                 var draw = object_start(factory.table(attrs, css));
                 return stl.handler_dispatcher(nsmap, table_builder(draw));
             } else {
@@ -3776,16 +4401,27 @@ function json_builder(nsmap, factory, root, options) {
         };
     }
     
-    function root_builder() {
+    function root_builder(stylesheet) {
         function document_(start, attrs) {
             if (start)
                 return stl.handler_dispatcher(nsmap, doc_builder());
         }
+
+        function style_(start, attrs) {
+            if (start) {
+                return attrs.src
+                    ? unsupported('linked stylesheet')
+                    : stl.text_accumulator(function(css) {
+                        ctx.stylesheet = stl.css_parse(css);
+                    });
+            }
+        }
+        
         return {
             stl_: () => {},
             data_: () => unsupported("stl:data"), 
             fixtures_: () => unsupported("stl:fixtures"),
-            style_: () => unsupported("stl:style"),
+            style_: style_,
             document_: document_,
             text: unexpected_text, 
             finalize: () => {}
@@ -3806,6 +4442,7 @@ function json_builder(nsmap, factory, root, options) {
  *    - `input` ... input string or stream containing _Empower JSON_
  *    - `options` ... following options are currently supported:
  *      - `output` ... optional output stream to be filled with resulting _STL_
+ *      - `css` ... `false` => inline styles, `true` => internal stylesheet, `stream` => external stylesheet
  *      - `indent` ... bool, string or a function(tag, tags, is_start) used for indentation
  *      - `page` ... bool determining whether page type should be generated
  *      - `resources` ... optional object representing resources (typically parsed from `designpack.json`)
@@ -3820,7 +4457,7 @@ exports.emp2stl = function emp2stl(input, options) {
     options = check_options(options);
 
     var contents = JSON.parse(input).contents;
-    var writer = stl.stl_writer(options.indent);
+    var writer = stl.stl_writer(options.indent, options.css);
     build_stl(contents, writer, options);
     var output = writer.finalize();
     if (!options.output) {
@@ -5719,6 +6356,8 @@ if (!String.fromCodePoint) {
 
 'use strict';
 
+var util = require('util');
+
 var namespaces = {
     stl: "http://developer.opentext.com/schemas/storyteller/layout",
     xp: "http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
@@ -5832,6 +6471,21 @@ function element_stack(nsmap, next) {
     };
 }
 
+function is_element(tag, nsmap, expected_ns, expected_name) {
+    var split = tag.split(':', 2);
+    var alias = split.length === 1
+        ? ''
+        : split[0];
+    var name = split.length === 1
+        ? split[0]
+        : split[1];
+    if (name === expected_name) {
+        var ns = nsmap.lookup(alias);
+        return (ns === expected_ns);
+    }
+    return false;
+}
+
 //////////////////////////////////////////////////////////////////////////////////
 
 function ignorant() {
@@ -5923,18 +6577,7 @@ function preprocessor(nsmap, next, callback) {
     var fixture = null;
 
     function is_fixture(tag) {
-        var split = tag.split(':', 2);
-        var alias = split.length === 1
-            ? ''
-            : split[0];
-        var name = split.length === 1
-            ? split[0]
-            : split[1];
-        if (name === 'fixture') {
-            var ns = nsmap.lookup(alias);
-            return (ns === namespaces.xp);
-        }
-        return false;
+        return is_element(tag, nsmap, namespaces.xp, 'fixture');
     }
 
     function get_next() {
@@ -5982,10 +6625,15 @@ function preprocessor(nsmap, next, callback) {
     };
 }
 
-function normalizer(next) {
+function stl_normalizer(nsmap, next) {
     var data = '';
     var last_start = true;
+    var story_depth = 0;
 
+    function is_story(tag) {
+        return is_element(tag, nsmap, namespaces.stl, 'story');
+    }
+    
     function normalize_space(str, left_trim, right_trim) {
         if (str) {
             str = str.replace(/\s+/g, ' ');
@@ -6000,7 +6648,9 @@ function normalizer(next) {
     }
 
     function flush(start) {
-        data = normalize_space(data, last_start, !start);
+        if (story_depth) {
+            data = normalize_space(data, last_start, !start);
+        }
         if (data) {
             next.text(data);
             data = '';
@@ -6011,11 +6661,17 @@ function normalizer(next) {
     function start(name, attrs) {
         flush(true);
         next.start(name, attrs);
+        if (is_story(name)) {
+            story_depth += 1;
+        }
     }
 
     function end(name, attrs) {
         flush(false);
         next.end(name, attrs);
+        if (is_story(name)) {
+            story_depth -= 1;
+        }
     }
 
     function text(txt) {
@@ -6122,7 +6778,7 @@ function sax_parser(nsmap, builder, cfg) {
 
     var dispatcher = dispatch_stack(handler_dispatcher(nsmap, builder));
     var preprocess = preprocessor(nsmap, dispatcher, cfg.fixture);
-    var normalize = normalizer(preprocess);
+    var normalize = stl_normalizer(nsmap, preprocess);
     var elements = element_stack(nsmap, normalize);
 
     var parser = sax.parser(true);
@@ -6137,7 +6793,6 @@ function sax_parser(nsmap, builder, cfg) {
 //////////////////////////////////////////////////////////////////////////////////////
 
 function make_indenter(indent, default_indent) {
-    var util = require('util');
     if (util.isFunction(indent)) {
         return indent;
     }
@@ -6156,8 +6811,9 @@ function make_indenter(indent, default_indent) {
     return () => '';
 }
 
-function xml_writer(indenter) {
-    var tags = [];
+function xml_writer(indenter, initial_tags) {
+    initial_tags = initial_tags || [];
+    var tags = initial_tags.slice();
     var no_children;
     var content = '';
     var attr_escape = xml_escaper(/[<&"]/g);
@@ -6179,11 +6835,6 @@ function xml_writer(indenter) {
         return '</' + tag + '>';
     }
 
-    function flush() {
-        content += cache;
-        cache = '';
-    }
-    
     function start(tag, attrs) {
         var line = format_start(tag, attrs);
         var indent = indenter(tag, tags, true);
@@ -6221,24 +6872,84 @@ function xml_writer(indenter) {
         content += text_escape(data);
     }
 
+    function inject(markup) {
+        no_children = false;
+        content += markup;
+    }
+    
     function finalize() {
-        return content;
+        if (tags.length != initial_tags.length)
+            throw new Error("xml_writer parity mismatch");
+        var result = content;
+        content = '';
+        return result;
     }
 
     return {
         start: start,
         end: end,
         text: text,
+        inject: inject,
         finalize: finalize
     };
 }
 
-function stl_writer(indent) {
-    var writer = xml_writer(make_indenter(indent));
+function css_map(normalize) {
+    var categories = {};
+    
+    function cls(style, tag) {
+        tag = tag || 'cls';
+        if (normalize) {
+            style = style.split(';').map(function (s) {
+                return s.split(':').map(p => p.trim()).join(':');
+            }).sort().join(';');
+        }
+        if (!style)
+            return null;
+        var category = categories[tag];
+        if (category === undefined) {
+            category = categories[tag] = [];
+        }
+        var i = category.indexOf(style);
+        if (i === -1) {
+            i = category.length;
+            category.push(style);
+        }
+        return tag + (i + 1);
+    }
+
+    function all() {
+        var result = {};
+        Object.keys(categories).forEach(function (cat) {
+            categories[cat].forEach(function (style, index) {
+                result[cat + (index + 1)] = style;
+            });
+        });
+        return Object.keys(result).length ? result : null;
+    }
+
+    return {
+        cls: cls,
+        all: all
+    };
+}
+
+function stl_writer(indent, css) {
+    var writer = xml_writer(make_indenter(indent), ['stl:stl']);
+    var cssmap = css ? css_map(true) : null;
 
     function start(tag, attrs) {
-        if (attrs && attrs.style === '') {
-            delete attrs.style;
+        if (attrs && attrs.style !== undefined) {
+            if (cssmap) {
+                var cls = cssmap.cls(attrs.style, tag);
+                delete attrs.style;
+                if (cls !== null) {
+                    attrs['class'] = cls;
+                }
+            } else {
+                if (attrs.style.trim() === '')
+                    delete attrs.style;
+            }
         }
         writer.start('stl:' + tag, attrs);
     }
@@ -6252,23 +6963,85 @@ function stl_writer(indent) {
     }
 
     function finalize() {
-        end('stl');
+        function stylesheet(styles) {
+            var content = '';
+            Object.keys(styles).forEach(function (style, index) {
+                content += '\n.'+style+' {\n  ';
+                content += styles[style].split(';').map(s => s.replace(':', ': ')).join(';\n  ');
+                content += '\n}';
+            });
+            return content;
+        }
+        
         var content = writer.finalize();
+        writer = xml_writer(make_indenter(indent));
+        var attrs = {
+            'xmlns:stl': exports.namespaces.stl,
+            version: exports.version
+        };
+        writer.start('stl:stl', attrs);
+        if (cssmap) {
+            var styles = cssmap.all();
+            if (styles) {
+                var ss = stylesheet(styles);
+                if (util.isStream(css)) {
+                    css.write(ss);
+                    writer.start('stl:style', {src: css.uri});
+                    writer.end('stl:style');
+                } else {
+                    writer.start('stl:style');
+                    writer.text(ss.replace(/\n/g, '\n    '));
+                    writer.end('stl:style');
+                }
+            }
+        }
+        writer.inject(content);
+        writer.end('stl:stl');
+        content = writer.finalize();
         writer = null;
         return content;
     }
 
-    var attrs = {
-        'xmlns:stl': exports.namespaces.stl,
-        version: exports.version
-    };
-    start('stl', attrs);
     return {
         start: start,
         end: end,
         text: text,
         finalize: finalize
     };
+}
+
+////////////////////////////////////////////////////////////////////////////
+
+function css_parse(css) {
+    function compileProps(rules, selector, styles) {
+        var result = (styles && styles[selector]) || {};
+        rules.forEach(function(rule) {
+            if (rule.selectors.indexOf(selector) !== -1) {
+                rule.declarations.filter((decl) => decl.type === 'declaration').forEach(function(decl) {
+                    result[decl.property] = decl.value;
+                });
+            }
+        });
+        return result;
+    }
+
+    function compileStylesheet(rules, styles) {
+        styles = styles || {};
+        rules.forEach(function(rule) {
+            rule.selectors.filter((sel) => sel.startsWith('.') && !sel.endsWith('::marker')).forEach(function(selector) {
+                styles[selector] = compileProps(rules, selector, styles);
+                var marker = compileProps(rules, selector+'::marker');
+                if (Object.keys(marker).length)
+                    styles[selector]['-stl-list-marker'] = marker;
+            });
+        });
+        return styles;
+    }
+
+    var parse = require('css').parse;
+    var rules = parse(css).stylesheet.rules.filter((rule) => rule.type === 'rule');
+    var styles = compileStylesheet(rules);
+    return styles;
 }
 
 exports.version = '0.1';
@@ -6285,8 +7058,9 @@ exports.xml_escaper = xml_escaper;
 exports.make_indenter = make_indenter;
 exports.xml_writer = xml_writer;
 exports.stl_writer = stl_writer;
+exports.css_parse = css_parse;
 
-},{"he":"he","sax":"sax","streams":false,"util":"util"}],"util":[function(require,module,exports){
+},{"css":"css","he":"he","sax":"sax","streams":false,"util":"util"}],"util":[function(require,module,exports){
 // NOTE: These type checking functions intentionally don't use `instanceof`
 // because it is fragile and can be easily faked with `Object.create()`.
 var isArray = exports.isArray = Array.isArray;

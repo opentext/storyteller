@@ -68,7 +68,6 @@ function html_writer(indent) {
     }
 
     function finalize() {
-        end('body');
         end('html');
         var content = writer.finalize();
         writer = null;
@@ -76,7 +75,6 @@ function html_writer(indent) {
     }
 
     start('html');
-    start('body');
     return {
         start: start,
         end: end,
@@ -255,9 +253,20 @@ function html_builder(nsmap, writer, options) {
     function story_builder(writer) {
         var inside = {};
 
+        function css_classes(cls1, cls2) {
+            if (cls1) {
+                if (cls2) {
+                    return cls1 + ' ' + cls2;
+                }
+                return cls1;
+            } else if (cls2) {
+                return cls2;
+            }
+        }
+        
         function block_(start, attrs) {
             if (start) {
-                writer.start('div', {'class': 'stl-block', style: attrs.style});
+                writer.start('div', {'class': css_classes('stl-block', attrs['class']), style: attrs.style});
             } else {
                 writer.end('div');
             }
@@ -265,7 +274,7 @@ function html_builder(nsmap, writer, options) {
 
         function p_(start, attrs) {
             if (start) {
-                writer.start('div', {'class': 'stl-p', style: attrs.style});
+                writer.start('div', {'class': css_classes('stl-p', attrs['class']), style: attrs.style});
                 inside.paragraph = true;
             } else {
                 writer.end('div');
@@ -298,7 +307,7 @@ function html_builder(nsmap, writer, options) {
         
         function span_(start, attrs) {
             if (start) {
-                writer.start('span', {'class': 'stl-span', style: attrs.style});
+                writer.start('span', {'class': css_classes('stl-span', attrs['class']), style: attrs.style});
             } else {
                 writer.end('span');
             }
@@ -306,7 +315,7 @@ function html_builder(nsmap, writer, options) {
 
         function image_(start, attrs) {
             if (start) {
-                writer.start('img', {'class': 'stl-image', width: attrs.w, height: attrs.h, src: attrs.src});
+                writer.start('img', {'class': css_classes('stl-image', attrs['class']), width: attrs.w, height: attrs.h, src: attrs.src});
                 return stl.empty_checker();
             } else {
                 writer.end('img');
@@ -315,7 +324,7 @@ function html_builder(nsmap, writer, options) {
         
         function table_(start, attrs) {
             if (start) {
-                writer.start('table', {'class': 'stl-table', style: attrs.style});
+                writer.start('table', {'class': css_classes('stl-table', attrs['class']), style: attrs.style});
                 return stl.handler_dispatcher(nsmap, table_builder(writer));
             } else {
                 writer.end('table');
@@ -334,7 +343,7 @@ function html_builder(nsmap, writer, options) {
                 handle_resize(css);
                 css.transform = attrs.transform;
                 writer.start('div', {'class': 'stl-wrap', style: 'display: inline-block; vertical-align: text-bottom'});
-                writer.start('div', {'class': 'stl-text', style: css_format(css)});
+                writer.start('div', {'class': css_classes('stl-text', attrs['class']), style: css_format(css)});
                 inside.object = true;
             } else {
                 writer.end('div');
@@ -391,15 +400,38 @@ function html_builder(nsmap, writer, options) {
     
     function root_builder(writer) {
         function document_(start, attrs) {
-            if (start)
+            if (start) {
+                writer.start('body');
                 return stl.handler_dispatcher(nsmap, doc_builder(writer));
+            } else {
+                writer.end('body');
+            }
+        }
+
+        function style_(start, attrs) {
+            if (start) {
+                writer.start('head');
+                if (attrs.src) {
+                    writer.start('link', {rel: 'stylesheet', type: 'text/css', href: attrs.src});
+                    writer.end('link');
+                } else {
+                    writer.start('style');
+                    return stl.text_accumulator(function(css) {
+                        writer.text(css);
+                        writer.end('style');
+                    });
+                }
+            }
+            else {
+                writer.end('head');
+            }
         }
         
         return {
             stl_: () => {},
             data_: () => unsupported("stl:data"), 
             fixtures_: () => unsupported("stl:fixtures"),
-            style_: () => unsupported("stl:style"),
+            style_: style_,
             document_: document_,
             text: unexpected_text, 
             finalize: () => {}

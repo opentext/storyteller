@@ -27,31 +27,8 @@ function basename(path) {
      return path.replace( /.*\//, "" );
 }
 
-function normalize_path(path) {
-    var segs = [];
-    path.split('/').forEach(function (p) {
-        if ('.' === p) {
-            // simply ignore empty and dot segments
-        }
-        else if ('..' === p ) {
-            if ( !segs.length )
-                throw new Error('Relative uris outside working tree are not allowed (uri: "' + path + '")');
-            segs.pop();
-        } else if ('' !== p || !segs.length) {
-            // we ignore empty seqments except the very first one
-            segs.push(p);
-        }
-    });
-    return segs.join('/');
-}
-
 function normalize_uri(uri) {
-    var sep = '://';
-    var index = uri.indexOf(sep);
-    if (index === -1 )
-        return normalize_path(uri);
-    index += sep.length;
-    return uri.substr(0,index) + normalize_path(uri.substr(index));
+    return repo.norm( uri )
 }
 
 // The resolve() function returns the exact filename that will be loaded when require() is called
@@ -211,7 +188,7 @@ if (settings.jslint.enabled) {
         stats = repo.stat(p);
         if (!stats)
             throw new Error('Invalid suppression: ' + p);
-        suppress.push(normalize_uri(stats.uri)+'/.*');
+        suppress.push(normalize_uri(stats.uri)+'.*');
     });
     suppressions = new RegExp(suppress.join('|'));
 }

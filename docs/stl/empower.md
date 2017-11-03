@@ -151,6 +151,7 @@ and `stl2emp` with following signatures:
     - `input` ... input string or stream containing _Empower JSON_
     - `options` ... following options are currently supported:
       - `output` ... optional output stream to be filled with resulting _STL_
+      - `css` ... `false` => inline styles, `true` => internal stylesheet, `stream` => external stylesheet
       - `indent` ... bool, string, number (of spaces) or a function(tag, tags, is_start) used for indentation
       - `page` ... bool determining whether page type should be generated
       - `resources` ... optional object representing resources (typically parsed from `designpack.json`)
@@ -220,6 +221,42 @@ And we can also generate a page & text boilerplate (via `emp2stl(json, {indent: 
   <stl:page w="8.5in" h="1in">
     <stl:text w="8.5in" h="1in" style="-stl-shape-resize: free 0pt max 0pt max" story="Main"/>
   </stl:page>
+</stl:stl>
+```
+
+We can enable internal CSS stylesheet (via `emp2stl(json, {indent: '  ', page: true, css: true})` call):
+
+```xml
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:style>
+    .text1 {
+      -stl-shape-resize: free 0pt max 0pt max
+    }
+  </stl:style>
+  <stl:document>
+    <stl:story name="Main" w="8.5in">
+      <stl:p/>
+    </stl:story>
+    <stl:page w="8.5in" h="1in">
+      <stl:text w="8.5in" h="1in" story="Main" class="text1"/>
+    </stl:page>
+  </stl:document>
+</stl:stl>
+```
+
+... or an external CSS stylesheet (via `emp2stl(json, {indent: '  ', page: true, css: cssOutStream})` call):
+
+```xml
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:style src="wd:/output/empty.css"/>
+  <stl:document>
+    <stl:story name="Main" w="8.5in">
+      <stl:p/>
+    </stl:story>
+    <stl:page w="8.5in" h="1in">
+      <stl:text w="8.5in" h="1in" story="Main" class="text1"/>
+    </stl:page>
+  </stl:document>
 </stl:stl>
 ```
 

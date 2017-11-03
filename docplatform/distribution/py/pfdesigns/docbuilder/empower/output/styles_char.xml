@@ -1,36 +1,75 @@
-
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:style>
+    .span1 {
+      font-family: Lato;
+      font-size: 10pt
+    }
+    .span2 {
+      font-family: Lato;
+      font-size: 14pt
+    }
+    .span3 {
+      font-family: Lato;
+      font-size: 8pt
+    }
+    .span4 {
+      font-family: Lato;
+      font-size: 10pt;
+      font-weight: bold
+    }
+    .span5 {
+      font-family: Lato;
+      font-size: 10pt;
+      font-style: italic
+    }
+    .span6 {
+      font-family: Lato;
+      font-size: 10pt;
+      text-decoration: underline
+    }
+    .span7 {
+      font-family: Lato;
+      font-size: 10pt;
+      text-decoration: line-through
+    }
+    .span8 {
+      font-family: Lato;
+      font-size: 10pt;
+      vertical-align: super
+    }
+    .span9 {
+      font-family: Lato;
+      font-size: 10pt;
+      vertical-align: sub
+    }
+    .span10 {
+      color: #0000C4;
+      font-family: Lato;
+      font-size: 10pt;
+      text-decoration: underline
+    }
+    .span11 {
+      color: #FF0000;
+      font-family: Lato;
+      font-size: 10pt
+    }
+    .span12 {
+      color: #00FF00;
+      font-family: Lato;
+      font-size: 10pt
+    }
+    .span13 {
+      color: #0000FF;
+      font-family: Lato;
+      font-size: 10pt
+    }
+  </stl:style>
   <stl:document>
     <stl:story name="Main" w="8.5in">
-      <stl:p>
-        <stl:span style="font-family: Lato; font-size: 10pt">Normal <stl:span/></stl:span>
-        <stl:span style="font-family: Lato; font-size: 14pt">Big</stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt"><stl:span/> <stl:span/></stl:span>
-        <stl:span style="font-family: Lato; font-size: 8pt">Small</stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt"><stl:span/> <stl:span/></stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt; font-weight: bold">Bold</stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt"><stl:span/> <stl:span/></stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt; font-style: italic">Italic</stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt"><stl:span/> <stl:span/></stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt; text-decoration: underline">Underline</stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt"><stl:span/> <stl:span/></stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt; text-decoration: line-through">Strikethrough</stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt"><stl:span/> <stl:span/></stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt; vertical-align: super">Superscript</stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt"><stl:span/> <stl:span/></stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt; vertical-align: sub">Subscript</stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt"><stl:span/> <stl:span/> <stl:span/></stl:span>
-        <stl:scope hyperlink="http://www.opentext.com">
-          <stl:story>
-            <stl:span style="font-family: Lato; font-size: 10pt; text-decoration: underline; color: #0000C4">hyperlink</stl:span>
+      <stl:p><stl:span class="span1">Normal <stl:span/></stl:span><stl:span class="span2">Big</stl:span><stl:span class="span1"><stl:span/> <stl:span/></stl:span><stl:span class="span3">Small</stl:span><stl:span class="span1"><stl:span/> <stl:span/></stl:span><stl:span class="span4">Bold</stl:span><stl:span class="span1"><stl:span/> <stl:span/></stl:span><stl:span class="span5">Italic</stl:span><stl:span class="span1"><stl:span/> <stl:span/></stl:span><stl:span class="span6">Underline</stl:span><stl:span class="span1"><stl:span/> <stl:span/></stl:span><stl:span class="span7">Strikethrough</stl:span><stl:span class="span1"><stl:span/> <stl:span/></stl:span><stl:span class="span8">Superscript</stl:span><stl:span class="span1"><stl:span/> <stl:span/></stl:span><stl:span class="span9">Subscript</stl:span><stl:span class="span1"><stl:span/> <stl:span/> <stl:span/></stl:span><stl:scope hyperlink="http://www.opentext.com">
+          <stl:story><stl:span class="span10">hyperlink</stl:span>
           </stl:story>
-        </stl:scope>
-        <stl:span style="font-family: Lato; font-size: 10pt; color: #FF0000"><stl:span/> Red</stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt"><stl:span/> <stl:span/></stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt; color: #00FF00">Green</stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt"><stl:span/> <stl:span/></stl:span>
-        <stl:span style="font-family: Lato; font-size: 10pt; color: #0000FF">Blue</stl:span>
-      </stl:p>
+        </stl:scope><stl:span class="span11"><stl:span/> Red</stl:span><stl:span class="span1"><stl:span/> <stl:span/></stl:span><stl:span class="span12">Green</stl:span><stl:span class="span1"><stl:span/> <stl:span/></stl:span><stl:span class="span13">Blue</stl:span></stl:p>
     </stl:story>
   </stl:document>
 </stl:stl>

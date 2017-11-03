@@ -1,64 +1,111 @@
-
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:style>
+    .table1 {
+      border: 0.02in dotted #FF0000;
+      display: table
+    }
+    .cell1 {
+      -stl-alignment: vertical 1;
+      background-color: #DBFF3B;
+      border-bottom: 0.02in dotted #00FF00;
+      padding-bottom: 0.02in;
+      padding-right: 0.05in
+    }
+    .cell2 {
+      -stl-alignment: vertical 1;
+      border-bottom: 0.02in dotted #00FF00;
+      border-left: 0.001in solid #FF0000;
+      padding-bottom: 0.02in
+    }
+    .cell3 {
+      -stl-alignment: vertical 1;
+      background-color: #FFC8C8;
+      border-bottom: 0.02in dotted #00FF00;
+      padding-bottom: 0.02in
+    }
+    .cell4 {
+      -stl-alignment: vertical 0.5;
+      padding-right: 0.05in
+    }
+    .cell5 {
+      -stl-alignment: vertical 0.5;
+      background-color: #B4FCFF;
+      border-bottom: 0.04in dotted #000000;
+      border-left: 0.03in solid #000000;
+      border-right: 0.02in solid #000000;
+      border-top: 0.05in dashed #000000
+    }
+    .cell6 {
+      -stl-alignment: vertical 0.5;
+      padding-left: 0.05in
+    }
+    .cell7 {
+      background-color: #79FF7E;
+      padding-right: 0.05in;
+      padding-top: 0.02in
+    }
+    .cell8 {
+      border-left: 0.001in solid #FF0000;
+      padding-top: 0.02in
+    }
+    .cell9 {
+      background-color: #FF74F9;
+      padding-left: 0.05in;
+      padding-top: 0.02in
+    }
+    .p1 {
+      text-align: right
+    }
+    .p2 {
+      text-align: center
+    }
+    .span1 {
+      font-family: Lato;
+      font-size: 10pt
+    }
+    .row1 {
+      -stl-shape-resize: free 0pt max 0pt max
+    }
+  </stl:style>
   <stl:document>
     <stl:story name="Main" w="4.2in">
-      <stl:p>
-        <stl:table style="border: 0.02in dotted #FF0000; display: table">
+      <stl:p><stl:table class="table1">
           <stl:story>
             <stl:row h="0.3in">
-              <stl:cell w="0.8in" style="padding-right: 0.05in; padding-bottom: 0.02in; border-bottom: 0.02in dotted #00FF00; background-color: #DBFF3B; -stl-alignment: vertical 1">
-                <stl:p style="text-align: right">
-                  <stl:span style="font-family: Lato; font-size: 10pt">Top Left</stl:span>
-                </stl:p>
+              <stl:cell w="0.8in" class="cell1">
+                <stl:p class="p1"><stl:span class="span1">Top Left</stl:span></stl:p>
               </stl:cell>
-              <stl:cell w="1.6in" style="padding-bottom: 0.02in; border-bottom: 0.02in dotted #00FF00; border-left: 0.001in solid #FF0000; -stl-alignment: vertical 1">
-                <stl:p style="text-align: center">
-                  <stl:span style="font-family: Lato; font-size: 10pt">Top center</stl:span>
-                </stl:p>
+              <stl:cell w="1.6in" class="cell2">
+                <stl:p class="p2"><stl:span class="span1">Top center</stl:span></stl:p>
               </stl:cell>
-              <stl:cell w="0.7in" style="padding-bottom: 0.02in; border-bottom: 0.02in dotted #00FF00; background-color: #FFC8C8; -stl-alignment: vertical 1">
-                <stl:p>
-                  <stl:span style="font-family: Lato; font-size: 10pt">Top right</stl:span>
-                </stl:p>
+              <stl:cell w="0.7in" class="cell3">
+                <stl:p><stl:span class="span1">Top right</stl:span></stl:p>
               </stl:cell>
             </stl:row>
-            <stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max">
-              <stl:cell style="padding-right: 0.05in; -stl-alignment: vertical 0.5">
-                <stl:p style="text-align: right">
-                  <stl:span style="font-family: Lato; font-size: 10pt">Middle left</stl:span>
-                </stl:p>
+            <stl:row h="0.25in" class="row1">
+              <stl:cell class="cell4">
+                <stl:p class="p1"><stl:span class="span1">Middle left</stl:span></stl:p>
               </stl:cell>
-              <stl:cell style="border-top: 0.05in dashed #000000; border-right: 0.02in solid #000000; border-bottom: 0.04in dotted #000000; border-left: 0.03in solid #000000; background-color: #B4FCFF; -stl-alignment: vertical 0.5">
-                <stl:p style="text-align: center">
-                  <stl:span style="font-family: Lato; font-size: 10pt">Center</stl:span>
-                </stl:p>
+              <stl:cell class="cell5">
+                <stl:p class="p2"><stl:span class="span1">Center</stl:span></stl:p>
               </stl:cell>
-              <stl:cell style="padding-left: 0.05in; -stl-alignment: vertical 0.5">
-                <stl:p>
-                  <stl:span style="font-family: Lato; font-size: 10pt">Middle right</stl:span>
-                </stl:p>
+              <stl:cell class="cell6">
+                <stl:p><stl:span class="span1">Middle right</stl:span></stl:p>
               </stl:cell>
             </stl:row>
-            <stl:row h="0.25in" style="-stl-shape-resize: free 0pt max 0pt max">
-              <stl:cell style="padding-right: 0.05in; padding-top: 0.02in; background-color: #79FF7E">
-                <stl:p style="text-align: right">
-                  <stl:span style="font-family: Lato; font-size: 10pt">Bottom left</stl:span>
-                </stl:p>
+            <stl:row h="0.25in" class="row1">
+              <stl:cell class="cell7">
+                <stl:p class="p1"><stl:span class="span1">Bottom left</stl:span></stl:p>
               </stl:cell>
-              <stl:cell style="padding-top: 0.02in; border-left: 0.001in solid #FF0000">
-                <stl:p style="text-align: center">
-                  <stl:span style="font-family: Lato; font-size: 10pt">Bottom center</stl:span>
-                </stl:p>
+              <stl:cell class="cell8">
+                <stl:p class="p2"><stl:span class="span1">Bottom center</stl:span></stl:p>
               </stl:cell>
-              <stl:cell style="padding-left: 0.05in; padding-top: 0.02in; background-color: #FF74F9">
-                <stl:p>
-                  <stl:span style="font-family: Lato; font-size: 10pt">Bottom right</stl:span>
-                </stl:p>
+              <stl:cell class="cell9">
+                <stl:p><stl:span class="span1">Bottom right</stl:span></stl:p>
               </stl:cell>
             </stl:row>
           </stl:story>
-        </stl:table>
-      </stl:p>
+        </stl:table></stl:p>
     </stl:story>
   </stl:document>
 </stl:stl>

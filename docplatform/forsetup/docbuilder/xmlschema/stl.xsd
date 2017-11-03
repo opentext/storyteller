@@ -35,6 +35,13 @@
     </xsd:restriction>
   </xsd:simpleType>
 
+  <xsd:simpleType name="identifier">
+    <xsd:restriction base="xsd:string">
+	  <!-- User defined identifiers should not start with underscore - it is reserved for internal IDs -->
+      <xsd:pattern value="[a-zA-Z][a-zA-Z_\-0-9]*"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
   <xsd:simpleType name="class">
     <xsd:restriction base="xsd:string">
       <xsd:pattern value="[a-zA-Z_][a-zA-Z_\-0-9]*"/>
@@ -68,11 +75,6 @@
 
   <xsd:simpleType name="locale">
     <xsd:restriction base="xsd:string" />
-  </xsd:simpleType>
-
-  <xsd:simpleType name="tabs">
-	<!-- Todo: validate tabs definition string -->
-    <xsd:restriction base="xsd:string"/>
   </xsd:simpleType>
 
   <xsd:simpleType name="points">
@@ -233,14 +235,6 @@
     </xsd:restriction>
   </xsd:simpleType>
 
-  <xsd:simpleType name="visibility_mode">
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="visible"/>
-      <xsd:enumeration value="hidden"/>
-      <xsd:enumeration value="invisible"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-
   <xsd:simpleType name="script_when">
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="before"/>
@@ -295,26 +289,6 @@
 
   <xsd:attributeGroup name="layout-item-attrs">
 	<xsd:attribute name="transform" type="stl:transform" />
-	<xsd:attribute name="visibility" type="stl:visibility_mode" />
-	<xsd:attribute name="wrapping-mode" type="stl:wrapping_mode" />
-  </xsd:attributeGroup>
-
-  <xsd:attributeGroup name="layout-item-attrs-fmt">
-	<!-- Following attributes all handle formatting, we should probably reduce them somehow -->
-	<xsd:attributeGroup ref="stl:layout-item-attrs"/>
-	<xsd:attribute name="loose-formatting" type="xsd:boolean" />
-	<xsd:attribute name="content-rescale" type="stl:resize_mode" />
-	<xsd:attribute name="content-h-growth" type="stl:unbounded_decimal" />
-	<xsd:attribute name="content-h-shrink" type="stl:unbounded_decimal" />
-	<xsd:attribute name="content-v-growth" type="stl:unbounded_decimal" />
-	<xsd:attribute name="content-v-shrink" type="stl:unbounded_decimal" />
-	<xsd:attribute name="shape-resize" type="stl:resize_mode" />
-	<xsd:attribute name="shape-h-growth" type="stl:unbounded_decimal" />
-	<xsd:attribute name="shape-h-shrink" type="stl:unbounded_decimal" />
-	<xsd:attribute name="shape-v-growth" type="stl:unbounded_decimal" />
-	<xsd:attribute name="shape-v-shrink" type="stl:unbounded_decimal" />
-	<xsd:attribute name="placement-h-ratio" type="xsd:decimal" />
-	<xsd:attribute name="placement-v-ratio" type="xsd:decimal" />
   </xsd:attributeGroup>
 
   <xsd:group name="layout-items">
@@ -572,7 +546,7 @@
 		<xsd:group ref="stl:runtime-items"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	  <xsd:attribute name="src" type="stl:uri"/>
 	</xsd:complexType>
@@ -584,7 +558,7 @@
 		<xsd:group ref="stl:runtime-items"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	  <xsd:attribute name="type" type="stl:input_type"/>
 	  <xsd:attribute name="xpath" type="stl:xpath"/>
@@ -609,7 +583,7 @@
 		<xsd:group ref="stl:runtime-items"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attribute name="data" type="stl:path_data"/>
 	</xsd:complexType>
   </xsd:element>
@@ -621,7 +595,7 @@
 		<xsd:group ref="stl:runtime-items"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	  <xsd:attribute name="story" type="stl:name"/>
 	</xsd:complexType>
@@ -634,7 +608,7 @@
 		<xsd:group ref="stl:runtime-items"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:bbox-attrs-ellipse"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	  <xsd:attribute name="story" type="stl:name"/>
 	</xsd:complexType>
@@ -647,7 +621,7 @@
 		<xsd:group ref="stl:runtime-items"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:bbox-attrs-circle"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	  <xsd:attribute name="story" type="stl:name"/>
 	</xsd:complexType>
@@ -660,7 +634,7 @@
 		<xsd:group ref="stl:runtime-items"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attribute name="points" type="stl:points"/>
 	  <xsd:attribute name="story" type="stl:name"/>
 	</xsd:complexType>
@@ -672,7 +646,7 @@
 		<xsd:group ref="stl:runtime-items"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attribute name="points" type="stl:points"/>
 	</xsd:complexType>
   </xsd:element>
@@ -683,7 +657,7 @@
 		<xsd:group ref="stl:runtime-items"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:bbox-attrs-line"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	</xsd:complexType>
   </xsd:element>
@@ -695,7 +669,7 @@
 		<xsd:group ref="stl:runtime-items"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	  <xsd:attribute name="story" type="stl:name"/>
 	</xsd:complexType>
@@ -707,7 +681,7 @@
 		<xsd:group ref="stl:runtime-items"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	  <xsd:attribute name="src" type="stl:uri"/>
 	  <xsd:attribute name="selector" type="stl:selector"/>
@@ -721,7 +695,7 @@
 		<xsd:element ref="stl:story" />
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	</xsd:complexType>
   </xsd:element>
@@ -762,7 +736,7 @@
 		<xsd:element ref="stl:modification" /> 
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	  <xsd:attribute name="modern" type="xsd:boolean"/>
 	  <xsd:attribute name="src" type="stl:uri" />
@@ -776,7 +750,7 @@
 		<xsd:element ref="stl:attribute"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs-fmt"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	  <xsd:attribute name="type" type="xsd:string"/>
 	  <xsd:attribute name="data" type="xsd:string"/>
@@ -814,7 +788,6 @@
 		<xsd:group ref="stl:inline-items"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
-	  <xsd:attribute name="tabs" type="stl:tabs" />
 	</xsd:complexType>
   </xsd:element>
 
@@ -849,15 +822,10 @@
 	<xsd:complexType>
 	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
 		<xsd:element ref="stl:list" />
-		<xsd:element ref="stl:li" />
 		<xsd:element ref="stl:p" />
 		<xsd:element ref="stl:command" />
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
-	  <xsd:attribute name="list-mask" type="xsd:string"/>
-	  <xsd:attribute name="list-style" type="stl:style"/>
-	  <xsd:attribute name="numbering-id" type="xsd:integer"/>
-	  <xsd:attribute name="tabs" type="stl:tabs" />
 	</xsd:complexType>
   </xsd:element>
 

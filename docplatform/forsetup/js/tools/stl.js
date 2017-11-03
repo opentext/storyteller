@@ -2,6 +2,8 @@
 
 'use strict';
 
+var util = require('util');
+
 var namespaces = {
     stl: "http://developer.opentext.com/schemas/storyteller/layout",
     xp: "http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
@@ -115,6 +117,21 @@ function element_stack(nsmap, next) {
     };
 }
 
+function is_element(tag, nsmap, expected_ns, expected_name) {
+    var split = tag.split(':', 2);
+    var alias = split.length === 1
+        ? ''
+        : split[0];
+    var name = split.length === 1
+        ? split[0]
+        : split[1];
+    if (name === expected_name) {
+        var ns = nsmap.lookup(alias);
+        return (ns === expected_ns);
+    }
+    return false;
+}
+
 //////////////////////////////////////////////////////////////////////////////////
 
 function ignorant() {
@@ -206,18 +223,7 @@ function preprocessor(nsmap, next, callback) {
     var fixture = null;
 
     function is_fixture(tag) {
-        var split = tag.split(':', 2);
-        var alias = split.length === 1
-            ? ''
-            : split[0];
-        var name = split.length === 1
-            ? split[0]
-            : split[1];
-        if (name === 'fixture') {
-            var ns = nsmap.lookup(alias);
-            return (ns === namespaces.xp);
-        }
-        return false;
+        return is_element(tag, nsmap, namespaces.xp, 'fixture');
     }
 
     function get_next() {
@@ -265,10 +271,15 @@ function preprocessor(nsmap, next, callback) {
     };
 }
 
-function normalizer(next) {
+function stl_normalizer(nsmap, next) {
     var data = '';
     var last_start = true;
+    var story_depth = 0;
 
+    function is_story(tag) {
+        return is_element(tag, nsmap, namespaces.stl, 'story');
+    }
+    
     function normalize_space(str, left_trim, right_trim) {
         if (str) {
             str = str.replace(/\s+/g, ' ');
@@ -283,7 +294,9 @@ function normalizer(next) {
     }
 
     function flush(start) {
-        data = normalize_space(data, last_start, !start);
+        if (story_depth) {
+            data = normalize_space(data, last_start, !start);
+        }
         if (data) {
             next.text(data);
             data = '';
@@ -294,11 +307,17 @@ function normalizer(next) {
     function start(name, attrs) {
         flush(true);
         next.start(name, attrs);
+        if (is_story(name)) {
+            story_depth += 1;
+        }
     }
 
     function end(name, attrs) {
         flush(false);
         next.end(name, attrs);
+        if (is_story(name)) {
+            story_depth -= 1;
+        }
     }
 
     function text(txt) {
@@ -405,7 +424,7 @@ function sax_parser(nsmap, builder, cfg) {
 
     var dispatcher = dispatch_stack(handler_dispatcher(nsmap, builder));
     var preprocess = preprocessor(nsmap, dispatcher, cfg.fixture);
-    var normalize = normalizer(preprocess);
+    var normalize = stl_normalizer(nsmap, preprocess);
     var elements = element_stack(nsmap, normalize);
 
     var parser = sax.parser(true);
@@ -420,7 +439,6 @@ function sax_parser(nsmap, builder, cfg) {
 //////////////////////////////////////////////////////////////////////////////////////
 
 function make_indenter(indent, default_indent) {
-    var util = require('util');
     if (util.isFunction(indent)) {
         return indent;
     }
@@ -439,8 +457,9 @@ function make_indenter(indent, default_indent) {
     return () => '';
 }
 
-function xml_writer(indenter) {
-    var tags = [];
+function xml_writer(indenter, initial_tags) {
+    initial_tags = initial_tags || [];
+    var tags = initial_tags.slice();
     var no_children;
     var content = '';
     var attr_escape = xml_escaper(/[<&"]/g);
@@ -462,11 +481,6 @@ function xml_writer(indenter) {
         return '</' + tag + '>';
     }
 
-    function flush() {
-        content += cache;
-        cache = '';
-    }
-    
     function start(tag, attrs) {
         var line = format_start(tag, attrs);
         var indent = indenter(tag, tags, true);
@@ -504,24 +518,84 @@ function xml_writer(indenter) {
         content += text_escape(data);
     }
 
+    function inject(markup) {
+        no_children = false;
+        content += markup;
+    }
+    
     function finalize() {
-        return content;
+        if (tags.length != initial_tags.length)
+            throw new Error("xml_writer parity mismatch");
+        var result = content;
+        content = '';
+        return result;
     }
 
     return {
         start: start,
         end: end,
         text: text,
+        inject: inject,
         finalize: finalize
     };
 }
 
-function stl_writer(indent) {
-    var writer = xml_writer(make_indenter(indent));
+function css_map(normalize) {
+    var categories = {};
+    
+    function cls(style, tag) {
+        tag = tag || 'cls';
+        if (normalize) {
+            style = style.split(';').map(function (s) {
+                return s.split(':').map(p => p.trim()).join(':');
+            }).sort().join(';');
+        }
+        if (!style)
+            return null;
+        var category = categories[tag];
+        if (category === undefined) {
+            category = categories[tag] = [];
+        }
+        var i = category.indexOf(style);
+        if (i === -1) {
+            i = category.length;
+            category.push(style);
+        }
+        return tag + (i + 1);
+    }
+
+    function all() {
+        var result = {};
+        Object.keys(categories).forEach(function (cat) {
+            categories[cat].forEach(function (style, index) {
+                result[cat + (index + 1)] = style;
+            });
+        });
+        return Object.keys(result).length ? result : null;
+    }
+
+    return {
+        cls: cls,
+        all: all
+    };
+}
+
+function stl_writer(indent, css) {
+    var writer = xml_writer(make_indenter(indent), ['stl:stl']);
+    var cssmap = css ? css_map(true) : null;
 
     function start(tag, attrs) {
-        if (attrs && attrs.style === '') {
-            delete attrs.style;
+        if (attrs && attrs.style !== undefined) {
+            if (cssmap) {
+                var cls = cssmap.cls(attrs.style, tag);
+                delete attrs.style;
+                if (cls !== null) {
+                    attrs['class'] = cls;
+                }
+            } else {
+                if (attrs.style.trim() === '')
+                    delete attrs.style;
+            }
         }
         writer.start('stl:' + tag, attrs);
     }
@@ -535,23 +609,85 @@ function stl_writer(indent) {
     }
 
     function finalize() {
-        end('stl');
+        function stylesheet(styles) {
+            var content = '';
+            Object.keys(styles).forEach(function (style, index) {
+                content += '\n.'+style+' {\n  ';
+                content += styles[style].split(';').map(s => s.replace(':', ': ')).join(';\n  ');
+                content += '\n}';
+            });
+            return content;
+        }
+        
         var content = writer.finalize();
+        writer = xml_writer(make_indenter(indent));
+        var attrs = {
+            'xmlns:stl': exports.namespaces.stl,
+            version: exports.version
+        };
+        writer.start('stl:stl', attrs);
+        if (cssmap) {
+            var styles = cssmap.all();
+            if (styles) {
+                var ss = stylesheet(styles);
+                if (util.isStream(css)) {
+                    css.write(ss);
+                    writer.start('stl:style', {src: css.uri});
+                    writer.end('stl:style');
+                } else {
+                    writer.start('stl:style');
+                    writer.text(ss.replace(/\n/g, '\n    '));
+                    writer.end('stl:style');
+                }
+            }
+        }
+        writer.inject(content);
+        writer.end('stl:stl');
+        content = writer.finalize();
         writer = null;
         return content;
     }
 
-    var attrs = {
-        'xmlns:stl': exports.namespaces.stl,
-        version: exports.version
-    };
-    start('stl', attrs);
     return {
         start: start,
         end: end,
         text: text,
         finalize: finalize
     };
+}
+
+////////////////////////////////////////////////////////////////////////////
+
+function css_parse(css) {
+    function compileProps(rules, selector, styles) {
+        var result = (styles && styles[selector]) || {};
+        rules.forEach(function(rule) {
+            if (rule.selectors.indexOf(selector) !== -1) {
+                rule.declarations.filter((decl) => decl.type === 'declaration').forEach(function(decl) {
+                    result[decl.property] = decl.value;
+                });
+            }
+        });
+        return result;
+    }
+
+    function compileStylesheet(rules, styles) {
+        styles = styles || {};
+        rules.forEach(function(rule) {
+            rule.selectors.filter((sel) => sel.startsWith('.') && !sel.endsWith('::marker')).forEach(function(selector) {
+                styles[selector] = compileProps(rules, selector, styles);
+                var marker = compileProps(rules, selector+'::marker');
+                if (Object.keys(marker).length)
+                    styles[selector]['-stl-list-marker'] = marker;
+            });
+        });
+        return styles;
+    }
+
+    var parse = require('css').parse;
+    var rules = parse(css).stylesheet.rules.filter((rule) => rule.type === 'rule');
+    var styles = compileStylesheet(rules);
+    return styles;
 }
 
 exports.version = '0.1';
@@ -568,3 +704,4 @@ exports.xml_escaper = xml_escaper;
 exports.make_indenter = make_indenter;
 exports.xml_writer = xml_writer;
 exports.stl_writer = stl_writer;
+exports.css_parse = css_parse;
