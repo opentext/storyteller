@@ -9,8 +9,10 @@ var namespaces = {
     xp: "http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
 };
 
-function xml_escaper(pattern) {
-    var he = require('he');
+function xml_escaper(pattern, css) {
+    const fallback = css
+          ? (c) => '\\' + Number(c.charCodeAt()).toString(16)
+          : (c) => '&#x' + Number(c.charCodeAt()).toString(16) + ';'
     
     function encoder(c) {
         switch (c) {
@@ -23,14 +25,17 @@ function xml_escaper(pattern) {
         case '"':
             return '&quot;';
         default:
-            return '&#' + c.charCodeAt() + ';';
+            return fallback(c);
         }
     }
     return function (value) {
-        return he.encode(value.replace(pattern, encoder));
+        return value.replace(pattern, encoder);
     };
 }
 
+const attr_escape = xml_escaper(/[<>&"]/g);
+const text_escape = xml_escaper(/[<>&]|[^\x00-\x7F]/g);
+const css_escape = xml_escaper(/[<>&]|[^\x00-\x7F]/g, true);
 
 function namespace_stack() {
     var aliases = [];
@@ -187,18 +192,18 @@ function text_accumulator(callback) {
 function xml_accumulator(callback, dont_escape) {
     var accumulated = '';
 
-    var attr_escape = (data) => data;
-    var text_escape = (data) => data;
+    var aEscape = (data) => data;
+    var tEscape = (data) => data;
     if (!dont_escape) {
-        attr_escape = xml_escaper(/[<&"]/g);
-        text_escape = xml_escaper(/[<&]/g);
+        aEscape = attr_escape;
+        tEscape = text_escape;
     }
 
     return {
         start: function (tag, attrs) {
             accumulated += '<' + tag;
             Object.keys(attrs).forEach(function (key) {
-                accumulated += ' ' + key + '="' + attr_escape(attrs[key]) + '"';
+                accumulated += ' ' + key + '="' + aEscape(attrs[key]) + '"';
             });
             accumulated += '>';
         },
@@ -206,7 +211,7 @@ function xml_accumulator(callback, dont_escape) {
             accumulated += '</' + tag + '>';
         },
         text: function (data) {
-            accumulated += text_escape(data);
+            accumulated += tEscape(data);
         },
         finalize: function () {
             callback(accumulated);
@@ -462,8 +467,6 @@ function xml_writer(indenter, initial_tags) {
     var tags = initial_tags.slice();
     var no_children;
     var content = '';
-    var attr_escape = xml_escaper(/[<&"]/g);
-    var text_escape = xml_escaper(/[<&]/g);
     
     function format_start(tag, attrs) {
         attrs = attrs || {};
@@ -705,3 +708,4 @@ exports.make_indenter = make_indenter;
 exports.xml_writer = xml_writer;
 exports.stl_writer = stl_writer;
 exports.css_parse = css_parse;
+exports.css_escape = css_escape;

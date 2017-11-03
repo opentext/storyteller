@@ -26,7 +26,7 @@ function correct_indenter(tag, tags, start) {
 function emp2stl(json) {
     var stl;
     try {
-        stl = empower.emp2stl(json, {indent: correct_indenter, css: true});
+        stl = empower.emp2stl(json, {indent: correct_indent, css: true});
     } catch (e) {
         stl = e;
     }

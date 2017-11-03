@@ -67,6 +67,10 @@ function html_writer(indent) {
         writer.text(data);
     }
 
+    function inject(data) {
+        return writer.inject(data);
+    }
+    
     function finalize() {
         end('html');
         var content = writer.finalize();
@@ -79,8 +83,134 @@ function html_writer(indent) {
         start: start,
         end: end,
         text: text,
+        inject: inject,
         finalize: finalize
     };
+}
+
+function css_postprocess(css) {
+    function isNumberingRule(rule) {
+        return Object.keys(rule).filter((prop) => prop.startsWith('-stl-list-')).length > 0;
+    }
+
+    function collectCounters(rules) {
+        var result = {};
+        Object.keys(rules).forEach(function(key) {
+            var counter = rules[key]['-stl-list-counter'];
+            if (counter)
+                result[counter] = true;
+        });
+        return Object.keys(result);
+    }
+
+    function formatMask(mask, counter, level) {
+        function preprocessMask(mask, level) {
+            return mask.replace(/\{(.*?(%([0-9]+)![1RrAa]).*?)\}/g, function(match, p1, p2, p3) {
+                return (p3 && +p3<=level)
+                    ? p1
+                    : '';
+            });
+        }
+        
+        function compileMask(mask, level) {
+            var masks = mask.replace(/^['"]|['"]$/gm,'').split('" "');
+            var mask = level < masks.length
+                ? masks[level]
+                : masks[masks.length-1];
+            var pmask = preprocessMask(mask, level);
+            return pmask;
+        }
+        
+        var format = {
+            '1': 'decimal',
+            'A': 'upper-alpha',
+            'a': 'lower-alpha',
+            'R' : 'upper-roman',
+            'r': 'lower-roman'
+        };
+        return compileMask(mask, level).replace(/%((\d+)!([1aArR]))|([^%]+)/gm, function(match, p1, p2, p3) {
+            if (p2)
+                return 'counter('+counter+'-'+p2+','+format[p3]+') ';
+            return '"'+match+'" ';
+        }).trim();
+    }
+    
+    function maxLevel(mask) {
+        var regex = /%(\d+)!/g;
+        var max = -1;
+        var result;
+        while ( (result = regex.exec(mask)) ) {
+            var level = +result[1];
+            if (level > max) max = level;
+        }
+        return max;
+    }
+
+    function genNumberingStyles(key, props, level) {
+        if (level === undefined)
+            level = props.level;
+        var css = '';
+        if (props.counter) {
+            css += '    ' + key + ' {\n';
+            css += '      counter-reset: ' + props.counter + '-' + (level+1) + ';\n';
+            css += '      counter-increment: ' + props.counter + '-' + level + ';\n';
+            css += '    }\n';
+        }
+        if (props.mask || props.marker) {
+            css += '    ' + key + '::before {\n';
+            if (props.mask) {
+                css += '      content: ' + formatMask(props.mask, props.counter, level) + ';\n';
+            }
+            Object.keys(props.marker || {}).forEach(function(prop) {
+                css += '      '+prop+': ' + props.marker[prop] + ';\n';
+            });
+            css += '    }\n';
+        }
+        return css;
+    }
+
+    function getNumberingProps(rule) {
+        return {
+            counter: rule['-stl-list-counter'],
+            level: rule['-stl-list-level'],
+            mask: rule['-stl-list-mask'],
+            marker: rule['-stl-list-marker']
+        };
+    }
+
+    var styles = stl.css_parse(css);
+    var new_css = '';
+    var counters = collectCounters(styles);
+    if (counters.length) {
+        new_css += '    body {\n';
+        new_css += '      counter-reset: ' + counters.join('-0 ') + '-0;\n';
+        new_css += '    }\n';
+        new_css += '    ol {\n';
+        new_css += '      list-style-type: none;\n';
+        new_css += '      padding-left: 1em;\n';
+        new_css += '    }\n';
+    }
+    Object.keys(styles).forEach(function(key) {
+        var rule = styles[key];
+        if (!isNumberingRule(rule))
+            return;
+        var props = getNumberingProps(rule);
+        if (props.level !== undefined) {
+            new_css += genNumberingStyles(key, props);
+        } else {
+            var max = maxLevel(props.mask);
+            for (var level=0; level<=max; ++level) {
+                key = 'ol ' + key;
+                new_css += genNumberingStyles(key, props, level);
+            }
+        }
+    });
+    if (new_css) {
+        css += '\n    /* ---- STL2HTML generated stylesheet ----*/\n\n'
+        css += new_css;
+        css += '\n';
+    }
+    return css;
 }
 
 function css_format(css) {
@@ -417,7 +547,7 @@ function html_builder(nsmap, writer, options) {
                 } else {
                     writer.start('style');
                     return stl.text_accumulator(function(css) {
-                        writer.text(css);
+                        writer.inject(stl.css_escape(css_postprocess(css)));
                         writer.end('style');
                     });
                 }

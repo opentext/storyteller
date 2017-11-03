@@ -1669,11 +1669,12 @@ function json_builder(nsmap, factory, root, options) {
 
         function style_(start, attrs) {
             if (start) {
-                return attrs.src
-                    ? unsupported('linked stylesheet')
-                    : stl.text_accumulator(function(css) {
+                if (!attrs.src) {
+                    return stl.text_accumulator(function(css) {
                         ctx.stylesheet = stl.css_parse(css);
                     });
+                }
+                ctx.stylesheet = require('streams').stream(attrs.src).read();
             }
         }
         
