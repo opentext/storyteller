@@ -49,6 +49,43 @@ div.tab button.active {
 	background-color: lightgray;
 }
 
+#preview {
+	margin:5% 10%;
+	padding: 5% 10%;
+	box-sizing: border-box;
+	width: 80%;
+	height: 90%;
+	background-color: #FFF;
+}
+
+#preview h3 {
+	font-family: arial;
+	text-align:center;
+	color: #AAA;
+}
+
+.shadow {
+	position:relative;
+	box-shadow:0 10px 40px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.shadow:before,
+.shadow:after {
+	content:"";
+	position:absolute;
+	z-index:-1;
+	box-shadow:0 0 40px rgba(0,0,0,0.8);
+	top:10px;
+	bottom:10px;
+	left:0;
+	right:0;
+	border-radius:100px / 10px;
+}
+.shadow:after {
+	right:10px;
+	left:auto;
+	transform:skew(8deg) rotate(3deg);
+}
+
 .dynamic {
 	background-color: white;
 }

@@ -1629,9 +1629,9 @@ function show_preview() {
         var stl2html = require('html').stl2html;
         try {
             var html = stl2html(xml);
-            $('#right').html(html);
+            $('#preview').html(html);
             // adjust all rotated items
-            $("#right .stl-wrap").each(function() {
+            $("#preview .stl-wrap").each(function() {
                 var $this = $(this);
                 var child = $this.children(":first")[0];
                 var transform = $(child).css('transform');
@@ -1649,7 +1649,7 @@ function show_preview() {
             });
             
         } catch(e) {
-            $('#right').text(e);
+            $('#preview').html('<h3>&#x26a0; Preview Error</h3><pre>'+e+'</pre>');
         }
     }
 };
@@ -1665,7 +1665,10 @@ function init_editors() {
         show_preview();
     }
     
-    Split(['#left', '#right']);
+    Split(['#left', '#right'], {
+        sizes: [60, 40],
+        minSize: 200
+    });
     var xschema = XonomyBuilder.convertSchema(stl_schema, stlPreprocess, stlPostprocess);
 	var xonomy = document.getElementById("xonomy");
     var url = window.location.href;
