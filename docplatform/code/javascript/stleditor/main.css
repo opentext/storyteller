@@ -49,6 +49,12 @@ div.tab button.active {
 	background-color: lightgray;
 }
 
+input:disabled.button {
+	opacity : .35;
+	background-color:lightgray;
+	border:1px solid gray;
+}
+
 .paper {
 	margin:5% 10%;
 	padding: 10% 10%;
@@ -61,6 +67,16 @@ div.tab button.active {
 	font-family: arial;
 	text-align:center;
 	color: #AAA;
+}
+
+.highlight-node {
+	background-color: rgba(180,255,255,0.3);
+	outline: 1px dotted blue;
+}
+
+.highlight-tree {
+	background-color: rgba(180,255,255,0.3);
+	outline: 1px dotted blue;
 }
 
 #preview {
@@ -142,5 +158,18 @@ div.tab button.active {
 .split.split-horizontal, .gutter.gutter-horizontal {
     height: 100%;
     float: left;
+}
+
+
+.ui-rotatable-handle {
+	float: left;
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+	background-image: url(http://cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/rotate.png);
+	background-size: 100%;
+	position: absolute;
+	left: -2px;
+	top: -2px;
 }
 

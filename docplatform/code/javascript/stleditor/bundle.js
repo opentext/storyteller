@@ -1,4 +1,23 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"base64-js":[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/home/pfi01/streamserve/docplatform/forsetup/js/tools/html.json":[function(require,module,exports){
+module.exports={
+    "css": [
+        "html {",
+        "  box-sizing: border-box;",
+        "}",
+        "*, *:before, *:after {",
+        "  box-sizing: inherit;",
+        "}",
+        ".stl-inline-item {",
+        "  display: inline-block;",
+        "  vertical-align: text-bottom;",
+        "}",
+        "*[data-stl-class=\"stl:text\"] {",
+        "  overflow: hidden;",
+        "}",
+    ]
+}
+
+},{}],"base64-js":[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
 
 ;(function (exports) {
@@ -2149,6 +2168,7 @@ function addParent(obj, parent) {
 
 const util = require('util');
 const stl = require('stl');
+const defs = require('./html.json');
 
 function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
@@ -2230,6 +2250,11 @@ function html_writer(indent) {
     };
 }
 
+function indent_strings(strings, indent) {
+    var sep = '\n'+(indent||'    ');
+    return sep+strings.join(sep)+sep;
+}
+    
 function css_postprocess(css) {
     function isNumberingRule(rule) {
         return Object.keys(rule).filter((prop) => prop.startsWith('-stl-list-')).length > 0;
@@ -2245,21 +2270,32 @@ function css_postprocess(css) {
         return Object.keys(result);
     }
 
+    function splitMask(mask) {
+        return mask.replace(/^['"]|['"]$/gm,'').split('" "');
+    }
+    
     function formatMask(mask, counter, level) {
         function preprocessMask(mask, level) {
-            return mask.replace(/\{(.*?(%([0-9]+)![1RrAa]).*?)\}/g, function(match, p1, p2, p3) {
-                return (p3 && +p3<=level)
-                    ? p1
+            var pmask = mask.replace(/\{(.*?(%([0-9]+)![1RrAa]).*?)\}/g, function(match, all, _, index) {
+                return (index && +index<=level)
+                    ? all
                     : '';
             });
+            pmask = pmask.replace(/(%([0-9]+)![1RrAa])/g, function (match, all, index) {
+                return (index && +index<=level)
+                    ? all
+                    : '';
+            });
+            return pmask;
         }
-        
+
         function compileMask(mask, level) {
-            var masks = mask.replace(/^['"]|['"]$/gm,'').split('" "');
+            var masks = splitMask(mask);
             var mask = level < masks.length
                 ? masks[level]
                 : masks[masks.length-1];
             var pmask = preprocessMask(mask, level);
+            console.log(mask, level, '->', pmask);
             return pmask;
         }
         
@@ -2280,106 +2316,98 @@ function css_postprocess(css) {
     function maxLevel(mask) {
         var regex = /%(\d+)!/g;
         var max = -1;
+        // analyze numbering mask
         var result;
         while ( (result = regex.exec(mask)) ) {
             var level = +result[1];
             if (level > max) max = level;
         }
-        return max;
+        return max === -1
+            ? splitMask(mask).length // bullet mask
+            : max;
     }
 
     function genNumberingStyles(key, props, level) {
         if (level === undefined)
             level = props.level;
-        var css = '';
+        var css = [];
         if (props.counter) {
-            css += '    ' + key + ' {\n';
-            css += '      counter-reset: ' + props.counter + '-' + (level+1) + ';\n';
-            css += '      counter-increment: ' + props.counter + '-' + level + ';\n';
-            css += '    }\n';
+            css.push(key + ' {');
+            css.push('  counter-reset: ' + props.counter + '-' + (level+1) + ';');
+            css.push('  counter-increment: ' + props.counter + '-' + level + ';');
+            css.push('}');
         }
         if (props.mask || props.marker) {
-            css += '    ' + key + '::before {\n';
-            if (props.mask) {
-                css += '      content: ' + formatMask(props.mask, props.counter, level) + ';\n';
-            }
+            css.push('' + key + '::before {');
+            css.push('  content: ' + formatMask(props.mask, props.counter, level) + ';');
             Object.keys(props.marker || {}).forEach(function(prop) {
-                css += '      '+prop+': ' + props.marker[prop] + ';\n';
+                css.push('  '+prop+': ' + props.marker[prop] + ';');
             });
-            css += '    }\n';
+            css.push('}');
         }
         return css;
     }
 
     function getNumberingProps(rule) {
-        return {
-            counter: rule['-stl-list-counter'],
-            level: rule['-stl-list-level'],
-            mask: rule['-stl-list-mask'],
-            marker: rule['-stl-list-marker']
-        };
+        var props = {};
+        function get_prop(key) {
+            var p = rule['-stl-list-'+key];
+            if (p) {
+                props[key] = p;
+            }
+        }
+        
+        get_prop('counter');
+        get_prop('level');
+        get_prop('mask');
+        get_prop('marker');
+        if (Object.keys(props).length) {
+            if (!props.mask || props.mask === 'default') {
+                props.mask = props.counter
+                    ? '"{%0!1.}{%1!1.}{%2!1.}{%3!1.} "'
+                    : '"\u2022 " "\u25e6 " "\u25aa "';
+            }
+            return props;
+        }
+        return null;
     }
 
     var styles = stl.css_parse(css);
-    var new_css = '';
+    var new_css = [];
     var counters = collectCounters(styles);
     if (counters.length) {
-        new_css += '    body {\n';
-        new_css += '      counter-reset: ' + counters.join('-0 ') + '-0;\n';
-        new_css += '    }\n';
-        new_css += '    ol {\n';
-        new_css += '      list-style-type: none;\n';
-        new_css += '      padding-left: 1em;\n';
-        new_css += '    }\n';
+        new_css.push('body {');
+        new_css.push('  counter-reset: ' + counters.join('-0 ') + '-0;');
+        new_css.push('}');
+        new_css.push('ol {');
+        new_css.push('  list-style-type: none;');
+        new_css.push('  padding-left: 1em;');
+        new_css.push('  margin: 0em;');
+        new_css.push('}');
     }
     Object.keys(styles).forEach(function(key) {
         var rule = styles[key];
-        if (!isNumberingRule(rule))
-            return;
         var props = getNumberingProps(rule);
-        if (props.level !== undefined) {
-            new_css += genNumberingStyles(key, props);
-        } else {
-            var max = maxLevel(props.mask);
-            for (var level=0; level<=max; ++level) {
-                key = 'ol ' + key;
-                new_css += genNumberingStyles(key, props, level);
+        if (props) {
+            if (props.level !== undefined) {
+                new_css.concat(genNumberingStyles(key, props));
+            } else {
+                var max = maxLevel(props.mask);
+                for (var level=0; level<=max; ++level) {
+                    key = 'ol ' + key;
+                    new_css.concat(genNumberingStyles(key, props, level));
+                }
             }
         }
     });
-    if (new_css) {
-        css += '\n    /* ---- STL2HTML generated stylesheet ----*/\n\n'
-        css += new_css;
-        css += '\n';
-    }
-    return css;
+    return new_css;
 }
-
-function css_format(css) {
-    return Object.keys(css).filter(function (key) {
-        return css[key] !== null;
-    }).map(function (key) {
-        return key + ': ' + css[key];
-    }).join('; ');
-}
-
-function css_split(style, css) {
-    css = css || {};
-    if (style) {
-        style.trim().split(';').forEach(function(property) {
-            var parts = property.trim().split(':');
-            if (parts.length === 2) {
-                css[parts[0].trim()] = parts[1].trim();
-            } else if (parts[0].length) {
-                throw new Error("Invalid CSS property: "+parts[0]);
-            }
-        });
-    }
-    return css;
-}
-
 
 function html_builder(nsmap, writer, options) {
+    var ctx = {
+        stylesheet: null
+    };
+    
     const unsupported = function (item) {
         var message = "Unsupported " + item;
         if (options.permissive) {
@@ -2404,7 +2432,7 @@ function html_builder(nsmap, writer, options) {
         'mm': 72/25.4,
         'cm': 72/2.54
     };
-    
+
     function convert_length(len) {
         var matches = /([0-9\.]+)(pt|px|in|pc|mm|cm|em|%)/.exec(len);
         if (!matches)
@@ -2436,7 +2464,18 @@ function html_builder(nsmap, writer, options) {
             return unexpected("stl:stl", "text");
     }
 
-    function handle_resize(css, options) {            
+    function handle_resize(cls, css, options) {
+        function css_property(name) {
+            var val = css[name];
+            if (val === undefined && ctx.stylesheet) {
+                var def = ctx.stylesheet['.'+cls];
+                if (def) {
+                    val = def[name];
+                }
+            }
+            return val;
+        }
+        
         function set_boundaries(growth, shrink, key) {
             function set_boundary(base, boundary, coef, key) {
                 switch(boundary) {
@@ -2449,7 +2488,7 @@ function html_builder(nsmap, writer, options) {
                     css[key] = pt2len(base+coef*boundary);
                 }
             }
-            var base = len2pt(css[key]);
+            var base = len2pt(css_property(key));
             var minkey = 'min-' + key;
             var maxkey = 'max-' + key;
             set_boundary(base, resize2pt(growth), 1, maxkey);
@@ -2458,11 +2497,11 @@ function html_builder(nsmap, writer, options) {
                 delete css[minkey];
                 delete css[maxkey];
             } else {
-                delete css[key];
+                css[key] = 'auto'; //delete css[key];
             }
         }
 
-        var resize = css['-stl-shape-resize'] || 'free';
+        var resize = css_property('-stl-shape-resize') || 'fixed';
         resize = resize.split(' ');
         switch (resize[0]) {
         case 'fixed':
@@ -2487,10 +2526,14 @@ function html_builder(nsmap, writer, options) {
         function row_(start, attrs) {
             if (start) {
                 cell = 0;
-                var css = css_split(attrs.style);
+                var css = stl.css_split(attrs.style);
                 css.height = attrs.h;
-                handle_resize(css, {height: true});
-                writer.start('tr', {style: css_format(css)});
+                handle_resize(attrs['class'], css, {height: true});
+                writer.start('tr', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:row',
+                    style: stl.css_format(css)
+                });
             } else {
                 row += 1;
                 writer.end('tr');
@@ -2502,9 +2545,14 @@ function html_builder(nsmap, writer, options) {
                 if (row === 0) {
                     widths.push(attrs.w);
                 }
-                var css = css_split(attrs.style);
+                var css = stl.css_split(attrs.style);
                 css.width = widths[cell];
-                writer.start('td', {colspan: attrs.colspan, style: css_format(css)});
+                writer.start('td', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:cell',
+                    colspan: attrs.colspan,
+                    style: stl.css_format(css)
+                });
                 return stl.handler_dispatcher(nsmap, story_builder(writer));
             } else {
                 cell += 1;
@@ -2512,8 +2560,19 @@ function html_builder(nsmap, writer, options) {
             }
         }
 
+        function story_(start, attrs) {
+            if (start) {
+                writer.start('tbody', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:story'
+                });
+            } else {
+                writer.end('tbody');
+            }
+        }
+        
         return { 
-            story_: () => {},
+            story_: story_,
             row_: row_,
             cell_: cell_,
             repeater_: () => unsupported("stl:repeater"),
@@ -2524,29 +2583,57 @@ function html_builder(nsmap, writer, options) {
     
     function story_builder(writer) {
         var inside = {};
+        var list_level = 0;
 
-        function css_classes(cls1, cls2) {
-            if (cls1) {
-                if (cls2) {
-                    return cls1 + ' ' + cls2;
-                }
-                return cls1;
-            } else if (cls2) {
-                return cls2;
-            }
+        function start_item() {
+            writer.start('div', {
+                'class': 'stl-inline-item',
+            });
+            inside.object = true;
         }
+
+        function end_item() {
+            writer.end('div');
+            inside.object = false;
+        }
+        
         
         function block_(start, attrs) {
             if (start) {
-                writer.start('div', {'class': css_classes('stl-block', attrs['class']), style: attrs.style});
+                writer.start('div', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:block',
+                    style: attrs.style
+                });
             } else {
                 writer.end('div');
             }
         }
 
+        function list_(start, attrs) {
+            if (start) {
+                list_level += 1;
+                writer.start('ol', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:list',
+                    style: attrs.style
+                });
+            } else {
+                writer.end('ol');
+                list_level -= 1;
+            }
+        }
+        
         function p_(start, attrs) {
             if (start) {
-                writer.start('div', {'class': css_classes('stl-p', attrs['class']), style: attrs.style});
+                // consider conditional use of 'li'
+                writer.start('div', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:p',
+                    style: attrs.style
+                });
+                if (inside.paragraph)
+                    return unsupported('stl:p nesting');
                 inside.paragraph = true;
             } else {
                 writer.end('div');
@@ -2556,10 +2643,26 @@ function html_builder(nsmap, writer, options) {
 
         function story_(start, attrs) {
             if (start) {
-                if (inside.object)
+                if (inside.object) {
+                    writer.start('div', {
+                        'class': attrs['class'],
+                        'data-stl-class': 'stl:story'
+                    });
                     return stl.handler_dispatcher(nsmap, story_builder(writer));
-                if (!inside.hyperlink)
+                } else if (inside.hyperlink) {
+                    writer.start('span', {
+                        'class': attrs['class'],
+                        'data-stl-class': 'stl:story'
+                    });
+                } else {
                     return unsupported("stl:story nesting");
+                }
+            } else {
+                if (inside.object) {
+                    writer.end('div');
+                } else if (inside.hyperlink) {
+                    writer.end('span');
+                }
             }
         }
         
@@ -2569,7 +2672,11 @@ function html_builder(nsmap, writer, options) {
                     return unsupported("stl:scope");
                 if (inside.hyperlink)
                     return unsupported("stl:scope nesting");
-                writer.start('a', {href: attrs.hyperlink});
+                writer.start('a', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:scope',
+                    href: attrs.hyperlink
+                });
                 inside.hyperlink = true;
             } else {
                 inside.hyperlink = false;
@@ -2579,7 +2686,11 @@ function html_builder(nsmap, writer, options) {
         
         function span_(start, attrs) {
             if (start) {
-                writer.start('span', {'class': css_classes('stl-span', attrs['class']), style: attrs.style});
+                writer.start('span', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:span',
+                    style: attrs.style
+                });
             } else {
                 writer.end('span');
             }
@@ -2587,19 +2698,37 @@ function html_builder(nsmap, writer, options) {
 
         function image_(start, attrs) {
             if (start) {
-                writer.start('img', {'class': css_classes('stl-image', attrs['class']), width: attrs.w, height: attrs.h, src: attrs.src});
+                start_item();
+                writer.start('img', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:image',
+                    width: attrs.w,
+                    height: attrs.h,
+                    src: attrs.src
+                });
                 return stl.empty_checker();
             } else {
                 writer.end('img');
+                end_item();
             }
         }
         
         function table_(start, attrs) {
             if (start) {
-                writer.start('table', {'class': css_classes('stl-table', attrs['class']), style: attrs.style});
+                var css = stl.css_split(attrs.style);
+                css.transform = attrs.transform;
+                css.width = attrs.w;
+                css.height = attrs.h;
+                start_item();
+                writer.start('table', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:table',
+                    style: stl.css_format(css)
+                });
                 return stl.handler_dispatcher(nsmap, table_builder(writer));
             } else {
                 writer.end('table');
+                end_item();
             }
         }
 
@@ -2607,20 +2736,21 @@ function html_builder(nsmap, writer, options) {
             if (start) {
                 if (attrs.story)
                     return unsupported("stl:story reference");
-                var css = css_split(attrs.style);
-                css.display = 'inline-block';
-                css['box-sizing'] = 'border-box';
+                var css = stl.css_split(attrs.style);
+                //css.display = 'inline-block';
                 css.width = attrs.w;
                 css.height = attrs.h;
-                handle_resize(css);
+                handle_resize(attrs['class'], css);
                 css.transform = attrs.transform;
-                writer.start('div', {'class': 'stl-wrap', style: 'display: inline-block; vertical-align: text-bottom'});
-                writer.start('div', {'class': css_classes('stl-text', attrs['class']), style: css_format(css)});
-                inside.object = true;
+                start_item();
+                writer.start('div', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:text',
+                    style: stl.css_format(css)
+                });
             } else {
                 writer.end('div');
-                writer.end('div');
-                inside.object = false;
+                end_item();
             }
         }
         
@@ -2637,7 +2767,8 @@ function html_builder(nsmap, writer, options) {
         function finalize() {
         }
 
-        return { 
+        return {
+            list_: list_,
             p_: p_,
             span_: span_,
             block_: block_,
@@ -2658,7 +2789,13 @@ function html_builder(nsmap, writer, options) {
     function doc_builder(writer) {
         function story_(start, attrs) {
             if (start) {
+                writer.start('div', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:story',
+                });
                 return stl.handler_dispatcher(nsmap, story_builder(writer));
+            } else {
+                writer.end('div');
             }
         }
         
@@ -2696,17 +2833,28 @@ function html_builder(nsmap, writer, options) {
         }
 
         function style_(start, attrs) {
+            function set_stylesheet(css) {
+                if (ctx.stylesheet) {
+                    return unsupported('multiple stylesheets');
+                }
+                ctx.stylesheet = stl.css_parse(css);
+                writer.start('style');
+                writer.text(css);
+                writer.end('style');
+                var new_css = css_postprocess(css);
+                if (new_css.length) {
+                    writer.start('style');
+                    writer.text(indent_strings(new_css));
+                    writer.end('style');
+                }
+            }
+            
             if (start) {
                 section('head');
                 if (attrs.src) {
-                    writer.start('link', {rel: 'stylesheet', type: 'text/css', href: attrs.src});
-                    writer.end('link');
+                    set_stylesheet(require('streams').stream(attrs.src).read());
                 } else {
-                    writer.start('style');
-                    return stl.text_accumulator(function(css) {
-                        writer.text(css_postprocess(css));
-                        writer.end('style');
-                    });
+                    return stl.text_accumulator(set_stylesheet);
                 }
             }
         }
@@ -2714,6 +2862,9 @@ function html_builder(nsmap, writer, options) {
         section('head');
         writer.start('meta', {charset: "UTF-8"});
         writer.end('meta');
+        writer.start('style');
+        writer.text(indent_strings(defs.css));
+        writer.end('style');
         
         return {
             stl_: () => {},
@@ -2766,7 +2917,7 @@ exports.stl2html = function stl2html(input, options) {
 
 
 
-},{"stl":"stl","util":"util"}],"ieee754":[function(require,module,exports){
+},{"./html.json":"/home/pfi01/streamserve/docplatform/forsetup/js/tools/html.json","stl":"stl","streams":false,"util":"util"}],"ieee754":[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -4855,7 +5006,7 @@ function stl_writer(indent, css) {
     function start(tag, attrs) {
         if (attrs && attrs.style !== undefined) {
             if (cssmap) {
-                var cls = cssmap.cls(attrs.style, tag);
+                var cls = cssmap.cls(attrs.style, 'stl-'+tag);
                 delete attrs.style;
                 if (cls !== null) {
                     attrs['class'] = cls;
@@ -4958,6 +5109,49 @@ function css_parse(css) {
     return styles;
 }
 
+function css_split(style, css) {
+    css = css || {};
+    if (style) {
+        style.trim().split(';').forEach(function(property) {
+            var parts = property.trim().split(':');
+            if (parts.length === 2) {
+                css[parts[0].trim()] = parts[1].trim();
+            } else if (parts[0].length) {
+                throw new Error("Invalid CSS property: "+parts[0]);
+            }
+        });
+    }
+    return css;
+}
+
+function css_format(css) {
+    return Object.keys(css).filter(function (key) {
+        var v = css[key];
+        return v !== null && v !== undefined;
+    }).map(function (key) {
+        return key + ': ' + css[key];
+    }).join('; ');
+}
+
+function css_lookup(stylesheet, attrs, basecss) {
+    function clone_css(css) {
+        return JSON.parse(JSON.stringify(css));
+    }
+    
+    var css = basecss ? clone_css(basecss) : {};
+    var cls = attrs['class'];
+    if (cls && stylesheet) {
+        var style = stylesheet['.'+cls];
+        if (style) {
+            Object.keys(style).forEach(function (prop) {
+                css[prop] = style[prop];
+            });
+        }
+    }
+    css_split(attrs.style, css);
+    return css;
+}
+
 exports.version = '0.1';
 exports.namespaces = namespaces;
 exports.namespace_stack = namespace_stack;
@@ -4968,11 +5162,16 @@ exports.text_accumulator = text_accumulator;
 exports.xml_accumulator = xml_accumulator;
 exports.parser = sax_parser;
 exports.xml_escaper = xml_escaper;
+exports.attr_escape = attr_escape;
+exports.text_escape = text_escape;
 
 exports.make_indenter = make_indenter;
 exports.xml_writer = xml_writer;
 exports.stl_writer = stl_writer;
 exports.css_parse = css_parse;
+exports.css_lookup = css_lookup;
+exports.css_split = css_split;
+exports.css_format = css_format;
 
 },{"css":"css","sax":"sax","streams":false,"util":"util"}],"util":[function(require,module,exports){
 // NOTE: These type checking functions intentionally don't use `instanceof`

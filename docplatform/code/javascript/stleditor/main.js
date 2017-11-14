@@ -84,6 +84,22 @@ function findDescendants(js, name, result) {
 	return result;
 };
 
+function findElementByOpath(opath, js) {
+    js = js || harvestRootElement();
+    opath.split('/').forEach(function (selector) {
+        var matches = /^([^\[]+)(\[(\d+)\])?/.exec(selector);
+        if (!matches)
+            throw new Error('Invalid selector: "'+selector+'" in opath "'+opath+'"');
+        var name = matches[1];
+        var index = matches[3] ? matches[3]-1 : 0;
+        var children = js.children.filter((c) => c.name === name);
+        if (!children.length || index >= children.length)
+            throw new Error('Cannot find child with name "'+name+'" and index '+index);
+        js = children[index];
+    });
+    return js;
+};
+
 function rtrim(s, chars) {
     chars = chars || '\\s';
     return s.replace(new RegExp("[" + chars + "]*$"), '');
@@ -105,26 +121,50 @@ function jsContent(js) {
 }
 
 function jsNormalize(js, indent) {
+    var tags = [];
+        
     if (indent === undefined)
         indent = '\\t';
 
-    function _normalize(js, depth) {
+    function _normalize_space(str, left_trim, right_trim) {
+        if (str) {
+            str = str.replace(/\s+/g, ' ');
+            if (left_trim) {
+                str = str.replace(/^\s+/, '');
+            }
+            if (right_trim) {
+                str = str.replace(/\s+$/, '');
+            }
+        }
+        return str;
+    }
+
+    function _normalize(js, depth, previous, next) {
         if (js.type === 'element' && js.children.length) {
+            tags.push(js.name);
             var normalizer = detectNormalizer(js);
             if (normalizer) {
                 var content = jsContent(js);
                 content = normalizer(content);
-                js.children = [{type: "text", value: content, htmlID: '', parent: function(){return js} }];
+                js.children = [{type: 'text', value: content, htmlID: '', parent: function(){return js} }];
             } else {
-                js.children.forEach( (child) => _normalize(child, depth+1) );
+                js.children.forEach( (child, i, children) => _normalize(child, depth+1, children[i-1], children[i+1]) );
                 js.children = js.children.filter( (child) => child.value !== '' );
             }
+            tags.pop();
         }
         else if (js.type === 'text') {
-            js.value = js.value.trim();
+            if (tags.some((name) => name === 'stl:p' || name === 'body')) {
+                // we cannot fully trim inside a story
+                var left_trim = !previous || previous.type !== 'element';
+                var right_trim = !next || next.type !== 'element';
+                js.value = _normalize_space(js.value, left_trim, right_trim);
+            } else {
+                js.value = js.value.trim();
+            }
             if (indent) {
                 var indentation = new RegExp('\\n'+indent+'{'+depth+'}', 'gm');
-                js.value = js.value.replace(indentation, '\n').trim();
+                js.value = js.value.replace(indentation, '\n');
             }
         }
     }
@@ -369,7 +409,7 @@ function elementValidator(def, schema) {
         : function() {};
 }
 
-function initAce(mode, id) {
+function initAce(mode, id, onChange) {
     var editor = window.ace.edit(id);
     editor.setTheme("ace/theme/chrome");
     editor.setOptions({
@@ -381,12 +421,17 @@ function initAce(mode, id) {
         maxLines: 50,
     });
     editor.$blockScrolling = Infinity;
-
+    editor.getSession().on('changeAnnotation', function(results) {
+        const hasErrors = editor.getSession().getAnnotations().some((annotation) => annotation.type === 'error');
+        onChange(!hasErrors);
+    });
+    
     return function(input) {
         editor.setValue(input);
         editor.focus();
 
         return function () {
+            
             var output = editor.getSession().getValue();
             editor.destroy();
             return output;
@@ -481,7 +526,6 @@ function detectSyntax(name, attrs) {
                 return {syntax: mode.syntax, skipRoot: true, escape: false, category: mode.category};
             if(attrs.key) {
                 var mode = getAceModeForPath(attrs.key);
-                console.log('mode:', mode);
                 if (mode)
                     return {syntax: mode, skipRoot: true, escape: true, category: 'text'};
             }
@@ -517,32 +561,51 @@ function markupEditor(editor, id) {
     id = id || 'editor-bubble';
     editor = editor || initAce;
     
-    function _ask_editor_string() {
-	    var html="";
-	    html+="<form onsubmit='Xonomy.answer($(\"#"+id+"\").data().getter()); return false'>";
-	    html+="  <div id='"+id+"'></div>";
-	    html+="  <div class='submitline'><input type='submit' value='OK'></div>";
-	    html+="</form>";
+    function askEditorString(id) {
+	    var html='';
+	    html+='<form onsubmit="Xonomy.answer($(\'#'+id+'\').data().getter()); return false">';
+	    html+='  <div id="'+id+'"></div>';
+	    html+='  <div class="submitline"><input class="button" type="submit" value="OK"></div>';
+	    html+='</form>';
 	    return html;
+    }
+
+    function validateXML(markup, strict)
+    {
+        strict = strict || true;
+        var sax = require('sax');
+        var parser = sax.parser(strict);
+        parser.write(markup).close();
+    }
+
+    function onChange(isSyntaxValid) {
+        $('#'+id+' + div > input').prop('disabled', !isSyntaxValid);
     }
     
     return function (jsElement, callback) {
-	    document.body.appendChild(Xonomy.makeBubble(_ask_editor_string()));
         var mode = detectSyntax(jsElement.name, collectAttrs(jsElement));
-        var initialize = editor(mode.syntax, id);
         jsPrettify(jsElement, mode.skipRoot);
         var input = js2xml(jsElement, stl_schema, mode.skipRoot);
         if (mode.escape)
             input = xmlUnEscape(input);
+	    document.body.appendChild(Xonomy.makeBubble(askEditorString(id)));
+        var initialize = editor(mode.syntax, id, onChange);
         $('#'+id).data('getter', initialize(input) );
+        
         Xonomy.answer = function(output) {
-            if (mode.escape)
-                output = xmlEscapeText(output);
-            var jsNewElement = mode.skipRoot
-                ? xml2js(output, jsElement)
-                : Xonomy.xml2js(output, jsElement.parent());
-            jsNormalize(jsNewElement);
-		    callback(jsNewElement);
+            Xonomy.clickoff();
+            try {
+                //validateXML(output);
+                if (mode.escape)
+                    output = xmlEscapeText(output);
+                var jsNewElement = mode.skipRoot
+                    ? xml2js(output, jsElement)
+                    : Xonomy.xml2js(output, jsElement.parent());
+                jsNormalize(jsNewElement);
+		        callback(jsNewElement);
+            } catch(e) {
+                report_error('Syntax error', e.message);
+            }
         };
     };
 }
@@ -927,8 +990,9 @@ function cssClasses(js) {
             if (matches) {
                 matches[1].split(',').forEach(function(decl) {
                     decl = decl.trim();
-                    if (decl.match(/\.[a-zA-Z0-9_-]+/))
+                    if (decl.match(/^\.[a-zA-Z0-9_\-]+$/)) {
                         classes.push(decl.substring(1));
+                    }
                 });
             }
         });
@@ -1168,6 +1232,13 @@ stl_schema.types = {
     integer : { 
         validate: /^[0-9]+$/,
     },
+    float: {
+        validate: /^[+-]?([0-9]*[.])?[0-9]+$/,
+    },
+    bool: {
+        validate: /^(true|false)$/,
+        asker: ['true', 'false'],
+    },
     occurrence : { 
         validate: /^([0-9]*|optional|once-or-more|repeatable)$/,
         asker: ['optional', 'once-or-more', 'repeatable', '1', null],
@@ -1238,13 +1309,41 @@ stl_schema.types = {
             null
         ]
     },
+    scd_title_position: {
+        validate: /^(top|bottom)$/,
+        asker: ['top', 'bottom'],
+    },
+    scd_position_h: {
+        validate: /^(left|center|right)$/,
+        asker: ['left', 'center', 'right'],
+    },
+    scd_position_v: {
+        validate: /^(top|center|bottom)$/,
+        asker: ['top', 'center', 'bottom'],
+    },
+    scd_placement: {
+        validate: /^(start|end)$/,
+        asker: ['start', 'end'],
+    },
+    scd_labels_connection: {
+        validate: /^(none|normal|level|radial|underlined|aligned)$/,
+        asker: ['none', 'normal', 'level', 'radial', 'underlined', 'aligned'],
+    },
+    scd_node_type: {
+        validate: /^(none|dot|square)$/,
+        asker: ['none', 'dot', 'square'],
+    },
+
+
 };
 
 stl_schema.namespaces = {
 	'xmlns:stl' : 'http://developer.opentext.com/schemas/storyteller/layout',
 	'xmlns:xp' : 'http://developer.opentext.com/schemas/storyteller/xmlpreprocessor',
 	'xmlns:tdt' : 'http://developer.opentext.com/schemas/storyteller/transformation/tdt',
-	'xmlns:svg' : 'http://www.w3.org/2000/svg',
+    'xmlns:svg': 'http://www.w3.org/2000/svg',
+    'xmlns:scd': 'http://developer.opentext.com/schemas/storyteller/chart/definition',
+
 };
 
 stl_schema.elements = {
@@ -1390,7 +1489,7 @@ stl_schema.elements = {
         collapsed: true,
 	},
 	'stl:p': {
-		text: true,
+		//text: true,
 		attributes: stl_style_attrs,
         children : stl_content_items.concat(stl_layout_items),
 		wrappers: ['stl:span'],
@@ -1547,10 +1646,122 @@ stl_schema.elements = {
         ].concat(stl_style_attrs),
 		children: ['stl:block', 'stl:list', 'stl:p'],
 	},
-	'stl:chart': {
-		attributes: stl_layout_item_attrs(stl_bbox_attrs),
-		children: stl_runtime_items,
-	},
+    'scd:title': {
+        attributes: [
+            'text',
+            { name: 'position', type: 'scd_title_position' },
+        ].concat(stl_style_attrs),
+    },
+    'scd:legend': {
+        attributes: [
+            { name: 'alignment_v', type: 'scd_position_v' },
+            { name: 'alignment_h', type: 'scd_position_h' },
+        ].concat(stl_style_attrs),
+    },
+    'scd:plot': {
+        attributes: [
+            { name: 'style', type: 'style' },
+            { name: 'logical_x_low', type: 'float' },
+            { name: 'logical_x_height', type: 'float' },
+            { name: 'logical_y_low', type: 'float' },
+            { name: 'logical_y_high', type: 'float' },
+        ],
+    },
+    'scd:axis_x': {
+        attributes: [
+            'label',
+            { name: 'label_alignment', type: 'scd_position_h' },
+            { name: 'label_position_v', type: 'scd_position_v' },
+            { name: 'label_placement', type: 'scd_placement' },
+            { name: 'logical_position_x', type: 'float' },
+            { name: 'logical_position_y', type: 'float' },
+            { name: 'logical_y_low', type: 'float' },
+            { name: 'logical_y_high', type: 'float' },
+            { name: 'draw_behind', type: 'bool' },
+            { name: 'label_rotation', type: 'integer' },
+            { name: 'data_labels_position_h', type: 'scd_position_h' },
+            { name: 'data_labels_position_v', type: 'scd_position_v' },
+        ].concat(stl_style_attrs),
+    },
+    'scd:axis_y': {
+        attributes: [
+            'label',
+            { name: 'label_alignment', type: 'scd_position_h' },
+            { name: 'label_position_v', type: 'scd_position_v' },
+            { name: 'label_placement', type: 'scd_placement' },
+            { name: 'logical_position_x', type: 'float' },
+            { name: 'logical_position_y', type: 'float' },
+            { name: 'logical_y_low', type: 'float' },
+            { name: 'logical_y_high', type: 'float' },
+            { name: 'draw_behind', type: 'bool' },
+        ].concat(stl_style_attrs),
+    },
+    'scd:support_lines': {
+        attributes: [
+            { name: 'label_alignment', type: 'scd_position_h' },
+            { name: 'label_position_v', type: 'scd_position_v' },
+            { name: 'label_placement', type: 'scd_placement' },
+            { name: 'logical_position_x', type: 'float' },
+            { name: 'logical_position_y', type: 'float' },
+            { name: 'logical_width', type: 'float' },
+            { name: 'logical_step', type: 'float' },
+            { name: 'logical_x_low', type: 'float' },
+            { name: 'logical_x_high', type: 'float' },
+            { name: 'logical_y_low', type: 'float' },
+            { name: 'logical_y_high', type: 'float' },
+            { name: 'draw_behind', type: 'bool' },
+            'mask',
+            { name: 'style', type: 'style' },
+        ],
+    },
+    'scd:series': {
+        attributes: [
+            { name: 'col_x', type: 'integer' },
+            { name: 'col_y', type: 'integer' },
+            { name: 'col_label', type: 'integer' },
+            { name: 'col_legend', type: 'integer' },
+        ].concat(stl_style_attrs),
+    },
+    'scd:layer': {
+        attributes: [
+            'type',
+            { name: 'xpath', type: 'xpath' },
+            { name: 'labels_offset', type: 'float' },
+            { name: 'labels_line', type: 'style' },
+            'mask_label',
+            'mask_legend',
+            { name: 'line', type: 'style' },
+            { name: 'radius', type: 'integer' },
+            { name: 'center_x', type: 'float' },
+            { name: 'center_y', type: 'float' },
+            { name: 'start_angle', type: 'integer' },
+            { name: 'clockwise', type: 'bool' },
+            { name: 'height_3d', type: 'integer' },
+            { name: 'xyratio', type: 'float' },
+            { name: 'donut_ratio', type: 'float' },
+            { name: 'labels_connection', type: 'scd_labels_connection' },
+            { name: 'node_type', type: 'scd_node_type' },
+            { name: 'node_size', type: 'length' },
+            { name: 'connected_axis_x', type: 'integer' },
+            { name: 'connected_axis_y', type: 'integer' },
+            'area',
+            { name: 'offset_left', type: 'integer' },
+            { name: 'offset_right', type: 'integer' },
+            { name: 'bar_widh', type: 'integer' },
+            { name: 'gap', type: 'integer' },
+            { name: 'rx', type: 'length' },
+            { name: 'ry', type: 'length' },
+            ],
+        children: ['scd:series'],
+    },
+    'scd:scd': {
+        order: true,
+        children: [{ name: 'scd:title', max: 1 }, { name: 'scd:legend', max: 1 }, { name: 'scd:plot', max: 1 }, 'scd:axis_x', 'scd:axis_y', 'scd:support_lines', 'scd:layer'],
+    },
+    'stl:chart': {
+        attributes: stl_layout_item_attrs(stl_bbox_attrs).concat(['modern']),
+        children: stl_runtime_items.concat([{ name: 'scd:scd', max: 1 }]),
+    },
 	'stl:barcode': {
 		attributes: stl_layout_item_attrs(stl_bbox_attrs),
 		children: stl_runtime_items,
@@ -1609,6 +1820,120 @@ stl_schema.elements = {
     },
 };
 
+function report_error(type, e) {
+    var stl = require('stl');
+    $('#preview').html('<h3>&#x26a0; '+type+'</h3><pre>'+stl.text_escape(e)+'</pre>');
+}
+
+function build_opath(elem, prefix) {
+    prefix = prefix || '';
+    var attr = 'data-stl-class';
+    var sel = '*['+attr+']';
+    var current = elem.closest(sel);
+    var path = [];
+    while(true) {
+        var type = current.attr(attr);
+        path.push(type);
+        var parent = current.parent().closest(sel);
+        if (!parent.length)
+            break;
+        var siblings = parent.find('> ['+attr+'="'+type+'"]');
+        if (siblings.length>1) {
+            path[path.length-1] += '[' + (siblings.index(current)+1) + ']';
+        }
+        current = parent;
+    }
+    path.push(prefix);
+    return path.reverse().join('/');
+}
+
+function lookup_tree_element(elem) {
+    var opath = build_opath(elem, 'stl:document');
+    var js = findElementByOpath(opath);
+    return $('#'+js.htmlID);
+}
+
+function handleRotation($elem) {
+    function parseTransform(transform) {
+        transform = transform || '';
+        //get all transform declarations
+        return (transform.match(/([\w]+)\(([^\)]+)\)/g)||[])
+        //make pairs of prop and value
+            .map(function(it){return it.replace(/\)$/,"").split(/\(/)})
+        //convert to key-value map/object
+            .reduce(function(m,it){return m[it[0]]=it[1],m},{});
+    }
+    
+    function calculateAngle(el) {
+        var st = window.getComputedStyle(el, null);
+        var tr = st.getPropertyValue("-webkit-transform") ||
+            st.getPropertyValue("-moz-transform") ||
+            st.getPropertyValue("-ms-transform") ||
+            st.getPropertyValue("-o-transform") ||
+            st.getPropertyValue("transform") ||
+            "none";
+        if (tr === "none")
+            return 0;
+        var values = tr.split('(')[1].split(')')[0].split(',');
+        var a = values[0];
+        var b = values[1];
+        var c = values[2];
+        var d = values[3];
+        var scale = Math.sqrt(a*a + b*b);
+        var sin = b/scale;
+        var radians = Math.atan2(b, a);
+        return radians;
+    }
+    
+    var $child = $elem.children(":first");
+    var transform = $child.css('transform');
+    var radians = 0;
+    var tx, ty;
+    if (transform) {
+        var pbox = $elem.get(0).getBoundingClientRect();
+        var box = $child.get(0).getBoundingClientRect();
+        tx = pbox.x-box.x;
+        ty = pbox.y-box.y;
+        transform = 'translate('+tx+'px, '+ty+'px) ' + transform;
+        $elem.css("width", box.width);
+        $elem.css("height", box.height);
+        //$elem.css("background-color", "gray");
+        $child.css('transform', transform);
+        radians = calculateAngle($child.get(0));
+    }
+    var options = {
+        transforms: parseTransform(transform),
+        stop: function(event, ui) {
+            var radians = calculateAngle($child.get(0));
+            var degrees = Math.round(radians * 180/Math.PI);
+            var opath = build_opath($child, 'stl:document');
+            var js = findElementByOpath(opath);
+            setOrCreateAttribute(js, 'transform', 'rotate('+degrees+'deg)');
+            Xonomy.replace(js.htmlID, js);
+        },
+    };
+    $child
+        .rotatable({
+            transforms: parseTransform(transform),
+            stop: function(event, ui) {
+                var radians = calculateAngle($child.get(0));
+                var degrees = Math.round(radians * 180/Math.PI);
+                var opath = build_opath($child, 'stl:document');
+                var js = findElementByOpath(opath);
+                setOrCreateAttribute(js, 'transform', 'rotate('+degrees+'deg)');
+                Xonomy.replace(js.htmlID, js);
+            },
+        }).resizable({
+            stop: function(event, ui) {
+                var opath = build_opath($child, 'stl:document');
+                var js = findElementByOpath(opath);
+                setOrCreateAttribute(js, 'w', Math.round(ui.size.width)+'px');
+                setOrCreateAttribute(js, 'h', Math.round(ui.size.height)+'px');
+                Xonomy.replace(js.htmlID, js);
+            },
+        });
+}
+
 function show_preview() {
     var js = harvestRootElement();
     var xml = js2xml(js, stl_schema);
@@ -1629,27 +1954,27 @@ function show_preview() {
         var stl2html = require('html').stl2html;
         try {
             var html = stl2html(xml);
+            // we do not use jQuery html() method as it does not preserve whitespace
             $('#preview').html(html);
             // adjust all rotated items
-            $("#preview .stl-wrap").each(function() {
-                var $this = $(this);
-                var child = $this.children(":first")[0];
-                var transform = $(child).css('transform');
-                if (transform) {
-                    var pbox = this.getBoundingClientRect();
-                    var box = child.getBoundingClientRect();
-                    var tx = pbox.x-box.x;
-                    var ty = pbox.y-box.y;
-                    transform = 'translate('+tx+'px, '+ty+'px) ' + transform;
-                    console.log(pbox, box, transform);
-                    $this.css("minWidth", box.width);
-                    $this.css("minHeight", box.height);
-                    $(child).css('transform', transform);
-                }
+            $("#preview .stl-inline-item").each((_, e) => handleRotation($(e)));
+            // hover highlight
+            $('#preview *[data-stl-class]').hover(function() {
+                var tree = lookup_tree_element($(this));
+                tree.addClass('highlight-tree');
+                $(this).addClass('highlight-node');
+            }, function() {
+                var tree = lookup_tree_element($(this));
+                tree.removeClass('highlight-tree');
+                $(this).removeClass('highlight-node');
             });
-            
+            //return;
+            // resize and rotate
+            //var items = $('#preview *[data-stl-class="stl:text"]');
+            //items.resizable();
+
         } catch(e) {
-            $('#preview').html('<h3>&#x26a0; Preview Error</h3><pre>'+e+'</pre>');
+            report_error('Preview Error', e.message);
         }
     }
 };
@@ -1659,10 +1984,10 @@ stl_schema.onchange = show_preview;
 
 function init_editors() {
     function init_markup(markup) {
+        markup = markup || XonomyBuilder.xml('stl:stl', {version: '0.1'}, '', stl_schema.namespaces);
         var js = Xonomy.xml2js(markup);
         jsNormalize(js);
         Xonomy.render(js, xonomy, xschema);
-        show_preview();
     }
     
     Split(['#left', '#right'], {
@@ -1674,9 +1999,22 @@ function init_editors() {
     var url = window.location.href;
     var stl = /\?stl=([^&]+)/.exec(url);
     if (stl) {
-        $.get(decodeURIComponent(stl[1]), init_markup);
+        $.get(decodeURIComponent(stl[1]))
+            .done(function (markup) {
+                init_markup(markup);
+                show_preview();
+            })
+            .fail(function (e) {
+                report_error('Loading Error', e.statusText);
+	            init_markup();
+                // intentionally no preview here
+            });
     } else {
-        var markup = XonomyBuilder.xml('stl:stl', {version: '0.1'}, '', stl_schema.namespaces);
-	    init_markup(markup);
+	    init_markup();
+        show_preview();
     }
 }
+
+// Story overflow:
+// https://developer.mozilla.org/en-US/docs/Web/API/Document/caretPositionFromPoint
+// https://codepen.io/anon/pen/WXGbQM
