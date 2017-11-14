@@ -1968,11 +1968,6 @@ function show_preview() {
                 tree.removeClass('highlight-tree');
                 $(this).removeClass('highlight-node');
             });
-            //return;
-            // resize and rotate
-            //var items = $('#preview *[data-stl-class="stl:text"]');
-            //items.resizable();
-
         } catch(e) {
             report_error('Preview Error', e.message);
         }
