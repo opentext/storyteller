@@ -4658,7 +4658,6 @@ function css_postprocess(css) {
                 ? masks[level]
                 : masks[masks.length-1];
             var pmask = preprocessMask(mask, level);
-            console.log(mask, level, '->', pmask);
             return pmask;
         }
         
@@ -4753,12 +4752,12 @@ function css_postprocess(css) {
         var props = getNumberingProps(rule);
         if (props) {
             if (props.level !== undefined) {
-                new_css.concat(genNumberingStyles(key, props));
+                new_css = new_css.concat(genNumberingStyles(key, props));
             } else {
                 var max = maxLevel(props.mask);
                 for (var level=0; level<=max; ++level) {
                     key = 'ol ' + key;
-                    new_css.concat(genNumberingStyles(key, props, level));
+                    new_css = new_css.concat(genNumberingStyles(key, props, level));
                 }
             }
         }
