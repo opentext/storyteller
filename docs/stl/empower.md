@@ -75,13 +75,17 @@ rendered variants side-by-side):
   <tr>
 	<td colspan="2">
 		Empower JSON render:<br/>
-		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_char.png"/>
+		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_char.json">
+			<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_char.png"/>
+		</a>
 	</td>
   </tr>
   <tr>
 	<td colspan="2">
 		StoryTeller STL render:<br/>
-		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_char.png"/>
+		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_char.json&css=1">
+		   <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_char.png"/>
+		</a>
 	</td>
   </tr>
   
@@ -89,11 +93,15 @@ rendered variants side-by-side):
   <tr>
 	<td>
 		Empower JSON render:<br/>
-    	<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.png"/>
+		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.json">
+		   	<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.png"/>
+		</a>
 	</td>
   	<td>
 		StoryTeller STL render:<br/>
-		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_par.png"/>
+		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.json&css=1">
+			<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_par.png"/>
+		</a>
 	</td>
   </tr>
 
@@ -101,11 +109,15 @@ rendered variants side-by-side):
   <tr>
 	<td>
 		Empower JSON render:<br/>
-    	<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.png"/>
+		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.json">
+		   	<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.png"/>
+		</a>
 	</td>
   	<td>
 		StoryTeller STL render:<br/>
-		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_table.png"/>
+		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.json&css=1">
+			<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_table.png"/>
+		</a>
 	</td>
   </tr>
 
@@ -113,11 +125,15 @@ rendered variants side-by-side):
   <tr>
 	<td>
 		Empower JSON render:<br/>
-    	<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.png"/>
+		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.json">
+    	   <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.png"/>
+		</a>
 	</td>
   	<td>
 		StoryTeller STL render:<br/>
-		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_canvas.png"/>
+		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.json&css=1">
+			<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_canvas.png"/>
+		</a>
 	</td>
   </tr>
 </table>
