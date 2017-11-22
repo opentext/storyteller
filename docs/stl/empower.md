@@ -359,7 +359,7 @@ The generated _STL_ is much more concise:
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/empty.xml">output/empty.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json&css=1">output/empty.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -435,7 +435,7 @@ If we compare the new [hello.json](https://rawgit.com/opentext/storyteller/maste
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello.xml">output/hello.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&css=1">output/hello.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -571,7 +571,7 @@ still opens succesfully in _Empower Web Editor_ with no obvious issues.
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/font.xml">output/font.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json&css=1">output/font.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -658,7 +658,7 @@ If we compare the new [euro.json](https://rawgit.com/opentext/storyteller/master
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/euro.xml">output/euro.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/euro.json&css=1">output/euro.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -755,7 +755,7 @@ If we compare the new [hello_opentext.json](https://rawgit.com/opentext/storytel
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_opentext.xml">output/hello_opentext.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&css=1">output/hello_opentext.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -891,7 +891,7 @@ If we compare the new [sizes.json](https://rawgit.com/opentext/storyteller/maste
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/sizes.xml">output/sizes.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/sizes.json&css=1">output/sizes.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -1002,7 +1002,7 @@ If we compare the new [colors.json](https://rawgit.com/opentext/storyteller/mast
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/colors.xml">output/colors.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/colors.json&css=1">output/colors.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -1129,7 +1129,7 @@ If we compare the new [valign.json](https://rawgit.com/opentext/storyteller/mast
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/valign.xml">output/valign.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/valign.json&css=1">output/valign.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -1272,7 +1272,7 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hyperlink.xml">output/hyperlink.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json&css=1">output/hyperlink.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -1409,7 +1409,7 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/paragraphs.xml">output/paragraphs.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&css=1">output/paragraphs.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -1501,7 +1501,7 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_color.xml">output/par_color.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json&css=1">output/par_color.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -1583,7 +1583,7 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_halign.xml">output/par_halign.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_halign.json&css=1">output/par_halign.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -1664,7 +1664,7 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_indent.xml">output/par_indent.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_indent.json&css=1">output/par_indent.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -1806,7 +1806,7 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_bullets.xml">output/par_bullets.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json&css=1">output/par_bullets.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -1914,7 +1914,7 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering.xml">output/par_numbering.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json&css=1">output/par_numbering.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -2051,7 +2051,7 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering_indent.xml">output/par_numbering_indent.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering_indent.json&css=1">output/par_numbering_indent.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -2160,7 +2160,7 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/image.xml">output/image.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json&css=1">output/image.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -2268,7 +2268,7 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/text.xml">output/text.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json&css=1">output/text.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -2420,7 +2420,7 @@ The _emp2stl_ convertor generates the following STL equivalent:
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.xml">output/table.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json&css=1">output/table.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -2669,7 +2669,7 @@ option passed as a parameter. Otherwise a conversion error is raised.
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/variables.xml">output/variables.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json&css=1">output/variables.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -2725,7 +2725,7 @@ The generated _STL_ looks as follows:
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_empty.xml">output/g_empty.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&css=1">output/g_empty.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -2821,7 +2821,7 @@ of an _inline text object_ we already know from the previous [Text Frame](#text-
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text.xml">output/g_text.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json&css=1">output/g_text.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -2927,7 +2927,7 @@ in the `m_iObjType` field.
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_table.xml">output/g_text_image_table.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_table.json&css=1">output/g_text_image_table.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -3057,7 +3057,7 @@ and `m_pObjs` plus `m_Objs` arrays are changed.
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_nested.xml">output/g_text_image_nested.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_nested.json&css=1">output/g_text_image_nested.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -3176,7 +3176,7 @@ content arrays and `m_pObjs` plus `m_Objs` arrays are changed.
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_table_nested.xml">output/g_text_table_nested.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_table_nested.json&css=1">output/g_text_table_nested.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
@@ -3223,7 +3223,7 @@ The resulting JSON can be seen in the [g_table_text_image_nested.json](https://r
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_table_text_image_nested.xml">output/g_table_text_image_nested.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https:<//rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_table_text_image_nested.json&css=1">output/g_table_text_image_nested.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
