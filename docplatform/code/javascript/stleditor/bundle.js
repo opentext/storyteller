@@ -5168,6 +5168,19 @@ function html_builder(nsmap, writer, options) {
             }
         }
 
+        function field_(start, attrs) {
+            if (start) {
+                writer.start('span', {
+                    'data-stl-class': 'stl:field',
+                    'data-stl-xpath': attrs.xpath,
+                });
+                var data = attrs.sample || attrs.xpath;
+                writer.text(data);
+                return stl.empty_checker();
+            } else {
+                writer.end('span');
+            }
+        }
         
         function text(data) {
             if (data) {
@@ -5190,7 +5203,7 @@ function html_builder(nsmap, writer, options) {
             block_: block_,
             scope_: scope_,
             story_: story_,
-            field_: () => unsupported("stl:field"),
+            field_: field_,
             image_: inline_items.image_,
             table_: inline_items.table_,
             text_: inline_items.text_,

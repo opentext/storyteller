@@ -2669,7 +2669,7 @@ option passed as a parameter. Otherwise a conversion error is raised.
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json&css=1">output/variables.xml</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json&resources=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/resources.json&css=1">output/variables.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>

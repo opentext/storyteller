@@ -2023,9 +2023,13 @@ function showPreview() {
     function getLabel($elem) {
         return '<div class="label">'+getItemSelector($elem)+'</div>';
     }
-    function getRefLabel($elem) {
+    function getStoryRef($elem, ref) {
         var story = $elem.attr('data-stl-story');
         return '<div class="reference">stl:story["'+story+'"]</div>';
+    }
+    function getXPathRef($elem) {
+        var xpath = $elem.attr('data-stl-xpath');
+        return '<div class="reference">'+xpath+'</div>';
     }
     
     var js = harvestRootElement();
@@ -2048,8 +2052,7 @@ function showPreview() {
         try {
             var html = stl2html(xml);
         } catch(e) {
-            report_error('Preview Error', e.message);
-            return;
+            return report_error('Preview Error', e.message);
         }
         // we do not use jQuery html() method as it does not preserve whitespace
         $('#preview').html(html);
@@ -2057,13 +2060,22 @@ function showPreview() {
         var $all = $document.find('*[data-stl-class]');
         var $pages = $document.find('> div[data-stl-class="stl:page"]');
         var $stories = $document.find('> div[data-stl-class="stl:story"]');
-        var $storyrefs = $document.find('div[data-stl-story]');
+        var $storyrefs = $document.find('*[data-stl-story]');
+        var $xpathrefs = $document.find('*[data-stl-xpath]');
         var $inlines = $document.find('.stl-inline-item > *[data-stl-class]');
-        var $layouts = $pages.find('> div[data-stl-class="stl:text"], > div[data-stl-class="stl:image"], > table[data-stl-class="stl:table"]');
+        var $layouts = $pages.find([
+            '> div[data-stl-class="stl:text"]',
+            '> div[data-stl-class="stl:image"]',
+            '> table[data-stl-class="stl:table"]'].join(', '));
         
         $stories.wrap('<div class="story-paper shadow"></div>').before(function () { return getLabel($(this)); });
         $pages.wrap('<div class="page-paper shadow"></div>').before(function () { return getLabel($(this)); });
-        $storyrefs.prepend(function () { return getRefLabel($(this)); });
+        $storyrefs.prepend(function () { return getStoryRef($(this)); });
+        $xpathrefs.tooltip({
+            content: function () { return $(this).attr('data-stl-xpath'); },
+            track: true,
+            items: 'span'
+        });
         
         // initialize modification handlers
         $pages.each((_, e) => initHandlers($(e), {resizable: "document"}));
@@ -2082,7 +2094,6 @@ function showPreview() {
             $tree.removeClass('highlight-tree');
             $this.removeClass('highlight-node');
         });
-        
     }
 };
 
@@ -2119,14 +2130,20 @@ function initialize() {
 	var xonomy = document.getElementById("xonomy");
     var stl = getParameterByName('stl');
     var emp = getParameterByName('emp');
+    var res = getParameterByName('resources');
     var input = stl || emp;
     if (input) {
-        $.get(input)
-            .done(function (input) {
+        input = $.get(input);
+        res = res ? $.get(res) : null;
+        $.when(input, res)
+            .done(function (input, res) {
+                input = input[0];
+                res = res[0];
                 var cfg = {
                     input: input,
                     format: stl ? 'stl' : 'emp',
                     options: {
+                        resources: res,
                         css: getParameterByName('css'),
                         page: getParameterByName('page'),
                         maps: {
