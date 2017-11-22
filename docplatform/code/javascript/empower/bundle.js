@@ -2747,7 +2747,7 @@ module.exports={
 
 const util = require('util');
 const stl = require('stl');
-const defs = require('empower.json');
+const defs = require('./empower.json');
 const enums = defs.enums;
 
 function getKeyByValue(object, value) {
@@ -2778,12 +2778,28 @@ function check_options(options) {
     return options;
 }
 
-function check_input(input) {
+function check_emp(input) {
+    if (util.isStream(input)) {
+        input = input.read();
+    }
+    if (util.isString(input)) {
+        input = JSON.parse(input)
+    }
+    if (util.isObject(input)) {
+        input = input.contents;
+    }
+    if (!input) {
+        throw new Error("Invalid 'input' parameter, stream, string or object (with contents) expected");
+    }
+    return input;
+}
+
+function check_stl(input) {
     if (util.isStream(input)) {
         input = input.read();
     }
     if (!util.isString(input)) {
-        throw new Error("Invalid 'input' parameter, string or stream expected");
+        throw new Error("Invalid 'input' parameter, stream or string expected");
     }
     return input;
 }
@@ -2794,14 +2810,6 @@ function check_input(input) {
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-function css_format(css) {
-    return Object.keys(css).filter(function (key) {
-        return css[key] !== null;
-    }).map(function (key) {
-        return key + ': ' + css[key];
-    }).join('; ');
-}
 
 function css_converter(resolution, options) {
 
@@ -2861,7 +2869,7 @@ function css_converter(resolution, options) {
             var css = {
                 '-stl-shape-resize': 'free 0pt max 0pt max'
             };
-            attrs.style = css_format(css);
+            attrs.style = stl.css_format(css);
         }
         return attrs;
     }
@@ -3154,7 +3162,7 @@ function content_inserter(writer) {
         if (paragraph === true) {
             throw new Error("Paragraph nesting not supported");
         }
-        push('p', {style: css_format(css)});
+        push('p', {style: stl.css_format(css)});
         paragraph = true;
     }
 
@@ -3171,7 +3179,7 @@ function content_inserter(writer) {
 
     function character(ch) {
         if (style.state === states.CACHED) {
-            writer.start('span', {style: css_format(style.css)});
+            writer.start('span', {style: stl.css_format(style.css)});
             style.state = states.OPEN;
             blackspace = null;
         }
@@ -3287,7 +3295,7 @@ function build_stl(contents, writer, options) {
                 }
                 var css = converter.item_style(cell.m_pTextDraw);
                 converter.cell_border(cell, row, column, css);
-                attrs.style = css_format(css);
+                attrs.style = stl.css_format(css);
                 inserter.push('cell', attrs);
                 convert_content(cell.m_pTextDraw);
                 inserter.pop('cell');
@@ -3299,7 +3307,7 @@ function build_stl(contents, writer, options) {
         var attrs = converter.pos(draw.m_rectPosition);
         var css = converter.item_style(draw);
         css.display = 'table';
-        attrs.style = css_format(css);
+        attrs.style = stl.css_format(css);
         inserter.push('table', attrs);
         inserter.push('story');
         draw.m_Rows.forEach(convert_row);
@@ -3318,7 +3326,7 @@ function build_stl(contents, writer, options) {
     function convert_text(draw, inserter) {
         var attrs = converter.bbox(draw.m_rectPosition);
         var css = converter.item_style(draw);
-        attrs.style = css_format(css);
+        attrs.style = stl.css_format(css);
         inserter.push('text', attrs);
         inserter.push('story');
         convert_content(draw);
@@ -3352,7 +3360,7 @@ function build_stl(contents, writer, options) {
         if (options.page) {
             writer.start('page', attrs);
             var css = converter.item_style(draw);
-            attrs.style = css_format(css);
+            attrs.style = stl.css_format(css);
             attrs.story = 'Main';
             writer.start('text', attrs);
             writer.end('text');
@@ -3895,7 +3903,7 @@ function json_factory(options) {
 
 function json_builder(nsmap, factory, root, options) {
     var ctx = {
-        stylesheet: {}
+        stylesheet: null
     };
 
     const unsupported = function (item) {
@@ -3920,38 +3928,8 @@ function json_builder(nsmap, factory, root, options) {
     }
     
     function get_css(attrs, basecss) {
-        function clone_css(css) {
-            return JSON.parse(JSON.stringify(css));
-        }
-        
-        function split_css(style, css) {
-            css = css || {};
-            if (style) {
-                style.trim().split(';').forEach(function(property) {
-                    var parts = property.trim().split(':');
-                    if (parts.length === 2) {
-                        css[parts[0].trim()] = parts[1].trim();
-                    } else if (parts[0].length) {
-                        throw new Error("Invalid CSS property: "+parts[0]);
-                    }
-                });
-            }
-            return css;
-        }
-        var css = basecss ? clone_css(basecss) : {};
-        var cls = attrs['class'];
-        if (cls) {
-            var style = ctx.stylesheet['.'+cls];
-            if (style) {
-                Object.keys(style).forEach(function (prop) {
-                    css[prop] = style[prop];
-                });
-            }
-        }
-        split_css(attrs.style, css);
-        return css;
+        return stl.css_lookup(ctx.stylesheet, attrs, basecss);
     }
-    
     
     function table_builder(draw) {
         var columns = [];
@@ -4401,20 +4379,26 @@ function json_builder(nsmap, factory, root, options) {
         };
     }
     
-    function root_builder(stylesheet) {
+    function root_builder() {
         function document_(start, attrs) {
             if (start)
                 return stl.handler_dispatcher(nsmap, doc_builder());
         }
 
         function style_(start, attrs) {
-            if (start) {
-                if (!attrs.src) {
-                    return stl.text_accumulator(function(css) {
-                        ctx.stylesheet = stl.css_parse(css);
-                    });
+            function set_stylesheet(css) {
+                if (ctx.stylesheet) {
+                    return unsupported('multiple stylesheets');
                 }
-                ctx.stylesheet = require('streams').stream(attrs.src).read();
+                ctx.stylesheet = stl.css_parse(css);
+            }
+            
+            if (start) {
+                if (attrs.src) {
+                    set_stylesheet(require('streams').stream(attrs.src).read());
+                } else {
+                    return stl.text_accumulator(set_stylesheet);
+                }
             }
         }
         
@@ -4454,12 +4438,11 @@ function json_builder(nsmap, factory, root, options) {
  *    - `@return` ... output stream (if provided as `options.output`) or string
  */
 exports.emp2stl = function emp2stl(input, options) {
-    input = check_input(input);
+    input = check_emp(input);
     options = check_options(options);
 
-    var contents = JSON.parse(input).contents;
     var writer = stl.stl_writer(options.indent, options.css);
-    build_stl(contents, writer, options);
+    build_stl(input, writer, options);
     var output = writer.finalize();
     if (!options.output) {
         return output; // return the string directly
@@ -4487,7 +4470,7 @@ exports.emp2stl = function emp2stl(input, options) {
  *    - `@return` ... output stream (if provided as `options.output`) or string
  */
 exports.stl2emp = function emp2stl(input, options) {
-    input = check_input(input);
+    input = check_stl(input);
     options = check_options(options);
         
     var nsmap = stl.namespace_stack();
@@ -4506,7 +4489,7 @@ exports.stl2emp = function emp2stl(input, options) {
 
 
 
-},{"empower.json":"empower.json","stl":"stl","streams":false,"util":"util"}],"ieee754":[function(require,module,exports){
+},{"./empower.json":"/home/pfi01/streamserve/docplatform/forsetup/js/tools/empower.json","stl":"stl","streams":false,"util":"util"}],"ieee754":[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -6467,8 +6450,9 @@ function make_indenter(indent, default_indent) {
     return () => '';
 }
 
-function xml_writer(indenter, initial_tags) {
+function xml_writer(options, initial_tags) {
     initial_tags = initial_tags || [];
+    var indenter = make_indenter(options.indent);
     var tags = initial_tags.slice();
     var no_children;
     var content = '';
@@ -6505,8 +6489,8 @@ function xml_writer(indenter, initial_tags) {
         if (top !== tag) {
             throw new Error("Tag mismatch (trying to close '" + tag + "' while top element is '" + top + "')");
         }
-        if (no_children) {
-            content = content.slice(0, -1) + '/>';
+        if (options.shortener && no_children) {
+            content = content.slice(0, -1) + options.shortener(tag);
             no_children = false;
         } else {
             var line = format_end(tag);
@@ -6589,13 +6573,13 @@ function css_map(normalize) {
 }
 
 function stl_writer(indent, css) {
-    var writer = xml_writer(make_indenter(indent), ['stl:stl']);
+    var writer = xml_writer({indent: indent, shortener: () => '/>'}, ['stl:stl']);
     var cssmap = css ? css_map(true) : null;
 
     function start(tag, attrs) {
         if (attrs && attrs.style !== undefined) {
             if (cssmap) {
-                var cls = cssmap.cls(attrs.style, tag);
+                var cls = cssmap.cls(attrs.style, 'stl-'+tag);
                 delete attrs.style;
                 if (cls !== null) {
                     attrs['class'] = cls;
@@ -6628,7 +6612,7 @@ function stl_writer(indent, css) {
         }
         
         var content = writer.finalize();
-        writer = xml_writer(make_indenter(indent));
+        writer = xml_writer({indent: indent, shortener: () => '/>'});
         var attrs = {
             'xmlns:stl': exports.namespaces.stl,
             version: exports.version
@@ -6698,6 +6682,49 @@ function css_parse(css) {
     return styles;
 }
 
+function css_split(style, css) {
+    css = css || {};
+    if (style) {
+        style.trim().split(';').forEach(function(property) {
+            var parts = property.trim().split(':');
+            if (parts.length === 2) {
+                css[parts[0].trim()] = parts[1].trim();
+            } else if (parts[0].length) {
+                throw new Error("Invalid CSS property: "+parts[0]);
+            }
+        });
+    }
+    return css;
+}
+
+function css_format(css) {
+    return Object.keys(css).filter(function (key) {
+        var v = css[key];
+        return v !== null && v !== undefined;
+    }).map(function (key) {
+        return key + ': ' + css[key];
+    }).join('; ');
+}
+
+function css_lookup(stylesheet, attrs, basecss) {
+    function clone_css(css) {
+        return JSON.parse(JSON.stringify(css));
+    }
+    
+    var css = basecss ? clone_css(basecss) : {};
+    var cls = attrs['class'];
+    if (cls && stylesheet) {
+        var style = stylesheet['.'+cls];
+        if (style) {
+            Object.keys(style).forEach(function (prop) {
+                css[prop] = style[prop];
+            });
+        }
+    }
+    css_split(attrs.style, css);
+    return css;
+}
+
 exports.version = '0.1';
 exports.namespaces = namespaces;
 exports.namespace_stack = namespace_stack;
@@ -6708,11 +6735,16 @@ exports.text_accumulator = text_accumulator;
 exports.xml_accumulator = xml_accumulator;
 exports.parser = sax_parser;
 exports.xml_escaper = xml_escaper;
+exports.attr_escape = attr_escape;
+exports.text_escape = text_escape;
 
 exports.make_indenter = make_indenter;
 exports.xml_writer = xml_writer;
 exports.stl_writer = stl_writer;
 exports.css_parse = css_parse;
+exports.css_lookup = css_lookup;
+exports.css_split = css_split;
+exports.css_format = css_format;
 
 },{"css":"css","sax":"sax","streams":false,"util":"util"}],"util":[function(require,module,exports){
 // NOTE: These type checking functions intentionally don't use `instanceof`

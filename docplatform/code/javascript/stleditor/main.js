@@ -1,6 +1,7 @@
 'use strict';
 
 var api_url;// = 'http://wprgpfi01l:9000/api';
+var cas_uri_prefix = 'https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/cas/';
 
 function uploadData(api_url, data, type, callback) {
     var url = api_url + '/storage/upload';
@@ -87,15 +88,28 @@ function findDescendants(js, name, result) {
 function findElementByOpath(opath, js) {
     js = js || harvestRootElement();
     opath.split('/').forEach(function (selector) {
-        var matches = /^([^\[]+)(\[(\d+)\])?/.exec(selector);
+        var matches = /^([^\[]+)(\[(\d+|"([^"]+)")\])?/.exec(selector);
         if (!matches)
-            throw new Error('Invalid selector: "'+selector+'" in opath "'+opath+'"');
-        var name = matches[1];
-        var index = matches[3] ? matches[3]-1 : 0;
-        var children = js.children.filter((c) => c.name === name);
-        if (!children.length || index >= children.length)
-            throw new Error('Cannot find child with name "'+name+'" and index '+index);
-        js = children[index];
+            throw new Error('Invalid selector: "'+selector+'" (opath "'+opath+'")');
+        var tag = matches[1];
+        var children = js.children.filter((c) => c.name === tag);
+        if (!children.length)
+            throw new Error('Cannot find child with tag "'+tag+'" (opath "'+opath+'")');
+        var name = matches[4];
+        if (name) {
+            var child = js.children.find(function (c) {
+                var att = c.attributes.find((a) => a.name === 'name');
+                return att && att.value === name;
+            });
+            if (!child)
+                throw new Error('Cannot find child "'+tag+'" with name '+name+' (opath "'+opath+'")');
+            js = child;
+        } else {
+            var index = matches[3] ? matches[3]-1 : 0;
+            if (index >= children.length)
+                throw new Error('Cannot find child "'+tag+'" with index '+index+' (opath "'+opath+'")');
+            js = children[index];
+        }
     });
     return js;
 };
@@ -1145,6 +1159,26 @@ function setEditorMode(htmlID, mode) {
 	Xonomy.clickoff();
 }
 
+function publishSTL(js) {
+    jsPrettify(js, false, '  ');
+    var xml = js2xml(js, stl_schema);
+    var data = {
+        "description": "STL uploaded from STL online editor",
+        "public": true,
+        "files": {
+            "stl.xml": {
+                "content": xml,
+                "type": "text/xml"
+            }
+        }
+    };
+    Xonomy.clickoff();
+    publishData(data, function(result) {
+        var url = result.files['stl.xml'].raw_url;
+        window.location.search = '?stl=' + url;
+    });
+}
+
 var stl_layout_items = [
 	{name: 'stl:text', group: 'Layout item'},
 	{name: 'stl:table', group: 'Layout item'},
@@ -1186,8 +1220,8 @@ var stl_inline_items = ['stl:span', 'stl:tab', 'stl:break', 'stl:command'];
 var stl_bbox_attrs = [
     {name: 'x', type: 'length'}, 
     {name: 'y', type: 'length'}, 
-    {name: 'w', type: 'length', mandatory: true}, 
-    {name: 'h', type: 'length', mandatory: true}, 
+    {name: 'w', type: 'length', value: '100pt', mandatory: true}, 
+    {name: 'h', type: 'length', value: '100pt', mandatory: true}, 
 ];
 var stl_ellipse_attrs = [
     {name: 'cx', type: 'length'}, 
@@ -1209,7 +1243,7 @@ var stl_line_attrs = [
 var stl_style_attrs = [
     'id', 
     {name: 'class', type: 'class'}, 
-    {name: 'style', type: 'style'},
+    {name: 'style', type: 'style', value: ''},
 ];
 var stl_edit_attrs = [
     {name: 'transform', type: 'transform'},
@@ -1283,7 +1317,7 @@ stl_schema.types = {
         asker: askerDynamic(templateXPaths),
     },
     transform: {
-        validate: /^((matrix|translate|scale|rotate|skewX|skewY)\(\s*([+-]?([0-9]*\.)?[0-9]+\s*)+\)\s*)+$/,
+        validate: /^(\s*(matrix\((\s*[0-9\.]+){6}\s*\)|translate\((\s*[\-0-9\.]+(pt|px|in|pc|mm|cm|em|%)){2}\s*\)|scale\((\s*[\-0-9\.]+){2}\s*\)|rotate\(\s*[\-0-9\.]+(deg|rad)\s*\)|(skewX|skewY)\(\s*[\-0-9\.]*\s*\))\s*)+$/,
     },
     style: {
         validate: /^([a-z\-]+:\s?[^;]+;?\s?)+$/,
@@ -1349,6 +1383,7 @@ stl_schema.namespaces = {
 stl_schema.elements = {
 	'stl:stl': {
         menu: [
+            {caption: "Publish STL", action: customAction, parameter: publishSTL},
             {caption: "Nerd mode", action: setEditorMode, parameter: 'nerd', condition: () => Xonomy.mode === 'laic'},
             {caption: "Laic mode", action: setEditorMode, parameter: 'laic', condition: () => Xonomy.mode === 'nerd'},
             editorMenuItem("Edit..."),
@@ -1825,35 +1860,54 @@ function report_error(type, e) {
     $('#preview').html('<h3>&#x26a0; '+type+'</h3><pre>'+stl.text_escape(e)+'</pre>');
 }
 
-function build_opath(elem, prefix) {
-    prefix = prefix || '';
-    var attr = 'data-stl-class';
-    var sel = '*['+attr+']';
+function getItemSelector(elem, parent) {
+    var aname = 'data-stl-name';
+    var atype = 'data-stl-class';
+    var sel = '*['+atype+']';
+    parent = parent || elem.parent().closest(sel);
+    var type = elem.attr(atype);
+    var name = elem.attr(aname);
+    var index = 0;
+    if (parent.length) {
+        var depth = elem.parentsUntil(parent).length;
+        var inner_sel = '*['+atype+'="'+type+'"]';
+        var siblings = parent.find(inner_sel).filter(function () {
+            return $(this).parentsUntil(parent).length === depth;
+        });
+        if (siblings.length > 1)
+            index = siblings.index(elem) + 1;
+    }
+    var label = type;
+    if (name)
+        label += '["'+name+'"]';
+    else if (index)
+        label += '['+index+']';
+    return label;
+}
+
+function getItemOpath(elem, prefix) {
+    var sel = '*[data-stl-class]';
     var current = elem.closest(sel);
     var path = [];
     while(true) {
-        var type = current.attr(attr);
-        path.push(type);
         var parent = current.parent().closest(sel);
+        path.push(getItemSelector(current, parent));
         if (!parent.length)
             break;
-        var siblings = parent.find('> ['+attr+'="'+type+'"]');
-        if (siblings.length>1) {
-            path[path.length-1] += '[' + (siblings.index(current)+1) + ']';
-        }
         current = parent;
     }
-    path.push(prefix);
+    if (prefix)
+        path.push(prefix);
     return path.reverse().join('/');
 }
 
-function lookup_tree_element(elem) {
-    var opath = build_opath(elem, 'stl:document');
+function lookupTreeElement(elem) {
+    var opath = getItemOpath(elem);
     var js = findElementByOpath(opath);
     return $('#'+js.htmlID);
 }
 
-function handleRotation($elem) {
+function initHandlers($item, options) {
     function parseTransform(transform) {
         transform = transform || '';
         //get all transform declarations
@@ -1884,57 +1938,96 @@ function handleRotation($elem) {
         var radians = Math.atan2(b, a);
         return radians;
     }
-    
-    var $child = $elem.children(":first");
-    var transform = $child.css('transform');
-    var radians = 0;
-    var tx, ty;
+
+    var transform = $item.css('transform');
     if (transform) {
-        var pbox = $elem.get(0).getBoundingClientRect();
-        var box = $child.get(0).getBoundingClientRect();
-        tx = pbox.x-box.x;
-        ty = pbox.y-box.y;
-        transform = 'translate('+tx+'px, '+ty+'px) ' + transform;
-        $elem.css("width", box.width);
-        $elem.css("height", box.height);
-        //$elem.css("background-color", "gray");
-        $child.css('transform', transform);
-        radians = calculateAngle($child.get(0));
+        if (options.inline) {
+            var $wrapper = $item.closest('.stl-inline-item');
+            var pbox = $wrapper.get(0).getBoundingClientRect();
+            var box = $item.get(0).getBoundingClientRect();
+            var tx = pbox.x-box.x;
+            var ty = pbox.y-box.y;
+            $wrapper.css("width", box.width);
+            $wrapper.css("height", box.height);
+            transform = 'translate('+tx+'px, '+ty+'px) ' + transform;
+        }
+        $item.css('transform', transform);
     }
-    var options = {
-        transforms: parseTransform(transform),
-        stop: function(event, ui) {
-            var radians = calculateAngle($child.get(0));
-            var degrees = Math.round(radians * 180/Math.PI);
-            var opath = build_opath($child, 'stl:document');
+
+    function applyResult(callback) {
+        return function (event, ui) {
+            var opath = getItemOpath($item);
             var js = findElementByOpath(opath);
-            setOrCreateAttribute(js, 'transform', 'rotate('+degrees+'deg)');
+            callback(js, ui);
             Xonomy.replace(js.htmlID, js);
-        },
-    };
-    $child
-        .rotatable({
-            transforms: parseTransform(transform),
-            stop: function(event, ui) {
-                var radians = calculateAngle($child.get(0));
-                var degrees = Math.round(radians * 180/Math.PI);
-                var opath = build_opath($child, 'stl:document');
-                var js = findElementByOpath(opath);
-                setOrCreateAttribute(js, 'transform', 'rotate('+degrees+'deg)');
-                Xonomy.replace(js.htmlID, js);
-            },
-        }).resizable({
-            stop: function(event, ui) {
-                var opath = build_opath($child, 'stl:document');
-                var js = findElementByOpath(opath);
-                setOrCreateAttribute(js, 'w', Math.round(ui.size.width)+'px');
-                setOrCreateAttribute(js, 'h', Math.round(ui.size.height)+'px');
-                Xonomy.replace(js.htmlID, js);
-            },
+        };
+    }
+
+    function setIfNotChanged(js, key, oldval, newval) {
+        oldval = Math.round(oldval);
+        newval = Math.round(newval);
+        if (oldval !== newval)
+            setOrCreateAttribute(js, key, newval+'px');
+    }
+    
+    if (options.draggable) {
+        $item.draggable({
+            containment: options.draggable,
+            autoHide: true,
+            stop: applyResult((js, ui) => {
+                setIfNotChanged(js, 'x', ui.originalPosition.left, ui.position.left);
+                setIfNotChanged(js, 'y', ui.originalPosition.top, ui.position.top);
+            }),
         });
+    }
+
+    if (options.rotatable) {
+        $item.rotatable({
+            transforms: parseTransform(transform),
+            autoHide: true,
+            wheelRotate: false,
+            stop: applyResult((js, ui) => {
+                var radians = calculateAngle($item.get(0));
+                var degrees = Math.round(radians * 180/Math.PI);
+                setOrCreateAttribute(js, 'transform', 'rotate('+degrees+'deg)');
+            }),
+        });
+    }
+    if (options.resizable) {
+        $item.resizable({
+            containment: options.resizable,
+            handles:"all",
+            autoHide: true,
+            stop: applyResult((js, ui) => {
+                setIfNotChanged(js, 'x', ui.originalPosition.left, ui.position.left);
+                setIfNotChanged(js, 'y', ui.originalPosition.top, ui.position.top);
+                setIfNotChanged(js, 'w', ui.originalSize.width, ui.size.width);
+                setIfNotChanged(js, 'h', ui.originalSize.height, ui.size.height);
+            }),
+        });
+    }
 }
 
-function show_preview() {
+function publishData(data, callback) {
+    $.ajax({
+        url: 'https://api.github.com/gists',
+        type: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        error: (e) => report_error('Gist upload error: ', e),
+        success: callback
+    });
+}
+
+function showPreview() {
+    function getLabel($elem) {
+        return '<div class="label">'+getItemSelector($elem)+'</div>';
+    }
+    function getRefLabel($elem) {
+        var story = $elem.attr('data-stl-story');
+        return '<div class="reference">stl:story["'+story+'"]</div>';
+    }
+    
     var js = harvestRootElement();
     var xml = js2xml(js, stl_schema);
     if (api_url) {
@@ -1954,59 +2047,104 @@ function show_preview() {
         var stl2html = require('html').stl2html;
         try {
             var html = stl2html(xml);
-            // we do not use jQuery html() method as it does not preserve whitespace
-            $('#preview').html(html);
-            // adjust all rotated items
-            $("#preview .stl-inline-item").each((_, e) => handleRotation($(e)));
-            // hover highlight
-            $('#preview *[data-stl-class]').hover(function() {
-                var tree = lookup_tree_element($(this));
-                tree.addClass('highlight-tree');
-                $(this).addClass('highlight-node');
-            }, function() {
-                var tree = lookup_tree_element($(this));
-                tree.removeClass('highlight-tree');
-                $(this).removeClass('highlight-node');
-            });
         } catch(e) {
             report_error('Preview Error', e.message);
+            return;
         }
+        // we do not use jQuery html() method as it does not preserve whitespace
+        $('#preview').html(html);
+        var $document = $('#preview div[data-stl-class="stl:document"]');
+        var $all = $document.find('*[data-stl-class]');
+        var $pages = $document.find('> div[data-stl-class="stl:page"]');
+        var $stories = $document.find('> div[data-stl-class="stl:story"]');
+        var $storyrefs = $document.find('div[data-stl-story]');
+        var $inlines = $document.find('.stl-inline-item > *[data-stl-class]');
+        var $layouts = $pages.find('> div[data-stl-class="stl:text"], > div[data-stl-class="stl:image"], > table[data-stl-class="stl:table"]');
+        
+        $stories.wrap('<div class="story-paper shadow"></div>').before(function () { return getLabel($(this)); });
+        $pages.wrap('<div class="page-paper shadow"></div>').before(function () { return getLabel($(this)); });
+        $storyrefs.prepend(function () { return getRefLabel($(this)); });
+        
+        // initialize modification handlers
+        $pages.each((_, e) => initHandlers($(e), {resizable: "document"}));
+        $inlines.each((_, e) => initHandlers($(e), {inline: true, resizable: "document", rotatable: true}));
+        $layouts.each((_, e) => initHandlers($(e), {resizable: "parent", draggable: "parent", rotatable: true}));
+        
+        // hover highlight
+        $all.hover(function() {
+            var $this = $(this);
+            var $tree = lookupTreeElement($this);
+            $tree.addClass('highlight-tree');
+            $this.addClass('highlight-node');
+        }, function() {
+            var $this = $(this);
+            var $tree = lookupTreeElement($this);
+            $tree.removeClass('highlight-tree');
+            $this.removeClass('highlight-node');
+        });
+        
     }
 };
 
 stl_schema.unknown = defaultSpec;
-stl_schema.onchange = show_preview;
+stl_schema.onchange = showPreview;
 
-function init_editors() {
-    function init_markup(markup) {
-        markup = markup || XonomyBuilder.xml('stl:stl', {version: '0.1'}, '', stl_schema.namespaces);
-        var js = Xonomy.xml2js(markup);
+function initialize() {
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+    
+    function initMarkup(cfg) {
+        cfg = cfg || {};
+        var stl = cfg.input || XonomyBuilder.xml('stl:stl', {version: '0.1'}, '', stl_schema.namespaces);
+        if (cfg.format === 'emp') {
+            stl = require('empower').emp2stl(stl, cfg.options);
+        }
+        var js = Xonomy.xml2js(stl);
         jsNormalize(js);
         Xonomy.render(js, xonomy, xschema);
     }
     
     Split(['#left', '#right'], {
-        sizes: [60, 40],
+        sizes: [50, 50],
         minSize: 200
     });
     var xschema = XonomyBuilder.convertSchema(stl_schema, stlPreprocess, stlPostprocess);
 	var xonomy = document.getElementById("xonomy");
-    var url = window.location.href;
-    var stl = /\?stl=([^&]+)/.exec(url);
-    if (stl) {
-        $.get(decodeURIComponent(stl[1]))
-            .done(function (markup) {
-                init_markup(markup);
-                show_preview();
+    var stl = getParameterByName('stl');
+    var emp = getParameterByName('emp');
+    var input = stl || emp;
+    if (input) {
+        $.get(input)
+            .done(function (input) {
+                var cfg = {
+                    input: input,
+                    format: stl ? 'stl' : 'emp',
+                    options: {
+                        css: getParameterByName('css'),
+                        page: getParameterByName('page'),
+                        maps: {
+                            uri: (uri) => uri.replace('cas:', cas_uri_prefix)
+                        }
+                    }
+                };
+                initMarkup(cfg);
+                showPreview();
             })
             .fail(function (e) {
                 report_error('Loading Error', e.statusText);
-	            init_markup();
+	            initMarkup();
                 // intentionally no preview here
             });
     } else {
-	    init_markup();
-        show_preview();
+	    initMarkup();
+        showPreview();
     }
 }
 

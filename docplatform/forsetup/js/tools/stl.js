@@ -458,8 +458,9 @@ function make_indenter(indent, default_indent) {
     return () => '';
 }
 
-function xml_writer(indenter, initial_tags) {
+function xml_writer(options, initial_tags) {
     initial_tags = initial_tags || [];
+    var indenter = make_indenter(options.indent);
     var tags = initial_tags.slice();
     var no_children;
     var content = '';
@@ -496,8 +497,8 @@ function xml_writer(indenter, initial_tags) {
         if (top !== tag) {
             throw new Error("Tag mismatch (trying to close '" + tag + "' while top element is '" + top + "')");
         }
-        if (no_children) {
-            content = content.slice(0, -1) + '/>';
+        if (options.shortener && no_children) {
+            content = content.slice(0, -1) + options.shortener(tag);
             no_children = false;
         } else {
             var line = format_end(tag);
@@ -580,13 +581,13 @@ function css_map(normalize) {
 }
 
 function stl_writer(indent, css) {
-    var writer = xml_writer(make_indenter(indent), ['stl:stl']);
+    var writer = xml_writer({indent: indent, shortener: () => '/>'}, ['stl:stl']);
     var cssmap = css ? css_map(true) : null;
 
     function start(tag, attrs) {
         if (attrs && attrs.style !== undefined) {
             if (cssmap) {
-                var cls = cssmap.cls(attrs.style, tag);
+                var cls = cssmap.cls(attrs.style, 'stl-'+tag);
                 delete attrs.style;
                 if (cls !== null) {
                     attrs['class'] = cls;
@@ -619,7 +620,7 @@ function stl_writer(indent, css) {
         }
         
         var content = writer.finalize();
-        writer = xml_writer(make_indenter(indent));
+        writer = xml_writer({indent: indent, shortener: () => '/>'});
         var attrs = {
             'xmlns:stl': exports.namespaces.stl,
             version: exports.version
@@ -689,6 +690,49 @@ function css_parse(css) {
     return styles;
 }
 
+function css_split(style, css) {
+    css = css || {};
+    if (style) {
+        style.trim().split(';').forEach(function(property) {
+            var parts = property.trim().split(':');
+            if (parts.length === 2) {
+                css[parts[0].trim()] = parts[1].trim();
+            } else if (parts[0].length) {
+                throw new Error("Invalid CSS property: "+parts[0]);
+            }
+        });
+    }
+    return css;
+}
+
+function css_format(css) {
+    return Object.keys(css).filter(function (key) {
+        var v = css[key];
+        return v !== null && v !== undefined;
+    }).map(function (key) {
+        return key + ': ' + css[key];
+    }).join('; ');
+}
+
+function css_lookup(stylesheet, attrs, basecss) {
+    function clone_css(css) {
+        return JSON.parse(JSON.stringify(css));
+    }
+    
+    var css = basecss ? clone_css(basecss) : {};
+    var cls = attrs['class'];
+    if (cls && stylesheet) {
+        var style = stylesheet['.'+cls];
+        if (style) {
+            Object.keys(style).forEach(function (prop) {
+                css[prop] = style[prop];
+            });
+        }
+    }
+    css_split(attrs.style, css);
+    return css;
+}
+
 exports.version = '0.1';
 exports.namespaces = namespaces;
 exports.namespace_stack = namespace_stack;
@@ -699,8 +743,13 @@ exports.text_accumulator = text_accumulator;
 exports.xml_accumulator = xml_accumulator;
 exports.parser = sax_parser;
 exports.xml_escaper = xml_escaper;
+exports.attr_escape = attr_escape;
+exports.text_escape = text_escape;
 
 exports.make_indenter = make_indenter;
 exports.xml_writer = xml_writer;
 exports.stl_writer = stl_writer;
 exports.css_parse = css_parse;
+exports.css_lookup = css_lookup;
+exports.css_split = css_split;
+exports.css_format = css_format;

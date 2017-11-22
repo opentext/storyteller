@@ -79,31 +79,81 @@ input:disabled.button {
 	outline: 1px dotted blue;
 }
 
-#preview {
-	border-left: 1px dotted #abd7e5;
-	border-right: 1px dotted #abd7e5;
-}
-
 .shadow {
 	position:relative;
 	box-shadow:0 10px 40px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
-.shadow:before,
-.shadow:after {
-	content:"";
-	position:absolute;
-	z-index:-1;
-	box-shadow:0 0 40px rgba(0,0,0,0.8);
-	top:10px;
-	bottom:10px;
-	left:0;
-	right:0;
-	border-radius:100px / 10px;
+
+#preview {
+	border-left: 1px dotted #abd7e5;
+	border-right: 1px dotted #abd7e5;
+	margin: 30pt 50pt;
+	text-align: center;
 }
-.shadow:after {
-	right:10px;
-	left:auto;
-	transform:skew(8deg) rotate(3deg);
+
+.story-paper {
+	position: relative;
+	margin: 10px 0px;
+	padding: 20px 40px;
+	width: auto;
+	background-color: white;
+	text-align: initial;
+}
+
+.page-paper {
+	position: relative;
+	margin: 10px 0px;
+	display: inline-block;
+	background-color: white;
+	text-align: initial;
+}
+
+.label {
+	display: none;
+	position: absolute;
+	top: -10px;
+	left: 30px;
+	z-index: 1000;
+	font-family: arial;
+	font-size: 10pt;
+	font-style: italic;
+	background: azure;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius : 4px;
+	box-shadow    : 0 0 0.5em rgba(0,0,0,0.6);
+}
+
+div:hover > .label {
+	display: inline;
+}
+
+.reference {
+	display: none;
+	position: absolute;
+	top: -10px;
+	left: 30px;
+	z-index: 1000;
+	font-family: arial;
+	font-size: 10pt;
+	font-style: italic;
+	background: salmon;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius : 4px;
+	box-shadow    : 0 0 0.5em rgba(0,0,0,0.6);
+}
+
+div:hover > .reference {
+	display: inline;
+}
+
+.ui-rotatable-handle {
+	display: none;
+}
+
+*:hover > .ui-rotatable-handle {
+	display: block;
 }
 
 .dynamic {
@@ -166,7 +216,7 @@ input:disabled.button {
 	height: 16px;
 	width: 16px;
 	cursor: pointer;
-	background-image: url(http://cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/rotate.png);
+	background-image: url(https://cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/rotate.png);
 	background-size: 100%;
 	position: absolute;
 	left: -2px;

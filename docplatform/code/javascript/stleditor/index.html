@@ -6,7 +6,6 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" charset="utf-8"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-modelist.js" charset="utf-8"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.11/fabric.min.js"></script>
-<!--	<script type="text/javascript" src="https://cdn.rawgit.com/kangax/fabric.js/v2.0.0-beta.1/dist/fabric.min.js"></script>-->
 	<script type="text/javascript" src="https://rawgit.com/filodej/xonomy/develop/xonomy.js"></script>
 	<script type="text/javascript" src="https://rawgit.com/filodej/xonomy-builder/master/src/XonomyBuilder.js"></script>
 	<script type="text/javascript" src="https://cdn.rawgit.com/nathancahill/Split.js/master/split.min.js"></script>
@@ -23,7 +22,7 @@
     <script type="text/javascript" src="bundle.js"></script>
 	<script type="text/javascript" src="main.js"></script>
   </head>
-  <body onload="init_editors()">
+  <body onload="initialize()">
     <div class="main">
       <div id="left" class="split split-horizontal">
         <div id="editor" class="split split-vertical">
@@ -31,11 +30,9 @@
         </div>
       </div>
       <div id="right" class="split split-horizontal">
-		<div class="paper shadow">
-          <div id="preview"><h3>&#8987; Preview...</h3></div>
-		</div>
+        <div id="preview"><h3>&#8987; Preview...</h3></div>
       </div>
     </div>
-	<div id="footer">This editor is powered by <a href="http://www.lexiconista.com/xonomy/">Xonomy</a>.</div>
+	<div id="footer">Powered by <a href="http://www.lexiconista.com/xonomy/">Xonomy</a>. Supported browsers: Google Chrome and Mozilla Firefox.</div>
   </body>
 </html>
