@@ -2134,7 +2134,7 @@ function initialize() {
     var input = stl || emp;
     if (input) {
         input = $.get(input);
-        res = res ? $.get(res) : null;
+        res = res ? $.get(res) : [];
         $.when(input, res)
             .done(function (input, res) {
                 input = input[0];
