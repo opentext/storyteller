@@ -2031,6 +2031,27 @@ function showPreview() {
         var xpath = $elem.attr('data-stl-xpath');
         return '<div class="reference">'+xpath+'</div>';
     }
+    var delay = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+    function highlight($target) {
+        $target.closest('*[data-stl-class]').addClass("highlight-node");
+        var $tree = lookupTreeElement($target);
+        $tree.addClass('highlight-tree');
+        $tree.parents('.collapsed').addClass('highlight-tree');
+    }
+
+    function unHighlight() {
+        var $xonomy = $('#xonomy');
+        var $document = $('#preview div[data-stl-class="stl:document"]');
+        $document.find('.highlight-node').removeClass("highlight-node");
+        $xonomy.find('.highlight-tree').removeClass("highlight-tree");
+    }
+
     
     var js = harvestRootElement();
     var xml = js2xml(js, stl_schema);
@@ -2057,6 +2078,7 @@ function showPreview() {
         // we do not use jQuery html() method as it does not preserve whitespace
         $('#preview').html(html);
         var $document = $('#preview div[data-stl-class="stl:document"]');
+        var $children = $document.find('> *[data-stl-class]');
         var $all = $document.find('*[data-stl-class]');
         var $pages = $document.find('> div[data-stl-class="stl:page"]');
         var $stories = $document.find('> div[data-stl-class="stl:story"]');
@@ -2083,17 +2105,12 @@ function showPreview() {
         $layouts.each((_, e) => initHandlers($(e), {resizable: "parent", draggable: "parent", rotatable: true}));
         
         // hover highlight
-        $all.hover(function() {
-            var $this = $(this);
-            var $tree = lookupTreeElement($this);
-            $tree.addClass('highlight-tree');
-            $this.addClass('highlight-node');
-        }, function() {
-            var $this = $(this);
-            var $tree = lookupTreeElement($this);
-            $tree.removeClass('highlight-tree');
-            $this.removeClass('highlight-node');
-        });
+        $children.on("mousemove", function (e){
+            delay(function() {
+                unHighlight();
+                highlight($(e.target));
+            }, 10);
+        }).on("mouseout", unHighlight);
     }
 };
 
