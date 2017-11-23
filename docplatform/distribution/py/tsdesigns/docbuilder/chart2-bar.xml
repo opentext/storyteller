@@ -16,37 +16,37 @@
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2010</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,0,0)">2563</ddi:cell>
-            <ddi:cell data_style="fill:rgb(0,0,255)" label_position_h="center" label_position_v="top">289</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,0,255); color:rgb(0,0,255)" label_position_h="center" label_position_v="top">289</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2011</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,20,0)">3542</ddi:cell>
-            <ddi:cell data_style="fill:rgb(0,20,255)" label_position_h="center" label_position_v="top">458</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,20,255); color:rgb(0,20,255)" label_position_h="center" label_position_v="top">458</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2012</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,40,0)">2888</ddi:cell>
-            <ddi:cell data_style="fill:rgb(0,40,255)" label_position_h="center" label_position_v="top">301</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,40,255); color:rgb(0,40,255)" label_position_h="center" label_position_v="top">301</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2013</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,60,0)">3110</ddi:cell>
-            <ddi:cell data_style="fill:rgb(0,60,255)" label_position_h="center" label_position_v="top">350</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,60,255); color:rgb(0,60,255)" label_position_h="center" label_position_v="top">350</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2014</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,80,0)">1563</ddi:cell>
-            <ddi:cell data_style="fill:rgb(0,80,255)" label_position_h="center" label_position_v="top">89</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,80,255); color:rgb(0,80,255)" label_position_h="center" label_position_v="top">89</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2015</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,90,0)">2993</ddi:cell>
-            <ddi:cell data_style="fill:rgb(0,90,255)" label_position_h="center" label_position_v="top">189</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,90,255); color:rgb(0,90,255)" label_position_h="center" label_position_v="top">189</ddi:cell>
 				</ddi:row>
         <ddi:row>
             <ddi:cell label_rotation="30" label_position_h="right">2016</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,100,0)">3963</ddi:cell>
-            <ddi:cell data_style="fill:rgb(0,100,255)" label_position_h="center" label_position_v="top">257</ddi:cell>
+            <ddi:cell data_style="fill:rgb(0,100,255); color:rgb(0,100,255)" label_position_h="center" label_position_v="top">257</ddi:cell>
 				</ddi:row>
 			</chartdata>
 		</data> 	

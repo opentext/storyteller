@@ -8,44 +8,52 @@
 		<data xmlns:ddi="http://developer.opentext.com/schemas/storyteller/layout/ddi/v1">
 			<chartdata id="table1">
 				<ddi:header>
-					<ddi:cell data_type="number">Year</ddi:cell>
-					<ddi:cell data_type="number" data_style="stroke:#ff0000">Production</ddi:cell>
-					<ddi:cell data_type="number" data_style="stroke:#0000ff">Profit</ddi:cell>
+					<ddi:cell data_type="number">X</ddi:cell>
+					<ddi:cell data_type="number" data_style="stroke:#ff0000">income</ddi:cell>
+					<ddi:cell data_type="number" data_style="stroke:#0000ff">revenue</ddi:cell>
+					<ddi:cell>Year</ddi:cell>
 				</ddi:header>
         <ddi:row>
-            <ddi:cell label_rotation="30" label_position_h="right">2010</ddi:cell>
+						<ddi:cell>0</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,0,0)">2563</ddi:cell>
             <ddi:cell data_style="fill:rgb(0,0,255)">289</ddi:cell>
+            <ddi:cell label_rotation="30" label_position_h="right">2017-05-01</ddi:cell>
 				</ddi:row>
         <ddi:row>
-            <ddi:cell label_rotation="30" label_position_h="right">2011</ddi:cell>
+						<ddi:cell>1</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,20,0)">3542</ddi:cell>
             <ddi:cell data_style="fill:rgb(0,20,255)">458</ddi:cell>
+            <ddi:cell label_rotation="30" label_position_h="right">2017-06-01</ddi:cell>
 				</ddi:row>
         <ddi:row>
-            <ddi:cell label_rotation="30" label_position_h="right">2012</ddi:cell>
+						<ddi:cell>2</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,40,0)">2888</ddi:cell>
             <ddi:cell data_style="fill:rgb(0,40,255)">301</ddi:cell>
+            <ddi:cell label_rotation="30" label_position_h="right">2017-07-01</ddi:cell>
 				</ddi:row>
         <ddi:row>
-            <ddi:cell label_rotation="30" label_position_h="right">2013</ddi:cell>
+						<ddi:cell>3</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,60,0)">3110</ddi:cell>
             <ddi:cell data_style="fill:rgb(0,60,255)">350</ddi:cell>
+            <ddi:cell label_rotation="30" label_position_h="right">2017-08-01</ddi:cell>
 				</ddi:row>
         <ddi:row>
-            <ddi:cell label_rotation="30" label_position_h="right">2014</ddi:cell>
+						<ddi:cell>4</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,80,0)">1563</ddi:cell>
             <ddi:cell data_style="fill:rgb(0,80,255)">89</ddi:cell>
+            <ddi:cell label_rotation="30" label_position_h="right">2017-09-01</ddi:cell>
 				</ddi:row>
         <ddi:row>
-            <ddi:cell label_rotation="30" label_position_h="right">2015</ddi:cell>
+						<ddi:cell>5</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,90,0)">2993</ddi:cell>
             <ddi:cell data_style="fill:rgb(0,90,255)">189</ddi:cell>
+            <ddi:cell label_rotation="30" label_position_h="right">2017-10-01</ddi:cell>
 				</ddi:row>
         <ddi:row>
-            <ddi:cell label_rotation="30" label_position_h="right">2016</ddi:cell>
+						<ddi:cell>6</ddi:cell>
             <ddi:cell data_style="fill:rgb(255,100,0)">3963</ddi:cell>
             <ddi:cell data_style="fill:rgb(0,100,255)">257</ddi:cell>
+            <ddi:cell label_rotation="30" label_position_h="right">2017-11-01</ddi:cell>
 				</ddi:row>
 			</chartdata>
 		</data> 	
@@ -76,12 +84,13 @@
 			<stl:p class="paragraph">
 				<stl:chart id="bar" w="400pt" h="320pt">
 					<scd:scd>
-						<scd:title text="Line Chart" style="font-size:12pt" />
+						<scd:title text="Chart Title" style="font-size:12pt;font-style: italic;color: rgb(139,0,0)" />
+						<scd:legend/>
 						<scd:axis_x/>
 						<scd:axis_y/>
-						<scd:support_lines/>
-						<scd:layer type="line" xpath="//chartdata">
-							<scd:series col_x="1" col_y="2"/>
+						<scd:support_lines mask="num(es-ES){z,zz9 $  }" style="stroke-dasharray:1pt, 2pt"/>
+						<scd:layer type="line" xpath="//chartdata" mask_label="date.medium{}">
+							<scd:series col_x="1" col_y="2" col_label="4"/>
 							<scd:series col_x="1" col_y="3"/>
 						</scd:layer>
 					</scd:scd>
