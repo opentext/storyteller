@@ -2606,7 +2606,7 @@ use different chart definitions
 
 #### Chart parts
 
-[<img src="chart_description.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/chart31-line-description.xml)
+[<img src="chart_description.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart31-line-description.xml)
 
 Users can specify the chart parts elements:
 
