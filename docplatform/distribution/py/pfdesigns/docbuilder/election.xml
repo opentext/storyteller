@@ -6,8 +6,9 @@
 	  <!-- Reusable TDT function library -->
 	  <tdt:transformation 
 		  xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" 
-		  xmlns:usr="http://developer.opentext.com/schemas/storyteller/transformation/usr" 
-		  version="1.0">
+		  xmlns:usr="http://developer.opentext.com/schemas/storyteller/transformation/usr"
+			xmlns:ddi="http://developer.opentext.com/schemas/storyteller/layout/ddi/v1"
+			version="1.0">
 		<tdt:rule path="usr:extreme">
 		  <tdt:value key="$nodeset"/>
 		  <tdt:value key="$xpath"/>
@@ -29,22 +30,24 @@
 	</xp:fixture>
 	<xp:fixture key="link:/tdt/template.xml">
 	  <!-- TDT template used for dynamic creation of TDT rules -->
-	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
+	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt"
+												xmlns:ddi="http://developer.opentext.com/schemas/storyteller/layout/ddi/v1" version="1.0">
 		<tdt:rule path="//svg:path[@id=?]">
-		  <tdt:value key="$region">/data/election/row[@id=?]</tdt:value>
-		  <tdt:value key="@style">$region/cell[3]/@data_style</tdt:value>
+		  <tdt:value key="$region">/data/election/ddi:row[@id=?]</tdt:value>
+		  <tdt:value key="@style">$region/ddi:cell[3]/@data_style</tdt:value>
 		</tdt:rule>
 	  </tdt:transformation>
 	</xp:fixture>
 	<xp:fixture key="link:/tdt/rules.xml">
 	  <!-- TDT rules used for dynamic creation of TDT rules -->
-	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
+	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt"
+												xmlns:ddi="http://developer.opentext.com/schemas/storyteller/layout/ddi/v1" version="1.0">
 		<tdt:rule path="//tdt:rule[@path='//svg:path[@id=?]']">
-		  <tdt:value key=".">/data/election/row</tdt:value>
+		  <tdt:value key=".">/data/election/ddi:row</tdt:value>
 		  <tdt:value key="@path">concat("//svg:path[@id='", @id, "']")</tdt:value>
 		</tdt:rule>
 		<tdt:rule path="//tdt:rule[@path='//svg:path[@id=?]']/tdt:value[@key='$region']">
-		  <tdt:value key="text()">concat("/data/election/row[@id='", @id, "']")</tdt:value>
+		  <tdt:value key="text()">concat("/data/election/ddi:row[@id='", @id, "']")</tdt:value>
 		</tdt:rule>
 	  </tdt:transformation>
 	</xp:fixture>
@@ -70,26 +73,27 @@
   <stl:data>
 	<stl:source src="wd:/election-data.xml" />
 	<stl:template>
-	  <data>
+	  <data xmlns:ddi="http://developer.opentext.com/schemas/storyteller/layout/ddi/v1">
 		<election year="?" default_style="font-family:Arial;font-size:9pt;">
-		  <header>
-			<cell>Region</cell>
-			<cell>Population</cell>
-			<cell data_type="number">Participation</cell>
-		  </header>
-		  <row id="?">
-			<cell label_rotation="30" label_position_h="right">?</cell>
-			<cell>?</cell>
-			<cell data_style="?">?</cell>
-		  </row>
+		  <ddi:header>
+				<ddi:cell>Region</ddi:cell>
+				<ddi:cell>Population</ddi:cell>
+					<ddi:cell data_type="number">Participation</ddi:cell>
+		  </ddi:header>
+			<ddi:row id="?">
+				<ddi:cell label_rotation="30" label_position_h="right">?</ddi:cell>
+				<ddi:cell>?</ddi:cell>
+				<ddi:cell data_style="?">?</ddi:cell>
+		  </ddi:row>
 		</election>
 	  </data>
 	</stl:template>
 	<stl:transformation>
 	  <tdt:transformation 
 		  xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" 
-		  xmlns:usr="http://developer.opentext.com/schemas/storyteller/transformation/usr" 
-		  version="1.0">
+		  xmlns:usr="http://developer.opentext.com/schemas/storyteller/transformation/usr"
+			xmlns:ddi="http://developer.opentext.com/schemas/storyteller/layout/ddi/v1"
+			version="1.0">
 		<xp:include src="link:/tdt/functions.xml" xpath="//tdt:rule"/>
 		<tdt:rule path="/">
 		  <tdt:value key="$colors">'#D4E500,#E5E603,#E8D906,#EACB0A,#EBBD0D,#EDB011,#EFA315,#F19618,#F28A1C,#F47E20,#F67224,#F86627,#F95B2B,#FB502F,#FD4633,#FF3B38'</tdt:value>
@@ -105,17 +109,17 @@
 		  <tdt:value key=".">/election</tdt:value>
 		  <tdt:value key="@year">@year</tdt:value>
 		</tdt:rule>
-		<tdt:rule path="/data/election/row">
+		<tdt:rule path="/data/election/ddi:row">
 		  <tdt:value key=".">region</tdt:value>
 		  <tdt:value key="@id">@id</tdt:value>
 		</tdt:rule>
-		<tdt:rule path="/data/election/row/cell[1]">
+		<tdt:rule path="/data/election/ddi:row/ddi:cell[1]">
 		  <tdt:value key="text()">@name</tdt:value>
 		</tdt:rule>
-		<tdt:rule path="/data/election/row/cell[2]">
+		<tdt:rule path="/data/election/ddi:row/ddi:cell[2]">
 		  <tdt:value key="text()">@population</tdt:value>
 		</tdt:rule>
-		<tdt:rule path="/data/election/row/cell[3]">
+		<tdt:rule path="/data/election/ddi:row/ddi:cell[3]">
 		  <tdt:value key="$color">round(1+(count($palette)-1) * (@participation - $min) div ($max - $min))</tdt:value>
 		  <tdt:value key="@data_style">concat("fill:", $palette[$color], "; stroke: none;")</tdt:value>
 		  <tdt:value key="text()">@participation</tdt:value>
@@ -138,6 +142,7 @@
 	.table {
 	  background-color: lightblue;
 	  border-collapse: collapse;
+	  display: table;
 	}
 
 	/* styles representing cell and table border */
@@ -171,35 +176,35 @@
 			<stl:row h="30pt">
 			  <stl:cell class="theader" w="40%">
 				<stl:p>
-				  <stl:field xpath="//election/header/cell[1]"/>
+				  <stl:field xpath="//election/ddi:header/ddi:cell[1]"/>
 				</stl:p>
 			  </stl:cell>
 			  <stl:cell class="theader" w="20%">
 				<stl:p style="text-align:right;">
-				  <stl:field xpath="//election/header/cell[2]"/>
+				  <stl:field xpath="//election/ddi:header/ddi:cell[2]"/>
 				</stl:p>
 			  </stl:cell>
 			  <stl:cell class="theader" w="40%">
 				<stl:p style="text-align:right;">
-				  <stl:field xpath="//election/header/cell[3]"/>
+				  <stl:field xpath="//election/ddi:header/ddi:cell[3]"/>
 				</stl:p>
 			  </stl:cell>
 			</stl:row>
-			<stl:repeater xpath="//election/row">
+			<stl:repeater xpath="//election/ddi:row">
 			  <stl:row>
 				<stl:cell class="even-trow">
 				  <stl:p>
-					<stl:field xpath="cell[1]"/>
+					<stl:field xpath="ddi:cell[1]"/>
 				  </stl:p>
 				</stl:cell>
 				<stl:cell class="even-trow">
 				  <stl:p style="text-align:right;">
-					<stl:field xpath="cell[2]"/>
+					<stl:field xpath="ddi:cell[2]"/>
 				  </stl:p>
 				</stl:cell>
 				<stl:cell class="even-trow">
 				  <stl:p style="text-align:right;">
-					<stl:field xpath="100* cell[3]" mask="num.decimal(en_US){}"/> %
+					<stl:field xpath="100* ddi:cell[3]" mask="num.decimal(en_US){}"/> %
 				  </stl:p>
 				</stl:cell>
 			  </stl:row>
@@ -235,7 +240,7 @@
 			var rules = streams.stream('link:/tdt/rules.xml');
 			var template = streams.stream('link:/tdt/template.xml');
 			var regions = streams.stream().write(data.dump('/'));
-			var tdt = services.tdt(template, rules, 31);
+			var tdt = services.tdt(template, rules, 127);
 
 			// apply primary transformation - dynamically generate actual TDT rules 
 			rules = tdt( regions, streams.stream() );

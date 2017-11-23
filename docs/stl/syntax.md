@@ -1076,7 +1076,7 @@ This example demonstrates the usage of a *Span*:
 
 ##### STL Definition
 
-<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/span.xml?footer=minimal"></script
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/span.xml?footer=minimal"></script>
 
 ##### Resulting Document
 
@@ -1108,7 +1108,7 @@ This example demonstrates the usage of *Lists*:
 
 ##### STL Definition
 
-<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/kitchen-sink.xml?footer=minimal"></scrip
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/kitchen-sink.xml?footer=minimal"></script>
 
 ##### Resulting Document
 
@@ -1163,7 +1163,7 @@ This example demonstrates various kinds of *Break commands*:
 
 ##### STL Definition
 
-<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/breaks.xml?footer=minimal"></scrip
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/breaks.xml?footer=minimal"></script>
 
 ##### Resulting Document
 
@@ -1233,7 +1233,7 @@ This example demonstrates usage of *Tab Stops*:
 
 ##### STL Definition
 
-<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/tabs.xml?footer=minimal"></script
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/tabs.xml?footer=minimal"></script>
 
 ##### Resulting Document
 
@@ -1384,7 +1384,7 @@ This example demonstrates various kinds of *Substitutions*:
 
 ##### STL Definition
 
-<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/subst.xml?footer=minimal"></script
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/subst.xml?footer=minimal"></script>
 
 ##### Resulting Document
 
@@ -2066,7 +2066,7 @@ image to DocBuilder++ (either manually or programmatically):
 
 ##### SVG Pumpkin
 
--   ![SVG](https://alistapart.com/d/using-svg-for-flexible-scalable-and-fun-backgrounds-part-ii/sample5.svg)
+![SVG](https://alistapart.com/d/using-svg-for-flexible-scalable-and-fun-backgrounds-part-ii/sample5.svg)
 
 ##### STL Definition
 

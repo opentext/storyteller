@@ -1,71 +1,71 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:data>
-	<stl:source key="_default">
-	  <data/>
-	</stl:source>
-	<stl:template>
-	  <data/>
-	</stl:template>
-	<stl:transformation key="_default">
-	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
-		<tdt:rule path="/data">
-		  <tdt:value key=".">/data</tdt:value>
-		</tdt:rule>
-	  </tdt:transformation>
-	</stl:transformation>
+    <stl:source key="_default">
+      <data/>
+    </stl:source>
+    <stl:template>
+      <data/>
+    </stl:template>
+    <stl:transformation key="_default">
+      <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
+        <tdt:rule path="/data">
+          <tdt:value key=".">/data</tdt:value>
+        </tdt:rule>
+      </tdt:transformation>
+    </stl:transformation>
   </stl:data>
   <stl:document>
-	<stl:page w="300pt" h="220pt">
-	  <stl:text x="20pt" y="20pt" w="260pt" h="180pt" style="fill:lightcyan">
-		<stl:story>
-		  <stl:p>This is a paragraph in a <stl:span>default style</stl:span>.</stl:p>
-		  <stl:p>
-			This one contains a span with custom
-			<stl:span style="font-family: Arial;">
-			  font and
-			  <stl:span style="font-size: 13pt;">s</stl:span><stl:span style="font-size: 14pt;">i</stl:span><stl:span style="font-size: 15pt;">z</stl:span><stl:span style="font-size: 16pt;">e</stl:span><stl:span style="font-size: 17pt;">s</stl:span>
-			  </stl:span>.
-		  </stl:p>
-		  <stl:p>
-			This one has: 
-			<stl:span style="font-weight: bold;">bold</stl:span>,
-			<stl:span style="font-style: italic;">italic</stl:span>,
-			<stl:span style="text-decoration: underline;">underline</stl:span>,
-			<stl:span style="text-decoration: line-through;">strikethrough</stl:span>,
-			<stl:span style="vertical-align: sub;">subscript</stl:span>,
-			<stl:span style="vertical-align: super;">superscript</stl:span>,
-			<stl:span style="font-variant: small-caps;">smallcaps</stl:span>, custom
-			<stl:span style="background-color: burlywood;">background</stl:span>,
-			<stl:span style="color: darkred;">foreground</stl:span> and
-			<stl:span style="background-color: burlywood; color: darkred;">both</stl:span>.
-		  </stl:p>
-		  <stl:p style="font-weight: bold; font-style: italic;">
-			Style properties can be
-			<stl:span style="font-weight: normal;">individually</stl:span>
-			<stl:span style="font-style: normal;">toggled</stl:span>.
-		  </stl:p>
-		  <stl:block style="font-family:Courier New;">
-			<stl:p>
-			  Span can <stl:span style="font-style: italic;">span</stl:span> over several paragraphs and it's style propagates to nested sub-stories:
-			</stl:p>
-			<stl:p>
-			  <stl:switch xpath="true">
-				<stl:case>
-				  <stl:story>a) <stl:span style="font-weight: bold;">native</stl:span> story</stl:story>
-				</stl:case>
-			  </stl:switch>
-			</stl:p>
-			<stl:p>
-			  <stl:repeater xpath="/data">
-				<stl:story format="XHTML"><html xmlns="http://www.w3.org/1999/xhtml"><body>b) <b>XHTML</b> story</body></html></stl:story>
-			  </stl:repeater>
-			</stl:p>
-			<stl:p>
-			  <stl:content xpath="'&lt;html&gt;&lt;body&gt;c) &lt;b&gt;rich&lt;/b&gt; substitution&lt;/body&gt;&lt;/html&gt;'"/>
-			</stl:p>
-		  </stl:block>
-		</stl:story>
-	  </stl:text>
-	</stl:page>
+    <stl:page w="300pt" h="220pt">
+      <stl:text x="20pt" y="20pt" w="260pt" h="180pt" style="fill:lightcyan">
+        <stl:story>
+          <stl:p>This is a paragraph in a <stl:span>default style</stl:span>.</stl:p>
+          <stl:p>
+            This one contains a span with custom
+            <stl:span style="font-family: Arial;">
+              font and
+              <stl:span style="font-size: 13pt;">s</stl:span><stl:span style="font-size: 14pt;">i</stl:span><stl:span style="font-size: 15pt;">z</stl:span><stl:span style="font-size: 16pt;">e</stl:span><stl:span style="font-size: 17pt;">s</stl:span>
+              </stl:span>.
+          </stl:p>
+          <stl:p>
+            This one has: 
+            <stl:span style="font-weight: bold;">bold</stl:span>,
+            <stl:span style="font-style: italic;">italic</stl:span>,
+            <stl:span style="text-decoration: underline;">underline</stl:span>,
+            <stl:span style="text-decoration: line-through;">strikethrough</stl:span>,
+            <stl:span style="vertical-align: sub;">subscript</stl:span>,
+            <stl:span style="vertical-align: super;">superscript</stl:span>,
+            <stl:span style="font-variant: small-caps;">smallcaps</stl:span>, custom
+            <stl:span style="background-color: burlywood;">background</stl:span>,
+            <stl:span style="color: darkred;">foreground</stl:span> and
+            <stl:span style="background-color: burlywood; color: darkred;">both</stl:span>.
+          </stl:p>
+          <stl:p style="font-weight: bold; font-style: italic;">
+            Style properties can be
+            <stl:span style="font-weight: normal;">individually</stl:span>
+            <stl:span style="font-style: normal;">toggled</stl:span>.
+          </stl:p>
+          <stl:block style="font-family:Courier New;">
+            <stl:p>
+              Span can <stl:span style="font-style: italic;">span</stl:span> over several paragraphs and it's style propagates to nested sub-stories:
+            </stl:p>
+            <stl:p>
+              <stl:switch xpath="true">
+                <stl:case>
+                  <stl:story>a) <stl:span style="font-weight: bold;">native</stl:span> story</stl:story>
+                </stl:case>
+              </stl:switch>
+            </stl:p>
+            <stl:p>
+              <stl:repeater xpath="/data">
+                <stl:story format="XHTML"><html xmlns="http://www.w3.org/1999/xhtml"><body>b) <b>XHTML</b> story</body></html></stl:story>
+              </stl:repeater>
+            </stl:p>
+            <stl:p>
+              <stl:content xpath="'&lt;html&gt;&lt;body&gt;c) &lt;b&gt;rich&lt;/b&gt; substitution&lt;/body&gt;&lt;/html&gt;'"/>
+            </stl:p>
+          </stl:block>
+        </stl:story>
+      </stl:text>
+    </stl:page>
   </stl:document>
 </stl:stl>

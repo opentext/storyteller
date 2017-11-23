@@ -1,5 +1,8 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:style>
+	.table {
+	  display: table;
+	}
 	.theader, .trow0, .trow1 {
 	  font-family: Arial;
 	  font-size: 10pt;

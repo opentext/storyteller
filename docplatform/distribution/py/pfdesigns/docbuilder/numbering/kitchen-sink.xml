@@ -1,131 +1,131 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
  <stl:style>
-	.default-bullets {
-	  -stl-list-mask: default;
-	}
-	.custom-bullets {
-	  -stl-list-mask: "♥ " "♠ " "♦ " "♣ ";
-	}
+    .default-bullets {
+      -stl-list-mask: default;
+    }
+    .custom-bullets {
+      -stl-list-mask: "♥ " "♠ " "♦ " "♣ ";
+    }
 
-	.shared-counter-numbering1 {
-	  -stl-list-counter: shared-counter;
-	  -stl-list-mask: "%0!1.%1!R ";
+    .shared-counter-numbering1 {
+      -stl-list-counter: shared-counter;
+      -stl-list-mask: "%0!1.%1!R ";
     }
-	.shared-counter-numbering1::marker {
+    .shared-counter-numbering1::marker {
       font-weight: bold;
-	}
-	.shared-counter-numbering2 {
-	  -stl-list-counter: shared-counter;
-	  -stl-list-mask: "%0!1.%1!R ";
     }
-	.shared-counter-numbering2::marker {
+    .shared-counter-numbering2 {
+      -stl-list-counter: shared-counter;
+      -stl-list-mask: "%0!1.%1!R ";
+    }
+    .shared-counter-numbering2::marker {
       font-weight: bold;
-	  font-style: italic;
-	}
+      font-style: italic;
+    }
 
-	.interrupted-numbering {
-	  -stl-list-counter: counter;
-	  -stl-list-mask: "(%0!A.%1!a) ";
+    .interrupted-numbering {
+      -stl-list-counter: counter;
+      -stl-list-mask: "(%0!A.%1!a) ";
     }
-	.interrupted-numbering::marker {
+    .interrupted-numbering::marker {
       color: #aa44aa;
-	}
-
-	.chapter {
-	  margin-top:3pt;
-	  margin-bottom:2pt;
-	  font-size:14pt;
-	  font-weight:bold;
-	  -stl-list-counter: headings;
-	  -stl-list-mask: "%0!1. ";
-	  -stl-list-level: 0;
     }
-	.section {
-	  margin-top:2pt;
-	  margin-bottom:2pt;
-	  text-indent:10pt;
-	  font-weight:bold;
-	  -stl-list-counter: headings;
-	  -stl-list-mask: "%1!R. ";
-	  -stl-list-level: 1;
+
+    .chapter {
+      margin-top:3pt;
+      margin-bottom:2pt;
+      font-size:14pt;
+      font-weight:bold;
+      -stl-list-counter: headings;
+      -stl-list-mask: "%0!1. ";
+      -stl-list-level: 0;
+    }
+    .section {
+      margin-top:2pt;
+      margin-bottom:2pt;
+      text-indent:10pt;
+      font-weight:bold;
+      -stl-list-counter: headings;
+      -stl-list-mask: "%1!R. ";
+      -stl-list-level: 1;
     }
   </stl:style>
   <stl:document>
-	<stl:page w="300pt" h="560pt">
-	  <stl:text x="20pt" y="20pt" w="260pt" h="520pt" style="fill:#aabbcc">
-		<stl:story>
-		  <stl:p style="background-color: lightyellow;">This is a bullets &amp; numbering test:</stl:p>
-		  <!-- Default bullets -->
-		  <stl:list>
-			<stl:p class="default-bullets">First item</stl:p>
-			<stl:list>
-			  <stl:p class="default-bullets">First nested item</stl:p>
-			  <stl:list>
-				<stl:p class="default-bullets">Deeper nested nested item</stl:p>
-			  </stl:list>
-			</stl:list>
-			<stl:p class="default-bullets">Second item</stl:p>
-			<stl:list>
-			  <stl:p class="default-bullets">Another nested item</stl:p>
-			</stl:list>
-		  </stl:list>
-		  <stl:p/>
-		  <!-- Custom bullets -->
-		  <stl:list>
-			<stl:p class="custom-bullets">First item</stl:p>
-			<stl:list>
-			  <stl:p class="custom-bullets">First nested item</stl:p>
-			  <stl:list>
-				<stl:p class="custom-bullets">Deeper nested nested item</stl:p>
-			  </stl:list>
-			</stl:list>
-			<stl:p class="custom-bullets">Second item</stl:p>
-			<stl:list>
-			  <stl:p class="custom-bullets">Another nested item</stl:p>
-			</stl:list>
-		  </stl:list>
-		  <stl:p/>
-		  <!-- Numbering with a shared counter -->
-		  <stl:list>
-			<stl:p class="shared-counter-numbering1">First level, first item</stl:p>
-			<stl:p class="shared-counter-numbering1">First level, second item</stl:p>
-			<stl:list>
-			  <stl:p class="shared-counter-numbering2">Second level, first item</stl:p>
-			  <stl:p class="shared-counter-numbering2">Second level, second item</stl:p>
-			</stl:list>
-		  </stl:list>
-		  <stl:p/>
-		  <stl:block style="font-family:Arial; font-size:11pt">
-			<!-- Interrupted numbered list -->
-			<stl:list>
-			  <stl:p class="interrupted-numbering">First level, first item</stl:p>
-			  <stl:list>
-				<stl:p class="interrupted-numbering">Second level, first item</stl:p>
-				<stl:p class="interrupted-numbering">Second level, second item</stl:p>
-			  </stl:list>
-			</stl:list>
-			<stl:p>This is an interleaving paragraph, but numbering still continues...</stl:p>
-			<stl:list>
-			  <stl:p class="interrupted-numbering">First level, second item</stl:p>
-			  <stl:list>
-				<stl:p class="interrupted-numbering">Second level, first item</stl:p>
-				<stl:p class="interrupted-numbering">Second level, second item</stl:p>
-				<stl:p class="interrupted-numbering">Second level, third item</stl:p>
-			  </stl:list>
-			</stl:list>
-		  </stl:block>
-		  <!-- Mixed numbered and plain paragraphs -->
-		  <stl:p class="chapter" style="margin-top:5pt">First Chapter</stl:p>
-		  <stl:p class="section" style="margin-top:3pt">Section</stl:p>
-		  <stl:p>Text of the first chapter, first section</stl:p>
-		  <stl:p class="section" style="margin-top:3pt">Section</stl:p>
-		  <stl:p>Text of the first chapter, second section</stl:p>
-		  <stl:p class="chapter">Second Chapter</stl:p>
-		  <stl:p>Text of the second chapter, but outside a section</stl:p>
-		  <stl:p class="section">Section</stl:p>
-		  <stl:p>Text of the second chapter, first section</stl:p>
-		</stl:story>
-	  </stl:text>
-	</stl:page>
+    <stl:page w="300pt" h="560pt">
+      <stl:text x="20pt" y="20pt" w="260pt" h="520pt" style="fill:#aabbcc">
+        <stl:story>
+          <stl:p style="background-color: lightyellow;">This is a bullets &amp; numbering test:</stl:p>
+          <!-- Default bullets -->
+          <stl:list>
+            <stl:p class="default-bullets">First item</stl:p>
+            <stl:list>
+              <stl:p class="default-bullets">First nested item</stl:p>
+              <stl:list>
+                <stl:p class="default-bullets">Deeper nested nested item</stl:p>
+              </stl:list>
+            </stl:list>
+            <stl:p class="default-bullets">Second item</stl:p>
+            <stl:list>
+              <stl:p class="default-bullets">Another nested item</stl:p>
+            </stl:list>
+          </stl:list>
+          <stl:p/>
+          <!-- Custom bullets -->
+          <stl:list>
+            <stl:p class="custom-bullets">First item</stl:p>
+            <stl:list>
+              <stl:p class="custom-bullets">First nested item</stl:p>
+              <stl:list>
+                <stl:p class="custom-bullets">Deeper nested nested item</stl:p>
+              </stl:list>
+            </stl:list>
+            <stl:p class="custom-bullets">Second item</stl:p>
+            <stl:list>
+              <stl:p class="custom-bullets">Another nested item</stl:p>
+            </stl:list>
+          </stl:list>
+          <stl:p/>
+          <!-- Numbering with a shared counter -->
+          <stl:list>
+            <stl:p class="shared-counter-numbering1">First level, first item</stl:p>
+            <stl:p class="shared-counter-numbering1">First level, second item</stl:p>
+            <stl:list>
+              <stl:p class="shared-counter-numbering2">Second level, first item</stl:p>
+              <stl:p class="shared-counter-numbering2">Second level, second item</stl:p>
+            </stl:list>
+          </stl:list>
+          <stl:p/>
+          <stl:block style="font-family:Arial; font-size:11pt">
+            <!-- Interrupted numbered list -->
+            <stl:list>
+              <stl:p class="interrupted-numbering">First level, first item</stl:p>
+              <stl:list>
+                <stl:p class="interrupted-numbering">Second level, first item</stl:p>
+                <stl:p class="interrupted-numbering">Second level, second item</stl:p>
+              </stl:list>
+            </stl:list>
+            <stl:p>This is an interleaving paragraph, but numbering still continues...</stl:p>
+            <stl:list>
+              <stl:p class="interrupted-numbering">First level, second item</stl:p>
+              <stl:list>
+                <stl:p class="interrupted-numbering">Second level, first item</stl:p>
+                <stl:p class="interrupted-numbering">Second level, second item</stl:p>
+                <stl:p class="interrupted-numbering">Second level, third item</stl:p>
+              </stl:list>
+            </stl:list>
+          </stl:block>
+          <!-- Mixed numbered and plain paragraphs -->
+          <stl:p class="chapter" style="margin-top:5pt">First Chapter</stl:p>
+          <stl:p class="section" style="margin-top:3pt">Section</stl:p>
+          <stl:p>Text of the first chapter, first section</stl:p>
+          <stl:p class="section" style="margin-top:3pt">Section</stl:p>
+          <stl:p>Text of the first chapter, second section</stl:p>
+          <stl:p class="chapter">Second Chapter</stl:p>
+          <stl:p>Text of the second chapter, but outside a section</stl:p>
+          <stl:p class="section">Section</stl:p>
+          <stl:p>Text of the second chapter, first section</stl:p>
+        </stl:story>
+      </stl:text>
+    </stl:page>
   </stl:document>
 </stl:stl>

@@ -1,36 +1,36 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:data>
-	<stl:template>
-	  <data>
-		<invoice number="123456"/>
-		<invoice number="234567"/>
-		<invoice number="345678"/>
-		<invoice number="456789"/>
-	  </data>
-	</stl:template>
-	<stl:transformation>
-	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
-	</stl:transformation>
+    <stl:template>
+      <data>
+        <invoice number="123456"/>
+        <invoice number="234567"/>
+        <invoice number="345678"/>
+        <invoice number="456789"/>
+      </data>
+    </stl:template>
+    <stl:transformation>
+      <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0"/>
+    </stl:transformation>
   </stl:data>
   <stl:document>
-	<stl:page w="540pt" h="120pt">
-	  <stl:barcode x="20pt" y="20pt" w="50pt" h="50pt" type="Royal Mail" data="123456" />
+    <stl:page w="540pt" h="120pt">
+      <stl:barcode x="20pt" y="20pt" w="50pt" h="50pt" type="Royal Mail" data="123456" />
       <stl:text x="20pt" y="50pt" w="500pt" h="50pt" style="fill:#ffffaa">
-		<stl:story>
-		  <stl:p>
-			This is a sequence of invoice barcodes:
-			<stl:repeater xpath="/data/invoice">
-			  <stl:story>
-				<stl:barcode w="30pt" h="20pt" type="Code 39" data=".">
-				  <!--<stl:modification key="@IBarcodeItem/Data">@number</stl:modification>-->
-				  <stl:script language="js">require('layout').item().Data = require('data').js('string(@number)');</stl:script>
-				</stl:barcode>
-				, 
-			  </stl:story>
-			</stl:repeater>
-		  </stl:p>
-		</stl:story>
+        <stl:story>
+          <stl:p>
+            This is a sequence of invoice barcodes:
+            <stl:repeater xpath="/data/invoice">
+              <stl:story>
+                <stl:barcode w="30pt" h="20pt" type="Code 39" data=".">
+                  <!--<stl:modification key="@IBarcodeItem/Data">@number</stl:modification>-->
+                  <stl:script language="js">require('layout').item().Data = require('data').js('string(@number)');</stl:script>
+                </stl:barcode>
+                , 
+              </stl:story>
+            </stl:repeater>
+          </stl:p>
+        </stl:story>
       </stl:text>
-	</stl:page>
+    </stl:page>
   </stl:document>
 </stl:stl>

@@ -1,32 +1,32 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document>
-	<stl:story name="Main">
-	  <stl:p>
-		<stl:image w="100pt" h="50pt" src="wd:/multipage.tiff">
-		  <stl:script language="js"><![CDATA[
-			var vars = require( 'vars' );
-			var item = require( 'layout' ).item();
-			for ( var i=1; i<item.PageCount; ++i )
-			  vars.set( 'pages', i, [ i ] );
-		  ]]></stl:script>
-		</stl:image>
-	  </stl:p>
-	  <stl:p>
-		<stl:repeater xpath="$pages">
-		  <stl:story>
-			<stl:p style="text-align:center">- separator -</stl:p>
-			<stl:p>
-			  <stl:image w="100pt" h="50pt" src="wd:/multipage.tiff">
-				<!--<stl:modification key="@IImageItem/Image/Page">.</stl:modification>-->
-				<stl:script language="js">require('layout').item().Selector = require('data').js('string(.)');</stl:script>
-			  </stl:image>
-			</stl:p>
-		  </stl:story>
-		</stl:repeater>
-	  </stl:p>
-	</stl:story>
-	<stl:page w="140pt" h="240pt" occurrence="repeatable">
+    <stl:story name="Main">
+      <stl:p>
+        <stl:image w="100pt" h="50pt" src="wd:/multipage.tiff">
+          <stl:script language="js"><![CDATA[
+            var vars = require( 'vars' );
+            var item = require( 'layout' ).item();
+            for ( var i=1; i<item.PageCount; ++i )
+              vars.set( 'pages', i, [ i ] );
+          ]]></stl:script>
+        </stl:image>
+      </stl:p>
+      <stl:p>
+        <stl:repeater xpath="$pages">
+          <stl:story>
+            <stl:p style="text-align:center">- separator -</stl:p>
+            <stl:p>
+              <stl:image w="100pt" h="50pt" src="wd:/multipage.tiff">
+                <!--<stl:modification key="@IImageItem/Image/Page">.</stl:modification>-->
+                <stl:script language="js">require('layout').item().Selector = require('data').js('string(.)');</stl:script>
+              </stl:image>
+            </stl:p>
+          </stl:story>
+        </stl:repeater>
+      </stl:p>
+    </stl:story>
+    <stl:page w="140pt" h="240pt" occurrence="repeatable">
       <stl:text x="20pt" y="20pt" w="100pt" h="200pt" story="Main"/>
-	</stl:page>
+    </stl:page>
   </stl:document>
 </stl:stl>

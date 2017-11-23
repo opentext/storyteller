@@ -1,87 +1,87 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
-		 xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" version="0.1">
+         xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" version="0.1">
   <stl:fixtures>
-	<xp:fixture key="link:/fragments/native-content.xml">
-	  <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-		<stl:style>
-		  .border { border:solid blue; }
-		</stl:style>
-		<stl:document>
+    <xp:fixture key="link:/fragments/native-content.xml">
+      <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+        <stl:style>
+          .border { border:solid blue; }
+        </stl:style>
+        <stl:document>
           <stl:story w="100pt">
-			<stl:p>[ <stl:span style="font-style:italic">Native story</stl:span> inside an embedded extern content  ]</stl:p>
-			<stl:p>
-			  <stl:table class="table" w="100%">
-				<stl:story>
-				  <stl:row h="20pt">
-					<stl:cell class="border" w="50%"><stl:p><stl:field xpath="/data/page[1]/heading"/></stl:p></stl:cell>
-					<stl:cell class="border" w="50%"><stl:p><stl:field xpath="/data/page[2]/heading"/></stl:p></stl:cell>
-				  </stl:row>
-				</stl:story>
-			  </stl:table>
-			</stl:p>
+            <stl:p>[ <stl:span style="font-style:italic">Native story</stl:span> inside an embedded extern content  ]</stl:p>
+            <stl:p>
+              <stl:table class="table" w="100%">
+                <stl:story>
+                  <stl:row h="20pt">
+                    <stl:cell class="border" w="50%"><stl:p style="text-align: justify"><stl:field xpath="/data/page[1]/heading"/></stl:p></stl:cell>
+                    <stl:cell class="border" w="50%"><stl:p style="text-align: justify"><stl:field xpath="/data/page[2]/heading"/></stl:p></stl:cell>
+                  </stl:row>
+                </stl:story>
+              </stl:table>
+            </stl:p>
           </stl:story>
-		</stl:document>
-	  </stl:stl>
-	</xp:fixture>
-	<xp:fixture key="link:/fragments/html-content.xml">
-	  <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-		<stl:document>
+        </stl:document>
+      </stl:stl>
+    </xp:fixture>
+    <xp:fixture key="link:/fragments/html-content.xml">
+      <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+        <stl:document>
           <stl:story format="XHTML">
-			<body xmlns="http://www.w3.org/1999/xhtml"><p>[ <b>XHTML</b> story inside an embedded extern content ]</p></body>
+            <body xmlns="http://www.w3.org/1999/xhtml"><p>[ <b>XHTML</b> story inside an embedded extern content ]</p></body>
           </stl:story>
-		</stl:document>
-	  </stl:stl>
-	</xp:fixture>
+        </stl:document>
+      </stl:stl>
+    </xp:fixture>
   </stl:fixtures>
   <stl:data>
-	<stl:source key="_default">
-	  <data>
-		<character>
+    <stl:source key="_default">
+      <data>
+        <character>
           <name>Freddy Kruger</name>
-		</character>
-		<character>
+        </character>
+        <character>
           <name>Homer J. Simpson</name>
-		</character>
+        </character>
       </data>
-	</stl:source>
-	<stl:template>
-	  <data>
-		<page number="?">
+    </stl:source>
+    <stl:template>
+      <data>
+        <page number="?">
           <heading>?</heading>
-		</page>
+        </page>
       </data>
-	</stl:template>
-	<stl:transformation key="_default">
-	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
-		<tdt:rule path="/data/page">
+    </stl:template>
+    <stl:transformation key="_default">
+      <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
+        <tdt:rule path="/data/page">
           <tdt:value key=".">/data/character</tdt:value>
           <tdt:value key="@number">position()</tdt:value>
-		</tdt:rule>
-		<tdt:rule path="/data/page/heading">
+        </tdt:rule>
+        <tdt:rule path="/data/page/heading">
           <tdt:value key="text()">name</tdt:value>
-		</tdt:rule>
+        </tdt:rule>
       </tdt:transformation>
-	</stl:transformation>
+    </stl:transformation>
   </stl:data>
 
   <stl:document>
-	<stl:page w="300pt" h="300pt">
-	  <stl:text x="20pt" y="20pt" w="260pt" h="260pt" style="fill:#aabbcc">
-		<stl:story>
-		  <stl:p>Various kinds of substitutions:</stl:p>
-		  <stl:p/>
-		  <stl:p>1) Field substitution, page number ... <stl:field type="page-number"/></stl:p>
-		  <stl:p>2) Data substitution ... <stl:field xpath="concat( 'Mr. ', /data/page[@number=2]/heading )"/></stl:p>
-		  <!-- Current styles and width *DO NOT* propagate into extern content substitution -->
-		  <stl:p>3a) ExternContent substitution (embedded) ... <stl:span style="color:blue"><stl:content uri="link:/fragments/native-content.xml" selector="/story[1]"/></stl:span></stl:p>
-		  <stl:p>3b) ExternContent substitution (embedded) ... <stl:content uri="link:/fragments/html-content.xml" selector="/story[1]"/></stl:p>
-		  <stl:p>3c) ExternContent substitution (linked RTF) ... <stl:content uri='wd:/Fragment.rtf' selector='/story[1]'/></stl:p>
-		  <!-- Current styles and width *DO* propagate into repository substitution -->
-		  <stl:p>4a) Native repository substitution ... <stl:span style="color:blue"><stl:content uri="link:/fragments/native-content.xml"/></stl:span></stl:p>
-		  <stl:p>4b) HTML repository substitution ... <stl:content uri="wd:/Fragment.html"/></stl:p>
-		  <stl:p>5) Language substitution ... <stl:translation phrase="Label1"/></stl:p>
-		</stl:story>
-	  </stl:text>
-	</stl:page>
+    <stl:page w="300pt" h="300pt">
+      <stl:text x="20pt" y="20pt" w="260pt" h="260pt" style="fill:#aabbcc">
+        <stl:story>
+          <stl:p>Various kinds of substitutions:</stl:p>
+          <stl:p/>
+          <stl:p>1) Field substitution, page number ... <stl:field type="page-number"/></stl:p>
+          <stl:p>2) Data substitution ... <stl:field xpath="concat( 'Mr. ', /data/page[@number=2]/heading )"/></stl:p>
+          <!-- Current styles and width *DO NOT* propagate into extern content substitution -->
+          <stl:p>3a) ExternContent substitution (embedded) ... <stl:span style="color:blue"><stl:content uri="link:/fragments/native-content.xml" selector="/story[1]"/></stl:span></stl:p>
+          <stl:p>3b) ExternContent substitution (embedded) ... <stl:content uri="link:/fragments/html-content.xml" selector="/story[1]"/></stl:p>
+          <stl:p>3c) ExternContent substitution (linked RTF) ... <stl:content uri='wd:/Fragment.rtf' selector='/story[1]'/></stl:p>
+          <!-- Current styles and width *DO* propagate into repository substitution -->
+          <stl:p>4a) Native repository substitution ... <stl:span style="color:blue"><stl:content uri="link:/fragments/native-content.xml"/></stl:span></stl:p>
+          <stl:p>4b) HTML repository substitution ... <stl:content uri="wd:/Fragment.html"/></stl:p>
+          <stl:p>5) Language substitution ... <stl:translation phrase="Label1"/></stl:p>
+        </stl:story>
+      </stl:text>
+    </stl:page>
   </stl:document>
 </stl:stl>

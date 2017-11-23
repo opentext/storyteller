@@ -1,36 +1,36 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document>
-	<stl:story name="Main">
-	  <stl:p style="text-align:left">Left-aligned paragraph.</stl:p>
-	  <stl:p style="text-align:right">Right-aligned paragraph.</stl:p>
-	  <stl:p style="text-align:center">Centered paragraph.</stl:p>
-	  <stl:p style="text-align:justify">
-		Full alignment paragraph - this is a default alignment in StoryTeller.
-		It is probably most esthetic for paragraphs containing several lines 
-		of text. On the other hand - paragraphs containing just a single line 
-		of text are indistinguishable from simple left-aligned paragraphs.
-	  </stl:p>
-	  <stl:p style="margin-left:20pt; margin-right:20pt; text-indent:20pt">
-		This paragraph has custom indent definitions, 'left-indent', 'right-indent' 
-		and 'first-indent' (interpreted relatively to the left).
-	  </stl:p>
-	  <stl:p style="margin-top:10pt; margin-bottom:10pt">
-		This paragraph has a custom 'space-before' and 'space-after' attributes.
-	  </stl:p>
-	  <stl:p style="line-height:1.5pt">
-		And this paragraph has a custom 'line-spacing' set to value 1.5 and 'line-spacing-mode'
-		set to 'relative'.
-	  </stl:p>
-	  <stl:p style="page-break-after:avoid">And this paragraph has 'keep-with-next' set to 1.</stl:p>
-	  <stl:p style="widows:3; orphans:3">
-		And this paragraph has widow &amp; orphan control. It's 'keep-together-first' 
-		and 'keep-together-last' attributes are set to 3 lines.
-	  </stl:p>
-	  <stl:p style="direction:rtl">This paragraph has a 'right-to-left' direction.</stl:p>
+    <stl:story name="Main">
+      <stl:p style="text-align:left">Left-aligned paragraph.</stl:p>
+      <stl:p style="text-align:right">Right-aligned paragraph.</stl:p>
+      <stl:p style="text-align:center">Centered paragraph.</stl:p>
+      <stl:p style="text-align:justify">
+        Full alignment paragraph - this is a default alignment in StoryTeller.
+        It is probably most esthetic for paragraphs containing several lines 
+        of text. On the other hand - paragraphs containing just a single line 
+        of text are indistinguishable from simple left-aligned paragraphs.
+      </stl:p>
+      <stl:p style="margin-left:20pt; margin-right:20pt; text-indent:20pt">
+        This paragraph has custom indent definitions, 'left-indent', 'right-indent' 
+        and 'first-indent' (interpreted relatively to the left).
+      </stl:p>
+      <stl:p style="margin-top:10pt; margin-bottom:10pt">
+        This paragraph has a custom 'space-before' and 'space-after' attributes.
+      </stl:p>
+      <stl:p style="line-height:1.5">
+        And this paragraph has a custom 'line-spacing' set to value 1.5 and 'line-spacing-mode'
+        set to 'relative'.
+      </stl:p>
+      <stl:p style="page-break-after:avoid">And this paragraph has 'keep-with-next' set to 1.</stl:p>
+      <stl:p style="widows:3; orphans:3">
+        And this paragraph has widow &amp; orphan control. It's 'keep-together-first' 
+        and 'keep-together-last' attributes are set to 3 lines.
+      </stl:p>
+      <stl:p style="direction:rtl">This paragraph has a 'right-to-left' direction.</stl:p>
     </stl:story>
-	<stl:page w="300pt" h="400pt">
-	  <stl:text x="20pt" y="20pt" w="260pt" h="270pt" style="fill:#aabbcc" story="Main"/>
-	  <stl:text x="20pt" y="300pt" w="260pt" h="80pt" style="fill:#aabbcc" story="Main"/>
-	</stl:page>
+    <stl:page w="300pt" h="400pt">
+      <stl:text x="20pt" y="20pt" w="260pt" h="270pt" style="fill:#aabbcc" story="Main"/>
+      <stl:text x="20pt" y="300pt" w="260pt" h="80pt" style="fill:#aabbcc" story="Main"/>
+    </stl:page>
   </stl:document>
 </stl:stl>

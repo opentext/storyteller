@@ -4,7 +4,7 @@
 	<xp:fixture key="link:/stories/box.xml">
 	  <!-- story content reused three times - a paragraph containing (possibly suppressed) inline text box with a dynamic content -->
 	  <stl:p>
-		<stl:text w="490pt" h="0pt" shape-resize="free" shape-h-shrink="0" shape-h-growth="0" shape-v-growth="max" style="border:solid black;">
+		<stl:text w="490pt" h="0pt" style="border: solid black; -stl-shape-resize: free 0pt max 0pt 0pt">
           <!--<stl:modification key="@ILayoutItem/Visibility">$suppress</stl:modification>-->
           <stl:script language="js">
 	        var vars = require('vars');

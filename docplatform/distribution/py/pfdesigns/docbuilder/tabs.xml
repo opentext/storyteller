@@ -8,6 +8,7 @@
 	.numbering {
 	  -stl-list-mask: "%0!1.&#9;";
       -stl-list-counter: numbering;
+      -stl-tabs: "30pt" "240pt decimal .";
 	}
   </stl:style>
   <stl:document>
@@ -20,16 +21,16 @@
 			  (left)<stl:tab/>(middle)<stl:tab/>(right)
 			</stl:p>
 			<stl:p class="heading">Custom tab definitions:</stl:p>
-			<stl:p tabs="100pt:200pt">
+			<stl:p style="-stl-tabs: '100pt' '200pt';">
 			  (left)<stl:tab/>(middle)<stl:tab/>(right)
 			</stl:p>
 			<stl:p class="heading">Custom leader:</stl:p>
-			<stl:p tabs="100pt;left;-+:200pt;left;-+">
+			<stl:p style="-stl-tabs: '100pt left -+' '200pt left -+';">
 			  (left)<stl:tab/>(middle)<stl:tab/>(right)
 			</stl:p>
 			<!-- Common tabs definition for the complete list -->
 			<stl:p class="heading">Custom tab alignment:</stl:p>
-			<stl:list tabs="30pt:240pt;decimal;.">
+			<stl:list>
 			  <stl:p class="numbering">Item<stl:tab/> 25,- CZK</stl:p>
 			  <stl:p class="numbering">Item<stl:tab/> 138,- CZK</stl:p>
 			  <stl:p class="numbering">Item<stl:tab/> 11 324,- CZK</stl:p>

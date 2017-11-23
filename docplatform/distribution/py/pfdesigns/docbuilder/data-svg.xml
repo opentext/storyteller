@@ -44,8 +44,8 @@
 		</tdt:rule>
 		<tdt:rule path="/svg:svg/svg:g[@id='layer2']/svg:rect[@id='positive-bar-00']">
 		  <tdt:value key=".">/root/values/record[number(@val) &gt; 0]</tdt:value>
-		  <tdt:value key="@id">concat('positive-bar-', @index)</tdt:value>
 		  <tdt:value key="$h">@val * $hu</tdt:value>
+		  <tdt:value key="@id">concat('positive-bar-', @index)</tdt:value>
 		  <tdt:value key="@height">$h</tdt:value>
 		  <tdt:value key="@x">$x0 + (@index - 1) * $w</tdt:value>
 		  <tdt:value key="@y">$y0 - $h</tdt:value>
@@ -56,8 +56,8 @@
 		  </tdt:value></tdt:rule>
 		<tdt:rule path="/svg:svg/svg:g[@id='layer2']/svg:rect[@id='negative-bar-00']">
 		  <tdt:value key=".">/root/values/record[number(@val) &lt; 0]</tdt:value>
-		  <tdt:value key="@id">concat('negative-bar-', @index)</tdt:value>
 		  <tdt:value key="$h">- @val * $hu</tdt:value>
+		  <tdt:value key="@id">concat('negative-bar-', @index)</tdt:value>
 		  <tdt:value key="@height">$h</tdt:value>
 		  <tdt:value key="@x">$x0 + (@index - 1) * $w</tdt:value>
 		  <tdt:value key="@width">$w</tdt:value>

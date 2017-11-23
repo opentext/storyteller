@@ -76,13 +76,13 @@
               <stl:script language="js">
                 'use strict';
                 var item = require('layout').item();
-                var repo = require('repo');
+                var streams = require('streams');
                 var data = require( 'data' );
                 var Mark = require('markup-js');
                 var section = data.js('.').section;
-                var template = repo.load("link:/template.xml");
-                var stl = Mark.up(template, section);
-                item.Uri = repo.upload(stl);
+                var template = streams.stream('link:/template.xml');
+                var stl = Mark.up(template.read(), section);
+                item.Uri = streams.stream('local:').write(stl).uri;
               </stl:script>
             </stl:content>
           </stl:p>

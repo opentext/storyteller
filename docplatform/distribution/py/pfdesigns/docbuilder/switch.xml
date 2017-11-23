@@ -1,141 +1,141 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:data>
-	<stl:source key="_default">
-	  <data>
-		<character>
+    <stl:source key="_default">
+      <data>
+        <character>
           <name>Freddy Kruger</name>
-		</character>
-		<character>
+        </character>
+        <character>
           <name>Homer J. Simpson</name>
-		</character>
-		<character>
+        </character>
+        <character>
           <name>Cinderella</name>
-		</character>
-		<character>
+        </character>
+        <character>
           <name>Oscar Wilde</name>
-		</character>
+        </character>
       </data>
-	</stl:source>
-	<stl:template>
-	  <data>
-		<relation/>
-		<character>
-		  <name>?</name>
-		</character>
-	  </data>
-	</stl:template>
-	<stl:transformation key="_default">
-	  <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
-		<tdt:rule path="/data/character">
-		  <tdt:value key=".">/data/character</tdt:value>
-		  <tdt:value key="recurse">.</tdt:value>
-		</tdt:rule>
-	  </tdt:transformation>
-	</stl:transformation>
+    </stl:source>
+    <stl:template>
+      <data>
+        <relation/>
+        <character>
+          <name>?</name>
+        </character>
+      </data>
+    </stl:template>
+    <stl:transformation key="_default">
+      <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0">
+        <tdt:rule path="/data/character">
+          <tdt:value key=".">/data/character</tdt:value>
+          <tdt:value key="recurse">.</tdt:value>
+        </tdt:rule>
+      </tdt:transformation>
+    </stl:transformation>
   </stl:data>
   <stl:document>
 <!--
-	<stl:stylesheet>
-	  <stylesheet name="First set of tests">
-		<style selector="hilighted">
-		  <character>
-			<foreground>RGB(255,64,255)</foreground>
-			<background>RGBA(128,255,128)</background>
-		  </character>
-		</style>    
-	  </stylesheet> 
-	</stl:stylesheet>
+    <stl:stylesheet>
+      <stylesheet name="First set of tests">
+        <style selector="hilighted">
+          <character>
+            <foreground>RGB(255,64,255)</foreground>
+            <background>RGBA(128,255,128)</background>
+          </character>
+        </style>    
+      </stylesheet> 
+    </stl:stylesheet>
 -->
-	<stl:story name="Shared #1" type="referencable">
+    <stl:story name="Shared #1" type="referencable">
       was just a handful of characters
-	</stl:story>
-	<stl:story name="Shared #2" type="referencable">
-	  <stl:p>
-		{ This is a 
-		<stl:span style="font-style:italic">shared</stl:span>
-		story }
-	  </stl:p>
-	</stl:story>
-	<stl:page w="300pt" h="200pt">
-	  <stl:text x="20pt" y="20pt" w="260pt" h="160pt" style="fill:#aabbcc">
-		<stl:story>
-		  <stl:p>
-			There 
-			<stl:switch xpath="count(/data/character)">
+    </stl:story>
+    <stl:story name="Shared #2" type="referencable">
+      <stl:p>
+        { This is a 
+        <stl:span style="font-style:italic">shared</stl:span>
+        story }
+      </stl:p>
+    </stl:story>
+    <stl:page w="300pt" h="200pt">
+      <stl:text x="20pt" y="20pt" w="260pt" h="160pt" style="fill:#aabbcc">
+        <stl:story>
+          <stl:p>
+            There 
+            <stl:switch xpath="count(/data/character)">
               <stl:case key="0">
-				<stl:story>were no characters</stl:story>
+                <stl:story>were no characters</stl:story>
               </stl:case>
               <stl:case key="1">
-				<stl:story>was one character</stl:story>
+                <stl:story>was one character</stl:story>
               </stl:case>
               <stl:case>
-				<stl:story>
-				  were
-				  <stl:field xpath="count(/data/character)"/>
-				  characters
-				</stl:story>
+                <stl:story>
+                  were
+                  <stl:field xpath="count(/data/character)"/>
+                  characters
+                </stl:story>
               </stl:case>
-			</stl:switch>
-			at the party.
-		  </stl:p>
-		  <stl:p>
-			There
-			<stl:switch xpath="count(/data/character)">
+            </stl:switch>
+            at the party.
+          </stl:p>
+          <stl:p>
+            There
+            <stl:switch xpath="count(/data/character)">
               <stl:case key="0">
-				<stl:story>were no characters</stl:story>
+                <stl:story>were no characters</stl:story>
               </stl:case>
-			  <stl:case key="1" story="Shared #1"/>
-			  <stl:case key="2" story="Shared #1"/>
-			  <stl:case key="3" story="Shared #1"/>
-			  <stl:case key="4" story="Shared #1"/>
-			  <stl:case>
-				<stl:story>were <stl:field xpath="count(/data/character)"/> characters</stl:story>
-			  </stl:case>
-			</stl:switch>
-			at the party.
-		  </stl:p>
-		  <stl:p>
-			This is a scope containing
-			<stl:scope>
-			  <stl:story><stl:span style="font-style:italic;">inline native content</stl:span></stl:story>
-			</stl:scope>
-			or
-			<stl:scope>
-			  <stl:story format="XHTML"><body xmlns="http://www.w3.org/1999/xhtml"><i>inline XHTML content.</i></body></stl:story>
-			</stl:scope>
-		  </stl:p>
-		  <stl:p>
-			This scope associates
-			<stl:scope relation="/data/relation">
-			  <stl:story>
-				<stl:span style="font-style:italic;">/data/relation</stl:span>
-			  </stl:story>
-			</stl:scope>
-			relation.
-		  </stl:p>
-		  <stl:p>
-			And this is a scope with associated
-			<stl:scope hyperlink="http://www.python.org" screentip="Python Web">
-			  <stl:story>
-				<stl:span style="text-decoration:underline; color:#0000ff">hyperlink</stl:span>
-			  </stl:story>
-			</stl:scope>.
-		  </stl:p>
-		  <stl:p>
-			And this is a scope representing story reference: 
-			<stl:scope story="Shared #2"/>
-		  </stl:p>
-		  <stl:p>
-			Here we reference styles via
-			<stl:scope>
+              <stl:case key="1" story="Shared #1"/>
+              <stl:case key="2" story="Shared #1"/>
+              <stl:case key="3" story="Shared #1"/>
+              <stl:case key="4" story="Shared #1"/>
+              <stl:case>
+                <stl:story>were <stl:field xpath="count(/data/character)"/> characters</stl:story>
+              </stl:case>
+            </stl:switch>
+            at the party.
+          </stl:p>
+          <stl:p>
+            This is a scope containing
+            <stl:scope>
+              <stl:story><stl:span style="font-style:italic;">inline native content</stl:span></stl:story>
+            </stl:scope>
+            or
+            <stl:scope>
+              <stl:story format="XHTML"><body xmlns="http://www.w3.org/1999/xhtml"><i>inline XHTML content.</i></body></stl:story>
+            </stl:scope>
+          </stl:p>
+          <stl:p>
+            This scope associates
+            <stl:scope relation="/data/relation">
+              <stl:story>
+                <stl:span style="font-style:italic;">/data/relation</stl:span>
+              </stl:story>
+            </stl:scope>
+            relation.
+          </stl:p>
+          <stl:p>
+            And this is a scope with associated
+            <stl:scope hyperlink="http://www.python.org" screentip="Python Web">
+              <stl:story>
+                <stl:span style="text-decoration:underline; color:#0000ff">hyperlink</stl:span>
+              </stl:story>
+            </stl:scope>.
+          </stl:p>
+          <stl:p>
+            And this is a scope representing story reference: 
+            <stl:scope story="Shared #2"/>
+          </stl:p>
+          <stl:p>
+            Here we reference styles via
+            <stl:scope>
 <!--
-			  <stl:story tag="hilighted">semantic tags</stl:story>
+              <stl:story tag="hilighted">semantic tags</stl:story>
 -->
-			  <stl:story tag="hilighted"><stl:span style="color:rgb(255,64,255);background-color:rgb(128,255,128)">semantic tags</stl:span></stl:story>
-			</stl:scope>.
-		  </stl:p>
-		</stl:story>
-	  </stl:text>
-	</stl:page>
+              <stl:story tag="hilighted"><stl:span style="color:rgb(255,64,255);background-color:rgb(128,255,128)">semantic tags</stl:span></stl:story>
+            </stl:scope>.
+          </stl:p>
+        </stl:story>
+      </stl:text>
+    </stl:page>
   </stl:document>
 </stl:stl>

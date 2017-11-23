@@ -1,56 +1,56 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" 
-		 xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" version="0.1">
+         xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" version="0.1">
   <stl:fixtures>
-	<xp:fixture key="link:/images/arrow.png" encoding="base64">
-	  iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACDElEQVQ4Ea1VPUsjURSdlw8nxTaLKJbiR7JgI7qFj
-	  RbbpUgmgvkJVoIurHFZdNFKVgXRrfwPUZPJFGks0qu7hSAyi9oJYqEkQTIT5e25k0x4vMmoAR883r3nnHvf1503TG
-	  nT4vG4Gg6raVDT6KPoH5uye8aUv5yzXL1e2y8Wi1YTbw2sZTUNTdNmELAFt1/mJP+acyVjGPkDEW8lTKfTwVrN3ma
-	  MzYuCN9g7qhpezGazz6QNuQGWZe8i2ZzrdzB+xUIC0C9QjLPCRCKVwtnkOkgiSzljXNN13WDYapdl1c+hGJRVoo/V
-	  b3DOv4uYZP/r6+sdCQ4Nxeg2ZyXS40L8pVKpBpB4ykM2gO5q9fEsgFlTPgIPbBj6ChKue4gmQLlCOLuxNoIjGTNNk
-	  xOm67nlZDJFZ/9D1uAcxxjICogPIlko5FvlJOKijbhV+GsiBrtC1/1qsBTkuNherR1OdXiDPiySmP1E9Mkulx8mSq
-	  XSE9nglzD8IltqN7gU5Y8Ekjsu92g06uwkmZzOgNsgkdyQ65TKIC8Tfn4ioS0qCt/04ylXQFVDhxBc+olc/Pb27hs
-	  C6NHwayjsnsZtvuenF6TpTPPiIhb7pMKc9Jv+JRw3vl4o6HukobJxGp6gnyB+u34H404k0kU16TRPDb7bA+vOQGPj
-	  FxCh5z+OW/2MPtDg2RXGY3xiRdu28+1+Af8B5Veuq3n4GT4AAAAASUVORK5CYII=
-	</xp:fixture>
+    <xp:fixture key="link:/images/arrow.png" encoding="base64">
+      iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACDElEQVQ4Ea1VPUsjURSdlw8nxTaLKJbiR7JgI7qFj
+      RbbpUgmgvkJVoIurHFZdNFKVgXRrfwPUZPJFGks0qu7hSAyi9oJYqEkQTIT5e25k0x4vMmoAR883r3nnHvf1503TG
+      nT4vG4Gg6raVDT6KPoH5uye8aUv5yzXL1e2y8Wi1YTbw2sZTUNTdNmELAFt1/mJP+acyVjGPkDEW8lTKfTwVrN3ma
+      MzYuCN9g7qhpezGazz6QNuQGWZe8i2ZzrdzB+xUIC0C9QjLPCRCKVwtnkOkgiSzljXNN13WDYapdl1c+hGJRVoo/V
+      b3DOv4uYZP/r6+sdCQ4Nxeg2ZyXS40L8pVKpBpB4ykM2gO5q9fEsgFlTPgIPbBj6ChKue4gmQLlCOLuxNoIjGTNNk
+      xOm67nlZDJFZ/9D1uAcxxjICogPIlko5FvlJOKijbhV+GsiBrtC1/1qsBTkuNherR1OdXiDPiySmP1E9Mkulx8mSq
+      XSE9nglzD8IltqN7gU5Y8Ekjsu92g06uwkmZzOgNsgkdyQ65TKIC8Tfn4ioS0qCt/04ylXQFVDhxBc+olc/Pb27hs
+      C6NHwayjsnsZtvuenF6TpTPPiIhb7pMKc9Jv+JRw3vl4o6HukobJxGp6gnyB+u34H404k0kU16TRPDb7bA+vOQGPj
+      FxCh5z+OW/2MPtDg2RXGY3xiRdu28+1+Af8B5Veuq3n4GT4AAAAASUVORK5CYII=
+    </xp:fixture>
   </stl:fixtures>
   <stl:document>
-	<stl:page w="600pt" h="270pt">
-	  <!-- Absolutely positioned and sized image -->
-	  <stl:text x="20pt" y="20pt" w="250pt" h="20pt">
-		<stl:story>
-		  <stl:p>This is an absolutely positioned and sized image:</stl:p>
-		</stl:story>
-	  </stl:text>
-	  <stl:image x="20pt" y="40pt" w="250pt" h="30pt" src="wd:/ducks.png" style="fill:#aaffff"/>
-	  <!-- Relatively positioned and automatically sized inline image -->
-	  <stl:text x="20pt" y="90pt" w="250pt" h="160pt" style="fill:#ffffaa">
-		<stl:story>
-		  <stl:p>Relatively positioned and automatically sized image:</stl:p>
-		  <stl:p/>
-		  <stl:p><stl:image src="wd:/ducks.png" style="fill:#ffccff"/></stl:p>
-		  <stl:p/>
-		  <stl:p>Embedded and sym-linked image: <stl:image src="link:/images/arrow.png"/></stl:p>
-		</stl:story>
-	  </stl:text>
-	  <!-- DataUri defined image embedded in XHTML story -->
+    <stl:page w="600pt" h="270pt">
+      <!-- Absolutely positioned and sized image -->
+      <stl:text x="20pt" y="20pt" w="250pt" h="20pt">
+        <stl:story>
+          <stl:p>This is an absolutely positioned and sized image:</stl:p>
+        </stl:story>
+      </stl:text>
+      <stl:image x="20pt" y="40pt" w="250pt" h="30pt" src="wd:/ducks.png" style="fill:#aaffff"/>
+      <!-- Relatively positioned and automatically sized inline image -->
+      <stl:text x="20pt" y="90pt" w="250pt" h="160pt" style="fill:#ffffaa">
+        <stl:story>
+          <stl:p>Relatively positioned and automatically sized image:</stl:p>
+          <stl:p/>
+          <stl:p><stl:image src="wd:/ducks.png" style="fill:#ffccff"/></stl:p>
+          <stl:p/>
+          <stl:p>Embedded and sym-linked image: <stl:image src="link:/images/arrow.png"/></stl:p>
+        </stl:story>
+      </stl:text>
+      <!-- DataUri defined image embedded in XHTML story -->
       <stl:text x="300pt" y="20pt" w="250pt" h="230pt" style="fill:#ffffaa">
-		<stl:story format="XHTML">
-		  <body xmlns="http://www.w3.org/1999/xhtml">
-			<p>Absolutely sized image:</p>
-			<p><img src="wd:/ducks.png" width="250pt" height="30pt"/></p>
-			<p>Automatically sized inline image:</p>
-			<p><img src="wd:/ducks.png"/></p>
-<!--			<p>Proportionally sized inline image:</p>
-			<p><img src="wd:/ducks.png" width="50px"/></p>
+        <stl:story format="XHTML">
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>Absolutely sized image:</p>
+            <p><img src="wd:/ducks.png" width="250pt" height="30pt"/></p>
+            <p>Automatically sized inline image:</p>
+            <p><img src="wd:/ducks.png"/></p>
+<!--            <p>Proportionally sized inline image:</p>
+            <p><img src="wd:/ducks.png" width="50px"/></p>
 -->
-			<p>
-			  Data URI based image embedded in HTML: 
-			  <img alt="alt text" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACDElEQVQ4Ea1VPUsjURSdlw8nxTaLKJbiR7JgI7qFjRbbpUgmgvkJVoIurHFZdNFKVgXRrfwPUZPJFGks0qu7hSAyi9oJYqEkQTIT5e25k0x4vMmoAR883r3nnHvf1503TGnT4vG4Gg6raVDT6KPoH5uye8aUv5yzXL1e2y8Wi1YTbw2sZTUNTdNmELAFt1/mJP+acyVjGPkDEW8lTKfTwVrN3maMzYuCN9g7qhpezGazz6QNuQGWZe8i2ZzrdzB+xUIC0C9QjLPCRCKVwtnkOkgiSzljXNN13WDYapdl1c+hGJRVoo/Vb3DOv4uYZP/r6+sdCQ4Nxeg2ZyXS40L8pVKpBpB4ykM2gO5q9fEsgFlTPgIPbBj6ChKue4gmQLlCOLuxNoIjGTNNkxOm67nlZDJFZ/9D1uAcxxjICogPIlko5FvlJOKijbhV+GsiBrtC1/1qsBTkuNherR1OdXiDPiySmP1E9Mkulx8mSqXSE9nglzD8IltqN7gU5Y8Ekjsu92g06uwkmZzOgNsgkdyQ65TKIC8Tfn4ioS0qCt/04ylXQFVDhxBc+olc/Pb27hsC6NHwayjsnsZtvuenF6TpTPPiIhb7pMKc9Jv+JRw3vl4o6HukobJxGp6gnyB+u34H404k0kU16TRPDb7bA+vOQGPjFxCh5z+OW/2MPtDg2RXGY3xiRdu28+1+Af8B5Veuq3n4GT4AAAAASUVORK5CYII="/>
-			</p>
-		  </body>
-		</stl:story>
+            <p>
+              Data URI based image embedded in HTML: 
+              <img alt="alt text" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACDElEQVQ4Ea1VPUsjURSdlw8nxTaLKJbiR7JgI7qFjRbbpUgmgvkJVoIurHFZdNFKVgXRrfwPUZPJFGks0qu7hSAyi9oJYqEkQTIT5e25k0x4vMmoAR883r3nnHvf1503TGnT4vG4Gg6raVDT6KPoH5uye8aUv5yzXL1e2y8Wi1YTbw2sZTUNTdNmELAFt1/mJP+acyVjGPkDEW8lTKfTwVrN3maMzYuCN9g7qhpezGazz6QNuQGWZe8i2ZzrdzB+xUIC0C9QjLPCRCKVwtnkOkgiSzljXNN13WDYapdl1c+hGJRVoo/Vb3DOv4uYZP/r6+sdCQ4Nxeg2ZyXS40L8pVKpBpB4ykM2gO5q9fEsgFlTPgIPbBj6ChKue4gmQLlCOLuxNoIjGTNNkxOm67nlZDJFZ/9D1uAcxxjICogPIlko5FvlJOKijbhV+GsiBrtC1/1qsBTkuNherR1OdXiDPiySmP1E9Mkulx8mSqXSE9nglzD8IltqN7gU5Y8Ekjsu92g06uwkmZzOgNsgkdyQ65TKIC8Tfn4ioS0qCt/04ylXQFVDhxBc+olc/Pb27hsC6NHwayjsnsZtvuenF6TpTPPiIhb7pMKc9Jv+JRw3vl4o6HukobJxGp6gnyB+u34H404k0kU16TRPDb7bA+vOQGPjFxCh5z+OW/2MPtDg2RXGY3xiRdu28+1+Af8B5Veuq3n4GT4AAAAASUVORK5CYII="/>
+            </p>
+          </body>
+        </stl:story>
       </stl:text>
 
-	</stl:page>
+    </stl:page>
   </stl:document>
 </stl:stl>

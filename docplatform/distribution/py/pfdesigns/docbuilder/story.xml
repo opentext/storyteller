@@ -1,27 +1,27 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document>
-	<!-- Shared story in native format -->
-	<stl:story name="Shared">
-	  <stl:p>This is a <stl:span style="font-weight:bold;">shared</stl:span> <stl:span style="font-style:italic;">native</stl:span> story.</stl:p>
-	  <stl:p/>
-	  <stl:p>
-		It is specified as a shared story and so it can overflow from one text frame to another.
-	  </stl:p>
-	</stl:story>
+    <!-- Shared story in native format -->
+    <stl:story name="Shared">
+      <stl:p>This is a <stl:span style="font-weight:bold;">shared</stl:span> <stl:span style="font-style:italic;">native</stl:span> story.</stl:p>
+      <stl:p/>
+      <stl:p>
+        It is specified as a shared story and so it can overflow from one text frame to another.
+      </stl:p>
+    </stl:story>
 
-	<stl:page w="300pt" h="150pt">
-	  <!-- Text box (owns a private story) -->
-	  <stl:text x="20pt" y="20pt" w="60pt" h="60pt" style="fill:#aabbcc">
-		<!-- Private story in XHTML format -->
-		<stl:story format="XHTML">
-		  <body xmlns="http://www.w3.org/1999/xhtml">
-			<p>This is a <b>private</b> <a href="https://en.wikipedia.org/wiki/XHTML">XHTML</a> <i>story</i>...</p>
-		  </body>
-		</stl:story>
-	  </stl:text>
-	  <!-- Two Text Frames (observe a shared story) -->
-	  <stl:text x="100pt" y="20pt" w="80pt" h="100pt" style="fill:#ffddcc" story="Shared"/>
-	  <stl:text x="200pt" y="20pt" w="80pt" h="100pt" style="fill:#ffddcc" story="Shared"/>
-	</stl:page>
+    <stl:page w="300pt" h="150pt">
+      <!-- Text box (owns a private story) -->
+      <stl:text x="20pt" y="20pt" w="60pt" h="60pt" style="fill:#aabbcc">
+        <!-- Private story in XHTML format -->
+        <stl:story format="XHTML">
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>This is a <b>private</b> <a href="https://en.wikipedia.org/wiki/XHTML">XHTML</a> <i>story</i>...</p>
+          </body>
+        </stl:story>
+      </stl:text>
+      <!-- Two Text Frames (observe a shared story) -->
+      <stl:text x="100pt" y="20pt" w="80pt" h="100pt" style="fill:#ffddcc" story="Shared"/>
+      <stl:text x="200pt" y="20pt" w="80pt" h="100pt" style="fill:#ffddcc" story="Shared"/>
+    </stl:page>
   </stl:document>
 </stl:stl>
