@@ -43,7 +43,7 @@ It means that we reused the `http://developer.opentext.com/schemas/storyteller/l
 
 This is a full example of an empty document definition:
 
-<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empty.xml?footer=minimal"></script
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empty.xml?footer=minimal"></script>
 
 There are three optional sub-elements under the `stl:stl` element, we will:
 
