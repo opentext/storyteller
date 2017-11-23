@@ -116,7 +116,7 @@ unified to a single format represented as a single *Data Template*.
 
 The data part of the *STL file* can look as follows:
 
-<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/dual-data.xml?footer=minimal"></script>
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/data-dual.xml?footer=minimal"></script>
 
 It is clearly visible that there is a single `stl:template` in the
 definition but two kinds of `stl:source` and `stl:transformation` pairs.
@@ -1388,7 +1388,7 @@ This example demonstrates various kinds of *Substitutions*:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png" /></a>
 
 
 #### External section references
