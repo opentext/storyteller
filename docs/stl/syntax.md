@@ -2574,7 +2574,7 @@ Following chart specific attributes are supported:
 -   `modern` ... defines what charting library is used.
    - "false" - use StreamServe library (default)
    - "true" - creates svg charts using NVD3 javascript library. Some settings are limited
--   `xpath` ... defines xpath to data where can be part of chart definition that overrides chart definition defined under stl:chart (available for scd and only for modern = "false" since 16.4) . Data related elements and attributes (`scd:layer/@xpath`, `scd:series`) cannot be modified this way. (See "Chart definition in data" )
+-   `xpath` ... defines xpath to data where a part of chart definition that overrides chart definition defined under stl:chart is placed (available for scd and only for modern = "false" since 16.4) . Data related elements and attributes (`scd:layer/@xpath`, `scd:series`) cannot be modified this way. (See [Chart definition in data](#chart-definition-in-data-since-164))
 
    ​
 
