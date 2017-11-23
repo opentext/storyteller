@@ -962,7 +962,7 @@ This example demonstrates a variety of `stl:p` attributes:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/paragraph.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png" /></a>
 
 ## Span
 
@@ -1080,7 +1080,7 @@ This example demonstrates the usage of a *Span*:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/span.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png" /></a>
 
 ## Lists
 
@@ -1112,7 +1112,7 @@ This example demonstrates the usage of *Lists*:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/numbering/kitchen-sink-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/kitchen-sink.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/numbering/kitchen-sink-xml_000-m.png" /></a>
 
 ## Breaks
 
@@ -1167,7 +1167,7 @@ This example demonstrates various kinds of *Break commands*:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/breaks.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png" /></a>
 
 ## Tab Stops
 
@@ -1237,7 +1237,7 @@ This example demonstrates usage of *Tab Stops*:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/tabs.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png" /></a>
 
 ### Commands
 
@@ -1388,7 +1388,7 @@ This example demonstrates various kinds of *Substitutions*:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/subst.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png" /></a>
 
 
 #### External section references
@@ -1570,7 +1570,7 @@ This example demonstrates the usage of a *Repeater*:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/repeater.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png" /></a>
 
 ## Switch & Scope
 
@@ -1761,7 +1761,7 @@ This example demonstrates the usage of a *Switch*:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/switch.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png" /></a>
 
 # Layout Items
 
@@ -1815,7 +1815,7 @@ example like for stories:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png" /></a>
 
 ## Image
 
@@ -1886,7 +1886,7 @@ example:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/image.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png" /></a>
 
 ## Fragment
 
@@ -1959,7 +1959,7 @@ Folowing example demonstrates definition of *Referenced* and *Embedded*
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/fragment.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png" /></a>
 
 ## Shape
 
@@ -2017,7 +2017,7 @@ example:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/shape.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png" /></a>
 
 ## Path
 
@@ -2074,7 +2074,7 @@ image to DocBuilder++ (either manually or programmatically):
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/paths.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png" /></a>
 
 Note that some of the arc handling code has been inspired by the Paul
 LeBeau's [androidsvg library](https://github.com/BigBadaboom/androidsvg)
@@ -2284,7 +2284,7 @@ This example demonstrates the usage of various kinds of *Tables*:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/table.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png" /></a>
 
 ## Interactive Item
 
@@ -2443,7 +2443,7 @@ Following example demonstrates some types of interactive items:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/input.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png" /></a>
 
 ## Group
 
@@ -2502,7 +2502,7 @@ Following example demonstrates the grouping in action:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/group.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png" /></a>
 
 ## Barcode
 
@@ -2562,7 +2562,7 @@ For demonstration of barcodes we can look at the following example:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/barcode.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png" /></a>
 
 ## Chart
 
@@ -3047,5 +3047,5 @@ example enumerating all pages of an multipage TIFF image:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/multipage.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png" /></a>
 
