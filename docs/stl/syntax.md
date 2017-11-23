@@ -36,13 +36,6 @@ One of the *DocBuilder++* design goals was to unify its XML structure with the o
 It means that we reused the `http://developer.opentext.com/schemas/storyteller/layout` XML namespace and `stl` alias 
 (but renamed `root` element to `stl`) and so the root of the XML structure looks as follows:
 
-```xml
-<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-</stl:stl>
-```
-
-This is a full example of an empty document definition:
-
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empty.xml?footer=minimal"></script>
 
 There are three optional sub-elements under the `stl:stl` element, we will:
@@ -2073,7 +2066,7 @@ image to DocBuilder++ (either manually or programmatically):
 
 ##### SVG Pumpkin
 
--   ![SVG](http://alistapart.com/d/using-svg-for-flexible-scalable-and-fun-backgrounds-part-ii/sample5.svg)
+-   ![SVG](https://alistapart.com/d/using-svg-for-flexible-scalable-and-fun-backgrounds-part-ii/sample5.svg)
 
 ##### STL Definition
 
