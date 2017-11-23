@@ -43,7 +43,7 @@ It means that we reused the `http://developer.opentext.com/schemas/storyteller/l
 
 This is a full example of an empty document definition:
 
--   [Empty STL Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/empty.xml)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/empty.xml?footer=minimal"></script
 
 There are three optional sub-elements under the `stl:stl` element, we will:
 
@@ -123,52 +123,21 @@ unified to a single format represented as a single *Data Template*.
 
 The data part of the *STL file* can look as follows:
 
-```xml
-<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-  <stl:data>
-    <stl:source key="bbc" src="wd:/bbc-data.xml"/>
-    <stl:source key="cro" src="wd:/cro-data.xml"/>
-    <stl:template>
-      <data>
-        <day date="?">
-          <station name="?">
-            <category name="?">
-              <broadcast duration="?" time="?">
-                <name>?</name>
-                <synopsis>?</synopsis>
-                <hyperlink>?</hyperlink>
-              </broadcast>
-            </category>
-          </station>
-        </day>
-      </data>
-    </stl:template>
-    <stl:transformation key="bbc" src="wd:/bbc-trans.xml"/>
-    <stl:transformation key="cro" src="wd:/cro-trans.xml"/>
-  </stl:data>
-</stl:stl>
-```
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/dual-data.xml?footer=minimal"></script>
 
 It is clearly visible that there is a single `stl:template` in the
 definition but two kinds of `stl:source` and `stl:transformation` pairs.
 This way we can process two formats of source data changing just the
 active *TDT key*.
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/data-dual.xml)
 -   BBC
-    -   [Data
-        Source](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/bbc-data.xml)
-    -   [TDT
-        Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/bbc-trans.xml)
-    -   [Data
-        Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-bbc-py-m.data.xml)
+    -   [Data Source](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/bbc-data.xml)
+    -   [TDT Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/bbc-trans.xml)
+    -   [Data Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-bbc-py-m.data.xml)
 -   CRO
-    -   [Data
-        Source](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/cro-data.xml)
-    -   [TDT
-        Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/cro-trans.xml)
-    -   [Data
-        Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-cro-py-m.data.xml)
+    -   [Data Source](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/cro-data.xml)
+    -   [TDT Definition](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/cro-trans.xml)
+    -   [Data Instance](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/data-cro-py-m.data.xml)
 
 ### TDT-based document creation
 
@@ -425,16 +394,16 @@ The<i>cat</i>ate the<b>grande croissant</b>. I didn't!
 So an encoder should assume that an element that includes nothing but
 text *will* get trimmed.
 
-### Example
+#### Example
 
 Following example demonstrates that such normalization works relatively
 well and is very intuitive:
 
-#### STL Definition
+##### STL Definition
 
 <script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml?footer=minimal"></script>
 
-#### Resulting Document
+##### Resulting Document
 
 <a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png" /></a>
 
@@ -471,9 +440,9 @@ can be done with the `style` attribute.
 The `style` attribute has the following syntax:
 
 ```xml
-    <stl:p style="text-align:center;">
-      Centered content ...
-    </stl:p>
+<stl:p style="text-align:center;">
+  Centered content ...
+</stl:p>
 ```
 
 ### Internal CSS
@@ -483,21 +452,21 @@ An internal CSS is used to define a style for a single *STL definition*.
 An internal CSS is defined in the top-level section of a definition file, before `stl:document` element.
 
 ```xml
-      <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-        <stl:style>
-          .centered {
-            text-align:center;
-          }
-        </stl:style>
-        <stl:document>
-          <stl:story>
-            <stl:p class="centered">
-              Centered content ...
-            </stl:p>
-         </stl:story>
-         ...
-       </stl:document>
-    </stl:stl>
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:style>
+    .centered {
+      text-align:center;
+    }
+  </stl:style>
+  <stl:document>
+    <stl:story>
+      <stl:p class="centered">
+        Centered content ...
+      </stl:p>
+    </stl:story>
+    ...
+  </stl:document>
+</stl:stl>
 ```
 
 ### External CSS
@@ -507,17 +476,17 @@ An external style sheet is used to define the style for many DocBuilder++ docume
 With an external style sheet, you can change the look of an entire library of documents by changing a single file!
 
 ```xml
-      <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-        <stl:style src="wd:/default.css"/>
-        <stl:document>
-          <stl:story>
-            <stl:p class="centered">
-              Centered content ...
-            </stl:p>
-         </stl:story>
-         ...
-       </stl:document>
-    </stl:stl>
+<stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:style src="wd:/default.css"/>
+  <stl:document>
+    <stl:story>
+      <stl:p class="centered">
+        Centered content ...
+      </stl:p>
+    </stl:story>
+    ...
+  </stl:document>
+</stl:stl>
 ```
 
 ## CSS Properties
@@ -579,34 +548,47 @@ For more detailed CSS unit description see the [W3C documentation](https://www.w
 Right now a six-digit (`#rrggbb`) and three-digit (`#rgb`) forms of hex format RGB color are implemented:
 
 ```xml
-    <stl:text x="20pt" y="20pt" w="260pt" h="180pt" style="fill:#0effff; stroke:#4b0082;">
-      <stl:story>
-        This is a<stl:span style="background-color:#d2691e; color:#0f0;"> colored </stl:span> text.
-      </stl:story>
-    </stl:text>
+<stl:text x="20pt" y="20pt" w="260pt" h="180pt" style="fill:#0effff; stroke:#4b0082;">
+  <stl:story>
+    This is a
+    <stl:span style="background-color:#d2691e; color:#0f0;">
+      colored
+    </stl:span>
+    text.
+  </stl:story>
+</stl:text>
 ```
 
 ... and also [CSS3 Extended Color Keywords](https://www.w3.org/TR/css3-color/#svg-color) are supported:
 
 ```xml
-    <stl:text x="20pt" y="20pt" w="260pt" h="180pt" style="fill:lightcyan; stroke:indigo;">
-      <stl:story>
-        This is a<stl:span style="background-color:chocolate; color:lime"> colored </stl:span> text.
-      </stl:story>
-    </stl:text>
+<stl:text x="20pt" y="20pt" w="260pt" h="180pt" style="fill:lightcyan; stroke:indigo;">
+  <stl:story>
+    This is a
+    <stl:span style="background-color:chocolate; color:lime">
+      colored
+    </stl:span> text.
+  </stl:story>
+</stl:text>
 ```
 
 ... and finally decimal `rgb()` and `rgba()` notations are supported:
 
 ```xml
-    <stl:text x="20pt" y="20pt" w="260pt" h="180pt" style="fill:rgb(224,255,255); stroke:rgba(75,0,130,1.0);">
-      <stl:story>
-        This is a<stl:span style="background-color:rgba(210,105,30,1.0); color:rgb(0,255,0);"> colored </stl:span> text.
-      </stl:story>
-    </stl:text>
+<stl:text x="20pt" y="20pt" w="260pt" h="180pt" style="fill:rgb(224,255,255); stroke:rgba(75,0,130,1.0);">
+  <stl:story>
+    This is a
+    <stl:span style="background-color:rgba(210,105,30,1.0); color:rgb(0,255,0);">
+      colored
+    </stl:span>
+    text.
+  </stl:story>
+</stl:text>
 ```
 
-But for genericity and user convenience we could implement a support for full [CSS color](https://www.w3.org/TR/css3-color/#colorunits) in future (e.g. decimal `hsl` and `hsla` notations).
+For genericity and user convenience we should implement a support for full
+[CSS color](https://www.w3.org/TR/css3-color/#colorunits) in future
+(e.g. decimal `hsl` and `hsla` notations).
 
 ### Pen Definition
 
@@ -655,7 +637,8 @@ Right now only a solid Fill (*Brush*) and Stroke (*Pen*) is generated for given 
 In future we are going to support more advanced *Fill* and *Stroke* definitions, via inline [CSS Style](https://www.w3.org/TR/SVG/styling.html#StylingWithCSS):
 
 ```xml
-    <stl:line x1="40pt" x2="120pt" y1="100pt" y2="100pt" style="stroke: black; stroke-width: 20pt; stroke-linecap: round;"/>
+<stl:line x1="40pt" x2="120pt" y1="100pt" y2="100pt"
+          style="stroke: black; stroke-width: 20pt; stroke-linecap: round;"/>
 ```
 
 There are also following additional *drawing style* related properties with no direct mapping to HTML CSS,
@@ -776,9 +759,9 @@ Single (repeatable) *Page Type* definition looks as follows:
 
 ```xml
 ...
-<stl:page w="300pt" h="500pt" occurrence="repeatable">
-  ...
-</stl:page>
+  <stl:page w="300pt" h="500pt" occurrence="repeatable">
+    ...
+  </stl:page>
 ...
 ```
 
@@ -843,16 +826,16 @@ Shared stories can be referenced via `index` or a `name`:
 
 ```xml
 ...
-<stl:document>
-  <stl:story name="Shared">
-    <stl:p>This is a shared story...</stl:p>
-  </stl:story>
-  ...
-  <stl:page w="300pt" h="500pt">
-    <stl:text x="120pt" y="20pt" w="60pt" h="60pt" story="Shared" style="stroke:#00ff00"/>
+  <stl:document>
+    <stl:story name="Shared">
+      <stl:p>This is a shared story...</stl:p>
+    </stl:story>
     ...
-  </stl:page>
-</stl:document>
+    <stl:page w="300pt" h="500pt">
+      <stl:text x="120pt" y="20pt" w="60pt" h="60pt" story="Shared" style="stroke:#00ff00"/>
+      ...
+    </stl:page>
+  </stl:document>
 ...
 ```
 
@@ -861,24 +844,26 @@ Some objects (e.g. *texts*, *switches*, *repeaters*) can define their
 
 ```xml
 ...
-<stl:text x="10pt" y="10pt" w="100pt" h="100pt" style="stroke:#0000ff">
-  <stl:story>
-    <stl:p>This is a private story...</stl:p>
-  </stl:story>
-</stl:text>
+  <stl:text x="10pt" y="10pt" w="100pt" h="100pt" style="stroke:#0000ff">
+    <stl:story>
+      <stl:p>This is a private story...</stl:p>
+    </stl:story>
+  </stl:text>
 ...
 ```
 
-### Story Example
+#### Example
 
 Following example demonstrates various *Story* ownership modes and
 formats:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png)
+##### STL Definition
 
-![Story example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png" /></a>
 
 ### Semantic Tags & Styling
 
@@ -950,14 +935,18 @@ And *Embedded Stylesheet* associations can look like this:
 </stl:stl>
 ```
 
+#### Example
+
 Following example demonstrates an embedded stylesheet and it's
 application to a story:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/styles.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png)
+##### STL Definition
 
-![Styles example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/styles.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png" /></a>
 
 # Content Entities
 
@@ -974,10 +963,13 @@ to potentially nested paragraphs (e.g. paragraphs inside a nested switch).
 
 This example demonstrates a variety of `stl:p` attributes:
 
-- [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/paragraph.xml)
-- [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png)
+##### STL Definition
 
-![Paragraph example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/paragraph.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png" /></a>
 
 ## Span
 
@@ -1085,15 +1077,17 @@ nested stories:
 ...
 ```
 
-### Example
+#### Example
 
 This example demonstrates the usage of a *Span*:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/span.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png)
+##### STL Definition
 
-![Span example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/span.xml?footer=minimal"></script
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png" /></a>
 
 ## Lists
 
@@ -1119,10 +1113,13 @@ The _Bullets & Numbering_ syntax is described in a [separate document](numbering
 
 This example demonstrates the usage of *Lists*:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/kitchen-sink.xml)
--   [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/kitchen-sink-xml_000-m.png)
+##### STL Definition
 
-![List example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/kitchen-sink-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/kitchen-sink.xml?footer=minimal"></scrip
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/numbering/kitchen-sink-xml_000-m.png" /></a>
 
 ## Breaks
 
@@ -1167,15 +1164,17 @@ across several areas:
 ...
 ```
 
-### Example:
+#### Example:
 
 This example demonstrates various kinds of *Break commands*:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/breaks.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png)
+##### STL Definition
 
-![Break Commands](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/breaks.xml?footer=minimal"></scrip
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png" /></a>
 
 ## Tab Stops
 
@@ -1235,15 +1234,17 @@ Users can even utilize an `stl:list` for a common *Tab Stop* definition:
 ...
 ```
 
-### Example:
+#### Example:
 
 This example demonstrates usage of *Tab Stops*:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/tabs.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png)
+##### STL Definition
 
-![Tab Stops](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/tabs.xml?footer=minimal"></script
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png" /></a>
 
 ### Commands
 
@@ -1388,10 +1389,14 @@ external document (e.g. HTML) with no caching:
 
 This example demonstrates various kinds of *Substitutions*:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/subst.xml)
--   [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png)
+##### STL Definition
 
-![Substitution example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/subst.xml?footer=minimal"></script
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-xml_000-m.png" /></a>
+
 
 #### External section references
 
@@ -1408,18 +1413,17 @@ subset of) *STL file* syntax. Imagine we provide a set of predefined
 story. Such designs could look like the following:
 
 ```xml
-    <stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" 
-             xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-      <stl:document>
-        <xp:include src="wd:/sections-story.xml" />
-
-        <stl:page w="370pt" h="500pt">
-          <!-- Two Text Frames (observe a shared story) -->
-          <stl:text x="20pt" y="50pt" w="150pt" h="430pt" style="fill:#ffddcc" story="Sections"/>
-          <stl:text x="200pt" y="50pt" w="150pt" h="430pt" style="fill:#ffddcc" story="Sections"/>
-        </stl:page>
-      </stl:document>
-    </stl:stl>
+<stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" 
+         xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:document>
+    <xp:include src="wd:/sections-story.xml" />
+    <stl:page w="370pt" h="500pt">
+    <!-- Two Text Frames (observe a shared story) -->
+      <stl:text x="20pt" y="50pt" w="150pt" h="430pt" style="fill:#ffddcc" story="Sections"/>
+      <stl:text x="200pt" y="50pt" w="150pt" h="430pt" style="fill:#ffddcc" story="Sections"/>
+    </stl:page>
+  </stl:document>
+</stl:stl>
 ```
 
 ... note that the main story is not present, but rather externally included.
@@ -1428,26 +1432,26 @@ Let's say we have the following *Section definitions* (`section_html`, `section_
     `section_mixed`):
 
 ```xml
-    <definition name="DocDefSections" templateVersion="1" templateName="DocDefSections">
-      <section id="section_html">
-        <resource displayName="Text" path="Fragment.html" type="html" uri="www.example.com/text">
-          ...
-        </resource>
-      </section>
-      <section id="section_tables">
-        <resource displayName="Tables" path="tables.html" type="html" uri="www.example.com/tables">
-          ...
-        </resource>
-      </section>
-      <section id="section_image">
-        <resource displayName="Image" path="ducks.png" type="image" uri="www.example.com/image">
-          ...
-        </resource>
-      </section>
-      <section id="section_mixed">
-        ...
-      </section>
-    </definition>
+<definition name="DocDefSections" templateVersion="1" templateName="DocDefSections">
+  <section id="section_html">
+    <resource displayName="Text" path="Fragment.html" type="html" uri="www.example.com/text">
+      ...
+    </resource>
+  </section>
+  <section id="section_tables">
+    <resource displayName="Tables" path="tables.html" type="html" uri="www.example.com/tables">
+      ...
+    </resource>
+  </section>
+  <section id="section_image">
+    <resource displayName="Image" path="ducks.png" type="image" uri="www.example.com/image">
+      ...
+    </resource>
+  </section>
+  <section id="section_mixed">
+    ...
+  </section>
+</definition>
 ```
 
 Then the *StoryBoard web editor* could let user edit the sequence of 
@@ -1455,12 +1459,12 @@ the sections and based on his choice generate the actual content of
 the main story, for example as follows:
 
 ```xml
-    <stl:story name="Sections" xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-      <stl:content uri="strssec:section_html" />
-      <stl:content uri="strssec:section_tables" />
-      <stl:content uri="strssec:section_image" />
-      <stl:content uri="strssec:section_mixed" />
-    </stl:story>
+<stl:story name="Sections" xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:content uri="strssec:section_html" />
+  <stl:content uri="strssec:section_tables" />
+  <stl:content uri="strssec:section_image" />
+  <stl:content uri="strssec:section_mixed" />
+</stl:story>
 ```
 
 ... and *DocBuilder* interpreting the *STL definition file* would
@@ -1475,30 +1479,30 @@ Substitution* and postponing interpretation of the dynamic story to
 runtime. The top level design could look as follows:
 
 ```xml
-    <stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" 
-             xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-      <stl:fixtures>
-        <xp:fixture key="link:/story-fragment.xml">
-          <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
-            <stl:document>
-              <xp:include src="wd:/sections-story.xml" />
-            </stl:document>
-          </stl:stl>
-        </xp:fixture>
-      </stl:fixtures>
+<stl:stl xmlns:xp="http://developer.opentext.com/schemas/storyteller/xmlpreprocessor" 
+         xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+  <stl:fixtures>
+    <xp:fixture key="link:/story-fragment.xml">
+      <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
+        <stl:document>
+          <xp:include src="wd:/sections-story.xml" />
+        </stl:document>
+      </stl:stl>
+    </xp:fixture>
+  </stl:fixtures>
 
-      <stl:document>
-        <stl:story name="ExternContent">
-          <stl:content uri="link:/story-fragment.xml" selector="/story[1]"/>
-        </stl:story>
+  <stl:document>
+    <stl:story name="ExternContent">
+      <stl:content uri="link:/story-fragment.xml" selector="/story[1]"/>
+    </stl:story>
 
-        <stl:page w="370pt" h="500pt">
-          <!-- Two Text Frames (observe a shared story) -->
-          <stl:text x="20pt" y="50pt" w="150pt" h="430pt" style="fill:#ffddcc" story="ExternContent"/>
-          <stl:text x="200pt" y="50pt" w="150pt" h="430pt" style="fill:#ffddcc" story="ExternContent"/>
-        </stl:page>
-      </stl:document>
-    </stl:stl>
+     <stl:page w="370pt" h="500pt">
+      <!-- Two Text Frames (observe a shared story) -->
+      <stl:text x="20pt" y="50pt" w="150pt" h="430pt" style="fill:#ffddcc" story="ExternContent"/>
+      <stl:text x="200pt" y="50pt" w="150pt" h="430pt" style="fill:#ffddcc" story="ExternContent"/>
+    </stl:page>
+  </stl:document>
+</stl:stl>
 ```
 
 There is a disadvantage that the dynamic story is created in runtime
@@ -1567,11 +1571,13 @@ There are two kinds of a repeater:
 
 This example demonstrates the usage of a *Repeater*:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/repeater.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png)
+##### STL Definition
 
-![Repeater example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/repeater.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png" /></a>
 
 ## Switch & Scope
 
@@ -1654,7 +1660,9 @@ inside a hosting story:
   <stl:p>
     This is a scope containing
     <stl:scope>
-      <stl:story><stl:span style="font-style:italic">inline native content</stl:span></stl:story>
+      <stl:story>
+        <stl:span style="font-style:italic">inline native content</stl:span>
+      </stl:story>
     </stl:scope>
     or
     <stl:scope>
@@ -1750,15 +1758,17 @@ semantic tags can be utilized for dynamic styling:
 ...
 ```
 
-### Example
+#### Example
 
 This example demonstrates the usage of a *Switch*:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/switch.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png)
+##### STL Definition
 
-![Switch example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/switch.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png" /></a>
 
 # Layout Items
 
@@ -1801,15 +1811,18 @@ And this listing demonstrates a *Text Frame* referending a shared story:
 ...
 ```
 
-### Example
+#### Example
 
 For *Text Box* and *Text Frame* demonstration we can use identical
 example like for stories:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml)
--   [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png)
+##### STL Definition
 
-![Text example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png" /></a>
 
 ## Image
 
@@ -1869,16 +1882,18 @@ TIFF:
 ...
 ```
 
-### Example
+#### Example
 
 For demonstration of *Image item* variants we can look at the following
 example:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/image.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png)
+##### STL Definition
 
-![Image example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/image.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png" /></a>
 
 ## Fragment
 
@@ -1940,16 +1955,18 @@ Fragments can be absolute positioned on a page:
 ...
 ```
 
-### Example
+#### Example
 
 Folowing example demonstrates definition of *Referenced* and *Embedded*
 *Fragments* on a *Page* and inside a *Story*:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/fragment.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png)
+##### STL Definition
 
-![Fragment example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/fragment.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png" /></a>
 
 ## Shape
 
@@ -1996,16 +2013,18 @@ story (either shared or private) gets formatted inside the closed shape.
 </stl:page>
 ...
 ```
-### Example:
+#### Example:
 
 For demonstration of various shape variants we can look at the following
 example:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/shape.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png)
+##### STL Definition
 
-![Shapes example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/shape.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png" /></a>
 
 ## Path
 
@@ -2046,18 +2065,23 @@ relatively positioned.
 -   [Mozilla Path
     Tutorial](https://developer.mozilla.org/en/docs/Web/SVG/Tutorial/Paths)
 
-### Examples:
+#### Example:
 
 For demonstration of SVG-like path variants we can look at the following
 example. It also demonstrates how easy it is to migrate an SVG vector
 image to DocBuilder++ (either manually or programmatically):
 
--   [SVG](http://alistapart.com/d/using-svg-for-flexible-scalable-and-fun-backgrounds-part-ii/sample5.svg)
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/paths.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png)
+##### SVG Pumpkin
 
-![Paths example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png)
+-   ![SVG](http://alistapart.com/d/using-svg-for-flexible-scalable-and-fun-backgrounds-part-ii/sample5.svg)
+
+##### STL Definition
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/paths.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png" /></a>
 
 Note that some of the arc handling code has been inspired by the Paul
 LeBeau's [androidsvg library](https://github.com/BigBadaboom/androidsvg)
@@ -2261,11 +2285,13 @@ columns.
 
 This example demonstrates the usage of various kinds of *Tables*:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/table.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png)
+##### STL Definition
 
-![Table example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/table.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png" /></a>
 
 ## Interactive Item
 
@@ -2414,13 +2440,17 @@ and submit button:
 ...
 ```
 
+#### Example
+
 Following example demonstrates some types of interactive items:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/input.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png)
+##### STL Definition
 
-![Interactive item example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/input.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png" /></a>
 
 ## Group
 
@@ -2465,14 +2495,21 @@ Groups can be used for coordinate space transformations (*scaling*,
 *rotation* and *translation*) or just for organizing the design to
 collapsable and named *groups*.
 
+#### Example
+
 Following example demonstrates the grouping in action:
 
--   [SVG](https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg)
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/group.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png)
+##### SVG
 
-![Grouping example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png)
+![SVG](https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg)
+
+##### STL Definition
+
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/group.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png" /></a>
 
 ## Barcode
 
@@ -2522,13 +2559,17 @@ input data), then it is possible to use `stl:script` as follows:
 ...
 ```
 
+#### Example
+
 For demonstration of barcodes we can look at the following example:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/barcode.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png)
+##### STL Definition
 
-![Barcode example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/barcode.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png" /></a>
 
 ## Chart
 
@@ -3002,13 +3043,16 @@ image:
 ...
 ```
 
-### Example
+#### Example
 
 For demonstration of runtime modifications we can look at the following
 example enumerating all pages of an multipage TIFF image:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/multipage.xml)
--   [Resulting Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png)
+##### STL Definition
 
-![Multipage Image example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/multipage.xml?footer=minimal"></script>
+
+##### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png" /></a>
 
