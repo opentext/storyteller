@@ -1,6 +1,9 @@
+# STL definition syntax
+
 Table of Contents
 =================
 
+   * [Overview](#overview)
    * [STL Root](#stl-root)
    * [Whitespace handling](#whitespace-handling)
    * [Styling](#styling)
@@ -10,7 +13,7 @@ Table of Contents
    * [Layout Items](#layout-items)
    * [Runtime Behavior](#runtime-behavior)
 
-# STL definition syntax
+# Overview
 
 This document describes an XML syntax of *STL definition file*. The syntax can be validated programmatically 
 against the following [XSD schema](https://github.com/opentext/storyteller/blob/master/docplatform/forsetup/docbuilder/xmlschema/stl.xsd).
@@ -427,11 +430,13 @@ text *will* get trimmed.
 Following example demonstrates that such normalization works relatively
 well and is very intuitive:
 
--   [STL](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml)
--   [Resulting
-    Document](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png)
+#### STL Definition
 
-![Story example](https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png)
+<script src="//gist-it.appspot.com/github/opentext/storyteller/raw/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml?footer=minimal"></script>
+
+#### Resulting Document
+
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png" /></a>
 
 # Styling
 

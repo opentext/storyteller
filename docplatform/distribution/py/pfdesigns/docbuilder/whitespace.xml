@@ -1,6 +1,6 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:document>
-	<stl:page w="300pt" h="120pt">
+	<stl:page w="300pt" h="140pt">
 	  <stl:text x="20pt" y="20pt" w="260pt" h="100pt" style="fill:#aabbcc">
 		<stl:story>
 		  <stl:p>
