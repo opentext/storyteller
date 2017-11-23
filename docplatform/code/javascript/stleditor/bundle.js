@@ -5075,8 +5075,10 @@ function html_builder(nsmap, writer, options) {
         };
     }
 
-    function story_builder(writer) {
-        var inside = {};
+    function story_builder(writer, inside_paragraph) {
+        var inside = {
+            paragraph: inside_paragraph
+        };
         var list_level = 0;
         var inline_items = item_builder(writer, inside);
         
@@ -5124,14 +5126,19 @@ function html_builder(nsmap, writer, options) {
         }
 
         function story_(start, attrs) {
-            if (inside.hyperlink) {
+            if (inside.hyperlink || inside.repeater) {
                 if (start) {
-                    writer.start('span', {
+                    writer.start(inside.paragraph ? 'span' : 'div', {
                         'class': attrs['class'],
                         'data-stl-class': 'stl:story'
                     });
+                    if (inside.repeater) {
+                        return attrs.format === 'XHTML'
+                            ? stl.xml_accumulator( (markup) => writer.inject(convert_html(markup)), true)
+                            : stl.handler_dispatcher(nsmap, story_builder(writer, inside.paragraph));
+                    }
                 } else {
-                    writer.end('span');
+                    writer.end(inside.paragraph ? 'span' : 'div');
                 }
             } else {
                 return inline_items.story_(start, attrs);
@@ -5155,6 +5162,21 @@ function html_builder(nsmap, writer, options) {
                 writer.end('a');
             }
         }
+
+        function repeater_(start, attrs) {
+            if (start) {
+                if (inside.repeater)
+                    return unsupported("stl:repeater nesting");
+                writer.start(inside.paragraph ? 'span' : 'div', {
+                    'data-stl-class': 'stl:repeater',
+                    'data-stl-xpath': attrs.xpath
+                });
+                inside.repeater = true;
+            } else {
+                inside.repeater = false;
+                writer.end(inside.paragraph ? 'span' : 'div');
+            }
+        }
         
         function span_(start, attrs) {
             if (start) {
@@ -5168,6 +5190,16 @@ function html_builder(nsmap, writer, options) {
             }
         }
 
+        function break_(start, attrs) {
+            if (start) {
+                writer.start('span', {'data-stl-class': 'stl:break'});
+                writer.inject('<br/>');
+                return stl.empty_checker();
+            } else {
+                writer.end('span');
+            }
+        }
+        
         function field_(start, attrs) {
             if (start) {
                 writer.start('span', {
@@ -5200,8 +5232,10 @@ function html_builder(nsmap, writer, options) {
             list_: list_,
             p_: p_,
             span_: span_,
+            break_: break_,
             block_: block_,
             scope_: scope_,
+            repeater_: repeater_,
             story_: story_,
             field_: field_,
             image_: inline_items.image_,
@@ -5274,6 +5308,12 @@ function html_builder(nsmap, writer, options) {
                 writer.end(inside);
             }
         }
+
+        function data_(start, attrs) {
+            if (start) {
+                return stl.ignorant();
+            }
+        }
         
         function document_(start, attrs) {
             if (start) {
@@ -5321,7 +5361,7 @@ function html_builder(nsmap, writer, options) {
         
         return {
             stl_: () => {},
-            data_: () => unsupported("stl:data"), 
+            data_: data_,
             fixtures_: () => unsupported("stl:fixtures"),
             style_: style_,
             document_: document_,

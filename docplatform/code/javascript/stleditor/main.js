@@ -252,6 +252,9 @@ function jsPrettify(js, skipRoot, indent, limit) {
 }
 
 function js2xml(js, schema, skipRoot) {
+    var types = schema ? schema.elements: {};
+    var nsmap = schema ? schema.namespaces : null;
+        
     function make_writer() {
         var xml = '';
         var namespaces = {};
@@ -265,7 +268,7 @@ function js2xml(js, schema, skipRoot) {
             if (name.length > 1) {
                 var prefix = 'xmlns:'+name[0];
                 if (!namespaces[prefix]) {
-                    var uri = schema.namespaces[prefix];
+                    var uri = nsmap[prefix];
                     namespaces[prefix] = uri;
                 }
             }
@@ -330,7 +333,7 @@ function js2xml(js, schema, skipRoot) {
     function innerXML(js, writer) {
         var type = types[js.name];
         var fnNext = (type && type.serializer)
-            ? (js) => writer.raw(type.serializer(js))
+            ? (js) => writer.raw(type.serializer(js, schema))
             : (js) => outerXML(js, writer);
 	    js.children.forEach(function(child) {
 		    if(child.type === "text" && child.value) 
@@ -340,7 +343,6 @@ function js2xml(js, schema, skipRoot) {
 	    });
     }
 
-    var types = schema ? schema.elements: {};
     var writer = make_writer();
     if (skipRoot)
         innerXML(js, writer);
@@ -840,7 +842,7 @@ function templateXPaths(js) {
 
 function parseXML(js) {
     var parser = new DOMParser();
-    var markup = js2xml(js, null, true);
+    var markup = js2xml(js, stl_schema, true);
     return parser.parseFromString(markup, "text/xml");
 }
 
@@ -1377,7 +1379,7 @@ stl_schema.namespaces = {
 	'xmlns:tdt' : 'http://developer.opentext.com/schemas/storyteller/transformation/tdt',
     'xmlns:svg': 'http://www.w3.org/2000/svg',
     'xmlns:scd': 'http://developer.opentext.com/schemas/storyteller/chart/definition',
-
+    'xmlns:ddi': 'http://developer.opentext.com/schemas/storyteller/layout/ddi/v1'
 };
 
 stl_schema.elements = {
@@ -2104,7 +2106,7 @@ function showPreview() {
         $inlines.each((_, e) => initHandlers($(e), {inline: true, resizable: "document", rotatable: true}));
         $layouts.each((_, e) => initHandlers($(e), {resizable: "parent", draggable: "parent", rotatable: true}));
         
-        // hover highlight
+        // hover highlight (we cannot use hover event as we want to highlight only a very deepest element)
         $children.on("mousemove", function (e){
             delay(function() {
                 unHighlight();
