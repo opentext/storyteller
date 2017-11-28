@@ -224,11 +224,13 @@ an underlying server. And in case there are no such services needed, we can run 
 completely. Like in case of this example of an 
 [Interactive STL editor](https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html).
 
-The following table demonstrates two independent dimensions - *engine* and *processing phase*:
+The following table summarizes how individual components cooperate in various scenarios.
 
-| Phase vs Engine | StoryTeller Formatter    |  Server-side STL2HTML                 |
-| --------------- | ------------------------ | ------------------------------------- |
-| Server-side     | ST batch production      |  Static HTML (email) / PDF attachment |
-| Mixed           | ST Preview (REST API)    |  Dynamic HTML                         |
-| Client-side     |	On-demand PDF (REST API) |  Realtime Preview                     |
+| Engine / Phase | Server-side          |  Mixed                  | Client-side                 |
+| -------------- | -------------------- | ----------------------- | --------------------------- |
+| StoryTeller    | ST batch production  | ST preview (REST)       | On-demand PDF (REST)        |
+| TDT            | ST Data Instance     | ST Data Island          | On-demand Conversion (REST) |
+| STL2HTML       |       X              | Create HTML Skeleton    | Create HTML Document        |
+| Browser DOM    | Static HTML (email) /| Dynamic/Responsive HTML | Realtime Preview            |
+|                |   PDF attachment     |                         |                             |
 
