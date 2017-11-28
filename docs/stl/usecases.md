@@ -213,13 +213,6 @@ context of HTML document object model. Moreover the scripts can be
 executed not just on server-side, but alternatively on client-side (in
 web browser).
 
-The following table demonstrates two independent dimensions - *engine* and *processing time*:
-
-| Time vs Engine  | StoryTeller Formatter  |  HTML DOM Formatter       |
-| --------------- | ---------------------- | ------------------------- |
-| Server-side     | ST batch production    |  Responsive HTML (email)  |
-| Client-side     | ST Preview (REST API)  |  Dynamic HTML             |
-
 But we can go even further - we can implement /stl2html/ conversion in client-side
 javascript completely. That way we get much more responsive experience for interactive
 tools like online editors, document preview etc.
@@ -231,4 +224,11 @@ an underlying server. And in case there are no such services needed, we can run 
 completely. Like in case of this example of an 
 [Interactive STL editor](https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html).
 
+The following table demonstrates two independent dimensions - *engine* and *processing phase*:
+
+| Phase vs Engine | StoryTeller Formatter    |  Server-side STL2HTML                 |
+| --------------- | ------------------------ | ------------------------------------- |
+| Server-side     | ST batch production      |  Static HTML (email) / PDF attachment |
+| Mixed           | ST Preview (REST API)    |  Dynamic HTML                         |
+| Client-side     |	On-demand PDF (REST API) |  Realtime Preview                     |
 
