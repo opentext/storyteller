@@ -939,7 +939,7 @@ application to a story:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/styles.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png" /></a>
 
 # Content Entities
 
@@ -1112,7 +1112,7 @@ This example demonstrates the usage of *Lists*:
 
 ##### Resulting Document
 
-<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/kitchen-sink.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/numbering/kitchen-sink-xml_000-m.png" /></a>
+<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/kitchen-sink.xml"><img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/kitchen-sink-xml_000-m.png" /></a>
 
 ## Breaks
 
