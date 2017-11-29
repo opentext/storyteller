@@ -616,7 +616,7 @@ module.exports={
         "*[data-stl-class=\"stl:page\"] {",
         "  position: relative;",
         "}",
-        "*[data-stl-class=\"stl:text\"] > *[data-stl-class=\"stl:story\"] {",
+        "*[data-stl-class=\"stl:text\"] {",
         "  overflow: hidden;",
         "}"
     ]

@@ -132,8 +132,8 @@ div:hover > .label {
 .reference {
 	display: none;
 	position: absolute;
-	top: -10px;
-	left: 30px;
+	top: 5px;
+	left: 15px;
 	z-index: 1000;
 	font-family: arial;
 	font-size: 10pt;
