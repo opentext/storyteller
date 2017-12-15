@@ -736,7 +736,7 @@ function initialize() {
     handleParameters(function (cfg, error) {
 	    initMarkup(cfg);
         if (error) {
-            report_error('Loading Error', e.statusText);
+            report_error('Loading Error', error.statusText);
             // intentionally no preview here
         } else {
             previewMarkup();
