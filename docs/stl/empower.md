@@ -85,7 +85,6 @@ rendered variants side-by-side):
 		StoryTeller STL render:<br/>
 		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_char.png"/>
 		<a class="try-it-btn" href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_char.json&css=1" target="_blank">Try it Yourself »</a>
-		
 	</td>
   </tr>
   
@@ -94,7 +93,7 @@ rendered variants side-by-side):
 	<td>
 		Empower JSON render:<br/>
 	   	<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.png"/>
-		<a class="try-it-btn" href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.json" target="_blank">Try it Yourself »</a>
+		<a class="try-it-btn" href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.json" target="_blank">Open JSON »</a>
 	</td>
   	<td>
 		StoryTeller STL render:<br/>
@@ -107,12 +106,12 @@ rendered variants side-by-side):
   <tr>
 	<td>
 		Empower JSON render:<br/>
-		<a class="try-it-btn" href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.json" target="_blank">Try it Yourself »</a>
-		   	<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.png"/>
+		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.png"/>
+		<a class="try-it-btn" href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.json" target="_blank">Open JSON »</a>
 	</td>
   	<td>
 		StoryTeller STL render:<br/>
-			<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_table.png"/>
+		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_table.png"/>
 		<a class="try-it-btn" href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.json&css=1" target="_blank">Try it Yourself »</a>
 	</td>
   </tr>
@@ -121,12 +120,12 @@ rendered variants side-by-side):
   <tr>
 	<td>
 		Empower JSON render:<br/>
-		<a class="try-it-btn" href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.json" target="_blank">Try it Yourself »</a>
-    	   <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.png"/>
+   	   <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.png"/>
+		<a class="try-it-btn" href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.json" target="_blank">Open JSON »</a>
 	</td>
   	<td>
 		StoryTeller STL render:<br/>
-			<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_canvas.png"/>
+		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_canvas.png"/>
 		<a class="try-it-btn" href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.json&css=1" target="_blank">Try it Yourself »</a>
 	</td>
   </tr>
