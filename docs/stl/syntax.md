@@ -2928,16 +2928,21 @@ Attributes:
 
 **Chart examples:**
 
-[<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart2-bar-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart2-bar.xml)
+<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart2-bar-xml_000-m.png">
+<a class="green-button" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/tsdesigns/docbuilder/chart2-bar.xml" target="_blank">Try it Yourself »</a>
 
-[<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart3-line-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart3-line.xml)
+<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart3-line-xml_000-m.png">
+<a class="green-button" href="https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart3-line.xml" target="_blank">Try it Yourself »</a>
 
-[<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart90-area-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart90-area.xml)
+<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart90-area-xml_000-m.png">
+<a class="green-button" href="https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart90-area.xml" target="_blank">Try it Yourself »</a>
 
-[<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart6-pie-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart6-pie.xml)
+<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart6-pie-xml_000-m.png">
+<a class="green-button" href="https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart6-pie.xml" target="_blank">Try it Yourself »</a>
 
 Modern chart that uses javascript NVD3 library and SVG rendering:
-[<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart4-donut-modern-xml_000-m.png">](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart4-donut-modern.xml)
+<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart4-donut-modern-xml_000-m.png">
+<a class="green-button" href="https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart4-donut-modern.xml" target="_blank">Try it Yourself »</a>
 
 All examples are [here](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/) with [results](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/).
 
