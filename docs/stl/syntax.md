@@ -399,7 +399,7 @@ well and is very intuitive:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/whitespace-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/whitespace.xml" target="_blank">Try it Yourself »</a>
 
 
 # Styling
@@ -859,7 +859,7 @@ formats:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml" target="_blank">Try it Yourself »</a>
 
 ### Semantic Tags & Styling
 
@@ -943,7 +943,7 @@ application to a story:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/styles-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/styles.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/styles.xml" target="_blank">Try it Yourself »</a>
 
 # Content Entities
 
@@ -967,7 +967,7 @@ This example demonstrates a variety of `stl:p` attributes:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paragraph-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/paragraph.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/paragraph.xml" target="_blank">Try it Yourself »</a>
 
 ## Span
 
@@ -1086,7 +1086,7 @@ This example demonstrates the usage of a *Span*:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/span-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/span.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/span.xml" target="_blank">Try it Yourself »</a>
 
 
 ## Lists
@@ -1120,7 +1120,7 @@ This example demonstrates the usage of *Lists*:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/numbering/kitchen-sink-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/kitchen-sink.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/numbering/kitchen-sink.xml" target="_blank">Try it Yourself »</a>
 
 
 ## Breaks
@@ -1177,7 +1177,7 @@ This example demonstrates various kinds of *Break commands*:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/breaks-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/breaks.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/breaks.xml" target="_blank">Try it Yourself »</a>
 
 
 ## Tab Stops
@@ -1249,7 +1249,7 @@ This example demonstrates usage of *Tab Stops*:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/tabs-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/tabs.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/tabs.xml" target="_blank">Try it Yourself »</a>
 
 ### Commands
 
@@ -1401,7 +1401,7 @@ This example demonstrates various kinds of *Substitutions*:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/subst-py_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/subst.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/subst.xml" target="_blank">Try it Yourself »</a>
 
 #### External section references
 
@@ -1583,7 +1583,7 @@ This example demonstrates the usage of a *Repeater*:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/repeater-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/repeater.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/repeater.xml" target="_blank">Try it Yourself »</a>
 
 
 ## Switch & Scope
@@ -1776,7 +1776,7 @@ This example demonstrates the usage of a *Switch*:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/switch-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/switch.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/switch.xml" target="_blank">Try it Yourself »</a>
 
 
 # Layout Items
@@ -1832,7 +1832,7 @@ example like for stories:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/story-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/story.xml" target="_blank">Try it Yourself »</a>
 
 
 ## Image
@@ -1905,7 +1905,7 @@ example:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/image-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/image.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/image.xml" target="_blank">Try it Yourself »</a>
 
 
 ## Fragment
@@ -1980,7 +1980,7 @@ Folowing example demonstrates definition of *Referenced* and *Embedded*
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/fragment-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/fragment.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/fragment.xml" target="_blank">Try it Yourself »</a>
 
 
 ## Shape
@@ -2040,7 +2040,7 @@ example:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/shape-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/shape.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/shape.xml" target="_blank">Try it Yourself »</a>
 
 
 ## Path
@@ -2099,7 +2099,7 @@ image to DocBuilder++ (either manually or programmatically):
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/paths-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/paths.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/paths.xml" target="_blank">Try it Yourself »</a>
 
 
 Note that some of the arc handling code has been inspired by the Paul
@@ -2311,7 +2311,7 @@ This example demonstrates the usage of various kinds of *Tables*:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/table-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/table.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/table.xml" target="_blank">Try it Yourself »</a>
 
 
 ## Interactive Item
@@ -2472,7 +2472,7 @@ Following example demonstrates some types of interactive items:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/input-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/input.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/input.xml" target="_blank">Try it Yourself »</a>
 
 
 ## Group
@@ -2533,7 +2533,7 @@ Following example demonstrates the grouping in action:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/group-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/group.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/group.xml" target="_blank">Try it Yourself »</a>
 
 
 ## Barcode
@@ -2595,7 +2595,7 @@ For demonstration of barcodes we can look at the following example:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/barcode-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/barcode.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/barcode.xml" target="_blank">Try it Yourself »</a>
 
 
 ## Chart
@@ -2963,20 +2963,20 @@ Attributes:
 **Chart examples:**
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart2-bar-xml_000-m.png">
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/tsdesigns/docbuilder/chart2-bar.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/tsdesigns/docbuilder/chart2-bar.xml" target="_blank">Try it Yourself »</a>
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart3-line-xml_000-m.png">
-<a class="try-it-btn" href="editor/?stl=https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart3-line.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/tsdesigns/docbuilder/chart3-line.xml" target="_blank">Try it Yourself »</a>
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart90-area-xml_000-m.png">
-<a class="try-it-btn" href="editor/?stl=https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart90-area.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/tsdesigns/docbuilder/chart90-area.xml" target="_blank">Try it Yourself »</a>
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart6-pie-xml_000-m.png">
-<a class="try-it-btn" href="editor/?stl=https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart6-pie.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/tsdesigns/docbuilder/chart6-pie.xml" target="_blank">Try it Yourself »</a>
 
 Modern chart that uses javascript NVD3 library and SVG rendering:
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/chart4-donut-modern-xml_000-m.png">
-<a class="try-it-btn" href="editor/?stl=https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/chart4-donut-modern.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/tsdesigns/docbuilder/chart4-donut-modern.xml" target="_blank">Try it Yourself »</a>
 
 All examples are [here](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/tsdesigns/docbuilder/) with [results](https://github.com/opentext/storyteller/blob/master/docplatform/distribution/py/regr_output/tsdesigns/docbuilder/).
 
@@ -3087,6 +3087,6 @@ example enumerating all pages of an multipage TIFF image:
 ##### Resulting Document
 
 <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/regr_output/pfdesigns/docbuilder/multipage-xml_000-m.png" />
-<a class="try-it-btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/multipage.xml" target="_blank">Try it Yourself »</a>
+<a class="btn" href="editor/?stl=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/multipage.xml" target="_blank">Try it Yourself »</a>
 
 
