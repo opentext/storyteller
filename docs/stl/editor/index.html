@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+	<title>STL Editor</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.6/nv.d3.min.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/jquery.ui.rotatable.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" charset="utf-8"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-modelist.js" charset="utf-8"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.11/fabric.min.js"></script>
+	<script type="text/javascript" src="https://cdn.rawgit.com/nathancahill/Split.js/master/split.min.js"></script>
+	<script type="text/javascript" src="https://cdn.rawgit.com/beautify-web/js-beautify/v1.6.12/js/lib/beautify.js"></script>
+	<script type="text/javascript" src="https://cdn.rawgit.com/beautify-web/js-beautify/v1.6.12/js/lib/beautify-css.js"></script>
+	<script type="text/javascript" src="https://cdn.rawgit.com/cdnjs/cdnjs/master/ajax/libs/Trumbowyg/2.8.1/trumbowyg.min.js"></script>
+	<script type="text/javascript" src="https://cdn.rawgit.com/polygonplanet/encoding.js/master/encoding.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.6/nv.d3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.6/nv.d3.min.js"></script>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://cdn.rawgit.com/cdnjs/cdnjs/master/ajax/libs/Trumbowyg/2.8.1/ui/trumbowyg.min.css"/>
+	<link type="text/css" rel="stylesheet" href="https://rawgit.com/filodej/xonomy/develop/xonomy.css"/>
+	<script type="text/javascript" src="https://rawgit.com/filodej/xonomy/develop/xonomy.js"></script>
+	<script type="text/javascript" src="https://rawgit.com/filodej/xonomy-builder/master/src/XonomyBuilder.js"></script>
+	
+	<link type="text/css" rel="stylesheet" href="main.css"/>	
+    <script type="text/javascript" src="bundle.js" charset="utf-8"></script>
+	<script type="text/javascript" src="schema.js" charset="utf-8"></script>
+	<script type="text/javascript" src="main.js" charset="utf-8"></script>
+	<script>$(initialize)</script>
+  </head>
+  <body>
+    <div class="main">
+      <div id="left" class="split split-horizontal">
+        <div id="editor" class="split split-vertical">
+		  <div class="menu">
+			<button onclick="publishSTL()">Publish</button>
+			<button onclick="toggleMode()">Mode</button>
+		  </div>
+		  <div id="xonomy"></div>
+        </div>
+      </div>
+      <div id="right" class="split split-horizontal">
+		<div class="tab">
+		  <button class="tablinks" onclick="previewType(event, 'html')" id="tab-preview-html">HTML</button>
+		  <button class="tablinks" onclick="previewType(event, 'st')" id="tab-preview-st" disabled>Layout</button>
+		  <button class="tablinks" onclick="previewType(event, 'data')" id="tab-preview-data" disabled>Data</button>
+		</div>
+		<div id="preview">
+		  <div id="preview-html" class="tabcontent"><br/></div>
+		  <div id="preview-st" class="tabcontent"><br/></div>
+		  <div id="preview-data" class="tabcontent"><br/></div>
+		</div>
+      </div>
+    </div>
+	<div id="footer">
+	  This is an alpha version; Supported browsers: Google Chrome and Mozilla Firefox<br/>
+	  Powered by <a href="http://www.lexiconista.com/xonomy/">Xonomy</a>
+	</div>
+  </body>
+</html>
