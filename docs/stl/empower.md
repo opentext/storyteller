@@ -75,7 +75,7 @@ rendered variants side-by-side):
   <tr>
 	<td colspan="2">
 		Empower JSON render:<br/>
-		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_char.json">
+		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_char.json" target="_blank">
 			<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_char.png"/>
 		</a>
 	</td>
@@ -83,9 +83,9 @@ rendered variants side-by-side):
   <tr>
 	<td colspan="2">
 		StoryTeller STL render:<br/>
-		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_char.json&css=1">
-		   <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_char.png"/>
-		</a>
+		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_char.png"/>
+		<a class="try-it-btn" href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_char.json&css=1" target="_blank">Try it Yourself »</a>
+		
 	</td>
   </tr>
   
@@ -93,15 +93,13 @@ rendered variants side-by-side):
   <tr>
 	<td>
 		Empower JSON render:<br/>
-		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.json">
-		   	<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.png"/>
-		</a>
+	   	<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.png"/>
+		<a class="try-it-btn" href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.json" target="_blank">Try it Yourself »</a>
 	</td>
   	<td>
 		StoryTeller STL render:<br/>
-		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.json&css=1">
-			<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_par.png"/>
-		</a>
+		<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_par.png"/>
+		<a class="try-it-btn" href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_par.json&css=1" target="_blank">Try it Yourself »</a>
 	</td>
   </tr>
 
@@ -109,15 +107,13 @@ rendered variants side-by-side):
   <tr>
 	<td>
 		Empower JSON render:<br/>
-		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.json">
+		<a class="try-it-btn" href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.json" target="_blank">Try it Yourself »</a>
 		   	<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.png"/>
-		</a>
 	</td>
   	<td>
 		StoryTeller STL render:<br/>
-		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.json&css=1">
 			<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_table.png"/>
-		</a>
+		<a class="try-it-btn" href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_table.json&css=1" target="_blank">Try it Yourself »</a>
 	</td>
   </tr>
 
@@ -125,15 +121,13 @@ rendered variants side-by-side):
   <tr>
 	<td>
 		Empower JSON render:<br/>
-		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.json">
+		<a class="try-it-btn" href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.json" target="_blank">Try it Yourself »</a>
     	   <img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.png"/>
-		</a>
 	</td>
   	<td>
 		StoryTeller STL render:<br/>
-		<a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.json&css=1">
 			<img src="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/styles_canvas.png"/>
-		</a>
+		<a class="try-it-btn" href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/styles_canvas.json&css=1" target="_blank">Try it Yourself »</a>
 	</td>
   </tr>
 </table>
@@ -371,19 +365,19 @@ The generated _STL_ is much more concise:
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json">input/empty.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json" target="_blank">input/empty.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json&css=1">output/empty.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json&css=1" target="_blank">output/empty.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/empty.json">output/empty.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/empty.json" target="_blank">output/empty.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/empty.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/empty.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -443,23 +437,23 @@ If we compare the new [hello.json](https://rawgit.com/opentext/storyteller/maste
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json">input/hello.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json" target="_blank">input/hello.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json">empty.json vs. hello.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json" target="_blank">empty.json vs. hello.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&css=1">output/hello.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&css=1" target="_blank">output/hello.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello.json">output/hello.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello.json" target="_blank">output/hello.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -579,23 +573,23 @@ still opens succesfully in _Empower Web Editor_ with no obvious issues.
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json">input/font.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json" target="_blank">input/font.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json">hello.json vs. font.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json" target="_blank">hello.json vs. font.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json&css=1">output/font.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json&css=1" target="_blank">output/font.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json">output/font.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json" target="_blank">output/font.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/font.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/font.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/font.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -666,23 +660,23 @@ If we compare the new [euro.json](https://rawgit.com/opentext/storyteller/master
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/euro.json">input/euro.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/euro.json" target="_blank">input/euro.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/euro.json">hello.json vs. euro.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/euro.json" target="_blank">hello.json vs. euro.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/euro.json&css=1">output/euro.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/euro.json&css=1" target="_blank">output/euro.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/euro.json">output/euro.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/euro.json" target="_blank">output/euro.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/euro.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/euro.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/euro.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/euro.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -763,23 +757,23 @@ If we compare the new [hello_opentext.json](https://rawgit.com/opentext/storytel
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json">input/hello_opentext.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json" target="_blank">input/hello_opentext.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json">hello.json vs. hello_opentext.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json" target="_blank">hello.json vs. hello_opentext.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&css=1">output/hello_opentext.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&css=1" target="_blank">output/hello_opentext.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_opentext.json">output/hello_opentext.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_opentext.json" target="_blank">output/hello_opentext.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_opentext.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hello_opentext.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -899,23 +893,23 @@ If we compare the new [sizes.json](https://rawgit.com/opentext/storyteller/maste
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/sizes.json">input/sizes.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/sizes.json" target="_blank">input/sizes.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/sizes.json">hello_opentext.json vs. sizes.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/sizes.json" target="_blank">hello_opentext.json vs. sizes.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/sizes.json&css=1">output/sizes.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/sizes.json&css=1" target="_blank">output/sizes.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/sizes.json">output/sizes.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/sizes.json" target="_blank">output/sizes.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/sizes.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/sizes.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/sizes.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/sizes.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -1010,23 +1004,23 @@ If we compare the new [colors.json](https://rawgit.com/opentext/storyteller/mast
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/colors.json">input/colors.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/colors.json" target="_blank">input/colors.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/colors.json">hello_opentext.json vs. colors.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/colors.json" target="_blank">hello_opentext.json vs. colors.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/colors.json&css=1">output/colors.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/colors.json&css=1" target="_blank">output/colors.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/colors.json">output/colors.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/colors.json" target="_blank">output/colors.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/colors.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/colors.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/colors.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/colors.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -1137,23 +1131,23 @@ If we compare the new [valign.json](https://rawgit.com/opentext/storyteller/mast
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/valign.json">input/valign.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/valign.json" target="_blank">input/valign.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/valign.json">hello_opentext.json vs. valign.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/valign.json" target="_blank">hello_opentext.json vs. valign.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/valign.json&css=1">output/valign.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/valign.json&css=1" target="_blank">output/valign.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/valign.json">output/valign.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/valign.json" target="_blank">output/valign.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/valign.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/valign.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/valign.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/valign.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -1280,23 +1274,23 @@ If we compare the new [hyperlink.json](https://rawgit.com/opentext/storyteller/m
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json">input/hyperlink.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json" target="_blank">input/hyperlink.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json">hello_opentext.json vs. hyperlink.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json" target="_blank">hello_opentext.json vs. hyperlink.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json&css=1">output/hyperlink.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json&css=1" target="_blank">output/hyperlink.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hyperlink.json">output/hyperlink.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hyperlink.json" target="_blank">output/hyperlink.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hyperlink.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hyperlink.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/hyperlink.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -1417,23 +1411,23 @@ The _emp2stl_ convertor generates the following STL equivalent:
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json">input/paragraphs.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json" target="_blank">input/paragraphs.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json">hello_opentext.json vs. paragraphs.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello_opentext.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json" target="_blank">hello_opentext.json vs. paragraphs.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&css=1">output/paragraphs.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&css=1" target="_blank">output/paragraphs.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/paragraphs.json">output/paragraphs.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/paragraphs.json" target="_blank">output/paragraphs.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/paragraphs.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/paragraphs.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -1509,23 +1503,23 @@ The _emp2stl_ convertor generates the following STL equivalent:
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json">input/par_color.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json" target="_blank">input/par_color.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json">paragraphs.json vs. par_color.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json" target="_blank">paragraphs.json vs. par_color.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json&css=1">output/par_color.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json&css=1" target="_blank">output/par_color.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_color.json">output/par_color.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_color.json" target="_blank">output/par_color.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_color.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_color.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_color.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -1591,23 +1585,23 @@ The _emp2stl_ convertor generates the following STL equivalent:
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_halign.json">input/par_halign.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_halign.json" target="_blank">input/par_halign.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_halign.json">paragraphs.json vs. par_halign.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_halign.json" target="_blank">paragraphs.json vs. par_halign.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_halign.json&css=1">output/par_halign.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_halign.json&css=1" target="_blank">output/par_halign.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_halign.json">output/par_halign.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_halign.json" target="_blank">output/par_halign.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_halign.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_halign.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_halign.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_halign.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -1672,23 +1666,23 @@ The _emp2stl_ convertor generates the following STL equivalent:
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_indent.json">input/par_indent.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_indent.json" target="_blank">input/par_indent.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_indent.json">paragraphs.json vs. par_indent.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_indent.json" target="_blank">paragraphs.json vs. par_indent.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_indent.json&css=1">output/par_indent.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_indent.json&css=1" target="_blank">output/par_indent.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_indent.json">output/par_indent.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_indent.json" target="_blank">output/par_indent.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_indent.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_indent.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_indent.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_indent.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -1814,23 +1808,23 @@ The _emp2stl_ convertor generates the following STL equivalent:
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json">input/par_bullets.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json" target="_blank">input/par_bullets.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json">paragraphs.json vs. par_bullets.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/paragraphs.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json" target="_blank">paragraphs.json vs. par_bullets.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json&css=1">output/par_bullets.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json&css=1" target="_blank">output/par_bullets.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_bullets.json">output/par_bullets.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_bullets.json" target="_blank">output/par_bullets.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_bullets.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_bullets.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -1922,23 +1916,23 @@ The _emp2stl_ convertor generates the following STL equivalent:
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json">input/par_numbering.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json" target="_blank">input/par_numbering.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json">par_bullets.json vs. par_numbering.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_bullets.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json" target="_blank">par_bullets.json vs. par_numbering.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json&css=1">output/par_numbering.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json&css=1" target="_blank">output/par_numbering.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering.json">output/par_numbering.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering.json" target="_blank">output/par_numbering.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -2059,23 +2053,23 @@ The _emp2stl_ convertor generates the following STL equivalent:
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering_indent.json">input/par_numbering_indent.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering_indent.json" target="_blank">input/par_numbering_indent.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering_indent.json">par_numbering.json vs. par_numbering_indent.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering_indent.json" target="_blank">par_numbering.json vs. par_numbering_indent.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering_indent.json&css=1">output/par_numbering_indent.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering_indent.json&css=1" target="_blank">output/par_numbering_indent.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering_indent.json">output/par_numbering_indent.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering_indent.json" target="_blank">output/par_numbering_indent.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering_indent.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering_indent.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/par_numbering_indent.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/par_numbering_indent.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -2168,23 +2162,23 @@ The _emp2stl_ convertor generates the following STL equivalent:
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json">input/image.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json" target="_blank">input/image.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json">hello.json vs. image.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json" target="_blank">hello.json vs. image.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json&css=1">output/image.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json&css=1" target="_blank">output/image.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/image.json">output/image.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/image.json" target="_blank">output/image.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/image.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/image.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -2276,23 +2270,23 @@ The _emp2stl_ convertor generates the following STL equivalent:
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json">input/text.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json" target="_blank">input/text.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json">image.json vs. text.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/image.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json" target="_blank">image.json vs. text.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json&css=1">output/text.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json&css=1" target="_blank">output/text.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/text.json">output/text.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/text.json" target="_blank">output/text.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/text.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/text.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/text.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -2428,23 +2422,23 @@ The _emp2stl_ convertor generates the following STL equivalent:
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json">input/table.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json" target="_blank">input/table.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json">hello.json vs. table.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json" target="_blank">hello.json vs. table.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json&css=1">output/table.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json&css=1" target="_blank">output/table.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.json">output/table.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.json" target="_blank">output/table.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/table.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/table.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -2677,23 +2671,23 @@ option passed as a parameter. Otherwise a conversion error is raised.
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json">input/variables.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json" target="_blank">input/variables.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json">hello.json vs. variables.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/hello.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json" target="_blank">hello.json vs. variables.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json&resources=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/resources.json&css=1">output/variables.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json&resources=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/resources.json&css=1" target="_blank">output/variables.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/variables.json">output/variables.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/variables.json" target="_blank">output/variables.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/variables.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/variables.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/variables.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -2737,19 +2731,19 @@ The generated _STL_ looks as follows:
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json">input/g_empty.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json" target="_blank">input/g_empty.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&css=1">output/g_empty.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&css=1" target="_blank">output/g_empty.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_empty.json">output/g_empty.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_empty.json" target="_blank">output/g_empty.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_empty.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_empty.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -2829,23 +2823,23 @@ of an _inline text object_ we already know from the previous [Text Frame](#text-
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json">input/g_text.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json" target="_blank">input/g_text.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json">g_empty.json vs. g_text.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json" target="_blank">g_empty.json vs. g_text.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json&css=1">output/g_text.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json&css=1" target="_blank">output/g_text.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text.json">output/g_text.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text.json" target="_blank">output/g_text.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -2935,23 +2929,23 @@ in the `m_iObjType` field.
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_table.json">input/g_text_image_table.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_table.json" target="_blank">input/g_text_image_table.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_table.json">g_empty.json vs. g_text_image_table.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_table.json" target="_blank">g_empty.json vs. g_text_image_table.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_table.json&css=1">output/g_text_image_table.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_table.json&css=1" target="_blank">output/g_text_image_table.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_table.json">output/g_text_image_table.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_table.json" target="_blank">output/g_text_image_table.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_table.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_table.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_table.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_table.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -3065,23 +3059,23 @@ and `m_pObjs` plus `m_Objs` arrays are changed.
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_nested.json">input/g_text_image_nested.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_nested.json" target="_blank">input/g_text_image_nested.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_nested.json">g_text.json vs. g_text_image_nested.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_nested.json" target="_blank">g_text.json vs. g_text_image_nested.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_nested.json&css=1">output/g_text_image_nested.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_nested.json&css=1" target="_blank">output/g_text_image_nested.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_nested.json">output/g_text_image_nested.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_nested.json" target="_blank">output/g_text_image_nested.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_nested.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_nested.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_image_nested.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_image_nested.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -3184,23 +3178,23 @@ content arrays and `m_pObjs` plus `m_Objs` arrays are changed.
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_table_nested.json">input/g_text_table_nested.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_table_nested.json" target="_blank">input/g_text_table_nested.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_table_nested.json">g_text.json vs. g_text_table_nested.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_table_nested.json" target="_blank">g_text.json vs. g_text_table_nested.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_table_nested.json&css=1">output/g_text_table_nested.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_table_nested.json&css=1" target="_blank">output/g_text_table_nested.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_table_nested.json">output/g_text_table_nested.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_table_nested.json" target="_blank">output/g_text_table_nested.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_table_nested.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_table_nested.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_text_table_nested.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_text_table_nested.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
@@ -3231,23 +3225,23 @@ The resulting JSON can be seen in the [g_table_text_image_nested.json](https://r
 <table style="background-color:#fff49c">
   <tr>
 	<td>JSON input:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_table_text_image_nested.json">input/g_table_text_image_nested.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_table_text_image_nested.json" target="_blank">input/g_table_text_image_nested.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_table_text_image_nested.json">g_empty.json vs. g_table_text_image_nested.json</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_empty.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_table_text_image_nested.json" target="_blank">g_empty.json vs. g_table_text_image_nested.json</a></td>
   </tr>
   <tr>
 	<td>STL output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/code/javascript/stleditor/index.html?emp=https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_table_text_image_nested.json&css=1">output/g_table_text_image_nested.xml</a></td>
+	<td><a href="editor/?emp=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_table_text_image_nested.json&css=1" target="_blank">output/g_table_text_image_nested.xml</a></td>
   </tr>
   <tr>
 	<td>JSON output:</td>
-	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_table_text_image_nested.json">output/g_table_text_image_nested.json</a></td>
+	<td><a href="https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_table_text_image_nested.json" target="_blank">output/g_table_text_image_nested.json</a></td>
   </tr>
   <tr>
     <td>JSON diff:</td>
-	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_table_text_image_nested.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_table_text_image_nested.json">input vs. output</a></td>
+	<td><a href="http://benjamine.github.io/jsondiffpatch/demo/index.html?left=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/input/g_table_text_image_nested.json&right=https://raw.githubusercontent.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/output/g_table_text_image_nested.json" target="_blank">input vs. output</a></td>
   </tr>
   <tr>
     <td colspan="2">Empower JSON render:</td>
