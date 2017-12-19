@@ -8118,6 +8118,76 @@ function html_builder(nsmap, writer, options) {
             }
         }
 
+        function group_(start, attrs) {
+            if (start) {
+                start_item(attrs);
+                var css = convert_css(attrs);
+                writer.start('div', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:group',
+                    style: stl.css_format(css)
+                });
+            } else {
+                writer.end('div');
+                end_item();
+            }
+        }
+
+        function input_(start, attrs) {
+            if (start) {
+                start_item(attrs);
+                var css = convert_css(attrs);
+                var att = {
+                        'class': attrs['class'],
+                        style: stl.css_format(css),
+                        'data-stl-class': 'stl:input',
+                        'data-stl-type': attrs.type,
+                        'data-stl-xpath': attrs.xpath
+                };           
+                switch(attrs.type) {
+                case 'text':
+                    att.type = 'text';
+                    writer.start('input', att);
+                    break;
+                case 'radio':
+                    att.type = 'radio';
+                    writer.start('input', att);
+                    break;
+                case 'checkbox':
+                    att.type = 'checkbox';
+                    writer.start('input', att);
+                    break;
+                case 'submit':
+                    att.type = 'submit';
+                    writer.start('input', att);
+                    break;
+                case 'listbox':
+                    att.multiple = 'true';
+                case 'dropdown':
+                    writer.start('select', att);
+                    break;
+                default:
+                    throw new Error('Unsupported input type: ' + attrs.type);
+                }
+            } else {
+                switch(attrs.type) {
+                case 'text':
+                case 'radio':
+                case 'checkbox':
+                case 'submit':
+                    writer.end('input');
+                    break;
+                case 'listbox':
+                case 'dropdown':
+                    writer.end('select');
+                    break;
+                default:
+                    throw new Error('Unsupported input type: ' + attrs.type);
+                }
+                end_item();
+            }
+        }
+        
         function box_(start, attrs) {
             if (start) {
                 start_item(attrs);
@@ -8208,6 +8278,8 @@ function html_builder(nsmap, writer, options) {
 
         return { 
             box_: box_,
+            group_: group_,
+            input_: input_,
             text_: text_,
             image_: image_,
             table_: table_,
@@ -8272,7 +8344,7 @@ function html_builder(nsmap, writer, options) {
         }
 
         function story_(start, attrs) {
-            if (inside.hyperlink || inside.repeater) {
+            if (inside.hyperlink || inside.form || inside.repeater) {
                 if (start) {
                     writer.start(inside.paragraph ? 'span' : 'div', {
                         'class': attrs['class'],
@@ -8293,19 +8365,37 @@ function html_builder(nsmap, writer, options) {
         
         function scope_(start, attrs) {
             if (start) {
-                if (!attrs.hyperlink)
+                if (attrs.relation) {
+                    if (inside.form)
+                        return unsupported("form nesting");
+                    writer.start('form', {
+                        'class': attrs['class'],
+                        'data-stl-class': 'stl:scope',
+                        'data-stl-xpath': attrs.relation
+                    });
+                    inside.form = true;                    
+                } else if (attrs.hyperlink) {
+                    if (inside.hyperlink)
+                        return unsupported("hyperlink nesting");
+                    writer.start('a', {
+                        'class': attrs['class'],
+                        'data-stl-class': 'stl:scope',
+                        href: attrs.hyperlink
+                    });
+                    inside.hyperlink = true;                    
+                } else {
                     return unsupported("stl:scope");
-                if (inside.hyperlink)
-                    return unsupported("stl:scope nesting");
-                writer.start('a', {
-                    'class': attrs['class'],
-                    'data-stl-class': 'stl:scope',
-                    href: attrs.hyperlink
-                });
-                inside.hyperlink = true;
+                }
             } else {
-                inside.hyperlink = false;
-                writer.end('a');
+                if (attrs.relation) {
+                    inside.form = false;
+                    writer.end('form');
+                } else if (attrs.hyperlink) {
+                    inside.hyperlink = false;
+                    writer.end('a');
+                } else {
+                    return unsupported("stl:scope");
+                }
             }
         }
 
@@ -8387,6 +8477,8 @@ function html_builder(nsmap, writer, options) {
             field_: field_,
             image_: inline_items.image_,
             table_: inline_items.table_,
+            group_: inline_items.group_,
+            input_: inline_items.input_,
             text_: inline_items.text_,
             chart_: inline_items.chart_,
             fragment_: inline_items.fragment_,

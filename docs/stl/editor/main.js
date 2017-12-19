@@ -422,6 +422,46 @@ function previewManager() {
                 case 'stl:field':
                     elem.textContent = current.dump ? current.dump('string(.)') : current;
                     break;
+                case 'stl:scope':
+                    walkChildren(elem, before, after);
+                    break;
+                case 'stl:input': {
+                    var def = current.js('*');
+                    console.log(def);
+                    switch(elem.dataset.stlType) {
+                    case 'radio':
+                    case 'checkbox': {
+                        var select = current.js('..');
+                        console.log(select);
+                        var choice = def['ddi:choice'];
+                        elem.setAttribute('value', choice._);
+                        elem.setAttribute('name', select['ddi:input-group'].name);
+                        if (choice.selected === 'true')
+                            elem.setAttribute('checked', true);
+                        break;
+                    }
+                    case 'text':
+                    case 'submit':
+                        elem.setAttribute('name', def['ddi:input'].name);
+                        elem.setAttribute('placeholder', def['ddi:input']._);
+                        break;
+                    case 'dropdown':
+                    case 'listbox':
+                        def['ddi:input-group'].choice.forEach(function (c) {
+                            var choice = c['ddi:choice'];
+                            var option = document.createElement('option');
+                            option.setAttribute('value', choice._);
+                            if (choice.selected === 'true')
+                                option.setAttribute('selected', true);
+                            option.innerHTML = c['ddi:label'];
+                            elem.appendChild(option);
+                        });
+                        break;
+                    default:
+                        throw new Error('Unsupported input type: ' + elem.dataset.stlType);
+                    }
+                    break;
+                }
                 default:
                     console.error("Unsupported data class:" + cls);
                 }
@@ -505,7 +545,7 @@ function previewManager() {
             if (rules && !template)
                 throw new Error("Missing stl:template");
             if (!is_trivial_tdt(rules)) {
-                if (proxy.status() !== 'success') {
+                if (proxy.status() !== 'failure') {
                     return callTDT(template, source, rules, function(response) {
                         if (response.error)
                             return report_error('Preview Error', response.error, $elem);            
