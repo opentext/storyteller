@@ -1,15 +1,12 @@
 <stl:stl xmlns:stl="http://developer.opentext.com/schemas/storyteller/layout" version="0.1">
   <stl:data>
-    <stl:template>
+    <stl:source>
       <data>
         <row />
         <row />
         <row />
       </data>
-    </stl:template>
-    <stl:transformation key="_default">
-      <tdt:transformation xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt" version="1.0" />
-    </stl:transformation>
+    </stl:source>
   </stl:data>
   <stl:style>
     .border {
@@ -29,15 +26,13 @@
           </stl:row>
         </stl:story>
         <stl:story>
-          <stl:repeater xpath="/data">
-            <stl:repeater xpath="row">
-              <stl:row>
-                <stl:cell class="border"><stl:p><stl:field xpath="position()" />. left</stl:p></stl:cell>
-                <stl:cell class="border"><stl:p><stl:field xpath="position()" />. middle</stl:p></stl:cell>
-                <stl:cell class="border"><stl:p><stl:field xpath="position()" />. right</stl:p></stl:cell>
-              </stl:row>
-            </stl:repeater>       
-          </stl:repeater>         
+          <stl:repeater xpath="/data/row">
+            <stl:row>
+              <stl:cell class="border"><stl:p><stl:field xpath="position()" />. left</stl:p></stl:cell>
+              <stl:cell class="border"><stl:p><stl:field xpath="position()" />. middle</stl:p></stl:cell>
+              <stl:cell class="border"><stl:p><stl:field xpath="position()" />. right</stl:p></stl:cell>
+            </stl:row>
+          </stl:repeater>       
         </stl:story>
         <stl:story occurrence="footer">
           <stl:row>
