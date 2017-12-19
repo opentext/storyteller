@@ -2397,6 +2397,9 @@ module.exports={
         "}",
         "*[data-stl-class=\"stl:text\"] {",
         "  overflow: hidden;",
+        "}",
+        "*[data-stl-class=\"stl:table\"] {",
+        "  border-collapse: collapse;",
         "}"
     ]
 }

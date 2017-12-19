@@ -420,7 +420,7 @@ function previewManager() {
                     break;
                 }
                 case 'stl:field':
-                    elem.textContent = current.dump('string(.)');
+                    elem.textContent = current.dump ? current.dump('string(.)') : current;
                     break;
                 default:
                     console.error("Unsupported data class:" + cls);
