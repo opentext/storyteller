@@ -8,7 +8,8 @@ function xmlPrettifier() {
     var xsltProcessor = new XSLTProcessor();
     var xsltDoc = domParser.parseFromString([
         // describes how we want to modify the XML - indent everything
-        '<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform">',
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">',
         '  <xsl:output omit-xml-declaration="yes" indent="yes"/>',
         '    <xsl:template match="node()|@*">',
         '      <xsl:copy><xsl:apply-templates select="node()|@*"/></xsl:copy>',
@@ -69,22 +70,35 @@ function getItemSelector($elem, $parent) {
     var sel = '*['+atype+']';
     $parent = $parent || $elem.parent().closest(sel);
     var type = $elem.attr(atype);
-    var name = $elem.attr(aname);
-    var index = 0;
+    var result = {
+        name: $elem.attr(aname),
+        index: 0
+    };
     if ($parent.length) {
         var depth = $elem.parentsUntil($parent).length;
         var inner_sel = '*['+atype+'="'+type+'"]';
-        var siblings = $parent.find(inner_sel).filter(function () {
+        var $siblings = $parent.find(inner_sel).filter(function () {
             return $(this).parentsUntil($parent).length === depth;
         });
-        if (siblings.length > 1)
-            index = siblings.index($elem) + 1;
+        var elemIndex = $siblings.index($elem);
+        // compute index between siblings
+        $siblings.filter(index => index <= elemIndex).each(function() {
+            var opath = this.dataset.stlOpath;
+            if (opath) {
+                var matches = /^[^\[]+\[(\d+)\]/.exec(opath);
+                if (matches) {
+                    result.index = +matches[1];
+                    return;
+                }
+            }
+            result.index += 1;
+        });
     }
     var label = type;
-    if (name)
-        label += '["'+name+'"]';
-    else if (index)
-        label += '['+index+']';
+    if (result.name)
+        label += '["'+result.name+'"]';
+    else if (result.index)
+        label += '['+result.index+']';
     return label;
 }
 
@@ -252,9 +266,11 @@ function toggleMode() {
 
 function walkChildren(node, before, after) {
     var c = node.firstChild;
+    var next;
     while (c) {
+        next = c.nextSibling;
         walkTheDOM(c, before, after);
-        c = c.nextSibling;
+        c = next;
     }
 }
 
@@ -492,6 +508,22 @@ function previewManager() {
         processData($elem.get(0), data);
     }
 
+    function postprocessLinks($elem, fixtures) {
+        var $document = $elem.find('div[data-stl-class="stl:document"]');
+        // we postprocess *all* images (even onew comming through an XHTML story)
+        //var $images = $document.find('img[data-stl-class="stl:image"]');
+        var $images = $document.find('img');
+        $images.each(function() {
+            var $this = $(this);
+            var src = $this.attr('src');
+            var f = fixtures[src];
+            src = f
+                ? f.url
+                : src.replace(/^cas:/, 'cas/').replace(/^wd:/, 'wd');
+            $this.attr('src', src);
+        });
+    }
+    
     function callTDT(template, source, rules, callback) {
         // @todo: implement parallel uploads
         upload('template.xml', template, 'text/xml', function (template_hash) {
@@ -515,6 +547,28 @@ function previewManager() {
     }
 
     function previewHTML($elem, stl) {
+        function str2ab(bytestr) {
+            var ab = new ArrayBuffer(bytestr.length);
+            var ia = new Uint8Array(ab);
+            for (var i = 0; i < bytestr.length; i++)
+                ia[i] = bytestr.charCodeAt(i);
+            return ab;
+        }
+        
+        function handle_fixture(attrs, stream) {
+            var content = stream.read();
+            if (attrs.encoding === 'base64')
+                content = str2ab(window.atob(content));
+            var blob = new Blob([content], {type: attrs.type});
+            var url = URL.createObjectURL(blob);
+            return {
+                key: attrs.key,
+                type: attrs.type,
+                blob: blob,
+                url: url
+            };
+        }
+        
         function is_trivial_tdt(rules) {
             if (rules) {
                 var domParser = new DOMParser();
@@ -524,10 +578,13 @@ function previewManager() {
             }
             return true;
         }
+        
         var result = {};
+        var fixtures = {};
         var options = {
             handlers: {
                 data: (data) => result.data = data,
+                fixture: (attrs, stream) => fixtures[attrs.key] = handle_fixture(attrs, stream)
             }
         };
         try {
@@ -536,6 +593,7 @@ function previewManager() {
             return report_error('Preview Error', e.message, $elem);
         }
         $elem.html(result.html);
+        postprocessLinks($elem, fixtures);
         postprocessPages($elem);
         if (result.data && result.data.source) {
             var source = result.data.source['_default'];
@@ -739,10 +797,7 @@ function initialize() {
                         options: {
                             resources: res,
                             css: getParameterByName('css'),
-                            page: getParameterByName('page'),
-                            maps: {
-                                uri: (uri) => uri.replace('cas:', cas_uri_prefix)
-                            }
+                            page: getParameterByName('page')
                         }
                     };
                     callback(cfg);

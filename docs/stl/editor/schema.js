@@ -1661,6 +1661,7 @@ g_stl_schema.elements = {
     'stl:chart': {
         attributes: stl_layout_item_attrs(stl_bbox_attrs).concat(['modern']),
         children: stl_runtime_items.concat([{ name: 'scd:scd', max: 1 }]),
+        serializer: js2xml,
     },
 	'stl:barcode': {
 		attributes: stl_layout_item_attrs(stl_bbox_attrs),
