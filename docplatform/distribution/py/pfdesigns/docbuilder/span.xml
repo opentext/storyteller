@@ -46,7 +46,7 @@
           </stl:p>
           <stl:block style="font-family:Courier New;">
             <stl:p>
-              Span can <stl:span style="font-style: italic;">span</stl:span> over several paragraphs and it's style propagates to nested sub-stories:
+              A block can <stl:span style="font-style: italic;">span</stl:span> over several paragraphs and it's style propagates to nested sub-stories:
             </stl:p>
             <stl:p>
               <stl:switch xpath="true">

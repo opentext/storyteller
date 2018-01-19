@@ -46,7 +46,7 @@
 				  <stl:p>
 					<stl:scope hyperlink="{{web}}" screentip="Company">
 					  <stl:story>
-						<stl:p class="link">{{company_name}}</stl:p>
+						<stl:span class="link">{{company_name}}</stl:span>
 					  </stl:story>
 					</stl:scope>
 				  </stl:p>
@@ -62,7 +62,7 @@
 				  <stl:p>
 					<stl:scope hyperlink="mailto:{{email}}" screentip="Email Address">
 					  <stl:story>
-						<stl:p class="link">{{email}}</stl:p>
+						<stl:span class="link">{{email}}</stl:span>
 					  </stl:story>
 					</stl:scope>
 				  </stl:p>

@@ -485,7 +485,7 @@ function detectSyntax(name, attrs) {
     case 'stl:story':
         if (attrs.format === 'XHTML')
             return {syntax: 'html', skipRoot: true, escape: false, category: 'html'};
-        return {syntax: 'xml', skipRoot: true, escape: false, category: 'xml'};
+        return {syntax: 'xml', skipRoot: false, escape: false, category: 'xml'};
     case 'stl:script':
         return {syntax: 'javascript', skipRoot: true, escape: true };
     case 'stl:transformation':
@@ -991,7 +991,7 @@ function cssClasses(js) {
         return null;
     var classes = [];
     stylesheets.forEach(function(stylesheet) {
-        stylesheet = stylesheet.children[0].value;
+        stylesheet = stylesheet.children.map( s => s.value || '' ).join('');
         stylesheet.split('\n').forEach(function (line) {
             var matches = /^\s*([^{^,]+)[{,]/.exec(line);
             if (matches) {
@@ -1155,6 +1155,7 @@ function stlPostprocess(elementName, elementSpec, schema) {
 
 var stl_layout_items = [
 	{name: 'stl:text', group: 'Layout item'},
+	{name: 'stl:shape', group: 'Layout item'},
 	{name: 'stl:table', group: 'Layout item'},
 	{name: 'stl:image', group: 'Layout item'},
 	{name: 'stl:fragment', group: 'Layout item'},
@@ -1162,13 +1163,6 @@ var stl_layout_items = [
 	{name: 'stl:barcode', group: 'Layout item'},
 	{name: 'stl:input', group: 'Layout item'},
 	{name: 'stl:group', group: 'Layout item'},
-	{name: 'stl:ellipse',  group: 'Shape item'},
-	{name: 'stl:circle',  group: 'Shape item'},
-	{name: 'stl:rect', group: 'Shape item'},
-	{name: 'stl:path',  group: 'Shape item'},
-	{name: 'stl:polygon',  group: 'Shape item'},
-	{name: 'stl:polyline',  group: 'Shape item'},
-	{name: 'stl:line', group: 'Shape item'},
 ];
 var stl_runtime_items = [
 	{name: 'stl:script', max: 2}
@@ -1187,33 +1181,11 @@ var stl_content_items = [
 var stl_story_ref = [
     {name: 'story', type: 'story_ref' }
 ];
-var stl_paragraph_items = ['stl:block', 'stl:list', 'stl:p'];
+var stl_paragraph_items = ['stl:block', 'stl:list', 'stl:p', 'stl:repeater', 'stl:switch', 'stl:scope', 'stl:table'];
 var stl_subcontent_items = ['stl:repeater', 'stl:switch', 'stl:case', 'stl:translation', 'stl:scope'];
 var stl_inline_items = ['stl:span', 'stl:tab', 'stl:break', 'stl:command'];
+var svg_path_items = ['path', 'circle', 'ellipse', 'rect', 'line', 'polyline', 'polygon', 'g'];
 
-var stl_bbox_attrs = [
-    {name: 'x', type: 'length'}, 
-    {name: 'y', type: 'length'}, 
-    {name: 'w', type: 'length', value: '100pt', mandatory: true}, 
-    {name: 'h', type: 'length', value: '100pt', mandatory: true}, 
-];
-var stl_ellipse_attrs = [
-    {name: 'cx', type: 'length'}, 
-    {name: 'cy', type: 'length'}, 
-    {name: 'rx', type: 'length', mandatory: true}, 
-    {name: 'ry', type: 'length', mandatory: true}, 
-];
-var stl_circle_attrs = [
-    {name: 'cx', type: 'length'}, 
-    {name: 'cy', type: 'length'}, 
-    {name: 'r', type: 'length', mandatory: true}, 
-];
-var stl_line_attrs = [
-    {name: 'x1', type: 'length', mandatory: true}, 
-    {name: 'y1', type: 'length', mandatory: true}, 
-    {name: 'x2', type: 'length', mandatory: true}, 
-    {name: 'y2', type: 'length', mandatory: true}, 
-];
 var stl_style_attrs = [
     'id', 
     {name: 'class', type: 'class'}, 
@@ -1222,6 +1194,43 @@ var stl_style_attrs = [
 var stl_edit_attrs = [
     {name: 'transform', type: 'transform'},
 ];
+
+var stl_bbox_attrs = [
+    {name: 'x', type: 'length'}, 
+    {name: 'y', type: 'length'}, 
+    {name: 'w', type: 'length', value: '100pt', mandatory: true}, 
+    {name: 'h', type: 'length', value: '100pt', mandatory: true}, 
+];
+var svg_ellipse_attrs = [
+    {name: 'cx', type: 'length'}, 
+    {name: 'cy', type: 'length'}, 
+    {name: 'rx', type: 'length', mandatory: true}, 
+    {name: 'ry', type: 'length', mandatory: true}, 
+];
+var svg_circle_attrs = [
+    {name: 'cx', type: 'length'}, 
+    {name: 'cy', type: 'length'}, 
+    {name: 'r', type: 'length', mandatory: true}, 
+];
+var svg_line_attrs = [
+    {name: 'x1', type: 'length', mandatory: true}, 
+    {name: 'y1', type: 'length', mandatory: true}, 
+    {name: 'x2', type: 'length', mandatory: true}, 
+    {name: 'y2', type: 'length', mandatory: true}, 
+];
+var svg_path_attrs = [
+    {name: 'd', mandatory: true},
+];
+var svg_poly_attrs = [
+    {name: 'points', mandatory: true},
+];
+var svg_group_attrs = [
+];
+
+function svg_item_attrs(attrs) {
+    return attrs.concat(stl_style_attrs).concat(stl_edit_attrs);
+}
+
 var stl_layout_item_children = [
     {name: 'stl:story', max: 1},
 ].concat(stl_runtime_items);
@@ -1339,7 +1348,7 @@ g_stl_schema.types = {
         validate: /^(none|dot|square)$/,
         asker: ['none', 'dot', 'square'],
     },
-    'chart_xpath': {
+    chart_xpath: {
         asker: askerDynamic(templateChartXPaths),
     },
     data_type: {
@@ -1629,14 +1638,14 @@ g_stl_schema.elements = {
 		attributes: [
             {name: 'src', type: 'url'},
         ].concat(stl_layout_item_attrs(stl_bbox_attrs)),
-		children: stl_runtime_items,
+		children: stl_runtime_items.slice(),
 	},
 	'stl:fragment': {
 		attributes: [
             {name: 'src', type: 'url'},
             {name: 'category', type: 'fragment_category'},
         ].concat(stl_layout_item_attrs(stl_bbox_attrs)),
-		children: stl_runtime_items,
+		children: stl_runtime_items.slice(),
 	},
 	'stl:table': {
 		attributes: stl_layout_item_attrs([
@@ -1665,43 +1674,44 @@ g_stl_schema.elements = {
     },
 	'stl:barcode': {
 		attributes: stl_layout_item_attrs(stl_bbox_attrs),
-		children: stl_runtime_items,
+		children: stl_runtime_items.slice(),
 	},
 	'stl:input': {
 		attributes: stl_layout_item_attrs(stl_bbox_attrs),
-		children: stl_runtime_items,
+		children: stl_runtime_items.slice(),
 	},
 	'stl:text' : {
 		attributes: stl_layout_item_attrs(stl_bbox_attrs),
-		children: stl_layout_item_children,
+		children: stl_layout_item_children.slice(),
 	},
-	'stl:rect': {
+	'stl:shape' : {
 		attributes: stl_layout_item_attrs(stl_bbox_attrs),
-		children: stl_layout_item_children,
+		children: svg_path_items.slice(),
 	},
-	'stl:ellipse': {
-		attributes: stl_layout_item_attrs(stl_ellipse_attrs),
-		children: stl_layout_item_children,
+	'rect': {
+		attributes: svg_item_attrs(stl_bbox_attrs),
 	},
-	'stl:circle': {
-		attributes: stl_layout_item_attrs(stl_circle_attrs),
-		children: stl_layout_item_children,
+	'ellipse': {
+		attributes: svg_item_attrs(svg_ellipse_attrs),
 	},
-	'stl:path': {
-		attributes: stl_layout_item_attrs([{name: 'data', mandatory: true}]),
-		children: stl_layout_item_children,
+	'circle': {
+		attributes: svg_item_attrs(svg_circle_attrs),
 	},
-	'stl:polygon': {
-		attributes: stl_layout_item_attrs([{name: 'points', mandatory: true}]),
-		children: stl_layout_item_children,
+	'path': {
+		attributes: svg_item_attrs(svg_path_attrs),
 	},
-	'stl:polyline': {
-		attributes: stl_layout_item_attrs([{name: 'points', mandatory: true}]),
-		children: stl_runtime_items,
+	'polygon': {
+		attributes: svg_item_attrs(svg_poly_attrs),
 	},
-	'stl:line': {
-		attributes: stl_layout_item_attrs(stl_line_attrs),
-		children: stl_runtime_items,
+	'polyline': {
+		attributes: svg_item_attrs(svg_poly_attrs),
+	},
+	'line': {
+		attributes: svg_item_attrs(svg_line_attrs),
+	},
+	'g': {
+		attributes: svg_item_attrs(svg_group_attrs),
+		children: svg_path_items.slice(),
 	},
 	'stl:script': {
 		attributes: ['language', 'when'],
@@ -1721,7 +1731,15 @@ g_stl_schema.elements = {
     },
     'scd:scd': {
         order: true,
-        children: [{ name: 'scd:title', max: 1 }, { name: 'scd:legend', max: 1 }, { name: 'scd:plot', max: 1 }, 'scd:axis_x', 'scd:axis_y', 'scd:support_lines', 'scd:layer'],
+        children: [
+            { name: 'scd:title', max: 1 },
+            { name: 'scd:legend', max: 1 },
+            { name: 'scd:plot', max: 1 },
+            'scd:axis_x',
+            'scd:axis_y',
+            'scd:support_lines',
+            'scd:layer'
+        ],
         attributes:stl_style_attrs,
     },
     'scd:title': {

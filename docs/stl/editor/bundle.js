@@ -8060,7 +8060,9 @@ function html_builder(nsmap, writer, options) {
 
         function convert_css(attrs) {
             var css = stl.css_split(attrs.style);
-            if (!inline) {
+            if (inline) {
+                css.display = 'inline-block';
+            } else {
                 css.position = 'absolute';
                 if (attrs.x || attrs.y) {
                     if (attrs.x)
@@ -8195,6 +8197,30 @@ function html_builder(nsmap, writer, options) {
             }
         }
 
+        function shape_(start, attrs) {
+            if (start) {
+                var css = convert_css(attrs);
+                writer.start('div', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:shape',
+                    style: stl.css_format(css)
+                });
+                
+                return stl.xml_accumulator( function (markup) {
+                    writer.start('svg', {
+                        width: attrs.w,
+                        height: attrs.h,
+                        xmlns: 'http://www.w3.org/2000/svg',
+                        version: '1.1',
+                    });
+                    writer.inject(markup);
+                    writer.end('svg');
+                }, true);
+            } else {
+                writer.end('div');
+            }
+        }
+        
         function text_(start, attrs) {
             if (start) {
                 start_item(attrs);
@@ -8273,6 +8299,7 @@ function html_builder(nsmap, writer, options) {
             group_: group_,
             input_: input_,
             text_: text_,
+            shape_: shape_,
             image_: image_,
             table_: table_,
             story_: story_,
@@ -8336,9 +8363,10 @@ function html_builder(nsmap, writer, options) {
         }
 
         function story_(start, attrs) {
-            if (inside.hyperlink || inside.form || inside.repeater) {
+            if (inside.hyperlink || inside.form || inside.repeater || inside.switch_case) {
+                var tag = inside.paragraph ? 'span' : 'div';
                 if (start) {
-                    writer.start(inside.paragraph ? 'span' : 'div', {
+                    writer.start(tag, {
                         'class': attrs['class'],
                         'data-stl-class': 'stl:story'
                     });
@@ -8348,7 +8376,7 @@ function html_builder(nsmap, writer, options) {
                             : stl.handler_dispatcher(nsmap, story_builder(writer, inside.paragraph));
                     }
                 } else {
-                    writer.end(inside.paragraph ? 'span' : 'div');
+                    writer.end(tag);
                 }
             } else {
                 return inline_items.story_(start, attrs);
@@ -8391,6 +8419,41 @@ function html_builder(nsmap, writer, options) {
             }
         }
 
+        function switch_(start, attrs) {
+            var tag = inside.paragraph ? 'span' : 'div';
+            if (start) {
+                if (inside.switcher)
+                    return unsupported("stl:switch nesting");
+                writer.start(tag, {
+                    'data-stl-class': 'stl:switch',
+                    'data-stl-xpath': attrs.xpath
+                });
+                inside.switcher = true;                
+            } else {
+                inside.switcher = false;
+                writer.end(tag);
+            }
+        }
+
+        function case_(start, attrs) {
+            var tag = inside.paragraph ? 'span' : 'div';
+            if (start) {
+                if (inside.switch_case)
+                    return unsupported("stl:case nesting");
+                if (!inside.switcher)
+                    return unsupported("stl:case outside an stl:switch");
+                writer.start(tag, {
+                    'data-stl-class': 'stl:case',
+                    'data-stl-key': attrs.key,
+                    'data-stl-story': attrs.story,
+                });
+                inside.switch_case = true;                
+            } else {
+                inside.switch_case = false;
+                writer.end(tag);
+            }
+        }
+        
         function repeater_(start, attrs) {
             var tag = inside.paragraph ? 'span' : 'div';
             if (start) {
@@ -8431,6 +8494,8 @@ function html_builder(nsmap, writer, options) {
         
         function field_(start, attrs) {
             if (start) {
+                if (!attrs.xpath)
+                    return unsupported("stl:field with no xpath not supported");
                 writer.start('span', {
                     'data-stl-class': 'stl:field',
                     'data-stl-xpath': attrs.xpath,
@@ -8465,6 +8530,8 @@ function html_builder(nsmap, writer, options) {
             block_: block_,
             scope_: scope_,
             repeater_: repeater_,
+            switch_: switch_,
+            case_: case_,
             story_: story_,
             field_: field_,
             image_: inline_items.image_,
@@ -8472,6 +8539,7 @@ function html_builder(nsmap, writer, options) {
             group_: inline_items.group_,
             input_: inline_items.input_,
             text_: inline_items.text_,
+            shape_: inline_items.shape_,
             chart_: inline_items.chart_,
             fragment_: inline_items.fragment_,
             barcode_: inline_items.barcode_,
@@ -10225,6 +10293,10 @@ function storytellerProxy(server_url, onPing) {
             data: '',
             dataType: 'json',
             contentType: 'application/json',
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
             success: callback,
             error: onError(callback)
         });
@@ -10241,6 +10313,10 @@ function storytellerProxy(server_url, onPing) {
             dataType: 'json',
             contentType: false,
             processData: false,
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
             success: callback,
             error: onError(callback)
         });
@@ -10253,6 +10329,10 @@ function storytellerProxy(server_url, onPing) {
             contentType: false,
             processData: false,
             cache: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
             success: function (data, textStatus, jqXHR) {
                 callback(jqXHR.responseText);
             },
@@ -10269,6 +10349,10 @@ function storytellerProxy(server_url, onPing) {
             data: JSON.stringify(inputs),
             dataType: 'json',
             contentType: 'application/json',
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
             success: callback,
             error: onError(callback)
         });

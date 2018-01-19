@@ -33,6 +33,13 @@ input:disabled.button {
 	color: #777;
 }
 
+.errors {
+    display: block;
+	font-family: monospace;
+	white-space: pre-wrap;
+	margin: 1em 0;
+}
+
 /* We use :before pseudo element to rewrite current item's background color */
 /*
 .highlight-node::before {
@@ -324,3 +331,12 @@ div.menu button.active {
 	to {transform: rotate(359deg);}
 }
 
+
+#xonomy span.valueContainer > span.value {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	display: inline-block;
+	max-width: 30em;
+	bottom: -0.4em;
+}

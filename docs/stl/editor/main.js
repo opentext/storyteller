@@ -1,6 +1,7 @@
 'use strict';
 
-var cas_uri_prefix = 'https://rawgit.com/opentext/storyteller/master/docplatform/distribution/py/pfdesigns/docbuilder/empower/cas/'
+//const g_service_url = '';
+const g_service_url = 'http://cem-dev-karim.eastus.cloudapp.azure.com/storyteller';
 var g_preview = null;
 
 function xmlPrettifier() {
@@ -58,7 +59,7 @@ function findElementByOpath(opath, js) {
 function report_error(type, e, $elem) {
     $elem = $elem || $('#preview-html, #preview-st');
     var stl = require('stl');
-    $elem.html('<h3>&#x26a0; '+type+'</h3><pre>'+stl.text_escape(e)+'</pre>');
+    $elem.html('<h3>&#x26a0; '+type+'</h3><div class="errors">'+stl.text_escape(e)+'</div>');
 }
 
 function getItemSelector($elem, $parent) {
@@ -285,7 +286,7 @@ function previewManager() {
     var stl2html = require('html').stl2html;
     var services = require('services');
     var prettify = xmlPrettifier();
-    var proxy = services.proxy('/api', function (response) {
+    var proxy = services.proxy(g_service_url+'/api', function (response) {
         if (response.status === 'success') {
             $('#tab-preview-st, #tab-preview-data').removeAttr("disabled");
         }
@@ -408,7 +409,7 @@ function previewManager() {
         function processData(root, data) {
             var data_stack = [data];
 
-            function visit(elem, current) {
+            function visit(elem, cursor) {
                 var cls = elem.dataset.stlClass;
                 switch(cls) {
                 case 'stl:chart': {
@@ -416,8 +417,31 @@ function previewManager() {
                     var scd = child.textContent;
                     elem.removeChild(child);
                     var svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
-                    require('charts').stlchartnew(scd, current, svg);
+                    require('charts').stlchartnew(scd, cursor, svg);
                     elem.appendChild(svg);
+                    break;
+                }
+                case 'stl:switch': {
+                    var datakey = cursor.dump ? cursor.dump('string(.)') : cursor;
+                    var selected = null;
+                    var defcase = null;
+                    walkChildren(elem, function (child) {
+                        var key = child.dataset ? child.dataset.stlKey : null;
+                        if (key === datakey)
+                            selected = child;
+                        else if (key === undefined)
+                            defcase = child;
+                        return false;
+                    }, () => {});
+                    if (!selected)
+                        selected = defcase;
+                    selected.dataset.stlOpath = getItemSelector($(selected));
+                    walkChildren(elem, function (child) {
+                        if (child !== selected)
+                            elem.removeChild(child);
+                        return false;
+                    }, () => {});
+                    walkTheDOM(selected, before, after);
                     break;
                 }
                 case 'stl:repeater': {
@@ -425,7 +449,7 @@ function previewManager() {
                     var sibling = elem.nextSibling;
                     elem.dataset.stlOpath = getItemSelector($(elem));
                     parent.removeChild(elem);
-                    current.forEach(function (it, index) {
+                    cursor.forEach(function (it, index) {
                         var instance = elem.cloneNode(true);
                         instance.dataset.stlXpath += '['+(index+1)+']';
                         data_stack.push(it);
@@ -436,18 +460,18 @@ function previewManager() {
                     break;
                 }
                 case 'stl:field':
-                    elem.textContent = current.dump ? current.dump('string(.)') : current;
+                    elem.textContent = cursor.dump ? cursor.dump('string(.)') : cursor;
                     break;
                 case 'stl:scope':
                     walkChildren(elem, before, after);
                     break;
                 case 'stl:input': {
-                    var def = current.js('*');
+                    var def = cursor.js('*');
                     console.log(def);
                     switch(elem.dataset.stlType) {
                     case 'radio':
                     case 'checkbox': {
-                        var select = current.js('..');
+                        var select = cursor.js('..');
                         console.log(select);
                         var choice = def['ddi:choice'];
                         elem.setAttribute('value', choice._);
@@ -479,7 +503,7 @@ function previewManager() {
                     break;
                 }
                 default:
-                    console.error("Unsupported data class:" + cls);
+                    console.error("Unsupported data class: " + cls);
                 }
             }
             
@@ -488,9 +512,9 @@ function previewManager() {
                     var xpath = node.dataset.stlXpath;
                     if (xpath) {
                         var top = data_stack[data_stack.length-1];
-                        var current = top.dom(xpath);
-                        data_stack.push(current);
-                        visit(node, current);
+                        var cursor = top.dom(xpath);
+                        data_stack.push(cursor);
+                        visit(node, cursor);
                         return false;
                     }
                 }
@@ -624,6 +648,7 @@ function previewManager() {
 
     function previewST($elem, markup, width) {
         var options = {
+            validate: true,
             rasterizer: { type: 'svg' },
             layout: {},
             data: { source: '_default', rules: '_default' },

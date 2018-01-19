@@ -11,19 +11,17 @@
           ]]></stl:script>
         </stl:image>
       </stl:p>
-      <stl:p>
-        <stl:repeater xpath="$pages">
-          <stl:story>
-            <stl:p style="text-align:center">- separator -</stl:p>
-            <stl:p>
-              <stl:image w="100pt" h="50pt" src="wd:/multipage.tiff">
-                <!--<stl:modification key="@IImageItem/Image/Page">.</stl:modification>-->
-                <stl:script language="js">require('layout').item().Selector = require('data').js('string(.)');</stl:script>
-              </stl:image>
-            </stl:p>
-          </stl:story>
-        </stl:repeater>
-      </stl:p>
+      <stl:repeater xpath="$pages">
+        <stl:story>
+          <stl:p style="text-align:center">- separator -</stl:p>
+          <stl:p>
+            <stl:image w="100pt" h="50pt" src="wd:/multipage.tiff">
+              <!--<stl:modification key="@IImageItem/Image/Page">.</stl:modification>-->
+              <stl:script language="js">require('layout').item().Selector = require('data').js('string(.)');</stl:script>
+            </stl:image>
+          </stl:p>
+        </stl:story>
+      </stl:repeater>
     </stl:story>
     <stl:page w="140pt" h="240pt" occurrence="repeatable">
       <stl:text x="20pt" y="20pt" w="100pt" h="200pt" story="Main"/>
