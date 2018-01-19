@@ -1,7 +1,7 @@
 'use strict';
 
 //const g_service_url = '';
-const g_service_url = 'http://cem-dev-karim.eastus.cloudapp.azure.com/storyteller';
+const g_service_url = 'https://cem-dev-karim.eastus.cloudapp.azure.com/storyteller';
 var g_preview = null;
 
 function xmlPrettifier() {
