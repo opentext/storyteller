@@ -8038,12 +8038,11 @@ function html_builder(nsmap, writer, options) {
     }
     
     function item_builder(writer, inside) {
-        const inline = inside !== undefined;
         inside = inside || {};
         var chart_object = {};
         
         function start_item(attrs) {
-            //if (inline) {
+            //if (inside.paragraph) {
             //    writer.start('div', {
             //        'class': 'stl-inline-item',
             //    });
@@ -8052,7 +8051,7 @@ function html_builder(nsmap, writer, options) {
         }
 
         function end_item() {
-            //if (inline) {
+            //if (inside.paragraph) {
             //    writer.end('div');
             //}
             inside.object = false;
@@ -8060,9 +8059,16 @@ function html_builder(nsmap, writer, options) {
 
         function convert_css(attrs) {
             var css = stl.css_split(attrs.style);
-            if (inline) {
+            switch(inside.paragraph) {
+            case true:
+                // inline item
                 css.display = 'inline-block';
-            } else {
+                break;
+            case false:
+                // paragraph item
+                break;
+            case undefined:
+                // page item
                 css.position = 'absolute';
                 if (attrs.x || attrs.y) {
                     if (attrs.x)
@@ -8070,6 +8076,8 @@ function html_builder(nsmap, writer, options) {
                     if (attrs.y)
                         css.top = attrs.y;
                 }
+            default:
+                throw new Error("Unsupported inside mode: ", inside.paragraph);
             }
             css.width = attrs.w;
             css.height = attrs.h;
