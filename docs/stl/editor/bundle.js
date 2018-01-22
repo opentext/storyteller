@@ -8076,6 +8076,7 @@ function html_builder(nsmap, writer, options) {
                     if (attrs.y)
                         css.top = attrs.y;
                 }
+                break;
             default:
                 throw new Error("Unsupported inside mode: ", inside.paragraph);
             }
