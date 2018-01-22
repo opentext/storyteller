@@ -336,6 +336,9 @@ function previewManager() {
                 if (!xpath || xpath[0] === '/')
                     break;
                 $elem = $elem.parent().closest('*[data-stl-xpath]');
+                var cls = $elem.attr('data-stl-class');
+                if (cls !== 'stl:repeater')
+                    break;
             }
             xpaths.reverse();
             return xpaths;
@@ -409,8 +412,7 @@ function previewManager() {
         function processData(root, data) {
             var data_stack = [data];
 
-            function visit(elem, cursor) {
-                var cls = elem.dataset.stlClass;
+            function visit(cls, elem, cursor) {
                 switch(cls) {
                 case 'stl:chart': {
                     var child = elem.firstChild;
@@ -506,15 +508,28 @@ function previewManager() {
                     console.error("Unsupported data class: " + cls);
                 }
             }
+
+            function pushes_cursor(cls) {
+                switch(cls) {
+                case 'stl:repeater':
+                case 'stl:input':
+                case 'stl:chart':
+                    return true;
+                default:
+                    return false;
+                }
+            }
             
             function before(node) {
                 if (node.dataset) {
                     var xpath = node.dataset.stlXpath;
                     if (xpath) {
+                        var cls = node.dataset.stlClass;
                         var top = data_stack[data_stack.length-1];
-                        var cursor = top.dom(xpath);
-                        data_stack.push(cursor);
-                        visit(node, cursor);
+                        var value = top.dom(xpath);
+                        if (pushes_cursor(cls))
+                            data_stack.push(value);
+                        visit(cls, node, value);
                         return false;
                     }
                 }
@@ -523,7 +538,9 @@ function previewManager() {
             
             function after(node) {
                 if (node.dataset && node.dataset.stlXpath) {
-                    data_stack.pop();
+                    var cls = node.dataset.stlClass;
+                    if (pushes_cursor(cls))
+                        data_stack.pop();
                 }
             }
             
