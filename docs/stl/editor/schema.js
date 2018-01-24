@@ -1682,7 +1682,7 @@ g_stl_schema.elements = {
 	},
 	'stl:text' : {
 		attributes: stl_layout_item_attrs(stl_bbox_attrs),
-		children: stl_layout_item_children.slice(),
+		children: stl_layout_item_children.concat([{name: 'stl:shape', max: 1}]),
 	},
 	'stl:shape' : {
 		attributes: stl_layout_item_attrs(stl_bbox_attrs),
