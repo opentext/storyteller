@@ -4,6 +4,16 @@
 const g_service_url = 'https://cem-dev-karim.eastus.cloudapp.azure.com/storyteller';
 var g_preview = null;
 
+function getParameterByName(name, url) {
+    url = url || window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 function xmlPrettifier() {
     var domParser = new DOMParser();
     var xsltProcessor = new XSLTProcessor();
@@ -810,18 +820,8 @@ g_stl_schema.onchange = previewMarkup;
                    
 function initialize() {
     g_preview = previewManager();
-    var url = window.location.href;
 
     function handleParameters(callback) {
-        function getParameterByName(name) {
-            name = name.replace(/[\[\]]/g, "\\$&");
-            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
-        
         var stl = getParameterByName('stl');
         var emp = getParameterByName('emp');
         var res = getParameterByName('resources');
@@ -879,7 +879,9 @@ function initialize() {
             previewMarkup();
         }
     });
-    $('#tab-preview-html').click();
+    var preview = getParameterByName('preview') || 'html';
+    console.log(preview);
+    $('#tab-preview-'+preview).click();
 }
 
 // Story overflow:
