@@ -71,10 +71,12 @@
 				  <stl:p>
 					<stl:group transform="scale(0.1)">
 					  <stl:fragment src="wd:/clock-face.svg" selector="/item[1]" />
-					  <stl:group transform="translate(1024 1024) scale(0.22)">
-						<stl:path class="handh" data="M -50,-600  l 50,-50 50,50 0,800  -100,0 z" transform="rotate({{#|hours}})"/>
-						<stl:path class="handm" data="M -40,-900  l 40,-40 40,40 0,1180 -80,0  z" transform="rotate({{#|minutes}})"/>
-					  </stl:group>
+					  <stl:shape>
+						<g transform="translate(1024 1024) scale(0.22)">
+						  <path class="handh" d="M -50,-600  l 50,-50 50,50 0,800  -100,0 z" transform="rotate({{#|hours}}deg)"/>
+						  <path class="handm" d="M -40,-900  l 40,-40 40,40 0,1180 -80,0  z" transform="rotate({{#|minutes}}deg)"/>
+						</g>
+					  </stl:shape>
 					</stl:group>
 				  </stl:p>
 				</stl:cell>

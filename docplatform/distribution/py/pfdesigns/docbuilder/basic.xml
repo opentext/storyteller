@@ -109,8 +109,8 @@
 		  <stl:p>This is a private (and native) story...</stl:p>
 		</stl:story>
 	  </stl:text>
-	  <stl:text x="120pt" y="20pt" w="60pt" h="60pt" story="Shared" transform="rotate(-10)" style="border: solid #00ff00"/>
-	  <stl:image x="20pt" y="120pt" w="60pt" h="60pt" src="wd:/ducks.png" transform="rotate(10)" style="background-color:#aaffff"/>
+	  <stl:text x="120pt" y="20pt" w="60pt" h="60pt" story="Shared" transform="rotate(-10deg)" style="border: solid #00ff00"/>
+	  <stl:image x="20pt" y="120pt" w="60pt" h="60pt" src="wd:/ducks.png" transform="rotate(10deg)" style="background-color:#aaffff"/>
 	  <stl:image x="120pt" y="120pt" src="wd:/ducks.png" style="border:solid #ff0000"/>
       <stl:fragment x="20pt" y="220pt" w="80pt" h="80pt" transform="scale(10)" 
 					category="load-time" src="wd:/fragment.lxf!/item[1]" style="border:solid #ff0000"/>
