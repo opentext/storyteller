@@ -67,7 +67,7 @@ function findElementByOpath(opath, js) {
 };
 
 function report_error(type, e, $elem) {
-    $elem = $elem || $('#preview-html, #preview-st');
+    $elem = $elem || $('#preview-main, #preview-st');
     var stl = require('stl');
     $elem.html('<h3>&#x26a0; '+type+'</h3><div class="errors">'+stl.text_escape(e)+'</div>');
 }
@@ -298,7 +298,7 @@ function previewManager() {
     var prettify = xmlPrettifier();
     var proxy = services.proxy(g_service_url+'/api', function (response) {
         if (response.status === 'success') {
-            $('#tab-preview-st, #tab-preview-data').removeAttr("disabled");
+            $('#tab-preview-st, #tab-preview-data, #tab-preview-pdf, #tab-preview-docx').removeAttr("disabled");
         }
     });
     
@@ -479,12 +479,10 @@ function previewManager() {
                     break;
                 case 'stl:input': {
                     var def = cursor.js('*');
-                    console.log(def);
                     switch(elem.dataset.stlType) {
                     case 'radio':
                     case 'checkbox': {
                         var select = cursor.js('..');
-                        console.log(select);
                         var choice = def['ddi:choice'];
                         elem.setAttribute('value', choice._);
                         elem.setAttribute('name', select['ddi:input-group'].name);
@@ -597,7 +595,7 @@ function previewManager() {
         });
     }
 
-    function previewHTML($elem, stl) {
+    function previewMain($elem, stl) {
         function str2ab(bytestr) {
             var ab = new ArrayBuffer(bytestr.length);
             var ia = new Uint8Array(ab);
@@ -676,17 +674,17 @@ function previewManager() {
     function previewST($elem, markup, width) {
         var options = {
             validate: true,
-            rasterizer: { type: 'svg' },
+            properties: {language: 'en-US'},
+            driver: {type: 'svg'},
             layout: {},
-            data: { source: '_default', rules: '_default' },
-            target: { width: width, padding: '20px 40px' }
+            data: {source: '_default', rules: '_default'},
+            frame: {width: width, padding: '20px 40px'}
         }
         callSTL(markup, options, function(response) {
             if (response.error)
                 return report_error('Preview Error', response.error, $elem);            
             var layout = response.result.find((r) => r.name === 'layout.xml');
             proxy.content(layout.id, function (layout) {
-                console.log(layout);
                 var backgrounds = {}
                 var options = {
                     handlers: {
@@ -705,10 +703,72 @@ function previewManager() {
         });
     }
 
+    function previewPDF($elem, markup, width) {
+        var options = {
+            validate: true,
+            properties: {language: 'en-US'},
+            driver: {type: 'pdf'},
+            data: {source: '_default', rules: '_default'},
+            frame: {width: width, padding: '20px 40px'}
+        }
+        callSTL(markup, options, function(response) {
+            if (response.error)
+                return report_error('Preview Error', response.error, $elem);            
+            var document = response.result.find((r) => r.name === 'document.pdf');
+            var url = proxy.hash2uri(document.id);
+            var html = '<iframe src="'+url+'" style="width:100%; height: calc(100vh - 110px); border:none;"></iframe>';
+            $elem.html(html);
+        });
+    }
+
+    function previewDOCX($elem, markup, width) {
+        var options = {
+            validate: true,
+            properties: {language: 'en-US'},
+            driver: {type: 'docx'},
+            data: {source: '_default', rules: '_default'},
+            frame: {width: width, padding: '20px 40px'}
+        }
+        callSTL(markup, options, function(response) {
+            if (response.error)
+                return report_error('Preview Error', response.error, $elem);            
+            var document = response.result.find((r) => r.name === 'document.docx');
+            //var url = 'https://docs.google.com/gview?url='+proxy.hash2uri(document.id)+'&embedded=true';
+            var url = 'https://view.officeapps.live.com/op/embed.aspx?src='+proxy.hash2uri(document.id);
+            var html = '<iframe src="'+url+'" style="width:100%; height: calc(100vh - 110px); border:none; frameborder:0;"></iframe>';            $elem.html(html);
+        });
+    }
+
+    function previewHTML($elem, markup, width) {
+        var options = {
+            validate: true,
+            properties: {
+                language: 'en-US',
+			    GenerateInlineImages: '1',
+			    InlineCSS: '1',
+		        CodePage: 'UTF-8',
+			    OutputWideChar: '0',
+			    RasterizeFragments: '0'
+            },
+            driver: {type: 'html'},
+            data: {source: '_default', rules: '_default'},
+            frame: {width: width, padding: '20px 40px'}
+        }
+        callSTL(markup, options, function(response) {
+            if (response.error)
+                return report_error('Preview Error', response.error, $elem);            
+            var document = response.result.find((r) => r.type === 'application/pdf');
+            var url = proxy.hash2uri(document.id);
+            var html = '<iframe src="'+url+'" style="width:100%; height: calc(100vh - 110px); border:none;"></iframe>';
+            $elem.html(html);
+        });
+    }
+        
     function previewData($elem, markup) {
         var options = {
-            data: { source: '_default', rules: '_default', persist: true },
-            target: { width: '1000px' }
+            properties: {language: 'en-US'},
+            data: {source: '_default', rules: '_default', persist: true},
+            frame: {width: '1000px'}
         };
         callSTL(markup, options, function(response) {
             if (response.error)
@@ -716,21 +776,23 @@ function previewManager() {
             var data = response.result.find((r) => r.name === 'data.xml');
             proxy.content(data.id, function (data) {
                 var hl = hljs.highlight('xml', prettify(data));
-                console.log(hl);
                 $elem.html('<div class="data-paper">'+hl.value+'</div>');
             });
         });
     }
         
     var state = {
-        type: 'html',
+        type: 'main',
         width: null,
         markup: null,
         repo : {},
         last: {
-            html: {},
+            main: {},
             st: {},
             data: {},
+            pdf: {},
+            docx: {},
+            html: {}
         }
     };
 
@@ -751,7 +813,7 @@ function previewManager() {
         if (changes.type !== undefined) // preview type has changed
             state.type = changes.type;
 
-        if (!proxy && state.type !== 'html')
+        if (!proxy && state.type !== 'main')
             throw new Error("Proxy not available");
 
         var $elem = $('#preview-'+state.type);
@@ -767,11 +829,18 @@ function previewManager() {
             return;
         
         switch (state.type) {
-        case 'html':
+        case 'main':
             if (state.markup !== last.markup) {
                 $elem.append('<div class="loading"></div>');
                 last.markup = state.markup;
-                previewHTML($elem, state.markup);
+                previewMain($elem, state.markup);
+            }
+            break;
+        case 'data':
+            if (state.markup !== last.markup) {
+                $elem.append('<div class="loading"></div>');
+                previewData($elem, state.markup);
+                last.markup = state.markup;
             }
             break;
         case 'st':
@@ -782,10 +851,24 @@ function previewManager() {
                 last.width = state.width;
             }
             break;
-        case 'data':
-            if (state.markup !== last.markup) {
+        case 'pdf':
+            if (state.markup !== last.markup || state.width !== last.width) {
                 $elem.append('<div class="loading"></div>');
-                previewData($elem, state.markup);
+                previewPDF($elem, state.markup);
+                last.markup = state.markup;
+            }
+            break;
+        case 'docx':
+            if (state.markup !== last.markup || state.width !== last.width) {
+                $elem.append('<div class="loading"></div>');
+                previewDOCX($elem, state.markup);
+                last.markup = state.markup;
+            }
+            break;
+        case 'html':
+            if (state.markup !== last.markup || state.width !== last.width) {
+                $elem.append('<div class="loading"></div>');
+                previewHTML($elem, state.markup);
                 last.markup = state.markup;
             }
             break;
@@ -879,8 +962,7 @@ function initialize() {
             previewMarkup();
         }
     });
-    var preview = getParameterByName('preview') || 'html';
-    console.log(preview);
+    var preview = getParameterByName('preview') || 'main';
     $('#tab-preview-'+preview).click();
 }
 
