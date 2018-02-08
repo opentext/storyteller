@@ -1,0 +1,232 @@
+openapi: "3.0.0"
+info:
+  description: "This is a StoryTeller service API. You can find out more about StoryTeller at [https://opentext.github.io/storyteller/](https://opentext.github.io/storyteller/)."
+  version: 0.1.0
+  title: StoryTeller API
+  contact:
+    email: "pfilipsk@opentext.com"
+servers:
+  - url: https://cem-dev-karim.eastus.cloudapp.azure.com/storyteller/api
+tags:
+- name: "service"
+  description: "Service API"
+- name: "storage"
+  description: "Storage API"
+- name: "processor"
+  description: "Processor API"
+paths:
+  /ping:
+    get:
+      tags:
+      - "service"
+      summary: Test whether the service is alive
+      operationId: "pingService"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/PingResponse"
+  /files:
+    post:
+      tags:
+      - "storage"
+      summary: "Upload a file to the current session"
+      operationId: "uploadFile"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                filename:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/FileContent"
+      responses:
+        '200':
+          description: "Upload successful"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadResponse"
+  /files/{hashId}/contents:
+    get:
+      tags:
+      - "storage"
+      summary: "Gets contents of a file"
+      operationId: "serveFile"
+      parameters:
+        - name: hashId
+          in: "path"
+          description: "Hash of the file content to be fetched"
+          required: true
+          schema:
+            $ref: "#/components/schemas/FileHash"
+      responses:
+        '200':
+          description: "File content in binary form"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FileContent"
+        '400':
+          description: "File not found"
+  /tdt:
+    post:
+      tags:
+      - "processor"
+      summary: "Transform given data based on given template and TDT rules"
+      operationId: "processTDT"
+      requestBody:
+        description: "Request of the TDT transform operation"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/TdtRequest"
+      responses:
+        '200':
+          description: "Response of the TDT transform operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TdtResponse"
+  /stl:
+    post:
+      tags:
+      - "processor"
+      summary: "Create a document based on given layout and data"
+      operationId: "processSTL"
+      requestBody:
+        description: "Request of the STL format operation"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/StlRequest"
+      responses:
+        '200':
+          description: "Response of the STL format operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StlResponse"
+components:
+  schemas:
+    Status:
+      description: "Status of the operation"
+      type: "string"
+      example: "success"
+      enum:
+        - "success"
+        - "failure"
+    FileContent:
+      description: "Binary file content"
+      type: string
+      format: binary
+    FileHash:
+      description: "SHA1 hash of the file content"
+      type: "string"
+      pattern: "^[A-Fa-f0-9]{40}$"
+      example: 7831f13d519651eba0b3a7fb236cc94fd9a156a1
+    FileType:
+      description: "Content/Mime Type of the file"
+      type: "string"
+      example: application/xml
+    FileName:
+      description: "Name of the file"
+      type: "string"
+      example: document.xml
+    FileSize:
+      description: "Byte size of the file content"
+      type: "integer"
+      example: 1234
+    File:
+      description: "Representation of a server-side file"
+      type: "object"
+      properties:
+        id:
+          $ref:  "#/components/schemas/FileHash"
+        name:
+          $ref:  "#/components/schemas/FileName"
+        size:
+          $ref:  "#/components/schemas/FileSize"
+        type:
+          $ref:  "#/components/schemas/FileType"
+    Files:
+      type: "array"
+      items:
+        $ref:  "#/components/schemas/File"
+    PingResponse:
+      description: "Response of the ping operation"
+      properties:
+        status:
+          $ref:  "#/components/schemas/Status"
+    UploadResponse:
+      description: "Response of the upload operation"
+      properties:
+        status:
+          $ref:  "#/components/schemas/Status"
+        result:
+          $ref:  "#/components/schemas/Files"
+    TdtOptions:
+      description: "Options for TDT transform operation"
+      properties:
+        mode:
+          type: "integer"
+        params:
+          type: "object"
+    TdtRequest:
+      description: "Request of the TDT transform operation"
+      properties:
+        rules:
+          $ref:  "#/components/schemas/FileHash"
+        source:
+          $ref:  "#/components/schemas/FileHash"
+        template:
+          $ref:  "#/components/schemas/FileHash"
+        options:
+          $ref:  "#/components/schemas/TdtOptions"
+    TdtResponse:
+      description: "Response of the TDT transform operation"
+      properties:
+        status:
+          $ref:  "#/components/schemas/Status"
+        input:
+          $ref:  "#/components/schemas/StlRequest"
+        result:
+          $ref:  "#/components/schemas/Files"
+    StlOptions:
+      description: "Options for STL format operation"
+      properties:
+        data:
+          description: "Data settings"
+          type: "object"
+        layout:
+          type: "object"
+        driver:
+          type: "object"
+        frame:
+          type: "object"
+        properties:
+          type: "object"
+        validate:
+          type: "boolean"
+    StlRequest:
+      description: "Request of the STL format operation"
+      properties:
+        design:
+          $ref:  "#/components/schemas/FileHash"
+        options:
+          $ref:  "#/components/schemas/StlOptions"
+    StlResponse:
+      description: "Response of the STL format operation"
+      properties:
+        status:
+          $ref:  "#/components/schemas/Status"
+        input:
+          $ref:  "#/components/schemas/StlRequest"
+        result:
+          $ref:  "#/components/schemas/Files"
+
