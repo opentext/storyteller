@@ -1,0 +1,254 @@
+swagger: "2.0"
+info:
+  description: "This is a StoryTeller service API. You can find out more about StoryTeller at [https://opentext.github.io/storyteller/](https://opentext.github.io/storyteller/)."
+  version: "1.0.0"
+  title: "StoryTeller Service API"
+  contact:
+    email: "pfilipsk@opentext.com"
+host: "cem-dev-karim.eastus.cloudapp.azure.com"
+basePath: "/storyteller/api"
+securityDefinitions:
+  sessionCookie:
+    type: apiKey
+    name: Cookie
+    in: header
+tags:
+- name: "service"
+  description: "Service API"
+- name: "storage"
+  description: "Storage API"
+- name: "processor"
+  description: "Processor API"
+schemes:
+- "https"
+- "http"
+paths:
+  /ping:
+    get:
+      tags:
+      - "service"
+      summary: "tests whether the service is alive"
+      description: ""
+      operationId: "pingService"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PingResponse"
+  /files:
+    post:
+      tags:
+      - "storage"
+      summary: "uploads a file to the current session"
+      description: ""
+      operationId: "uploadFile"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - in: formData
+        name: file
+        type: file
+        required: true
+        description: The file to upload.
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/UploadResponse"
+      security: 
+        - sessionCookie: []
+  /files/{hashId}/contents:
+    get:
+      tags:
+      - "storage"
+      summary: "Gets contents of a file"
+      operationId: "serveFile"
+      parameters:
+      - name: "hashId"
+        in: "path"
+        description: "hash of the file content to be fetched"
+        required: true
+        type: "string" 
+      responses:
+        200:
+          description: "File content in binary form"
+          schema:
+            type: string
+            format: binary      
+        400:
+          description: "File not found"
+      security: 
+        - sessionCookie: []
+  /tdt:
+    post:
+      tags:
+      - "processor"
+      summary: "Transform given data based on given template and TDT rules"
+      operationId: "processTDT"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        description: "Request of the TDT transform operation"
+        schema:
+          $ref:  "#/definitions/TdtRequest"
+      responses:
+        200:
+          description: "Response of the TDT transform operation"
+          schema:
+            $ref: "#/definitions/TdtResponse"
+      security: 
+        - sessionCookie: []
+  /stl:
+    post:
+      tags:
+      - "processor"
+      summary: "Create a document based on given layout and data"
+      operationId: "processSTL"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        description: "Request of the STL format operation"
+        schema:
+          $ref:  "#/definitions/StlRequest"
+      responses:
+        200:
+          description: "Response of the STL format operation"
+          schema:
+            $ref: "#/definitions/StlResponse"
+      security: 
+        - sessionCookie: []
+
+definitions:
+  Status:
+    description: "Status of the operation"
+    type: "string"
+    example: "success"
+    enum:
+      - "success"
+      - "failure"
+  FileHash:
+    description: "SHA1 hash of the file content"
+    type: "string"
+    pattern: "^[A-Fa-f0-9]{40}$"
+    example: 7831f13d519651eba0b3a7fb236cc94fd9a156a1
+  FileType:
+    description: "Content/Mime Type of the file"
+    type: "string"
+    example: application/xml
+  FileName:
+    description: "Name of the file"
+    type: "string"
+    example: document.xml
+  FileSize:
+    description: "Byte size of the file content"
+    type: "integer"
+    example: 1234
+  File:
+    description: "Representation of a server-side file"
+    type: "object"
+    properties:
+      id:
+        $ref:  "#/definitions/FileHash"
+      name:
+        $ref:  "#/definitions/FileName"
+      size:
+        $ref:  "#/definitions/FileSize"
+      type:
+        $ref:  "#/definitions/FileType"
+  Files:
+    type: "array"
+    items:
+      $ref:  "#/definitions/File"
+  PingResponse:
+    description: "Response of the ping operation"
+    type: "object"
+    properties:
+      status:
+        $ref:  "#/definitions/Status"
+  UploadResponse:
+    description: "Response of the upload operation"
+    type: "object"
+    properties:
+      status:
+        $ref:  "#/definitions/Status"
+      result:
+        $ref:  "#/definitions/Files"
+  TdtOptions:
+    description: "Options for TDT transform operation"
+    type: "object"
+    properties:
+      mode:
+        type: "integer"
+      params:
+        type: "object"
+  TdtRequest:
+    description: "Request of the TDT transform operation"
+    type: "object"
+    properties:
+      source:
+        $ref:  "#/definitions/FileHash"
+      template:
+        $ref:  "#/definitions/FileHash"
+      rules:
+        $ref:  "#/definitions/FileHash"
+      options:
+        $ref:  "#/definitions/TdtOptions"
+  TdtResponse:
+    description: "Response of the TDT transform operation"
+    type: "object"
+    properties:
+      status:
+        $ref:  "#/definitions/Status"
+      input:
+        $ref:  "#/definitions/TdtRequest"
+      result:
+        $ref:  "#/definitions/Files"
+  StlOptions:
+    description: "Options for STL format operation"
+    type: "object"
+    properties:
+      data:
+        description: "Data settings"
+        type: "object"
+      layout:
+        type: "object"
+      driver:
+        type: "object"
+      frame:
+        type: "object"
+      properties:
+        type: "object"
+      validate:
+        type: "boolean"
+  StlRequest:
+    description: "Request of the TDT format operation"
+    type: "object"
+    properties:
+      design:
+        $ref:  "#/definitions/FileHash"
+      options:
+        $ref:  "#/definitions/StlOptions"
+  StlResponse:
+    description: "Response of the STL format operation"
+    type: "object"
+    properties:
+      status:
+        $ref:  "#/definitions/Status"
+      input:
+        $ref:  "#/definitions/StlRequest"
+      result:
+        $ref:  "#/definitions/Files"
