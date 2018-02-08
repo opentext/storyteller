@@ -1,14 +1,69 @@
 swagger: "2.0"
 info:
-  description: "This is a StoryTeller service API. You can find out more about StoryTeller at [https://opentext.github.io/storyteller/](https://opentext.github.io/storyteller/)."
-  version: "1.0.0"
+  version: "0.1.0"
   title: "StoryTeller Service API"
   contact:
     email: "pfilipsk@opentext.com"
+  description: |
+    This is a *StoryTeller service API*. You can find out more about StoryTeller, its Document Model
+	and associated services at [StoryTeller Develoment Documentation](https://opentext.github.io/storyteller/)."
+
+    # Introduction
+	As part of the *Document Platform* we provide lots of general and valuable components and 
+	services which could be re-used in many other contexts outside the *Document Platform*.
+	Those services are currently available inside the product and inside the document embedded 
+	javascript, but we would like to be used in many other contexts as well.
+	So now we are wrap the available services to a REST interface and also provide 
+	a thin Javascript HTTP/REST Client Proxy for completeness. This approach opens lots of new 
+	possibilities how to combine the available elements without introducing unnecessary platform 
+	or language dependencies. 
+
+	It is just a matter of configuration whether we call the service locally (in-process) 
+	or remotely (in a separate process), or whether we use the client code in curl, python script, 
+	or in a web browser and communicate with a server via network connection.
+	
+    ## Storage
+    The first facility we expose via the API is the *Storage* service. It simply serves as 
+	a [Content Addressable Storage](http://en.wikipedia.org/wiki/Content-addressable_storage), 
+	it enables storing any blob of data (represented as a stream), 
+	retrieving a content based hash key for any data uploaded and then using the key for obtaining 
+	the same data back or using it for other service calls.
+
+	The [SHA-1](http://en.wikipedia.org/wiki/SHA-1) cryptographic (20-bytes) hash function is used 
+	for key computation and so there is a very high collision resistance. This cryptographic function 
+	is very robust and future proof (other tools like [Git](http://en.wikipedia.org/wiki/Git_%28software%29)
+	[Distributed Revision Control](http://en.wikipedia.org/wiki/Distributed_revision_control) use the same 
+	function successfully), but of course it can be easily replaced by a more robust alternative 
+	([SHA-2](http://en.wikipedia.org/wiki/SHA-2), [SHA-3](http://en.wikipedia.org/wiki/SHA-3), …) 
+	if there is such a need.
+
+	## Processor
+	*Processor* represents a collection of computationally intensive services provided by *Document Platform*
+	to clients. Right now we expose two such *Services*:
+    - TDT transformation
+    - Document Formatter
+	but will expose more services in near future.
+
+    # Cross-Origin Resource Sharing
+    This API features Cross-Origin Resource Sharing (CORS) implemented in compliance with 
+    [W3C spec](https://www.w3.org/TR/cors/). That allows cross-domain communication from the browser.
+    All responses can have a wildcard same-origin which makes them completely public and accessible to everyone, 
+    including any code on any site if we decide to do so.
+
+    # Authentication
+    Currently there is no authentication necessary for using the service but server maintains a notion 
+    of user sessions. That means that any files uploaded or created during a session are accessible
+    from that particular session only. Clients are responsible for re-sending a server generated cookie
+    representing particular session. Uploaded files are guaranteed to be preserved on the server only 
+    for a lifetime of particular session.
 host: "cem-dev-karim.eastus.cloudapp.azure.com"
 basePath: "/storyteller/api"
+externalDocs:
+  description: Find out more about StoryTeller services and APIs
+  url: 'https://opentext.github.io/storyteller/'
 securityDefinitions:
   sessionCookie:
+    description: Use session cookie to maintain a single session representing recently uploaded and/or created files.
     type: apiKey
     name: Cookie
     in: header
@@ -27,8 +82,8 @@ paths:
     get:
       tags:
       - "service"
-      summary: "tests whether the service is alive"
-      description: ""
+      summary: "Test whether the service is alive"
+      description: "Can be used in watchdogs or other client code to determine whether the service is alive"
       operationId: "pingService"
       produces:
       - "application/json"
@@ -37,12 +92,31 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/PingResponse"
-  /files:
+      x-code-samples:
+        - lang: 'javascript/jquery'
+          source: |
+            function ping(callback) {
+              $.ajax({
+                url: api_url + '/ping',
+                type: 'GET',
+                data: '',
+                dataType: 'json',
+                contentType: 'application/json',
+                xhrFields: {
+                  withCredentials: true
+                },
+                crossDomain: true,
+                success: onSuccess(callback),
+                error: onError(callback)
+              });
+            }
     post:
       tags:
       - "storage"
-      summary: "uploads a file to the current session"
-      description: ""
+      summary: "Upload a file to the server"
+      description: |
+        From now on the uploaded files is present on the server and can be downloaded 
+        or used in other API calls until the session expires. 
       operationId: "uploadFile"
       consumes:
       - "multipart/form-data"
@@ -61,11 +135,36 @@ paths:
             $ref: "#/definitions/UploadResponse"
       security: 
         - sessionCookie: []
+      x-code-samples:
+        - lang: 'javascript/jquery'
+          source: |
+            function upload(name, content, mime, callback) {
+              var form = new FormData();
+              var blob = new Blob([content], {type: mime});
+              form.append("fileToUpload", blob, name);
+              $.ajax({
+                url: api_url + '/files',
+                type: 'POST',
+                data: form,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: onSuccess(callback),
+                error: onError(callback)
+              });
+            }
   /files/{hashId}/contents:
     get:
       tags:
       - "storage"
-      summary: "Gets contents of a file"
+      summary: "Get contents of a file"
+      description: |
+        Any uploaded file is uniquely represented by a hash and can be explicitly downloaded 
+        or used as a resource link (e.g. as an image `href` attribute) during the session lifetime.   
       operationId: "serveFile"
       parameters:
       - name: "hashId"
@@ -83,6 +182,24 @@ paths:
           description: "File not found"
       security: 
         - sessionCookie: []
+      x-code-samples:
+        - lang: 'javascript/jquery'
+          source: |
+            function content(hash, callback) {
+              $.ajax({
+                url: api_url + /files/' + hash + '/contents',
+                type: 'GET',
+                contentType: false,
+                processData: false,
+                cache: true,
+                xhrFields: {
+                  withCredentials: true
+                },
+                crossDomain: true,
+                success: onSuccess(callback),
+                error: onError(callback)
+              });
+            }
   /tdt:
     post:
       tags:
@@ -107,6 +224,30 @@ paths:
             $ref: "#/definitions/TdtResponse"
       security: 
         - sessionCookie: []
+      x-code-samples:
+        - lang: 'javascript/jquery'
+          source: |
+            function tdt(source, template, rules, options, callback) {
+              var inputs = {
+                source: source,
+                template: template,
+                rules: rules,
+                options: options,
+              };
+              $.ajax({
+                url: api_url + '/tdt',
+                type: 'POST',
+                data: JSON.stringify(inputs),
+                dataType: 'json',
+                contentType: 'application/json',
+                xhrFields: {
+                  withCredentials: true
+                },
+                crossDomain: true,
+                success: onSuccess(callback),
+                error: onError(callback)
+              });
+            }
   /stl:
     post:
       tags:
@@ -131,6 +272,29 @@ paths:
             $ref: "#/definitions/StlResponse"
       security: 
         - sessionCookie: []
+      x-code-samples:
+        - lang: 'javascript/jquery'
+          source: |
+            function stl(design, data, options, callback) {
+              var inputs = {
+                design: design,
+                data: data,
+                options: options,
+              };
+              $.ajax({
+                url: api_url + '/stl',
+                type: 'POST',
+                data: JSON.stringify(inputs),
+                dataType: 'json',
+                contentType: 'application/json',
+                xhrFields: {
+                  withCredentials: true
+                },
+                crossDomain: true,
+                success: onSuccess(callback),
+                error: onError(callback)
+              });
+            }
 
 definitions:
   Status:
