@@ -86,11 +86,14 @@ paths:
           schema:
             $ref: "#/definitions/PingResponse"
       x-code-samples:
+        - lang: 'curl'
+		  source: |
+		    curl -X GET "$URL/storyteller/api/ping" -H "accept: application/json"
         - lang: 'javascript/jquery'
           source: |
-            function ping(callback) {
+            function ping(apiUrl, callback) {
               $.ajax({
-                url: api_url + '/ping',
+                url: apiUrl + '/ping',
                 type: 'GET',
                 data: '',
                 dataType: 'json',
@@ -103,6 +106,13 @@ paths:
                 error: onError(callback)
               });
             }
+        - lang: 'python'
+          source: |
+            import requests
+
+            def ping(url):
+              return requests.get(url+'/ping').status_code == 200
+  /files:
     post:
       tags:
       - "storage"
@@ -129,14 +139,17 @@ paths:
       security:
         - sessionCookie: []
       x-code-samples:
+        - lang: 'curl'
+		  source: |
+            curl -X POST "$URL/storyteller/api/files" -H "accept: application/json" -H "Content-Type: multipart/form-data" -F "file=@sample.svg;type=image/svg+xml"
         - lang: 'javascript/jquery'
           source: |
-            function upload(name, content, mime, callback) {
+            function upload(apiUrl, name, content, mime, callback) {
               var form = new FormData();
               var blob = new Blob([content], {type: mime});
               form.append("fileToUpload", blob, name);
               $.ajax({
-                url: api_url + '/files',
+                url: apiUrl + '/files',
                 type: 'POST',
                 data: form,
                 dataType: 'json',
@@ -150,6 +163,19 @@ paths:
                 error: onError(callback)
               });
             }
+        - lang: 'python'
+          source: |
+             import requests
+             
+             class Proxy:
+               def __init__(self, url):
+                 self.url = url + '/storyteller/api'
+                 self.session = requests.Session()
+               
+               def upload(self, filepath, mimetype='application/octet-stream'):
+                 files = {'file': (os.path.basename(filepath), open(filepath, 'rb'), mimetype)} 
+                 return self.session.post(self.url+'/files', files=files).json()
+
   /files/{hashId}/contents:
     get:
       tags:
@@ -176,11 +202,14 @@ paths:
       security:
         - sessionCookie: []
       x-code-samples:
+        - lang: 'curl'
+		  source: |
+            curl -X GET "$URL/storyteller/api/files/e9b2b6237eebcb085c8f025fc12fe2b1fa998195/contents" -H "accept: application/json"
         - lang: 'javascript/jquery'
           source: |
-            function content(hash, callback) {
+            function content(apiUrl, hash, callback) {
               $.ajax({
-                url: api_url + /files/' + hash + '/contents',
+                url: apiUrl + /files/' + hash + '/contents',
                 type: 'GET',
                 contentType: false,
                 processData: false,
@@ -193,6 +222,17 @@ paths:
                 error: onError(callback)
               });
             }
+        - lang: 'python'
+          source: |
+             import requests
+             
+             class Proxy:
+               def __init__(self, url):
+                 self.url = url + '/storyteller/api'
+                 self.session = requests.Session()
+               
+               def content(self, hash):
+                 return self.session.get(self.url+'/files/'+hash+'/contents').content
   /tdt:
     post:
       tags:
@@ -218,9 +258,12 @@ paths:
       security:
         - sessionCookie: []
       x-code-samples:
+        - lang: 'curl'
+		  source: |
+            curl -X POST "$URL/storyteller/api/tdt" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"source\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\", \"template\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\", \"rules\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\"}"
         - lang: 'javascript/jquery'
           source: |
-            function tdt(source, template, rules, options, callback) {
+            function tdt(apiUrl, source, template, rules, options, callback) {
               var inputs = {
                 source: source,
                 template: template,
@@ -228,7 +271,7 @@ paths:
                 options: options,
               };
               $.ajax({
-                url: api_url + '/tdt',
+                url: apiUrl + '/tdt',
                 type: 'POST',
                 data: JSON.stringify(inputs),
                 dataType: 'json',
@@ -241,6 +284,23 @@ paths:
                 error: onError(callback)
               });
             }
+        - lang: 'python'
+          source: |
+             import requests
+             
+             class Proxy:
+               def __init__(self, url):
+                 self.url = url + '/storyteller/api'
+                 self.session = requests.Session()
+               
+               def tdt(self, source, template, rules, options = {}):
+                  data = {
+                    'source': source,
+                    'template': source,
+                    'rules': source,
+                    'options': options
+                  }
+                  return self.session.post(self.url+'/tdt', json=data).json()
   /stl:
     post:
       tags:
@@ -266,16 +326,19 @@ paths:
       security:
         - sessionCookie: []
       x-code-samples:
+        - lang: 'curl'
+		  source: |
+            curl -X POST "$URL/storyteller/api/stl" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"design\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\", \"options\": { \"driver\": { \"type\": \"pdf\" }, \"properties\": { \"language\": \"en-US\" }, \"validate\": true }}"
         - lang: 'javascript/jquery'
           source: |
-            function stl(design, data, options, callback) {
+            function stl(apiUrl, design, data, options, callback) {
               var inputs = {
                 design: design,
                 data: data,
                 options: options,
               };
               $.ajax({
-                url: api_url + '/stl',
+                url: apiUrl + '/stl',
                 type: 'POST',
                 data: JSON.stringify(inputs),
                 dataType: 'json',
@@ -288,6 +351,122 @@ paths:
                 error: onError(callback)
               });
             }
+        - lang: 'python'
+          source: |
+             import requests
+             
+             class Proxy:
+               def __init__(self, url):
+                 self.url = url + '/storyteller/api'
+                 self.session = requests.Session()
+               
+               def stl(self, design, data, options = {}):
+                  data = {
+                    'design': design,
+                    'data': data,
+                    'options': options
+                  }
+                  return self.session.post(self.url+'/stl', json=data).json()
+
+  /xslt:
+    post:
+      tags:
+      - "processor"
+      summary: "Transform given XML document based on given XSLT schema"
+      operationId: "processXSLT"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        description: "Request of the XSLT format operation"
+        schema:
+          type: "object"
+      responses:
+        200:
+          description: "Response of the XSLT format operation"
+          schema:
+            type: "object"
+      security:
+        - sessionCookie: []
+
+  /xp:
+    post:
+      tags:
+      - "processor"
+      summary: "Process given XML document with XML Processor template engine"
+      operationId: "processXP"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        description: "Request of the XP process operation"
+        schema:
+          type: "object"
+      responses:
+        200:
+          description: "Response of the XP process operation"
+          schema:
+            type: "object"
+      security:
+        - sessionCookie: []
+
+  /xsd:
+    post:
+      tags:
+      - "processor"
+      summary: "Validate given XML document based on given XSD schema"
+      operationId: "processXSD"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        description: "Request of the XSD validation"
+        schema:
+          type: "object"
+      responses:
+        200:
+          description: "Response of the XSD validation"
+          schema:
+            type: "object"
+      security:
+        - sessionCookie: []
+
+  /svg:
+    post:
+      tags:
+      - "processor"
+      summary: "Render given SVG"
+      operationId: "processSVG"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        description: "Request of the SVG rendering operation"
+        schema:
+          type: "object"
+      responses:
+        200:
+          description: "Response of the SVG rendering operation"
+          schema:
+            type: "object"
+      security:
+        - sessionCookie: []
 
 definitions:
   Status:
