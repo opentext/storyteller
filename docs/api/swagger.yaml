@@ -87,8 +87,8 @@ paths:
             $ref: "#/definitions/PingResponse"
       x-code-samples:
         - lang: 'curl'
-		  source: |
-		    curl -X GET "$URL/storyteller/api/ping" -H "accept: application/json"
+          source: |
+            curl -X GET "$URL/storyteller/api/ping" -H "accept: application/json"
         - lang: 'javascript/jquery'
           source: |
             function ping(apiUrl, callback) {
@@ -140,7 +140,7 @@ paths:
         - sessionCookie: []
       x-code-samples:
         - lang: 'curl'
-		  source: |
+          source: |
             curl -X POST "$URL/storyteller/api/files" -H "accept: application/json" -H "Content-Type: multipart/form-data" -F "file=@sample.svg;type=image/svg+xml"
         - lang: 'javascript/jquery'
           source: |
@@ -203,7 +203,7 @@ paths:
         - sessionCookie: []
       x-code-samples:
         - lang: 'curl'
-		  source: |
+          source: |
             curl -X GET "$URL/storyteller/api/files/e9b2b6237eebcb085c8f025fc12fe2b1fa998195/contents" -H "accept: application/json"
         - lang: 'javascript/jquery'
           source: |
@@ -259,7 +259,7 @@ paths:
         - sessionCookie: []
       x-code-samples:
         - lang: 'curl'
-		  source: |
+          source: |
             curl -X POST "$URL/storyteller/api/tdt" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"source\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\", \"template\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\", \"rules\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\"}"
         - lang: 'javascript/jquery'
           source: |
@@ -327,7 +327,7 @@ paths:
         - sessionCookie: []
       x-code-samples:
         - lang: 'curl'
-		  source: |
+          source: |
             curl -X POST "$URL/storyteller/api/stl" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"design\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\", \"options\": { \"driver\": { \"type\": \"pdf\" }, \"properties\": { \"language\": \"en-US\" }, \"validate\": true }}"
         - lang: 'javascript/jquery'
           source: |
