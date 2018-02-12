@@ -294,13 +294,13 @@ paths:
                  self.session = requests.Session()
                
                def tdt(self, source, template, rules, options = {}):
-                  data = {
+                  inputs = {
                     'source': source,
                     'template': source,
                     'rules': source,
                     'options': options
                   }
-                  return self.session.post(self.url+'/tdt', json=data).json()
+                  return self.session.post(self.url+'/tdt', json=inputs).json()
   /stl:
     post:
       tags:
@@ -361,12 +361,12 @@ paths:
                  self.session = requests.Session()
                
                def stl(self, design, data, options = {}):
-                  data = {
+                  inputs = {
                     'design': design,
                     'data': data,
                     'options': options
                   }
-                  return self.session.post(self.url+'/stl', json=data).json()
+                  return self.session.post(self.url+'/stl', json=inputs).json()
 
   /xslt:
     post:

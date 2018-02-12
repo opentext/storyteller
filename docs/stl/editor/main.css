@@ -27,7 +27,7 @@ input:disabled.button {
 	border:1px solid gray;
 }
 
-#preview-html h3, #preview-st h3 {
+#preview-main h3, #preview-layout h3 {
 	font-family: arial;
 	text-align:center;
 	color: #777;
@@ -70,7 +70,7 @@ input:disabled.button {
 	position: relative;
 }
 
-#preview-html, #preview-st {
+#preview-main, #preview-layout {
 	border-left: 1px dotted #abd7e5;
 	border-right: 1px dotted #abd7e5;
 	margin: 30pt 50pt;

@@ -67,7 +67,7 @@ function findElementByOpath(opath, js) {
 };
 
 function report_error(type, e, $elem) {
-    $elem = $elem || $('#preview-main, #preview-st');
+    $elem = $elem || $('#preview-main, #preview-layout');
     var stl = require('stl');
     $elem.html('<h3>&#x26a0; '+type+'</h3><div class="errors">'+stl.text_escape(e)+'</div>');
 }
@@ -298,7 +298,7 @@ function previewManager() {
     var prettify = xmlPrettifier();
     var proxy = services.proxy(g_service_url+'/api', function (response) {
         if (response.status === 'success') {
-            $('#tab-preview-st, #tab-preview-data, #tab-preview-pdf, #tab-preview-docx').removeAttr("disabled");
+            $('#tab-preview-layout, #tab-preview-data, #tab-preview-pdf, #tab-preview-docx').removeAttr("disabled");
         }
     });
     
@@ -789,7 +789,7 @@ function previewManager() {
         repo : {},
         last: {
             main: {},
-            st: {},
+            layout: {},
             data: {},
             pdf: {},
             docx: {},
@@ -844,7 +844,7 @@ function previewManager() {
                 last.markup = state.markup;
             }
             break;
-        case 'st':
+        case 'layout':
             if (state.markup !== last.markup || state.width !== last.width) {
                 $elem.append('<div class="loading"></div>');
                 previewST($elem, state.markup, state.width);
