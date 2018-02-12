@@ -735,6 +735,7 @@ function previewManager() {
             var document = response.result.find((r) => r.name === 'document.docx');
             //var url = 'https://docs.google.com/gview?url='+proxy.hash2uri(document.id)+'&embedded=true';
             var url = 'https://view.officeapps.live.com/op/embed.aspx?src='+proxy.hash2uri(document.id);
+            console.log(url);
             var html = '<iframe src="'+url+'" style="width:100%; height: calc(100vh - 110px); border:none; frameborder:0;"></iframe>';            $elem.html(html);
         });
     }
@@ -854,15 +855,17 @@ function previewManager() {
         case 'pdf':
             if (state.markup !== last.markup || state.width !== last.width) {
                 $elem.append('<div class="loading"></div>');
-                previewPDF($elem, state.markup);
+                previewPDF($elem, state.markup, state.width);
                 last.markup = state.markup;
+                last.width = state.width;
             }
             break;
         case 'docx':
             if (state.markup !== last.markup || state.width !== last.width) {
                 $elem.append('<div class="loading"></div>');
-                previewDOCX($elem, state.markup);
+                previewDOCX($elem, state.markup, state.width);
                 last.markup = state.markup;
+                last.width = state.width;
             }
             break;
         case 'html':
