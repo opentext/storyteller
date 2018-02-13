@@ -1,0 +1,178 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:simpleType name="length">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[+-]?([0-9]*\.)?[0-9]+(pt|px|in|pc|mm|cm|em|%)"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="identifier">
+    <xsd:restriction base="xsd:string">
+	  <!-- User defined identifiers should not start with underscore - it is reserved for internal IDs -->
+      <xsd:pattern value="[a-zA-Z][a-zA-Z_\-0-9]*"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="class">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[a-zA-Z_][a-zA-Z_\-0-9]*"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="style">
+    <xsd:restriction base="xsd:string">
+	  <!-- Whitespace rules may be too strict here, but we want to have the style syntax uniform -->
+      <xsd:pattern value="([a-z\-]+:\s?[^;]+;?\s?)+"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="transform">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="((matrix|translate|scale|rotate|skewX|skewY)\(\s*([+-]?([0-9]*\.)?[0-9]+\s*)+\)\s*)+"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="points">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="([+-]?([0-9]*\.)?[0-9]+[,;\s]?)+"/>
+	</xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="path_data">
+    <xsd:restriction base="xsd:string">
+	  <!-- This pattern causes assert at libxml_helpers.cxx:304 -->
+<!-- <xsd:pattern value="([mlhvcsqtaMLHVCSQTA]?[,;\s]?([+-]?(([0-9]*\.)?[0-9]+))[,;\s]?)+[zZ]?"/> -->
+	</xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:attributeGroup name="bbox-attrs-rect">
+	<!-- Following attributes all handle bbox, we should reduce them to just:
+		 'left', 'top', 'width', 'height' or something similar -->
+	<xsd:attribute name="x" type="svg:length" />
+	<xsd:attribute name="y" type="svg:length" />
+	<xsd:attribute name="w" type="svg:length" />
+	<xsd:attribute name="h" type="svg:length" />
+  </xsd:attributeGroup>
+
+  <xsd:attributeGroup name="bbox-attrs-ellipse">
+	<xsd:attribute name="cx" type="svg:length" />
+	<xsd:attribute name="cy" type="svg:length" />
+	<xsd:attribute name="rx" type="svg:length" />
+	<xsd:attribute name="ry" type="svg:length" />
+  </xsd:attributeGroup>
+
+  <xsd:attributeGroup name="bbox-attrs-circle">
+	<xsd:attribute name="cx" type="svg:length" />
+	<xsd:attribute name="cy" type="svg:length" />
+	<xsd:attribute name="r" type="svg:length" />
+  </xsd:attributeGroup>
+
+  <xsd:attributeGroup name="bbox-attrs-line">
+	<xsd:attribute name="x1" type="svg:length" />
+	<xsd:attribute name="y1" type="svg:length" />
+	<xsd:attribute name="x2" type="svg:length" />
+	<xsd:attribute name="y2" type="svg:length" />
+  </xsd:attributeGroup>
+
+  <xsd:simpleType name="class">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[a-zA-Z_][a-zA-Z_\-0-9]*"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="style">
+    <xsd:restriction base="xsd:string">
+	  <!-- Whitespace rules may be too strict here, but we want to have the style syntax uniform -->
+      <xsd:pattern value="([a-z\-]+:\s?[^;]+;?\s?)+"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="transform">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="((matrix|translate|scale|rotate|skewX|skewY)\(\s*([+-]?([0-9]*\.)?[0-9]+\s*)+\)\s*)+"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:attributeGroup name="style-attrs">
+	<xsd:attribute name="id" type="xsd:ID"/>
+	<xsd:attribute name="class" type="svg:class"/>
+	<xsd:attribute name="style" type="svg:style"/>
+  </xsd:attributeGroup>
+
+  <xsd:group name="shape-items">
+	<xsd:choice>
+	  <xsd:element ref="svg:ellipse" />
+	  <xsd:element ref="svg:circle" />
+	  <xsd:element ref="svg:rect" />
+	  <xsd:element ref="svg:path" />
+	  <xsd:element ref="svg:polygon" />
+	  <xsd:element ref="svg:polyline" />
+	  <xsd:element ref="svg:line" />
+	  <xsd:element ref="svg:g" />
+	</xsd:choice>
+  </xsd:group>
+
+
+  <xsd:element name="path">
+	<xsd:complexType>
+	  <xsd:attributeGroup ref="svg:style-attrs"/>
+	  <xsd:attribute name="d" type="svg:path_data"/>
+	  <xsd:attribute name="transform" type="svg:transform" />
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="rect">
+	<xsd:complexType>
+	  <xsd:attributeGroup ref="svg:bbox-attrs"/>
+	  <xsd:attributeGroup ref="svg:style-attrs"/>
+	  <xsd:attribute name="transform" type="svg:transform" />
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="ellipse">
+	<xsd:complexType>
+	  <xsd:attributeGroup ref="svg:bbox-attrs-ellipse"/>
+	  <xsd:attributeGroup ref="svg:style-attrs"/>
+	  <xsd:attribute name="transform" type="svg:transform" />
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="circle">
+	<xsd:complexType>
+	  <xsd:attributeGroup ref="svg:bbox-attrs-circle"/>
+	  <xsd:attributeGroup ref="svg:style-attrs"/>
+	  <xsd:attribute name="transform" type="svg:transform" />
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="polygon">
+	<xsd:complexType>
+	  <xsd:attributeGroup ref="svg:style-attrs"/>
+	  <xsd:attribute name="points" type="svg:points"/>
+	  <xsd:attribute name="transform" type="svg:transform" />
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="polyline">
+	<xsd:complexType>
+	  <xsd:attributeGroup ref="svg:style-attrs"/>
+	  <xsd:attribute name="points" type="svg:points"/>
+	  <xsd:attribute name="transform" type="svg:transform" />
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="line">
+	<xsd:complexType>
+	  <xsd:attributeGroup ref="svg:bbox-attrs-line"/>
+	  <xsd:attributeGroup ref="svg:style-attrs"/>
+	  <xsd:attribute name="transform" type="svg:transform" />
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="g">
+	<xsd:complexType>
+	  <xsd:attributeGroup ref="svg:style-attrs"/>
+	  <xsd:attribute name="transform" type="svg:transform" />
+	</xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

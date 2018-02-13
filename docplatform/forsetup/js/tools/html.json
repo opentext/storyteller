@@ -10,15 +10,14 @@
         "  display: inline-block;",
         "  vertical-align: text-bottom;",
         "}",
-        ".stl-image {",
-        "  width: 100%;",
-        "  height: 100%;",
-        "}",
         "*[data-stl-class=\"stl:page\"] {",
         "  position: relative;",
         "}",
         "*[data-stl-class=\"stl:text\"] {",
         "  overflow: hidden;",
+        "}",
+        "*[data-stl-class=\"stl:table\"] {",
+        "  border-collapse: collapse;",
         "}"
     ]
 }

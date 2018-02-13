@@ -91,7 +91,7 @@ function convert_xml_dump(xml, func) {
     }
     // numeric value
     var n = Number(xml);
-    if (!isNaN(n)) {
+    if (!Number.isNaN(n)) {
         return n;
     }
     return func !== undefined
@@ -100,28 +100,28 @@ function convert_xml_dump(xml, func) {
 }
 
 function dom_parse(xml) {
-    function node_proxy(node) {
-        function select(node, xpath_selector) {
-            return require('xpath')(node, xpath_selector);
+    function node_proxy(xpath_ctx) {
+        function select(xpath_ctx, xpath_selector) {
+            return require('xpath')(xpath_ctx, xpath_selector);
         }
 
         return {
-            node: node,
+            node: xpath_ctx.contextNode,
             dump: function dump_xml(xpath) {
-                return dom_write(select(node, xpath));
+                return dom_write(select(xpath_ctx, xpath));
             },
             js: function select_js(xpath, options) {
-                var result = select(node, xpath);
+                var result = select(xpath_ctx, xpath);
                 if (Array.isArray(result) && result.length > 0) {
                     result = js_parse(dom_write(result), options);
                 }
                 return result;
             },
             dom: function select_dom(xpath) {
-                var result = select(node, xpath);
+                var result = select(xpath_ctx, xpath);
                 if (Array.isArray(result)) {
-                    result = result.map(function (n) {
-                        return node_proxy(n);
+                    result = result.map(function (n, index, arr) {
+                        return node_proxy({contextNode: n, contextSize: arr.length, contextPosition: index + 1});
                     });
                     if (result.length) {
                         // augment single-item array with methods to allow direct selection chaining
@@ -141,27 +141,42 @@ function dom_parse(xml) {
         parser = new xmldom.DOMParser();
     }
     var dom = parser.parseFromString(xml, 'text/xml');
-    return node_proxy(dom);
+    return node_proxy({contextNode: dom, contextSize: 1, contextPosition: 1});
+}
+
+function st_proxy(data) {
+    return {
+        dump: function build_xml(xpath) {
+            return convert_xml_dump(data.select(xpath));
+        },
+        js: function build_js(xpath, options) {
+            return convert_xml_dump(data.select(xpath), function (dump) {
+                return js_parse(dump, options);
+            });
+        },
+        dom: function build_dom(xpath) {
+            return convert_xml_dump(data.select(xpath), function (dump) {
+                return dom_parse(dump);
+            });
+        }
+    };
+}
+
+function bind(proxy) {
+    if (require('util').isString(proxy)) {
+        proxy = dom_parse(proxy);
+    }
+    exports.dump = proxy.dump;
+    exports.js = proxy.js;
+    exports.dom = proxy.dom;
 }
 
 exports.xml2js = js_parse;
 exports.xml2dom = dom_parse;
 
-if (__bindings.data.select) {
-    exports.dump = function build_xml(xpath) {
-        return convert_xml_dump(__bindings.data.select(xpath));
-    };
-
-    exports.js = function build_js(xpath, options) {
-        return convert_xml_dump(__bindings.data.select(xpath), function (dump) {
-            return js_parse(dump, options);
-        });
-    };
-
-    exports.dom = function build_dom(xpath) {
-        return convert_xml_dump(__bindings.data.select(xpath), function (dump) {
-            return dom_parse(dump);
-        });
-    };
+if (typeof(__bindings) !== "undefined" && __bindings.data.select) {
+    // bind current data message automatically
+    bind(st_proxy(__bindings.data));
+} else {
+    exports.bind = bind;
 }
-

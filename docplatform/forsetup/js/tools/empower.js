@@ -495,7 +495,7 @@ function build_stl(contents, writer, options) {
                 inserter.push('field', var_args(id));
                 break;
             case enums.content.VARIABLE_END:
-            inserter.pop('field');
+                inserter.pop('field');
                 break;
             case enums.content.HYPERLINK_START:
                 inserter.push('scope', {'hyperlink': draw.m_Links[id].msLink});

@@ -48,25 +48,30 @@ exports.tdt = function tdt_transformer(template, rules, mode) {
     rules = _getInput(rules);
     template = _getInput(template);
     return function transform(src, dst, params) {
-        params = params || {};
         src = _getInput(src);
-        var result = __bindings.services.tdt(rules, template, src, _getInput(dst, true), params, mode);
+        var options = {
+            mode: mode,
+            params: params || {}
+        };
+        var result = __bindings.services.tdt(src, template, rules, _getInput(dst, true), options);
         return _setOutput(dst, result);
     };
 };
 
 exports.xp = function xml_processor() {
-    return function process(src, dst) {
+    return function process(src, dst, options) {
         src = _getInput(src);
-        var result = __bindings.services.xp(src, _getInput(dst, true));
+        var result = __bindings.services.xp(src, _getInput(dst, true), options || {});
         return _setOutput(dst, result);
     };
 };
 
 exports.xsd = function xsd_validator(xsd) {
-    return function validate(xml) {
+    return function validate(xml, options) {
         xml = _getInput(xml);
-        __bindings.services.xsd(xsd, xml);
+        var errors = __bindings.services.xsd(xml, xsd, options || {});
+        if (errors.length)
+            throw new Error(errors);
     };
 };
 

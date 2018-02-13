@@ -1,0 +1,18 @@
+{
+    "data" : {
+        "xml2js" : {
+            "defaults" : {
+                "async": false,
+                "explicitRoot": false,
+                "explicitArray": false,
+                "mergeAttrs": true,
+                "parseNumbers": true
+            }
+        },
+        "xml" : {
+            "root" : "tdt:root",
+            "alias" : "xmlns:tdt",
+            "ns": "http://developer.opentext.com/schemas/storyteller/transformation/tdt"
+        }
+    }
+}

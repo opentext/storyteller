@@ -56,8 +56,15 @@ function register_property(item, name, options) {
     var get = options.get || function () {
         var key = options.key;
         if (options.index) {
-            key += ',' + this.index;
+            if (this.key_prefix) {
+                key = this.key_prefix + '#' + this.index + '/' + key;
+            } else {
+                key += ',' + this.index;
+            }
+        } else if (this.key_prefix) {
+            key = this.key_prefix + key;
         }
+
         return filters.get(__bindings.properties.get(key));
     };
     var set = options.set || (options.get
@@ -65,7 +72,13 @@ function register_property(item, name, options) {
         : function (value) {
             var key = options.key;
             if (options.index) {
-                key += ',' + this.index;
+                if (this.key_prefix) {
+                    key = this.key_prefix + '#' + this.index + '/' + key;
+                } else {
+                    key += ',' + this.index;
+                }
+            } else if (this.key_prefix) {
+                key = this.key_prefix + key;
             }
             __bindings.properties.set(key, filters.set(value));
         });
@@ -364,6 +377,92 @@ util.inherits(Text, LayoutItem);
 
 // TextHeightGrow: "VerticalGrow", ... Deprecated
 
+//----------------- for Charts --------------------
+
+// common for axes
+function common_axes_properties() {
+    return {
+        LogicalPositionX: {key: "LogicalPositionX", index: true, numeric: true},
+        LogicalPositionY: {key: "LogicalPositionY", index: true, numeric: true},
+        LogicalXLow: {key: "CoordLimit/low_x", index: true, numeric: true},
+        LogicalXHigh: {key: "CoordLimit/high_x", index: true, numeric: true},
+        LogicalYLow: {key: "CoordLimit/low_y", index: true, numeric: true},
+        LogicalYHigh: {key: "CoordLimit/high_y", index: true, numeric: true}
+    };
+}
+
+//----------------- class SupportLine --------------------
+function SupportLine(index) {
+    assert(this instanceof SupportLine);
+    this.index = index;
+    this.key_prefix = "Chart/ChartGridLines/";
+}
+util.inherits(SupportLine, Base);
+
+register_properties(SupportLine.prototype, common_axes_properties());
+register_properties(SupportLine.prototype, {
+    LogicalWidth: {key: "LogicalWidth", index: true, numeric: true},
+    LogicalStep: {key: "LogicalHeight", index: true, numeric: true}
+});
+
+
+SupportLine.prototype.inspect = function () {
+    return '{' + this.Class + ' #' + this.index + '}';
+};
+
+//----------------- class AxisX --------------------
+function AxisX(index) {
+    assert(this instanceof AxisX);
+    this.index = index;
+    this.key_prefix = "Chart/ChartAxesX/";
+}
+util.inherits(AxisX, Base);
+
+register_properties(AxisX.prototype, common_axes_properties());
+register_properties(AxisX.prototype, {
+    LogicalWidth: {key: "LogicalWidth", index: true, numeric: true}
+});
+
+
+AxisX.prototype.inspect = function () {
+    return '{' + this.Class + ' #' + this.index + '}';
+};
+
+//----------------- class AxisY --------------------
+function AxisY(index) {
+    assert(this instanceof AxisY);
+    this.index = index;
+    this.key_prefix = "Chart/ChartAxesY/";
+}
+util.inherits(AxisY, Base);
+
+register_properties(AxisY.prototype, common_axes_properties());
+register_properties(AxisY.prototype, {
+    LogicalHeight: {key: "LogicalHeight", index: true, numeric: true}
+});
+
+
+AxisY.prototype.inspect = function () {
+    return '{' + this.Class + ' #' + this.index + '}';
+};
+
+//----------------- class Plot --------------------
+function Plot() {
+    assert(this instanceof Plot);
+    this.key_prefix = "Chart/Plot/";
+}
+
+register_properties(Plot.prototype, {
+    MarginLeft: {key: "offset_left", numeric: true},
+    MarginRight: {key: "offset_right", numeric: true},
+    MarginTop: {key: "offset_top", numeric: true},
+    MarginBottom: {key: "offset_bottom", numeric: true},
+    LogicalXHigh: {key: "high_x", numeric: true},
+    LogicalYLow: {key: "low_y", numeric: true},
+    LogicalYHigh: {key: "high_y", numeric: true},
+    LogicalXLow: {key: "low_x", numeric: true}
+});
+
 //----------------- class Chart --------------------
 function Chart() {
     assert(this instanceof Chart);
@@ -372,7 +471,43 @@ util.inherits(Chart, LayoutItem);
 
 register_properties(Chart.prototype, {
     Direction: {key: "Direction", map: ['None', 'L2R', 'R2L']},
-    BidiAndShaping: "Chart/BidiAndShaping"
+    BidiAndShaping: "Chart/BidiAndShaping",
+    Title: "Chart/WindowLabel",
+    Plot: {
+        get: function () {
+            return Object.freeze(new Plot());
+        }
+    },
+    SupportLines: {
+        get: function () {
+            var range = require('range');
+            var count = __bindings.properties.get("Chart/ChartGridLines/Count");
+            var support_lines = range(count).map(function (i) {
+                return Object.freeze(new SupportLine(i));
+            });
+            return Object.freeze(support_lines);
+        }
+    },
+    AxesX: {
+        get: function () {
+            var range = require('range');
+            var count = __bindings.properties.get("Chart/ChartAxesX/Count");
+            var axes_x = range(count).map(function (i) {
+                return Object.freeze(new AxisX(i));
+            });
+            return Object.freeze(axes_x);
+        }
+    },
+    AxesY: {
+        get: function () {
+            var range = require('range');
+            var count = __bindings.properties.get("Chart/ChartAxesY/Count");
+            var axes_y = range(count).map(function (i) {
+                return Object.freeze(new AxisY(i));
+            });
+            return Object.freeze(axes_y);
+        }
+    }
 });
 
 //----------------- class Group --------------------

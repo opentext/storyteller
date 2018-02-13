@@ -4,9 +4,11 @@
 
 var util = require('util');
 
-var namespaces = {
+const namespaces = {
     stl: "http://developer.opentext.com/schemas/storyteller/layout",
-    xp: "http://developer.opentext.com/schemas/storyteller/xmlpreprocessor"
+    xp: "http://developer.opentext.com/schemas/storyteller/xmlpreprocessor",
+    scd: "http://developer.opentext.com/schemas/storyteller/chart/definition",
+    ddi: "http://developer.opentext.com/schemas/storyteller/layout/ddi/v1"
 };
 
 function xml_escaper(pattern) {
@@ -214,11 +216,24 @@ function xml_accumulator(callback, dont_escape) {
     };
 }
 
+function fork() {
+    var next = Array.prototype.slice.call(arguments);
+    return {
+        start: (tag, attrs) => next.forEach((n) => n.start(tag, attrs)),
+        end: (tag) => next.forEach((n) => n.end(tag)),
+        text: (data) => next.forEach((n) => n.text(data)),
+        finalize: (data) => next.forEach((n) => n.finalize()),
+    };
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-function preprocessor(nsmap, next, callback) {
-    callback = callback || function () {
-        throw new Error("Fixtures not supported");
+function preprocessor(nsmap, next, handlers) {
+    handlers = handlers || {};
+
+    var streams = require('streams');   
+    var callback = handlers.fixture || function () {
+        throw new Error("stl::fixture not supported");
     };
     var fixture = null;
 
@@ -234,11 +249,11 @@ function preprocessor(nsmap, next, callback) {
         if (is_fixture(name)) {
             var src = attrs.src;
             if (src) {
-                callback(attrs, require('streams').stream(src).read());
+                callback(attrs, streams.stream(src));
                 fixture = empty_checker();
             } else {
                 fixture = xml_accumulator(function (data) {
-                    callback(attrs, data);
+                    callback(attrs, streams.stream().write(data));
                 });
             }
         } else {
@@ -249,7 +264,6 @@ function preprocessor(nsmap, next, callback) {
         if (is_fixture(name)) {
             fixture.finalize();
             fixture = null;
-            callback(attrs);
         } else {
             get_next().end(name, attrs);
         }
@@ -419,12 +433,12 @@ function handler_dispatcher(nsmap, handler) {
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-function sax_parser(nsmap, builder, cfg) {
-    cfg = cfg || {};
+function sax_parser(nsmap, builder, options) {
+    options = options || {};
     var sax = require('sax');
 
     var dispatcher = dispatch_stack(handler_dispatcher(nsmap, builder));
-    var preprocess = preprocessor(nsmap, dispatcher, cfg.fixture);
+    var preprocess = preprocessor(nsmap, dispatcher, options.handlers);
     var normalize = stl_normalizer(nsmap, preprocess);
     var elements = element_stack(nsmap, normalize);
 
@@ -741,6 +755,7 @@ exports.ignorant = ignorant;
 exports.empty_checker = empty_checker;
 exports.text_accumulator = text_accumulator;
 exports.xml_accumulator = xml_accumulator;
+exports.fork = fork;
 exports.parser = sax_parser;
 exports.xml_escaper = xml_escaper;
 exports.attr_escape = attr_escape;

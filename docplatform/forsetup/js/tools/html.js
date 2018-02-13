@@ -8,6 +8,7 @@
 const util = require('util');
 const stl = require('stl');
 const defs = require('./html.json');
+const charts = require('charts');
 
 function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
@@ -140,7 +141,6 @@ function css_postprocess(css) {
                 ? masks[level]
                 : masks[masks.length-1];
             var pmask = preprocessMask(mask, level);
-            console.log(mask, level, '->', pmask);
             return pmask;
         }
         
@@ -235,12 +235,12 @@ function css_postprocess(css) {
         var props = getNumberingProps(rule);
         if (props) {
             if (props.level !== undefined) {
-                new_css.concat(genNumberingStyles(key, props));
+                new_css = new_css.concat(genNumberingStyles(key, props));
             } else {
                 var max = maxLevel(props.mask);
                 for (var level=0; level<=max; ++level) {
                     key = 'ol ' + key;
-                    new_css.concat(genNumberingStyles(key, props, level));
+                    new_css = new_css.concat(genNumberingStyles(key, props, level));
                 }
             }
         }
@@ -250,13 +250,14 @@ function css_postprocess(css) {
 
 function html_builder(nsmap, writer, options) {
     var ctx = {
-        stylesheet: null
+        stylesheet: null,
+        chartidx: 0
     };
     
-    const unsupported = function (item) {
-        var message = "Unsupported " + item;
+    const unsupported = function (tag, ...args) {
+        var message = util.format('Unsupported', tag, ...args);
         if (options.permissive) {
-            console.error(message + " (ignored)");
+            console.error(message, '(ignored)');
             return stl.ignorant();
         }
         throw new Error(message);
@@ -364,55 +365,77 @@ function html_builder(nsmap, writer, options) {
     }
 
     function table_builder(writer) {
-        var row = 0;
-        var cell = 0;
         var widths = [];
-            
+        var inside = {
+            story: 0,
+            row: 0,
+            cell: 0,
+            rep_index: 0,
+            row_index: null
+        };
+
+        function repeater_(start, attrs) {
+            if (start) {
+                if (inside.repeater)
+                    throw new Error("Table row repeater nesting not supported");
+                inside.repeater = true;
+                inside.rep_index += 1;
+                inside.row_index = 0;
+                writer.start('tbody', {
+                    'data-stl-class': 'stl:repeater',
+                    'data-stl-opath': 'stl:story['+inside.story+']/stl:repeater['+inside.rep_index+']',
+                    'data-stl-xpath': attrs.xpath
+                });
+            } else {
+                writer.end('tbody');
+                inside.repeater = false;
+            }
+        }            
+        
         function row_(start, attrs) {
             if (start) {
-                cell = 0;
+                inside.cell = 0;
+                inside.row_index += 1;
                 var css = stl.css_split(attrs.style);
                 css.height = attrs.h;
                 handle_resize(attrs['class'], css, {height: true});
                 writer.start('tr', {
                     'class': attrs['class'],
                     'data-stl-class': 'stl:row',
+                    'data-stl-opath': inside.repeater
+                        ? undefined
+                        : 'stl:story['+inside.story+']/stl:row['+inside.row_index+']',
                     style: stl.css_format(css)
                 });
             } else {
-                row += 1;
+                inside.row += 1;
                 writer.end('tr');
             }
         }
 
         function cell_(start, attrs) {
             if (start) {
-                if (row === 0) {
+                if (inside.row === 0) {
                     widths.push(attrs.w);
                 }
                 var css = stl.css_split(attrs.style);
-                css.width = widths[cell];
+                css.width = widths[inside.cell];
                 writer.start('td', {
                     'class': attrs['class'],
                     'data-stl-class': 'stl:cell',
                     colspan: attrs.colspan,
                     style: stl.css_format(css)
                 });
-                return stl.handler_dispatcher(nsmap, story_builder(writer));
+                return stl.handler_dispatcher(nsmap, story_builder(writer, false));
             } else {
-                cell += 1;
+                inside.cell += 1;
                 writer.end('td');
             }
         }
 
         function story_(start, attrs) {
             if (start) {
-                writer.start('tbody', {
-                    'class': attrs['class'],
-                    'data-stl-class': 'stl:story'
-                });
-            } else {
-                writer.end('tbody');
+                inside.story += 1;
             }
         }
         
@@ -420,12 +443,44 @@ function html_builder(nsmap, writer, options) {
             story_: story_,
             row_: row_,
             cell_: cell_,
-            repeater_: () => unsupported("stl:repeater"),
+            repeater_: repeater_,
             text: unexpected_text,
             finalize: () => {}
         };
     }
 
+    function text_builder(writer, text_attrs) {
+        function story_(start, attrs) {
+            if (text_attrs.story)
+                return unsupported("referenced and own stl:story");
+            if (start) {
+                writer.start('div', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:story'
+                });
+                return attrs.format === 'XHTML'
+                    ? stl.xml_accumulator( (markup) => writer.inject(convert_html(markup)), true)
+                    : stl.handler_dispatcher(nsmap, story_builder(writer, false));
+            } else {
+                writer.end('div');
+            }
+        }
+        
+        function shape_(start, attrs) {
+            if (start) {
+                return stl.ignorant();
+            }
+        }
+        
+        return { 
+            story_: story_,
+            shape_: shape_,
+            script_: () => unsupported("stl:script"),
+            text: unexpected_text,
+            finalize: () => {}
+        };
+    }
+        
     function convert_html(markup) {
         return markup
             .replace(/<body( [^>]*)?>/, '')
@@ -434,61 +489,71 @@ function html_builder(nsmap, writer, options) {
             .replace('<p ', '<div ')
             .replace('</p>', '</div>');
     }
-    
-    function item_builder(writer, inside) {
-        const inline = inside !== undefined;
-        inside = inside || {};
-        
-        function start_item(attrs) {
-            if (inline) {
-                writer.start('div', {
-                    'class': 'stl-inline-item',
-                });
-            }
-            inside.object = true;
-        }
 
-        function end_item() {
-            if (inline) {
-                writer.end('div');
-            }
-            inside.object = false;
-        }
-
-        function convert_css(attrs) {
-            var css = stl.css_split(attrs.style);
+    function convert_css(attrs, inside) {
+        var css = stl.css_split(attrs.style);
+        switch(inside.paragraph) {
+        case true:
+            // inline item
+            css.display = 'inline-block';
+            break;
+        case false:
+            // paragraph item
+            break;
+        case undefined:
+            // page item
+            css.position = 'absolute';
             if (attrs.x || attrs.y) {
-                css.position = 'absolute';
                 if (attrs.x)
                     css.left = attrs.x;
                 if (attrs.y)
                     css.top = attrs.y;
             }
-            css.width = attrs.w;
-            css.height = attrs.h;
-            if (!css['background-color'])
-                css['background-color'] = css.fill;
-            css.transform = attrs.transform;
-            return css;
+            break;
+        default:
+            throw new Error("Unsupported inside paragraph mode: ", inside.paragraph);
+        }
+        css.width = attrs.w;
+        css.height = attrs.h;
+        if (!css['background-color'])
+            css['background-color'] = css.fill;
+        css.transform = attrs.transform;
+        return css;
+    }
+    
+    function item_builder(writer, inside) {
+        inside = inside || {};
+        var chart_object = {};
+        
+        function start_item(attrs) {
+            //if (inside.paragraph) {
+            //    writer.start('div', {
+            //        'class': 'stl-inline-item',
+            //    });
+            //}
+            inside.object = true;
+        }
+
+        function end_item() {
+            //if (inside.paragraph) {
+            //    writer.end('div');
+            //}
+            inside.object = false;
         }
         
         function image_(start, attrs) {
             if (start) {
                 start_item(attrs);
-                var css = convert_css(attrs);
-                writer.start('div', {
+                var css = convert_css(attrs, inside);
+                writer.start('img', {
                     'class': attrs['class'],
                     'data-stl-class': 'stl:image',
+                    src: options.maps.uri(attrs.src),
                     style: stl.css_format(css)
-                });
-                writer.start('img', {
-                    'class': 'stl-image',
-                    src: attrs.src
                 });
                 return stl.empty_checker();
             } else {
-                writer.end('img'); 
-                writer.end('div');
+                writer.end('img');
                 end_item();
             }
         }
@@ -496,7 +561,7 @@ function html_builder(nsmap, writer, options) {
         function table_(start, attrs) {
             if (start) {
                 start_item(attrs);
-                var css = convert_css(attrs);
+                var css = convert_css(attrs, inside);
                 writer.start('table', {
                     'class': attrs['class'],
                     'data-stl-class': 'stl:table',
@@ -509,15 +574,13 @@ function html_builder(nsmap, writer, options) {
             }
         }
 
-        function text_(start, attrs) {
+        function group_(start, attrs) {
             if (start) {
                 start_item(attrs);
-                var css = convert_css(attrs);
-                handle_resize(attrs['class'], css);
+                var css = convert_css(attrs, inside);
                 writer.start('div', {
                     'class': attrs['class'],
-                    'data-stl-class': 'stl:text',
-                    'data-stl-story': attrs.story,
+                    'data-stl-class': 'stl:group',
                     style: stl.css_format(css)
                 });
             } else {
@@ -526,31 +589,166 @@ function html_builder(nsmap, writer, options) {
             }
         }
 
-        function story_(start, attrs) {
-            if (inside.object) {
-                if (start) {
-                    writer.start('div', {
+        function input_(start, attrs) {
+            if (start) {
+                start_item(attrs);
+                var css = convert_css(attrs, inside);
+                var att = {
                         'class': attrs['class'],
-                        'data-stl-class': 'stl:story'
-                    });
-                    return attrs.format === 'XHTML'
-                        ? stl.xml_accumulator( (markup) => writer.inject(convert_html(markup)), true)
-                        : stl.handler_dispatcher(nsmap, story_builder(writer));
-                } else {
-                    writer.end('div');
+                        style: stl.css_format(css),
+                        'data-stl-class': 'stl:input',
+                        'data-stl-type': attrs.type,
+                        'data-stl-xpath': attrs.xpath
+                };           
+                switch(attrs.type) {
+                case 'text':
+                    att.type = 'text';
+                    writer.start('input', att);
+                    break;
+                case 'radio':
+                    att.type = 'radio';
+                    writer.start('input', att);
+                    break;
+                case 'checkbox':
+                    att.type = 'checkbox';
+                    writer.start('input', att);
+                    break;
+                case 'submit':
+                    att.type = 'submit';
+                    writer.start('input', att);
+                    break;
+                case 'listbox':
+                    att.multiple = 'true';
+                case 'dropdown':
+                    writer.start('select', att);
+                    break;
+                default:
+                    throw new Error('Unsupported input type: ' + attrs.type);
                 }
             } else {
-                return unsupported("stl:story nesting");
+                switch(attrs.type) {
+                case 'text':
+                case 'radio':
+                case 'checkbox':
+                case 'submit':
+                    writer.end('input');
+                    break;
+                case 'listbox':
+                case 'dropdown':
+                    writer.end('select');
+                    break;
+                default:
+                    throw new Error('Unsupported input type: ' + attrs.type);
+                }
+                end_item();
             }
         }
         
+        function box_(start, attrs) {
+            if (start) {
+                start_item(attrs);
+                var css = convert_css(attrs, inside);
+                writer.start('div', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:box',
+                    style: stl.css_format(css)
+                });
+            } else {
+                writer.end('div');
+                end_item();
+            }
+        }
+
+        function shape_(start, attrs) {
+            if (start) {
+                var css = convert_css(attrs, inside);
+                writer.start('div', {
+                    'class': attrs['class'],
+                    'data-stl-class': 'stl:shape',
+                    style: stl.css_format(css)
+                });
+                
+                return stl.xml_accumulator( function (markup) {
+                    writer.start('svg', {
+                        width: attrs.w,
+                        height: attrs.h,
+                        xmlns: 'http://www.w3.org/2000/svg',
+                        version: '1.1',
+                    });
+                    writer.inject(markup);
+                    writer.end('svg');
+                }, true);
+            } else {
+                writer.end('div');
+            }
+        }
+        
+        function text_(start, attrs) {
+            if (start) {
+                start_item(attrs);
+                var css = convert_css(attrs, inside);
+                handle_resize(attrs['class'], css);
+                writer.start('div', {
+                    'class': attrs['class'],
+                    'data-stl-story': attrs.story,
+                    'data-stl-class': 'stl:text',
+                    style: stl.css_format(css)
+                });
+                return stl.handler_dispatcher(nsmap, text_builder(writer, attrs));
+            } else {
+                writer.end('div');
+                end_item();
+            }
+        }
+
+        function chart_(start, attrs) {
+            if (start) {
+                start_item(attrs);
+                var xpaths = [];
+                var collect = {
+                    start: function (tag, attrs) {
+                        if (attrs.xpath)
+                            xpaths.push(attrs.xpath);
+                    },
+                    end: () => {},
+                    text: () => {},
+                    finalize: () => {}
+                };
+                var accu = stl.xml_accumulator(function (scd) {
+                    if (!xpaths.length)
+                        throw new Error("stl:chart - missing data xpath");
+                    if (xpaths.length>1)
+                        throw new Error("stl:chart - multiple data xpaths not supported");
+                    var css = convert_css(attrs, inside);
+                    writer.start('div', {
+                        'class': attrs['class'],
+                        'data-stl-class': 'stl:chart',
+                        'data-stl-xpath': xpaths[0],
+                        style: stl.css_format(css)
+                    });
+                    
+                    writer.start('script', {type: "text/xmldata"});
+                    writer.inject(scd.replace('<scd:scd>', '<scd:scd xmlns:scd="'+stl.namespaces.scd+'">'));
+                    writer.end('script');
+
+                    writer.end('div');
+                }, true);
+                return stl.fork(collect, accu);
+            } else {
+                end_item();
+            }
+        }
+
         return { 
+            box_: box_,
+            group_: group_,
+            input_: input_,
             text_: text_,
+            shape_: shape_,
             image_: image_,
             table_: table_,
-            story_: story_,
             fragment_: () => unsupported("stl:fragment"),
-            chart_: () => unsupported("stl:chart"),
+            chart_: chart_,
             barcode_: () => unsupported("stl:barcode"),
             script_: () => unsupported("stl:script"),
             text: unexpected_text, 
@@ -558,8 +756,10 @@ function html_builder(nsmap, writer, options) {
         };
     }
 
-    function story_builder(writer) {
-        var inside = {};
+    function story_builder(writer, inside_paragraph) {
+        var inside = {
+            paragraph: inside_paragraph
+        };
         var list_level = 0;
         var inline_items = item_builder(writer, inside);
         
@@ -607,35 +807,120 @@ function html_builder(nsmap, writer, options) {
         }
 
         function story_(start, attrs) {
-            if (inside.hyperlink) {
+            if (inside.hyperlink || inside.form || inside.repeater || inside.switch_case || inside.story_ref) {
+                var tag = inside.paragraph ? 'span' : 'div';
                 if (start) {
-                    writer.start('span', {
+                    writer.start(tag, {
                         'class': attrs['class'],
                         'data-stl-class': 'stl:story'
                     });
+                    return attrs.format === 'XHTML'
+                        ? stl.xml_accumulator( (markup) => writer.inject(convert_html(markup)), true)
+                        : stl.handler_dispatcher(nsmap, story_builder(writer, inside.paragraph));
                 } else {
-                    writer.end('span');
+                    writer.end(tag);
                 }
             } else {
-                return inline_items.story_(start, attrs);
+                return unsupported('stl:story');
             }
         }
         
         function scope_(start, attrs) {
-            if (start) {
-                if (!attrs.hyperlink)
-                    return unsupported("stl:scope");
-                if (inside.hyperlink)
-                    return unsupported("stl:scope nesting");
-                writer.start('a', {
-                    'class': attrs['class'],
-                    'data-stl-class': 'stl:scope',
-                    href: attrs.hyperlink
-                });
-                inside.hyperlink = true;
+            if (attrs.relation) {
+                if (start) {
+                    var css = convert_css(attrs, inside);
+                    if (inside.form)
+                        return unsupported("form nesting");
+                    writer.start('form', {
+                        'class': attrs['class'],
+                        'data-stl-class': 'stl:scope',
+                        'data-stl-xpath': attrs.relation,
+                        style: stl.css_format(css)
+                    });
+                    inside.form = true;
+                } else {
+                    inside.form = false;
+                    writer.end('form');
+                }
+            } else if (attrs.hyperlink) {
+                if (start) {
+                    if (inside.hyperlink)
+                        return unsupported("hyperlink nesting");
+                    writer.start('a', {
+                        'class': attrs['class'],
+                        'data-stl-class': 'stl:scope',
+                        href: attrs.hyperlink
+                    });
+                    inside.hyperlink = true;                    
+                } else {
+                    inside.hyperlink = false;
+                    writer.end('a');
+                }
             } else {
-                inside.hyperlink = false;
-                writer.end('a');
+                var tag = inside.paragraph ? 'span' : 'div';
+                if (start) {
+                    if (inside.story_ref)
+                        return unsupported("story ref nesting");
+                    writer.start(tag, {
+                        'data-stl-class': 'stl:scope',
+                        'data-stl-story': attrs.story,
+                    });
+                    inside.story_ref = true;
+                } else {
+                    writer.end(tag);
+                    inside.story_ref = false;
+                }
+            }
+        }
+
+        function switch_(start, attrs) {
+            var tag = inside.paragraph ? 'span' : 'div';
+            if (start) {
+                if (inside.switcher)
+                    return unsupported("stl:switch nesting");
+                writer.start(tag, {
+                    'data-stl-class': 'stl:switch',
+                    'data-stl-xpath': attrs.xpath
+                });
+                inside.switcher = true;                
+            } else {
+                inside.switcher = false;
+                writer.end(tag);
+            }
+        }
+
+        function case_(start, attrs) {
+            var tag = inside.paragraph ? 'span' : 'div';
+            if (start) {
+                if (inside.switch_case)
+                    return unsupported("stl:case nesting");
+                if (!inside.switcher)
+                    return unsupported("stl:case outside an stl:switch");
+                writer.start(tag, {
+                    'data-stl-class': 'stl:case',
+                    'data-stl-key': attrs.key,
+                    'data-stl-story': attrs.story,
+                });
+                inside.switch_case = true;                
+            } else {
+                inside.switch_case = false;
+                writer.end(tag);
+            }
+        }
+        
+        function repeater_(start, attrs) {
+            var tag = inside.paragraph ? 'span' : 'div';
+            if (start) {
+                if (inside.repeater)
+                    return unsupported("stl:repeater nesting");
+                writer.start(tag, {
+                    'data-stl-class': 'stl:repeater',
+                    'data-stl-xpath': attrs.xpath
+                });
+                inside.repeater = true;
+            } else {
+                inside.repeater = false;
+                writer.end(tag);
             }
         }
         
@@ -651,13 +936,56 @@ function html_builder(nsmap, writer, options) {
             }
         }
 
-        
+        function break_(start, attrs) {
+            if (start) {
+                writer.start('span', {'data-stl-class': 'stl:break'});
+                writer.inject('<br/>');
+                return stl.empty_checker();
+            } else {
+                writer.end('span');
+            }
+        }
+
+        function space_(start, attrs) {
+            if (start) {
+                writer.inject('&nbsp;');
+                return stl.empty_checker();
+            }
+        }
+
+        function field_(start, attrs) {
+            if (start) {
+                if (!attrs.xpath)
+                    return unsupported("stl:field with no xpath not supported");
+                writer.start('span', {
+                    'data-stl-class': 'stl:field',
+                    'data-stl-xpath': attrs.xpath,
+                });
+                var data = attrs.sample || attrs.xpath;
+                writer.text(data);
+                return stl.empty_checker();
+            } else {
+                writer.end('span');
+            }
+        }
+
         function text(data) {
             if (data) {
-                if (inside.paragraph) {
+                switch(inside.paragraph) {
+                case undefined:
+                    inside.paragraph = true;
+                    // intentional fallthrough
+                case true:
                     writer.text(data);
-                } else if (data.trim()) {
-                    return unsupported("text outside paragraph");
+                    break;
+                case false:
+                    if (data.trim()) {
+                        return unsupported("text outside paragraph");
+                    }
+                    break;
+                default:
+                    throw new Error("Unsupported inside paragraph mode: ", inside.paragraph);
+                    break;
                 }
             }
         }
@@ -670,13 +998,21 @@ function html_builder(nsmap, writer, options) {
             list_: list_,
             p_: p_,
             span_: span_,
+            break_: break_,
+            space_: space_,
             block_: block_,
             scope_: scope_,
+            repeater_: repeater_,
+            switch_: switch_,
+            case_: case_,
             story_: story_,
-            field_: () => unsupported("stl:field"),
+            field_: field_,
             image_: inline_items.image_,
             table_: inline_items.table_,
+            group_: inline_items.group_,
+            input_: inline_items.input_,
             text_: inline_items.text_,
+            shape_: inline_items.shape_,
             chart_: inline_items.chart_,
             fragment_: inline_items.fragment_,
             barcode_: inline_items.barcode_,
@@ -711,6 +1047,7 @@ function html_builder(nsmap, writer, options) {
                     'class': attrs['class'],
                     'data-stl-class': 'stl:page',
                     'data-stl-name': attrs.name,
+                    'data-stl-background': attrs.background,
                     style: stl.css_format(css)
                 });
                 return stl.handler_dispatcher(nsmap, item_builder(writer));
@@ -728,20 +1065,55 @@ function html_builder(nsmap, writer, options) {
     }
     
     function root_builder(writer) {
-        var inside;
+        var inside = {};
+        var handlers = options.handlers || {};
 
         function section(name) {
-            if (inside !== name) {
-                if (inside)
-                    writer.end(inside);
-                inside = name;
+            if (inside.section !== name) {
+                if (inside.section)
+                    writer.end(inside.section);
+                inside.section = name;
                 writer.start(name);
             }
         }
 
         function finalize() {
-            if (inside) {
-                writer.end(inside);
+            if (inside.section) {
+                writer.end(inside.section);
+            }
+        }
+
+        function data_(start, attrs) {
+            if (start) {
+                inside.data = {
+                    template: null,
+                    source: { '_default': '<data/>' },
+                    rules: {}
+                };
+            } else {
+                if (!handlers.data) {
+                    throw new Error("stl::data not supported");
+                }
+                handlers.data(inside.data);
+                inside.data = null;
+            }
+        }
+
+        function source_(start, attrs) {
+            if (start) {
+                return stl.xml_accumulator( (markup) => inside.data.source[attrs.key || '_default'] = markup, true);
+            }
+        }
+
+        function transformation_(start, attrs) {
+            if (start) {
+                return stl.xml_accumulator( (markup) => inside.data.rules[attrs.key || '_default'] = markup, true);
+            }
+        }
+        
+        function template_(start, attrs) {
+            if (start) {
+                return stl.xml_accumulator( (markup) => inside.data.template = markup, true);
             }
         }
         
@@ -791,8 +1163,11 @@ function html_builder(nsmap, writer, options) {
         
         return {
             stl_: () => {},
-            data_: () => unsupported("stl:data"), 
-            fixtures_: () => unsupported("stl:fixtures"),
+            data_: data_,
+            source_: source_,
+            transformation_: transformation_,
+            template_: template_,
+            fixtures_: () => {}, // xp:fixture is handled in preprocessor
             style_: style_,
             document_: document_,
             text: unexpected_text, 
@@ -819,6 +1194,9 @@ function html_builder(nsmap, writer, options) {
  *        - `font` ... optional remap callback for font
  *        - `xpath` ... optional remap callback for XPath
  *        - `uri` ... optional remap callback for URI
+ *      - `handlers` ... object containing other handlers
+ *        - `fixture` ... optional callback for stl:fixture stream
+ *        - `data` ... optional callback for stl:data hierarchy (source, rules and template) 
  *    - `@return` ... output stream (if provided as `options.output`) or string
  */
 exports.stl2html = function stl2html(input, options) {
@@ -828,7 +1206,7 @@ exports.stl2html = function stl2html(input, options) {
     var nsmap = stl.namespace_stack();
     var writer = html_writer(options.indent);
     var builder = html_builder(nsmap, writer, options);
-    var parser = stl.parser(nsmap, builder);
+    var parser = stl.parser(nsmap, builder, options);
     parser.write(input).close();
     var output = writer.finalize();
     if (!options.output) {

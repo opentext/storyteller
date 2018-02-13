@@ -237,7 +237,7 @@ function process_chart_object(chart, chart_object, series) {
     if (chart_object.type === "multiBarHorizontalChart") {
         chart.showValues(true);
     }
-    if (chart_object.type === "lineChart" || chart_object.type === "multiBarChart") {
+    if (chart_object.type === "lineChart" || chart_object.type === "multiBarChart" || chart_object.type === "stackedAreaChart") {
         chart.xAxis.tickFormat(function (d) {
             return get_label(series, d);
         });
@@ -318,7 +318,8 @@ function chart_parser(document, ns, chart_object) {
         "pie": "pieChart",
         "bar": "discreteBarChart",
         "line": "lineChart",
-        "stackedBar": "multiBarChart"
+        "stackedBar": "stackedBar",
+        "stackedArea": "stackedAreaChart"
     };
 
     function get_chart_type(value, columns_series) {
@@ -455,7 +456,12 @@ function chart_parser(document, ns, chart_object) {
                 delete chart_object.options.forceX;
             },
             'stackedBar': function () {
+                chart_object.type = "multiBarChart";
                 chart_object.stacked = true;
+                var gap = node.getAttribute("gap");
+                var width = node.getAttribute("bar_width");
+                if (gap != "" && (width != "" || width != 0))
+                    chart_object.options.groupSpacing = Number(gap) / (Number(width) + Number(gap));
             },
             'multiBarChart': function () {
                 var gap = node.getAttribute("gap");
@@ -790,7 +796,64 @@ module.exports = {
 
         //console.timeEnd("addGraph");
 
+    },
+
+    stlchartxml : function (xml_def) {
+        var doc = jsdom.jsdom();
+
+        console.log('stlchartxml');
+
+        //console.time("scd parsing");
+
+        var chart_object = parse_chart_xml(doc, xml_def);
+
+        //console.timeEnd("scd parsing");
+
+        //console.time("data parsing");
+
+        var header_xpath = '/data' + chart_object.xpath + '/ddi:header';
+        var data_xpath = '/data' + chart_object.xpath + '/ddi:row';
+        var data_series = [{ key: header_xpath, values: data_xpath }];
+
+        //chart_object.data_series = process_data(process_data(data_series, "values"), "key");
+
+        //var chart_data = prepare_data(doc, chart_object);
+
+        var chart_data = [{
+            "color": "#a215af", "key": "Products", "area": true, "values": [
+                { "y": 10, "x": 0 }, 
+                { "y": 10, "x": 1 }, 
+                { "y": 11, "x": 2 }, 
+                { "y": 6, "x": 3 }, 
+                { "y": 12, "x": 4 }, 
+                { "y": 10, "x": 5 }, 
+                { "y": 13, "x": 6 }]
+        }, 
+        {
+            "color": "#0015af", "key": "prices", "area": true, "values": [
+                { "y": 22, "x": 0 }, 
+                { "y": 34, "x": 1 }, 
+                { "y": 110, "x": 2 },
+                { "y": 63, "x": 3 }, 
+                { "y": 12, "x": 4 },
+                { "y": 100, "x": 5 },
+                { "y": 130, "x": 6 }]
+        }]; 
+
+
+        //console.timeEnd("data parsing");
+
+        //console.time("addGraph");
+
+        nv.addGraph(
+            () => generator(doc, chart_object.type, chart_data, chart_object.options, chart_object),
+            (svg) => finalizer(doc, svg)
+        );
+
+        //console.timeEnd("addGraph");
+
     }
+
 };
 
 module.exports.time = d3.time;

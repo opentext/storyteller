@@ -57,7 +57,7 @@
 
   <xsd:simpleType name="transform">
     <xsd:restriction base="xsd:string">
-      <xsd:pattern value="((matrix|translate|scale|rotate|skewX|skewY)\(\s*([+-]?([0-9]*\.)?[0-9]+\s*)+\)\s*)+"/>
+      <xsd:pattern value="((matrix\(\s*([+-]?([0-9]*\.)?[0-9]+\s*){6}\)|translate\(\s*([+-]?([0-9]*\.)?[0-9]+\s*){2}\)|translateX\(\s*[+-]?([0-9]*\.)?[0-9]+\s*\)|translateY\(\s*[+-]?([0-9]*\.)?[0-9]+\s*\)|scale\(\s*([+-]?([0-9]*\.)?[0-9]+\s*){2}\)|scaleX\(\s*[+-]?([0-9]*\.)?[0-9]+\s*\)|scaleY\(\s*[+-]?([0-9]*\.)?[0-9]+\s*\)|rotate\(\s*[+-]?([0-9]*\.)?[0-9]+(rad|deg)\s*\)|skew\(\s*([+-]?([0-9]*\.)?[0-9]+(rad|deg)\s*){2}\)|skewX\(\s*[+-]?([0-9]*\.)?[0-9]+(rad|deg)\s*\)|skewY\(\s*[+-]?([0-9]*\.)?[0-9]+(rad|deg)\s*\))\s*)+"/>
     </xsd:restriction>
   </xsd:simpleType>
 
@@ -75,19 +75,6 @@
 
   <xsd:simpleType name="locale">
     <xsd:restriction base="xsd:string" />
-  </xsd:simpleType>
-
-  <xsd:simpleType name="points">
-    <xsd:restriction base="xsd:string">
-      <xsd:pattern value="([+-]?([0-9]*\.)?[0-9]+[,;\s]?)+"/>
-	</xsd:restriction>
-  </xsd:simpleType>
-
-  <xsd:simpleType name="path_data">
-    <xsd:restriction base="xsd:string">
-	  <!-- This pattern causes assert at libxml_helpers.cxx:304 -->
-<!-- <xsd:pattern value="([mlhvcsqtaMLHVCSQTA]?[,;\s]?([+-]?(([0-9]*\.)?[0-9]+))[,;\s]?)+[zZ]?"/> -->
-	</xsd:restriction>
   </xsd:simpleType>
 
   <xsd:simpleType name="unbounded_decimal">
@@ -267,26 +254,6 @@
 	<xsd:attribute name="h" type="stl:length" />
   </xsd:attributeGroup>
 
-  <xsd:attributeGroup name="bbox-attrs-ellipse">
-	<xsd:attribute name="cx" type="stl:length" />
-	<xsd:attribute name="cy" type="stl:length" />
-	<xsd:attribute name="rx" type="stl:length" />
-	<xsd:attribute name="ry" type="stl:length" />
-  </xsd:attributeGroup>
-
-  <xsd:attributeGroup name="bbox-attrs-circle">
-	<xsd:attribute name="cx" type="stl:length" />
-	<xsd:attribute name="cy" type="stl:length" />
-	<xsd:attribute name="r" type="stl:length" />
-  </xsd:attributeGroup>
-
-  <xsd:attributeGroup name="bbox-attrs-line">
-	<xsd:attribute name="x1" type="stl:length" />
-	<xsd:attribute name="y1" type="stl:length" />
-	<xsd:attribute name="x2" type="stl:length" />
-	<xsd:attribute name="y2" type="stl:length" />
-  </xsd:attributeGroup>
-
   <xsd:attributeGroup name="layout-item-attrs">
 	<xsd:attribute name="transform" type="stl:transform" />
   </xsd:attributeGroup>
@@ -294,13 +261,7 @@
   <xsd:group name="layout-items">
 	<xsd:choice>
 	  <xsd:element ref="stl:text" />
-	  <xsd:element ref="stl:ellipse" />
-	  <xsd:element ref="stl:circle" />
-	  <xsd:element ref="stl:rect" />
-	  <xsd:element ref="stl:path" />
-	  <xsd:element ref="stl:polygon" />
-	  <xsd:element ref="stl:polyline" />
-	  <xsd:element ref="stl:line" />
+	  <xsd:element ref="stl:shape" />
 	  <xsd:element ref="stl:image" />
 	  <xsd:element ref="stl:fragment" />
 	  <xsd:element ref="stl:group" />
@@ -338,6 +299,7 @@
 	<xsd:choice>
 	  <xsd:element ref="stl:span" />
 	  <xsd:element ref="stl:tab" />
+	  <xsd:element ref="stl:space" />
 	  <xsd:element ref="stl:break" />
 	  <!-- Consider splitting inline and paragraph commands -->
 	  <xsd:element ref="stl:command" />
@@ -349,6 +311,9 @@
 	  <xsd:element ref="stl:block" />
 	  <xsd:element ref="stl:list" />
 	  <xsd:element ref="stl:p" />
+	  <xsd:element ref="stl:scope" />
+	  <xsd:element ref="stl:repeater" />
+	  <xsd:element ref="stl:table" />
 	  <!-- Consider splitting inline and paragraph commands -->
 	  <xsd:element ref="stl:command" />
 	</xsd:choice>
@@ -428,6 +393,11 @@
   <!-- Command -->
 
   <xsd:element name="tab">
+	<xsd:complexType>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="space">
 	<xsd:complexType>
 	</xsd:complexType>
   </xsd:element>
@@ -576,102 +546,28 @@
 	</xsd:complexType>
   </xsd:element>
 
-  <xsd:element name="path">
-	<xsd:complexType>
-	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
-		<xsd:element ref="stl:story" />
-		<xsd:group ref="stl:runtime-items"/>
-	  </xsd:choice>
-	  <xsd:attributeGroup ref="stl:style-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
-	  <xsd:attribute name="data" type="stl:path_data"/>
-	</xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="rect">
-	<xsd:complexType>
-	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
-		<xsd:element ref="stl:story" />
-		<xsd:group ref="stl:runtime-items"/>
-	  </xsd:choice>
-	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
-	  <xsd:attributeGroup ref="stl:style-attrs"/>
-	  <xsd:attribute name="story" type="stl:name"/>
-	</xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="ellipse">
-	<xsd:complexType>
-	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
-		<xsd:element ref="stl:story" />
-		<xsd:group ref="stl:runtime-items"/>
-	  </xsd:choice>
-	  <xsd:attributeGroup ref="stl:bbox-attrs-ellipse"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
-	  <xsd:attributeGroup ref="stl:style-attrs"/>
-	  <xsd:attribute name="story" type="stl:name"/>
-	</xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="circle">
-	<xsd:complexType>
-	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
-		<xsd:element ref="stl:story" />
-		<xsd:group ref="stl:runtime-items"/>
-	  </xsd:choice>
-	  <xsd:attributeGroup ref="stl:bbox-attrs-circle"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
-	  <xsd:attributeGroup ref="stl:style-attrs"/>
-	  <xsd:attribute name="story" type="stl:name"/>
-	</xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="polygon">
-	<xsd:complexType>
-	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
-		<xsd:element ref="stl:story" />
-		<xsd:group ref="stl:runtime-items"/>
-	  </xsd:choice>
-	  <xsd:attributeGroup ref="stl:style-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
-	  <xsd:attribute name="points" type="stl:points"/>
-	  <xsd:attribute name="story" type="stl:name"/>
-	</xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="polyline">
-	<xsd:complexType>
-	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
-		<xsd:group ref="stl:runtime-items"/>
-	  </xsd:choice>
-	  <xsd:attributeGroup ref="stl:style-attrs"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
-	  <xsd:attribute name="points" type="stl:points"/>
-	</xsd:complexType>
-  </xsd:element>
-
-  <xsd:element name="line">
-	<xsd:complexType>
-	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
-		<xsd:group ref="stl:runtime-items"/>
-	  </xsd:choice>
-	  <xsd:attributeGroup ref="stl:bbox-attrs-line"/>
-	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
-	  <xsd:attributeGroup ref="stl:style-attrs"/>
-	</xsd:complexType>
-  </xsd:element>
-
   <xsd:element name="text">
 	<xsd:complexType>
 	  <xsd:choice minOccurs="0" maxOccurs="unbounded">
 		<xsd:element ref="stl:story" />
+		<xsd:element ref="stl:shape" />
 		<xsd:group ref="stl:runtime-items"/>
 	  </xsd:choice>
 	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
 	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	  <xsd:attribute name="story" type="stl:name"/>
+	</xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="shape">
+	<xsd:complexType>
+	  <xsd:sequence>
+		<xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+	  </xsd:sequence>
+	  <xsd:attributeGroup ref="stl:bbox-attrs"/>
+	  <xsd:attributeGroup ref="stl:layout-item-attrs"/>
+	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	</xsd:complexType>
   </xsd:element>
 
@@ -740,6 +636,7 @@
 	  <xsd:attributeGroup ref="stl:style-attrs"/>
 	  <xsd:attribute name="modern" type="xsd:boolean"/>
 	  <xsd:attribute name="src" type="stl:uri" />
+	  <xsd:attribute name="scd" type="stl:xpath" />
 	</xsd:complexType>
   </xsd:element>
 
