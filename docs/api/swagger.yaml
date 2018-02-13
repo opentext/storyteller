@@ -88,7 +88,8 @@ paths:
       x-code-samples:
         - lang: 'curl'
           source: |
-            curl -X GET "$URL/storyteller/api/ping" -H "accept: application/json"
+            curl -X GET "$URL/storyteller/api/ping" \
+                 -H "accept: application/json"
         - lang: 'javascript/jquery'
           source: |
             function ping(apiUrl, callback) {
@@ -190,7 +191,9 @@ paths:
                       headers: headers,
                       multipart: true,
                       data: {
-                        "file": restler.file(filepath, null, stats.size, null, mimetype),
+                        "file": restler.file(filepath, null, 
+                                             stats.size, null, 
+                                             mimetype),
                         "name": path.basename(filepath),
                       }
                     }).on('complete', (body, response) => {
@@ -210,9 +213,14 @@ paths:
                  self.url = url + '/storyteller/api'
                  self.session = requests.Session()
                
-               def upload(self, filepath, mimetype='application/octet-stream'):
-                 files = {'file': (os.path.basename(filepath), open(filepath, 'rb'), mimetype)} 
-                 return self.session.post(self.url+'/files', files=files).json()
+               def upload(self, 
+                          filepath, 
+                          mimetype='application/octet-stream'):
+                 files = {
+                   'file': (os.path.basename(filepath), 
+                            open(filepath, 'rb'), mimetype)} 
+                 return self.session.post(self.url+'/files', 
+                                          files=files).json()
 
   /files/{hashId}/contents:
     get:
@@ -242,7 +250,8 @@ paths:
       x-code-samples:
         - lang: 'curl'
           source: |
-            curl -X GET "$URL/storyteller/api/files/e9b2b6237eebcb085c8f025fc12fe2b1fa998195/contents" -H "accept: application/json"
+            curl -X GET "$URL/storyteller/api/files/e9b2b6237eebcb085c8f025fc12fe2b1fa998195/contents" \
+                 -H "accept: application/json"
         - lang: 'javascript/jquery'
           source: |
             function content(apiUrl, hash, callback) {
@@ -264,7 +273,8 @@ paths:
           source: |
             function content(hash) {
               return new Promise((resolve, reject) => {
-                restler.get(url+'/files/'+hash+'/contents', {headers: headers})
+                restler.get(url+'/files/'+hash+'/contents', 
+                            {headers: headers})
                   .on('success', resolve)
                   .on('fail', data => {
                     reject(new Error('Content for '+hash+' not found'));
@@ -281,7 +291,8 @@ paths:
                  self.session = requests.Session()
                
                def content(self, hash):
-                 return self.session.get(self.url+'/files/'+hash+'/contents').content
+                 url = self.url+'/files/'+hash+'/contents'
+                 return self.session.get(url).content
   /tdt:
     post:
       tags:
@@ -309,10 +320,16 @@ paths:
       x-code-samples:
         - lang: 'curl'
           source: |
-            curl -X POST "$URL/storyteller/api/tdt" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"source\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\", \"template\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\", \"rules\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\"}"
+            curl -X POST "$URL/storyteller/api/tdt" \
+                 -H "accept: application/json" \
+                 -H "Content-Type: application/json" \
+                 -d "{ \"source\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\", \
+                       \"template\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\", \
+                       \"rules\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\"}"
         - lang: 'javascript/jquery'
           source: |
-            function tdt(apiUrl, source, template, rules, options, callback) {
+            function tdt(apiUrl, 
+                         source, template, rules, options, callback) {
               var inputs = {
                 source: source,
                 template: template,
@@ -369,7 +386,8 @@ paths:
                     'rules': rules,
                     'options': options
                   }
-                  return self.session.post(self.url+'/tdt', json=inputs).json()
+                  url = self.url+'/tdt'
+                  return self.session.post(url, json=inputs).json()
   /stl:
     post:
       tags:
@@ -397,10 +415,19 @@ paths:
       x-code-samples:
         - lang: 'curl'
           source: |
-            curl -X POST "$URL/storyteller/api/stl" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"design\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\", \"options\": { \"driver\": { \"type\": \"pdf\" }, \"properties\": { \"language\": \"en-US\" }, \"validate\": true }}"
+            curl -X POST "$URL/storyteller/api/stl" \
+                 -H "accept: application/json" \
+                 -H "Content-Type: application/json" \
+                 -d "{ \"design\": \"7831f13d519651eba0b3a7fb236cc94fd9a156a1\", \
+                       \"options\": { \
+                         \"driver\": { \"type\": \"pdf\" }, \
+                         \"properties\": { \"language\": \"en-US\" }, \
+                         \"validate\": true }\
+                     }"
         - lang: 'javascript/jquery'
           source: |
-            function stl(apiUrl, design, data, options, callback) {
+            function stl(apiUrl, 
+                         design, data, options, callback) {
               var inputs = {
                 design: design,
                 data: data,
@@ -456,7 +483,8 @@ paths:
                     'data': data,
                     'options': options
                   }
-                  return self.session.post(self.url+'/stl', json=inputs).json()
+                  url = self.url+'/stl'
+                  return self.session.post(url, json=inputs).json()
 
   /xslt:
     post:
