@@ -106,6 +106,20 @@ paths:
                 error: onError(callback)
               });
             }
+        - lang: 'nodejs/restler'
+          source: |
+            function ping() {
+              return new Promise((resolve, reject) => {
+                restler.get(url+'/ping')
+                  .on('complete', result => {
+                     if (result instanceof Error) {
+                       reject(result);
+                     } else {
+                       resolve(result);
+                     }
+                });
+              });
+            }
         - lang: 'python'
           source: |
             import requests
@@ -161,6 +175,30 @@ paths:
                 crossDomain: true,
                 success: onSuccess(callback),
                 error: onError(callback)
+              });
+            }
+        - lang: 'nodejs/restler'
+          source: |
+            function upload(filepath, mimetype) {
+              mimetype = mimetype || 'application/octet-stream';
+              return new Promise((resolve, reject) => {
+                fs.stat(filepath, (err, stats) => {
+                  if (err) {
+                    reject(err);
+                  } else {
+                    restler.post(url+'/files', {
+                      headers: headers,
+                      multipart: true,
+                      data: {
+                        "file": restler.file(filepath, null, stats.size, null, mimetype),
+                        "name": path.basename(filepath),
+                      }
+                    }).on('complete', (body, response) => {
+                      storeCookie(response);
+                      resolve(body);
+                    });
+                  }
+                });
               });
             }
         - lang: 'python'
@@ -220,6 +258,17 @@ paths:
                 crossDomain: true,
                 success: onSuccess(callback),
                 error: onError(callback)
+              });
+            }
+        - lang: 'nodejs/restler'
+          source: |
+            function content(hash) {
+              return new Promise((resolve, reject) => {
+                restler.get(url+'/files/'+hash+'/contents', {headers: headers})
+                  .on('success', resolve)
+                  .on('fail', data => {
+                    reject(new Error('Content for '+hash+' not found'));
+                });
               });
             }
         - lang: 'python'
@@ -284,6 +333,26 @@ paths:
                 error: onError(callback)
               });
             }
+        - lang: 'nodejs/restler'
+          source: |
+            function tdt(source, template, rules, params) {
+              var inputs = {
+                rules: rules,
+                template: template,
+                source: source,
+                options: {
+                  mode: 127,
+                  params: params || {}
+                }
+              };
+              return new Promise(resolve => {
+                restler.postJson(url+'/tdt', inputs, {headers: headers})
+                  .on('complete', (body, response) => {
+                    storeCookie(response);
+                    resolve(body);
+                });
+              });
+            }
         - lang: 'python'
           source: |
              import requests
@@ -296,8 +365,8 @@ paths:
                def tdt(self, source, template, rules, options = {}):
                   inputs = {
                     'source': source,
-                    'template': source,
-                    'rules': source,
+                    'template': template,
+                    'rules': rules,
                     'options': options
                   }
                   return self.session.post(self.url+'/tdt', json=inputs).json()
@@ -349,6 +418,27 @@ paths:
                 crossDomain: true,
                 success: onSuccess(callback),
                 error: onError(callback)
+              });
+            }
+        - lang: 'nodejs/restler'
+          source: |
+            function stl(design, data, format) {
+              var inputs = {
+                design: design,
+                data: data,
+                options: {
+                  data: { rules: "_default", source: "_default"},
+                  driver: {type: format || 'pdf'},
+                  properties: { language:"en-US"},
+                  validate: true
+                }
+              };
+              return new Promise(resolve => {
+                restler.postJson(url+'/stl', inputs, {headers: headers})
+                  .on('complete', (body, response) => {
+                    storeCookie(response);
+                    resolve(body);
+                });
               });
             }
         - lang: 'python'
