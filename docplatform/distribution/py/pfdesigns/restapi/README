@@ -1,0 +1,9 @@
+
+Run tests from this directory:
+
+./curl/shape.sh
+./curl/table.sh
+python ./python/table.py
+python ./python/tdt.py
+node ./nodejs/tdt.js
+...

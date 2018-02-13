@@ -156,7 +156,10 @@ paths:
       x-code-samples:
         - lang: 'curl'
           source: |
-            curl -X POST "$URL/storyteller/api/files" -H "accept: application/json" -H "Content-Type: multipart/form-data" -F "file=@sample.svg;type=image/svg+xml"
+            curl -X POST "$URL/storyteller/api/files" \
+                 -H "accept: application/json" \
+                 -H "Content-Type: multipart/form-data" \
+                 -F "file=@sample.svg;type=image/svg+xml"
         - lang: 'javascript/jquery'
           source: |
             function upload(apiUrl, name, content, mime, callback) {

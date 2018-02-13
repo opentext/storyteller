@@ -1,0 +1,49 @@
+<stl:stl version='0.1'
+         xmlns:stl='http://developer.opentext.com/schemas/storyteller/layout'
+         xmlns:xp='http://developer.opentext.com/schemas/storyteller/xmlpreprocessor'>
+  <stl:style>
+    .name {
+      color:red;
+      font-weight:bold;
+    }
+    .even-cell,
+    .odd-cell {
+      text-align: center;
+      font-family: Arial;
+      font-size: 10pt;
+      padding: 8pt 2pt;
+      border: 1pt solid darkblue;
+    }
+
+    .even-cell {
+      background-color: #def;
+    }
+
+    .odd-cell {
+      background-color: #edf3fe;
+    }
+  </stl:style>
+  <stl:document>
+    <stl:page w='842pt' h='595pt'>
+      <stl:table x='5%' y='5%' w='90%' class='table'>
+        <stl:story>
+          <stl:row h='30pt'>
+            <stl:cell w='?' class="?">
+              <stl:block>
+                <stl:p>
+                  <stl:span class="name">?</stl:span>
+				  <stl:space/>
+				  <stl:span>vs.</stl:span>
+				  <stl:space/>
+				  <stl:span class="name">?</stl:span>
+                </stl:p>
+                <stl:p>:</stl:p>
+              </stl:block>
+              <stl:p>X</stl:p>
+            </stl:cell>
+          </stl:row>
+        </stl:story>
+      </stl:table>
+    </stl:page>
+  </stl:document>
+</stl:stl>

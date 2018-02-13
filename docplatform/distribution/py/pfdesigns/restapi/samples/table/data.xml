@@ -1,0 +1,75 @@
+<data>
+  <book id='bk003' genre='edu'>
+	<title>XML: A Primer</title>
+	<author>Simon St. Laurent</author>
+	<price>31.98</price>
+	<pages>352</pages>
+	<published year='1998' month='01' day='01'/>
+	<review>Fairly basic XML learning resource.</review>
+  </book>
+  <book id='bk001' genre='fic'>
+	<author>Some Writer</author>
+	<title>The First Book</title>
+	<price>44.95</price>
+	<pages>256</pages>
+	<published year='2000' month='10' day='01'/>
+	<review>An amazing story of nothing.</review>
+  </book>
+  <book id='bk002' genre='poe'>
+	<author>Some Poet</author>
+	<title>The Poet's First Poem</title>
+	<price>24.95</price>
+	<pages>116</pages>
+	<published year='2010' month='03' day='01'/>
+	<review>Least poetic poems.</review>
+  </book>
+  <book id='bk003' genre='edu'>
+	<title>XML: A Primer</title>
+	<author>Simon St. Laurent</author>
+	<price>31.98</price>
+	<pages>352</pages>
+	<published year='1996' month='01' day='01'/>
+	<review>Fairly basic XML learning resource.</review>
+  </book>
+  <book id='bk001' genre='fic'>
+	<author>Some Writer</author>
+	<title>The First Book</title>
+	<price>74.95</price>
+	<pages>211</pages>
+	<published year='2002' month='10' day='01'/>
+	<review>An amazing story of nothing.</review>
+  </book>
+  <book id='bk002' genre='poe'>
+	<author>Some Poet</author>
+	<title>The Poet's First Poem</title>
+	<price>14.95</price>
+	<pages>179</pages>
+	<published year='2015' month='03' day='01'/>
+	<review>Least poetic poems.</review>
+  </book>
+  <book id='bk003' genre='edu'>
+	<title>XML: A Primer</title>
+	<author>Simon St. Laurent</author>
+	<price>51.98</price>
+	<pages>322</pages>
+	<published year='1999' month='01' day='01'/>
+	<review>Fairly basic XML learning resource.</review>
+  </book>
+  <book id='bk001' genre='fic'>
+	<author>Some Writer</author>
+	<title>The First Book</title>
+	<price>49.95</price>
+	<pages>356</pages>
+	<published year='2007' month='10' day='01'/>
+	<review>An amazing story of nothing.</review>
+  </book>
+  <book id='bk002' genre='poe'>
+	<author>Some Poet</author>
+	<title>The Poet's First Poem</title>
+	<price>4.95</price>
+	<pages>66</pages>
+	<published year='2017' month='03' day='01'/>
+	<review>Least poetic poems.</review>
+  </book>
+</data>
+

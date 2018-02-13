@@ -1,0 +1,27 @@
+<tdt:transformation version="1.0"
+                    xmlns:tdt="http://developer.opentext.com/schemas/storyteller/transformation/tdt">
+  <tdt:rule path="//stl:table/stl:story/stl:row">
+    <tdt:value key=".">/data/player</tdt:value>
+    <tdt:value key="$r">position()</tdt:value>
+    <tdt:value key="$row">.</tdt:value>
+  </tdt:rule>
+  <tdt:rule path="//stl:cell">
+    <tdt:value key=".">/data/player</tdt:value>
+    <tdt:value key="$c">position()</tdt:value>
+    <tdt:value key="$cell">.</tdt:value>
+    <tdt:value key="@w">concat(round(100 div count(/data/player)), '%')</tdt:value>
+    <tdt:value key="@class">tdt:nodeset('even-cell', 'odd-cell')[($r+$c) mod 2 + 1]</tdt:value>
+  </tdt:rule>
+  <tdt:rule path="//stl:block">
+    <tdt:value key=".">tdt:nodeset($cell)[$row!=$cell]</tdt:value>
+  </tdt:rule>
+  <tdt:rule path="//stl:cell/stl:p">
+    <tdt:value key=".">tdt:nodeset($cell)[$row=$cell]</tdt:value>
+  </tdt:rule>
+  <tdt:rule path="//stl:block/stl:p[1]/stl:span[1]">
+    <tdt:value key="text()">$row/text()</tdt:value>
+  </tdt:rule>
+  <tdt:rule path="//stl:block/stl:p[1]/stl:span[3]">
+    <tdt:value key="text()">$cell/text()</tdt:value>
+  </tdt:rule>
+</tdt:transformation>

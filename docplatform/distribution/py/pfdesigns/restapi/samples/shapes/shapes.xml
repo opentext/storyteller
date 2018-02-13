@@ -1,0 +1,35 @@
+<stl:stl version='0.1' xmlns:stl='http://developer.opentext.com/schemas/storyteller/layout'>
+  <stl:document>
+    <stl:story name='Main'>
+      <stl:block style='font-family:Arial; font-size:7pt'>
+        <stl:p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque lacinia urna interdum erat scelerisque, at finibus orci mattis. Vivamus ornare libero ullamcorper elit consectetur porttitor. Aliquam erat volutpat. Aliquam vulputate sodales arcu. Suspendisse ultricies magna massa, et interdum ante scelerisque ut. Nunc faucibus enim malesuada lorem euismod, non egestas lectus lobortis. Maecenas vestibulum aliquam luctus. In id vehicula enim, in venenatis sapien.
+        </stl:p>
+        <stl:p>
+          Cras malesuada massa finibus, auctor lectus vel, posuere sapien. Vivamus non nunc pulvinar urna interdum fringilla. Etiam a faucibus elit. Nullam nec nibh cursus, bibendum risus et, tempus ante. Quisque at commodo nibh, cursus faucibus arcu. Nullam convallis accumsan vulputate. Etiam varius, nulla ac scelerisque convallis, tortor nisl lacinia tortor, vitae molestie odio ipsum ut neque. Aliquam lobortis nisl lectus, eu suscipit dolor dignissim a. In hac habitasse platea dictumst. Sed nec interdum lectus. Quisque ac interdum mauris. Integer justo ex, varius non venenatis a, pretium ut est. Fusce gravida mi ipsum.
+        </stl:p>
+        <stl:p>
+          Maecenas ac consequat ante. Nunc laoreet tortor pretium odio condimentum tristique. Donec ut ipsum ultrices, condimentum elit et, eleifend nisi. Nulla quis nisl et risus tristique venenatis vel eu purus. Nunc feugiat aliquet hendrerit. Morbi vitae semper neque, et elementum nisl. Fusce et dignissim sapien, et suscipit metus.
+        </stl:p>
+        <stl:p>
+          Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin vel tristique nibh, et euismod augue. Nullam porta feugiat nulla, eget feugiat neque convallis quis. Duis ultricies nec libero sit amet ultricies. Mauris maximus ante nunc, sed suscipit urna efficitur eget. Praesent magna ex, tincidunt et dignissim vel, convallis at quam. Vivamus non pulvinar sapien.
+        </stl:p>
+        <stl:p>
+          Donec iaculis diam augue, ut molestie lacus pellentesque id. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris fringilla lacus quis velit scelerisque porttitor. Aliquam porttitor lorem arcu. Donec sed pulvinar elit. Nunc et mattis arcu. Sed tempus ex quis tempor condimentum. Maecenas pharetra at ante vel rhoncus.
+        </stl:p>
+      </stl:block>
+    </stl:story>
+    <stl:page w='300pt' h='400pt'>
+      <stl:text story='Main' w='100pt' h='100pt' style='fill:#ffaaff; -stl-formatting: exact; -stl-wrapping: exact;'>
+        <stl:shape w='100pt' h='100pt'>
+          <path d='M 20 20 h 100 v 100 h -100 v -100 Z M 150 20 h 100 v 100 h -100 v -100 Z'/>
+        </stl:shape>
+      </stl:text>
+      <stl:text story='Main' w='100pt' h='100pt' style='fill:#aaffaa; -stl-formatting: exact; -stl-wrapping: exact;'>
+        <stl:shape w='100pt' h='100pt'>
+          <path d='M 20 170 h 200 v 200 h -200 v -200 Z M 70 220 v 100 h 100 v -100 h -100 Z'/>
+        </stl:shape>
+      </stl:text>
+    </stl:page>
+  </stl:document>
+</stl:stl>
