@@ -27,6 +27,9 @@
 	<script type="text/javascript" src="https://rawgit.com/filodej/xonomy/develop/xonomy.js"></script>
 	<script type="text/javascript" src="https://rawgit.com/filodej/xonomy-builder/master/src/XonomyBuilder.js"></script>
 	
+	<script src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.js"></script>
+	<link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css" rel="stylesheet">
+	
 	<link type="text/css" rel="stylesheet" href="main.css"/>	
     <script type="text/javascript" src="bundle.js" charset="utf-8"></script>
 	<script type="text/javascript" src="schema.js" charset="utf-8"></script>
@@ -36,31 +39,58 @@
   <body>
     <div class="main">
       <div id="left" class="split split-horizontal">
-        <div id="editor" class="split split-vertical">
-		  <div class="menu">
-			<button onclick="publishSTL()">Publish</button>
-			<button onclick="toggleMode()">Mode</button>
+        <div class="tab">
+		  <button class="tab-editor-links active" onclick="editorType('layout')" id="tab-editor-layout">Layout</button>
+		  <button class="tab-editor-links" onclick="editorType('data')" id="tab-editor-data" disabled>Data</button>
+		  <button class="tab-editor-links" onclick="editorType('tdt')" id="tab-editor-tdt" disabled>TDT</button>
+
+		  <button id="btn-publish" style="float: right;">Publish</button>
+		  <button id="btn-toggle-mode" style="float: right;">Mode</button>
+		</div>
+
+		<div id="editor">
+		  <div id="editor-layout" class="tab-editor-content"></div>
+		  <div id="editor-data" class="tab-editor-content">
+			<div id="panel-heading">
+			  <select id="data-select"></select>
+			  <button id="data-remove">-</button>
+			  <button id="data-new">+</button>
+			  <label class="data-file-upload">
+				<input type="file" id="data-files" multiple="true" accept="text/xml" style="display:none"/>
+				Browse...
+			  </label>
+			</div>
+			<br/>
+			<div id="panel-body">
+			  <div id="data-content"></div>
+			</div>
 		  </div>
-		  <div id="xonomy"></div>
-        </div>
+		  <div id="editor-tdt" class="tab-editor-content">
+			<div id="panel-body">
+			  <div id="tdt-content"></div>
+			</div>
+		  </div>
+		</div>
       </div>
       <div id="right" class="split split-horizontal">
 		<div class="tab">
-		  <button class="tablinks" onclick="previewType(event, 'main')" id="tab-preview-main">Main</button>
-		  <button class="tablinks" onclick="previewType(event, 'layout')" id="tab-preview-layout" disabled>Layout</button>
-		  <button class="tablinks" onclick="previewType(event, 'data')" id="tab-preview-data" disabled>Data</button>
-		  <button class="tablinks" onclick="previewType(event, 'pdf')" id="tab-preview-pdf" disabled>PDF</button>
-<!--		  <button class="tablinks" onclick="previewType(event, 'docx')" id="tab-preview-docx" disabled>DocX</button>
-		  <button class="tablinks" onclick="previewType(event, 'html')" id="tab-preview-html" disabled>HTML</button>
+		  <button class="tab-preview-links active" onclick="previewType('main')" id="tab-preview-main">Main</button>
+		  <button class="tab-preview-links" onclick="previewType('layout')" id="tab-preview-layout" disabled>Layout</button>
+		  <button class="tab-preview-links" onclick="previewType('stl')" id="tab-preview-stl" disabled>STL</button>
+		  <button class="tab-preview-links" onclick="previewType('data')" id="tab-preview-data" disabled>Data</button>
+		  <button class="tab-preview-links" onclick="previewType('pdf')" id="tab-preview-pdf" disabled>PDF</button>
+<!--		  <button class="tablinks" onclick="previewType('docx')" id="tab-preview-docx" disabled>DocX</button>
+		  <button class="tablinks" onclick="previewType('html')" id="tab-preview-html" disabled>HTML</button>
 -->
 		</div>
 		<div id="preview">
-		  <div id="preview-main" class="tabcontent"><br/></div>
-		  <div id="preview-layout" class="tabcontent"><br/></div>
-		  <div id="preview-data" class="tabcontent"><br/></div>
-		  <div id="preview-pdf" class="tabcontent"><br/></div>
-<!--		  <div id="preview-docx" class="tabcontent"><br/></div>
-		  <div id="preview-html" class="tabcontent"><br/></div>
+		  <div id="preview-main" class="tab-preview-content"><br/></div>
+		  <div id="preview-layout" class="tab-preview-content"><br/></div>
+		  <div id="preview-stl" class="tab-preview-content"><br/></div>
+		  <div id="preview-data" class="tab-preview-content"><br/></div>
+		  <div id="preview-pdf" class="tab-preview-content"><br/></div>
+<!--		  <div id="preview-docx" class="tab-preview-content"><br/></div>
+		  <div id="preview-html" class="tab-preview-content"><br/></div>
 -->
 		</div>
       </div>

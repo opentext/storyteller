@@ -10350,14 +10350,7 @@ function storytellerProxy(server_url, onPing) {
         }
         
         return function (jqXHR, textStatus, errorMessage) {
-            var response = {
-                status: 'failure',
-                error: errorMessage
-            };
-            if (jqXHR.responseText) {
-                response.error = parseText(jqXHR.responseText);
-            }
-            callback(response);
+            callback(jqXHR.responseText ? parseText(jqXHR.responseText) : errorMessage);
         };
     }
 
@@ -10378,58 +10371,64 @@ function storytellerProxy(server_url, onPing) {
     }
     
     function upload(name, content, mime, callback) {
-        var form = new FormData();
-        var blob = new Blob([content], {type: mime});
-        form.append("fileToUpload", blob, name);
-        $.ajax({
-            url: server_url + '/files',
-            type: 'POST',
-            data: form,
-            dataType: 'json',
-            contentType: false,
-            processData: false,
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            success: callback,
-            error: onError(callback)
+        return new Promise( (resolve, reject) => {
+            var form = new FormData();
+            var blob = new Blob([content], {type: mime});
+            form.append("fileToUpload", blob, name);
+            $.ajax({
+                url: server_url + '/files',
+                type: 'POST',
+                data: form,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: resolve,
+                error: onError(reject)
+            });
         });
     }
     
     function content(hash, callback) {
-        $.ajax({
-            url: hash2uri(hash),
-            type: 'GET',
-            contentType: false,
-            processData: false,
-            cache: true,
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            success: function (data, textStatus, jqXHR) {
-                callback(jqXHR.responseText);
-            },
-            error: function(jqXHR, textStatus, errorMessage) {
-                console.error(errorMessage);
-            }
+        return new Promise( (resolve, reject) => {
+            $.ajax({
+                url: hash2uri(hash),
+                type: 'GET',
+                contentType: false,
+                processData: false,
+                cache: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function (data, textStatus, jqXHR) {
+                    resolve(jqXHR.responseText);
+                },
+                error: function(jqXHR, textStatus, errorMessage) {
+                    reject(errorMessage);
+                }
+            });
         });
     }
 
-    function call(method, inputs, callback) {
-        $.ajax({
-            url: server_url + '/' + method,
-            type: 'POST',
-            data: JSON.stringify(inputs),
-            dataType: 'json',
-            contentType: 'application/json',
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            success: callback,
-            error: onError(callback)
+    function call(method, inputs) {
+        return new Promise( (resolve, reject) => {
+            $.ajax({
+                url: server_url + '/' + method,
+                type: 'POST',
+                data: JSON.stringify(inputs),
+                dataType: 'json',
+                contentType: 'application/json',
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: resolve,
+                error: onError(reject)
+            });
         });
     }
 
@@ -10446,12 +10445,8 @@ function storytellerProxy(server_url, onPing) {
         upload: upload,
         ping: ping,
         content: content,
-        tdt: function (inputs, callback) {
-            return call('tdt', inputs, callback);
-        },
-        stl: function (inputs, callback) {
-            return call('stl', inputs, callback);
-        },
+        tdt: (inputs) => call('tdt', inputs),
+        stl: (inputs) => call('stl', inputs)
     };
 }
 

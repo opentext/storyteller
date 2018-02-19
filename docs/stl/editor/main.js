@@ -3,6 +3,14 @@
 //const g_service_url = '';
 const g_service_url = 'https://cem-dev-karim.eastus.cloudapp.azure.com/storyteller';
 var g_preview = null;
+var g_prettify_xml = xmlPrettifier();
+var g_data = {
+    tdt: '',
+    index: 0,
+    files: [
+        {name: '[empty]', content: ''}
+    ]
+};
 
 function getParameterByName(name, url) {
     url = url || window.location.href;
@@ -67,7 +75,7 @@ function findElementByOpath(opath, js) {
 };
 
 function report_error(type, e, $elem) {
-    $elem = $elem || $('#preview-main, #preview-layout');
+    $elem = $elem || $('#preview-main');
     var stl = require('stl');
     $elem.html('<h3>&#x26a0; '+type+'</h3><div class="errors">'+stl.text_escape(e)+'</div>');
 }
@@ -238,41 +246,38 @@ function initHandlers($item, options) {
     }
 }
 
-function publishData(data, callback) {
-    $.ajax({
-        url: 'https://api.github.com/gists',
-        type: 'POST',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        error: (e) => report_error('Gist upload error: ', e),
-        success: callback
-    });
-}
+function publishSTL(stl, data) {
+    function publishGist(gist, callback) {
+        $.ajax({
+            url: 'https://api.github.com/gists',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(gist),
+            error: (e) => report_error('Gist upload error: ', e.message),
+            success: callback
+        });
+    }
 
-function publishSTL(js) {
     $("body").css("cursor", "progress");
-    js = js || harvestRootElement();
-    jsPrettify(js, false, '  ');
-    var xml = js2xml(js, g_stl_schema);
-    var data = {
-        "description": "STL uploaded from STL online editor",
+    var gist = {
+        "description": "Content published from STL online editor",
         "public": true,
         "files": {
-            "stl.xml": {
-                "content": xml,
-                "type": "text/xml"
-            }
+            "stl.xml": { content: stl, type: "application/xml" }
         }
     };
-    Xonomy.clickoff();
-    publishData(data, function(result) {
-        var url = result.files['stl.xml'].raw_url;
-        window.location.search = '?stl=' + url;
+    if (data.tdt)
+        gist.files['tdt.xml'] = {content: data.tdt, type: "application/xml"};
+    data.files.forEach(function (file, i) {
+        if (i > 0) {
+            var key = '' + i + '-data-' + encodeURI(file.name); 
+            gist.files[key] = { content: file.content, type: "application/xml" };
+        }
     });
-}
-
-function toggleMode() {
-    Xonomy.setMode(Xonomy.mode === 'laic' ? 'nerd' : 'laic');
+    Xonomy.clickoff();
+    publishGist(gist, function(result) {
+        window.location.search = '?gist=' + result.id;
+    });
 }
 
 function walkChildren(node, before, after) {
@@ -295,10 +300,10 @@ function walkTheDOM(node, before, after) {
 function previewManager() {
     var stl2html = require('html').stl2html;
     var services = require('services');
-    var prettify = xmlPrettifier();
     var proxy = services.proxy(g_service_url+'/api', function (response) {
         if (response.status === 'success') {
-            $('#tab-preview-layout, #tab-preview-data, #tab-preview-pdf, #tab-preview-docx').removeAttr("disabled");
+            $('#tab-preview-layout, #tab-preview-stl, #tab-preview-data, #tab-preview-pdf, #tab-preview-docx').removeAttr("disabled");
+            $('#tab-editor-data, #tab-editor-tdt').removeAttr("disabled");
         }
     });
     
@@ -370,7 +375,7 @@ function previewManager() {
         }
 
         function unHighlight() {
-            var $xonomy = $('#xonomy');
+            var $xonomy = $('#editor-layout');
             var $document = $elem.find('div[data-stl-class="stl:document"]');
             $document.find('.highlight-node').removeClass("highlight-node");
             $xonomy.find('.highlight-tree').removeClass("highlight-tree");
@@ -573,174 +578,283 @@ function previewManager() {
         });
     }
     
-    function callTDT(template, source, rules, callback) {
-        // @todo: implement parallel uploads
-        upload('template.xml', template, 'text/xml', function (template_hash) {
-            upload('source.xml', source, 'text/xml', function (source_hash) {
-                upload('rules.xml', rules, 'text/xml', function (rules_hash) {
-                    var inputs = {
-                        source: source_hash,
-                        rules: rules_hash,
-                        template: template_hash
-                    };
-                    proxy.tdt(inputs, callback);
-                });
+    function callTDT(source, template, rules, params) {
+        source = upload('source.xml', source, 'text/xml');
+        template = upload('template.xml', template, 'text/xml');
+        rules = upload('rules.xml', rules, 'text/xml');
+        return Promise.all([source, template, rules])
+            .then(hashes => { 
+                var inputs = {
+                    source: hashes[0],
+                    template: hashes[1],
+                    rules: hashes[2],
+                    options: {
+                        mode: 127,
+                        params: params || {}
+                    }
+                };
+                return proxy.tdt(inputs);
             });
-        });
     }
     
-    function callSTL(markup, options, callback) {
-        upload('design.xml', markup, 'text/xml', function (hash) {
-            proxy.stl({design: hash, options: options}, callback);
-        });
+    function callSTL(design, data, tdt, options) {
+        // convert STL (if there is a TDT defined) or simply upload it
+        design = tdt && data
+            ? callTDT(data, design, tdt).then(response => response.result.id)
+            : upload('design.xml', design, 'text/xml');
+        // upload data
+        data = data ? upload('data.xml', data, 'text/xml') : null;
+        // when everything is ready - call the STL service
+        return Promise.all([design, data])
+            .then( hashes => {
+                var inputs = {
+                    design: hashes[0],
+                    options: options
+                };
+                if (hashes[1])
+                    inputs.data = hashes[1];
+                return proxy.stl(inputs);
+            });
     }
 
-    function previewMain($elem, stl) {
-        function str2ab(bytestr) {
-            var ab = new ArrayBuffer(bytestr.length);
-            var ia = new Uint8Array(ab);
-            for (var i = 0; i < bytestr.length; i++)
-                ia[i] = bytestr.charCodeAt(i);
-            return ab;
-        }
-        
-        function handle_fixture(attrs, stream) {
-            var content = stream.read();
-            if (attrs.encoding === 'base64')
-                content = str2ab(window.atob(content));
-            var blob = new Blob([content], {type: attrs.type});
-            var url = URL.createObjectURL(blob);
-            return {
-                key: attrs.key,
-                type: attrs.type,
-                blob: blob,
-                url: url
-            };
-        }
-        
-        function is_trivial_tdt(rules) {
-            if (rules) {
-                var domParser = new DOMParser();
-                var xmlDoc = domParser.parseFromString(rules, 'application/xml');
-                if (xmlDoc.children[0].children.length)
-                    return false; // there are some tdt rules
-            }
-            return true;
-        }
-        
-        var result = {};
-        var fixtures = {};
-        var options = {
-            handlers: {
-                data: (data) => result.data = data,
-                fixture: (attrs, stream) => fixtures[attrs.key] = handle_fixture(attrs, stream)
-            }
-        };
-        try {
-            result.html = stl2html(stl, options);
-        } catch(e) {
-            return report_error('Preview Error', e.message, $elem);
-        }
-        $elem.html(result.html);
-        postprocessLinks($elem, fixtures);
-        postprocessPages($elem);
-        if (result.data && result.data.source) {
-            var source = result.data.source['_default'];
-            var template = result.data.template;
-            var rules = result.data.rules['_default'];
-
-            if (rules && !template)
-                throw new Error("Missing stl:template");
-            if (!is_trivial_tdt(rules)) {
-                if (proxy.status() !== 'failure') {
-                    return callTDT(template, source, rules, function(response) {
-                        if (response.error)
-                            return report_error('Preview Error', response.error, $elem);            
-                        proxy.content(response.result.id, function (data) {
-                            postprocessData($elem, data);
-                            postprocessVisualize($elem);
-                            postprocessEdit($elem);
-                        });
-                    });
-                }
+    function previewMain($elem, state) {
+        function prepareDesign(state) {
+            if (state.tdt && state.data) {
+                return callTDT(state.data, state.markup, state.tdt)
+                    .then(response => proxy.content(response.result.id) );
             } else {
-                postprocessData($elem, rules ? template : source);
-            }
+                return Promise.resolve(state.markup);
+           }
         }
-        postprocessVisualize($elem);
-        postprocessEdit($elem);
-    }
 
-    function previewST($elem, markup, width) {
+        function convertDesign(state, design) {
+            function str2ab(bytestr) {
+                var ab = new ArrayBuffer(bytestr.length);
+                var ia = new Uint8Array(ab);
+                for (var i = 0; i < bytestr.length; i++)
+                    ia[i] = bytestr.charCodeAt(i);
+                return ab;
+            }
+            
+            function handleFixture(attrs, stream) {
+                var content = stream.read();
+                if (attrs.encoding === 'base64')
+                    content = str2ab(window.atob(content));
+                var blob = new Blob([content], {type: attrs.type});
+                var url = URL.createObjectURL(blob);
+                return {
+                    key: attrs.key,
+                    type: attrs.type,
+                    blob: blob,
+                    url: url
+                };
+            }
+            
+            var result = {
+                data: {}
+            };
+            var fixtures = {};
+            var options = {
+                handlers: {
+                    data: (data) => result.data = data,
+                    fixture: (attrs, stream) => fixtures[attrs.key] = handleFixture(attrs, stream)
+                }
+            };
+
+            var html = stl2html(design, options);
+            $elem.html(html);
+            postprocessLinks($elem, fixtures);
+            postprocessPages($elem);
+            
+            if (state.data)
+                result.data.source = {'_default': state.data};
+            return Promise.resolve(result.data);
+        }
+        
+        function convertData(state, data) {
+            function isTrivialTDT(rules) {
+                if (rules) {
+                    var domParser = new DOMParser();
+                    var xmlDoc = domParser.parseFromString(rules, 'application/xml');
+                    if (xmlDoc.children[0].children.length)
+                        return false; // there are some tdt rules
+                }
+                return true;
+            }
+            
+            if (!data.source)
+                return Promise.resolve(null);
+
+            var source = data.source['_default'];
+            var template = data.template;
+            var rules = data.rules ? data.rules['_default'] : null;
+            
+            if (rules && !template)
+                return Promise.reject(new Error("Missing stl:template"));
+            
+            if (isTrivialTDT(rules))
+                return Promise.resolve(rules ? template : source);
+
+            return callTDT(source, template, rules)
+                .then(response => proxy.content(response.result.id) );
+        }
+
+        prepareDesign(state)
+            .then(design => convertDesign(state, design))
+            .then(data => convertData(state, data))
+            .then(data => {
+                if (data)
+                    postprocessData($elem, data);
+                postprocessVisualize($elem);
+                postprocessEdit($elem);
+                processingComplete();
+            })
+            .catch(error => processingFailed($elem, error));            
+    }
+    
+    function previewLayout($elem, state) {
         var options = {
             validate: true,
             properties: {language: 'en-US'},
             driver: {type: 'svg'},
             layout: {},
             data: {source: '_default', rules: '_default'},
-            frame: {width: width, padding: '20px 40px'}
+            frame: {width: state.width, padding: '20px 40px'}
         }
-        callSTL(markup, options, function(response) {
-            if (response.error)
-                return report_error('Preview Error', response.error, $elem);            
-            var layout = response.result.find((r) => r.name === 'layout.xml');
-            proxy.content(layout.id, function (layout) {
+        callSTL(state.markup, state.data, state.tdt, options)
+            .then( response => {
+                var layout = response.result.find((r) => r.name === 'layout.xml');
+                return proxy.content(layout.id);
+            })
+            .then( layout => {
                 var backgrounds = {}
                 var options = {
                     handlers: {
                         fixture: (attrs, stream) => backgrounds[attrs.key] = attrs.src.split(':')[1]
                     }
                 };
-                try {
-                    var html = stl2html(layout, options);
-                } catch(e) {
-                        return report_error('Preview Error', e.message, $elem);
-                }
+                var html = stl2html(layout, options);
                 $elem.html(html);
                 postprocessPages($elem, backgrounds);
                 postprocessVisualize($elem);
-            });
-        });
+                processingComplete();
+            })
+            .catch(error => processingFailed($elem, error) );
     }
 
-    function previewPDF($elem, markup, width) {
+    var state = {
+        processing: false,
+        pending: null,
+        repo : {},
+        current: {
+            type: 'main',
+            width: null,
+            tdt: null,
+            markup: null,
+            data: null,
+        },
+        last: {
+            main: {},
+            layout: {},
+            stl: {},
+            data: {},
+            pdf: {},
+            docx: {},
+            html: {}
+        }
+    };
+
+    function upload(name, content, type) {
+        var rec = state.repo[name];
+        if (rec && content === rec.content) {
+            return Promise.resolve(rec.hash);
+        }
+        return proxy.upload(name, content, type)
+            .then( response => {
+                var hash = response.result[0].id;
+                state.repo[name] = { content: content, hash: hash };
+                return hash;
+            });
+    }
+
+    function previewEmbed($elem, state, options, filename, makeEmbed) {
+        callSTL(state.markup, state.data, state.tdt, options)
+            .then(response => {
+                var document = response.result.find((r) => r.name === filename);
+                var url = proxy.hash2uri(document.id);
+                var html = makeEmbed(url);
+                $elem.html(html);
+                processingComplete();
+            })
+            .catch(error => processingFailed($elem, error) );
+    }
+    
+    function previewXML($elem, state, options, filename) {
+        return callSTL(state.markup, state.data, state.tdt, options)
+            .then(response => {
+                var data = response.result.find((r) => r.name === filename);
+                return proxy.content(data.id);
+            })
+            .then(data => {
+                var hl = hljs.highlight('xml', g_prettify_xml(data));
+                $elem.html('<div class="data-paper">'+hl.value+'</div>');
+                processingComplete();
+            })
+            .catch(error => processingFailed($elem, error));
+    }
+    
+    function previewData($elem, state) {
+        var options = {
+            properties: {language: 'en-US'},
+            data: {source: '_default', rules: '_default', persist: true},
+            frame: {width: '1000px'}
+        };
+        previewXML($elem, state, options, 'data.xml');
+    }
+
+    function previewSTL($elem, state) {
+        var options = {
+            validate: true,
+            properties: {language: 'en-US'},
+            data: {source: '_default', rules: '_default', persist: true},
+            frame: {width: '1000px'}
+        };
+        previewXML($elem, state, options, 'preprocessed.xml');
+    }
+    
+    
+    function previewPDF($elem, state) {
         var options = {
             validate: true,
             properties: {language: 'en-US'},
             driver: {type: 'pdf'},
             data: {source: '_default', rules: '_default'},
-            frame: {width: width, padding: '20px 40px'}
+            frame: {width: state.width, padding: '20px 40px'}
         }
-        callSTL(markup, options, function(response) {
-            if (response.error)
-                return report_error('Preview Error', response.error, $elem);            
-            var document = response.result.find((r) => r.name === 'document.pdf');
-            var url = proxy.hash2uri(document.id);
-            var html = '<iframe src="'+url+'" style="width:100%; height: calc(100vh - 110px); border:none;"></iframe>';
-            $elem.html(html);
-        });
+        previewEmbed(
+            $elem, state, options,
+            'document.pdf',
+            url => '<iframe src="'+url+'" style="width:100%; height: calc(100vh - 110px); border:none;"></iframe>' ); 
     }
 
-    function previewDOCX($elem, markup, width) {
+    function previewDOCX($elem, state) {
         var options = {
             validate: true,
             properties: {language: 'en-US'},
             driver: {type: 'docx'},
             data: {source: '_default', rules: '_default'},
-            frame: {width: width, padding: '20px 40px'}
+            frame: {width: state.width, padding: '20px 40px'}
         }
-        callSTL(markup, options, function(response) {
-            if (response.error)
-                return report_error('Preview Error', response.error, $elem);            
-            var document = response.result.find((r) => r.name === 'document.docx');
-            //var url = 'https://docs.google.com/gview?url='+proxy.hash2uri(document.id)+'&embedded=true';
-            var url = 'https://view.officeapps.live.com/op/embed.aspx?src='+proxy.hash2uri(document.id);
-            console.log(url);
-            var html = '<iframe src="'+url+'" style="width:100%; height: calc(100vh - 110px); border:none; frameborder:0;"></iframe>';            $elem.html(html);
-        });
+        previewEmbed(
+            $elem, state, options,
+            'document.docx',
+            function (url) {
+                //var url = 'https://docs.google.com/gview?url='+url+'&embedded=true';
+                var url = 'https://view.officeapps.live.com/op/embed.aspx?src='+url;
+                return '<iframe src="'+url+'" style="width:100%; height: calc(100vh - 110px); border:none; frameborder:0;"></iframe>';         });       
     }
 
-    function previewHTML($elem, markup, width) {
+    function previewHTML($elem, state) {
         var options = {
             validate: true,
             properties: {
@@ -753,142 +867,130 @@ function previewManager() {
             },
             driver: {type: 'html'},
             data: {source: '_default', rules: '_default'},
-            frame: {width: width, padding: '20px 40px'}
+            frame: {width: state.width, padding: '20px 40px'}
         }
-        callSTL(markup, options, function(response) {
-            if (response.error)
-                return report_error('Preview Error', response.error, $elem);            
-            var document = response.result.find((r) => r.type === 'application/pdf');
-            var url = proxy.hash2uri(document.id);
-            var html = '<iframe src="'+url+'" style="width:100%; height: calc(100vh - 110px); border:none;"></iframe>';
-            $elem.html(html);
-        });
-    }
-        
-    function previewData($elem, markup) {
-        var options = {
-            properties: {language: 'en-US'},
-            data: {source: '_default', rules: '_default', persist: true},
-            frame: {width: '1000px'}
-        };
-        callSTL(markup, options, function(response) {
-            if (response.error)
-                return report_error('Preview Error', response.error, $elem);
-            var data = response.result.find((r) => r.name === 'data.xml');
-            proxy.content(data.id, function (data) {
-                var hl = hljs.highlight('xml', prettify(data));
-                $elem.html('<div class="data-paper">'+hl.value+'</div>');
-            });
-        });
-    }
-        
-    var state = {
-        type: 'main',
-        width: null,
-        markup: null,
-        repo : {},
-        last: {
-            main: {},
-            layout: {},
-            data: {},
-            pdf: {},
-            docx: {},
-            html: {}
-        }
-    };
-
-    function upload(name, content, type, callback) {
-        var rec = state.repo[name];
-        if (rec && content === rec.content) {
-            setTimeout(() => callback(rec.hash), 0); // make it asynchronous in any case
-        } else {
-            proxy.upload(name, content, type, function (response) {
-                var hash = response.result[0].id;
-                state.repo[name] = { content: content, hash: hash };
-                callback(hash);
-            });
-        }
+        previewEmbed(
+            $elem, state, options,
+            'document.docx',
+            url => '<iframe src="'+url+'" style="width:100%; height: calc(100vh - 110px); border:none; frameborder:0;"></iframe>' );
     }
 
-    function changeState(changes) {
+    function handleChanges(changes) {
+        if (state.pending)
+            throw new Error("Internal state error!");
+        if (!Object.keys(changes).length)
+            return;
+        var current = state.current;
         if (changes.type !== undefined) // preview type has changed
-            state.type = changes.type;
-
-        if (!proxy && state.type !== 'main')
+            current.type = changes.type;
+        if (changes.data !== undefined)
+            current.data = changes.data;
+        if (changes.tdt !== undefined)
+            current.tdt = changes.tdt;
+        if (changes.markup !== undefined)    // markup has changed
+            current.markup = changes.markup;
+        if (!proxy && current.type !== 'main')
             throw new Error("Proxy not available");
 
-        var $elem = $('#preview-'+state.type);
-        var last = state.last[state.type];
+        var $elem = $('#preview-'+current.type);
+        var last = state.last[current.type];
         
         // view resize
-        state.width = changes.width || $elem.width()+'px';
+        current.width = changes.width || $elem.width()+'px';
         
-        if (changes.markup !== undefined)    // markup has changed
-            state.markup = changes.markup;
-
-        if (!state.markup)
+        if (!current.markup)
             return;
+
+        function checkChanges($elem, keys) {
+            var result = false;
+            keys.forEach(function (key) {
+                if (last[key] !== current[key]) {
+                    result = true;
+                    last[key] = current[key];
+                }
+            });
+            if (result) {
+                $elem.append('<div class="loading"></div>');
+                state.pending = {};
+            }
+            return result;
+        }
         
-        switch (state.type) {
+        switch (current.type) {
         case 'main':
-            if (state.markup !== last.markup) {
-                $elem.append('<div class="loading"></div>');
-                last.markup = state.markup;
-                previewMain($elem, state.markup);
-            }
-            break;
-        case 'data':
-            if (state.markup !== last.markup) {
-                $elem.append('<div class="loading"></div>');
-                previewData($elem, state.markup);
-                last.markup = state.markup;
-            }
+            if (checkChanges($elem, ['markup', 'data', 'tdt']))
+                previewMain($elem, current);
             break;
         case 'layout':
-            if (state.markup !== last.markup || state.width !== last.width) {
-                $elem.append('<div class="loading"></div>');
-                previewST($elem, state.markup, state.width);
-                last.markup = state.markup;
-                last.width = state.width;
-            }
+            if (checkChanges($elem, ['markup', 'data', 'tdt', 'width']))
+                previewLayout($elem, current);
+            break;
+        case 'data':
+            if (checkChanges($elem, ['markup', 'data', 'tdt']))
+                previewData($elem, current);
+            break;
+        case 'stl':
+            if (checkChanges($elem, ['markup', 'data', 'tdt']))
+                previewSTL($elem, current);
             break;
         case 'pdf':
-            if (state.markup !== last.markup || state.width !== last.width) {
-                $elem.append('<div class="loading"></div>');
-                previewPDF($elem, state.markup, state.width);
-                last.markup = state.markup;
-                last.width = state.width;
-            }
+            if (checkChanges($elem, ['markup', 'data', 'tdt', 'width']))
+                previewPDF($elem, current);
             break;
         case 'docx':
-            if (state.markup !== last.markup || state.width !== last.width) {
-                $elem.append('<div class="loading"></div>');
-                previewDOCX($elem, state.markup, state.width);
-                last.markup = state.markup;
-                last.width = state.width;
-            }
+            if (checkChanges($elem, ['markup', 'data', 'tdt', 'width']))
+                previewDOCX($elem, current);
             break;
         case 'html':
-            if (state.markup !== last.markup || state.width !== last.width) {
-                $elem.append('<div class="loading"></div>');
-                previewHTML($elem, state.markup);
-                last.markup = state.markup;
-            }
+            if (checkChanges($elem, ['markup', 'data', 'tdt', 'width']))
+                previewHTML($elem, current);
             break;
         default:
             throw new Error("Invalid preview type");
         }
     }
+
+    function processingFailed($elem, error) {
+        processingComplete();
+        if (error.message) // we support both strings and exceptions
+            error = error.message;
+        report_error('Preview Error', error, $elem);
+    }
+    
+    function processingComplete() {
+        if (state.pending) {
+            var changes = state.pending;
+            state.pending = null;
+            handleChanges(changes);
+        }
+    }
+
+    function changeState(changes) {
+        if (state.pending) {
+            // coalesce changes if there is already something pending
+            Object.keys(changes).forEach(function (key) {
+                state.pending[key] = changes[key];
+            });
+        } else
+            handleChanges(changes);
+    }
     
     return changeState;
 };
 
-function previewType(evt, type) {
-    $(".tabcontent").hide();
-    $(".tablinks").removeClass('active');
+function previewType(type) {
+    $(".tab-preview-content").hide();
+    $(".tab-preview-links").removeClass('active');
     $('#preview-'+type).show();
-    $(evt.currentTarget).addClass('active');
+    $('#tab-preview-'+type).addClass('active');
     g_preview({type: type});
+}
+
+function editorType(type) {
+    $(".tab-editor-content").hide();
+    $(".tab-editor-links").removeClass('active');
+    $('#editor-'+type).show();
+    $('#tab-editor-'+type).addClass('active');
 }
 
 function previewMarkup() {
@@ -907,66 +1009,200 @@ g_stl_schema.onchange = previewMarkup;
 function initialize() {
     g_preview = previewManager();
 
-    function handleParameters(callback) {
-        var stl = getParameterByName('stl');
-        var emp = getParameterByName('emp');
-        var res = getParameterByName('resources');
-        var input = stl || emp;
-        if (input) {
-            input = $.get(input);
-            res = res ? $.get(res) : [];
-            $.when(input, res)
-                .done(function (input, res) {
-                    input = input[0];
-                    res = res[0];
-                    var cfg = {
-                        input: input,
-                        format: stl ? 'stl' : 'emp',
-                        options: {
-                            resources: res,
-                            css: getParameterByName('css'),
-                            page: getParameterByName('page')
+    function handleParameters() {
+        function initMarkupSTL(stl, data, tdt) {
+            stl = stl || XonomyBuilder.xml('stl:stl', {version: '0.1'}, '', g_stl_schema.namespaces);
+            data = data || [];
+            tdt = tdt || '';
+            var js = Xonomy.xml2js(stl);
+            jsNormalize(js);
+            var xschema = XonomyBuilder.convertSchema(g_stl_schema, stlPreprocess, stlPostprocess);
+            Xonomy.render(js, $('#editor-layout').get(0), xschema);
+            g_data.tdt = tdt;
+            g_data.files = g_data.files.concat(data);
+            g_data.index = g_data.files.length-1;
+            initDataEditor(g_data);
+            initTDTEditor(g_data); 
+            stl = js2xml(js, g_stl_schema);
+            g_preview({type: 'main', markup: stl, tdt: g_data.tdt, data: g_data.files[g_data.index].content});
+        }
+
+        function handleError(error) {
+            report_error('Loading Error', error.statusText);
+        }
+        
+        function handleGist(id) {
+            $.get('https://api.github.com/gists/'+id)
+                .done(function(gist) {
+                    var data = [];
+                    var stl = gist.files['stl.xml'].content;
+                    var tdt = gist.files['tdt.xml'] ? gist.files['tdt.xml'].content : '';
+                    Object.keys(gist.files).forEach(function(key) {
+                        if (key.match(/^[0-9]+-data-*/)) {
+                            var content = gist.files[key].content;
+                            var name = key.replace(/^[0-9]+-data-/, '');
+                            data.push({name: name, content: content});
                         }
-                    };
-                    callback(cfg);
+                    });
+                    initMarkupSTL(stl, data, tdt);
                 })
-                .fail(function (e) {
-                    callback(null, e);
-                });
-        } else {
-            callback();
+                .fail(handleError);
         }
-    }
-    
-    function initMarkup(cfg) {
-        cfg = cfg || {};
-        var xschema = XonomyBuilder.convertSchema(g_stl_schema, stlPreprocess, stlPostprocess);
-        var stl = cfg.input || XonomyBuilder.xml('stl:stl', {version: '0.1'}, '', g_stl_schema.namespaces);
-        if (cfg.format === 'emp') {
-            stl = require('empower').emp2stl(stl, cfg.options);
+
+        function handleSTL(stl, data) {
+            stl = stl ? $.get(stl) : [];
+            data = data ? $.get(data) : [];
+            $.when(stl, data)
+                .done(function (stl, data) {
+                    initMarkupSTL(stl[0], data);
+                })
+                .fail(handleError);
         }
-        var js = Xonomy.xml2js(stl);
-        jsNormalize(js);
-        Xonomy.render(js, $('#xonomy').get(0), xschema);
+
+        function handleEMP(emp, res, css, page) {
+            emp = $.get(emp);
+            res = res ? $.get(res) : [];
+            $.when(emp, res)
+                .done(function (emp, res) {
+                    var options = {
+                        resources: res,
+                        css: css,
+                        page: page,
+                    };
+                    var stl = require('empower').emp2stl(emp[0], options);
+                    initMarkupSTL(stl);
+                })
+                .fail(handleError);
+        }
+        
+        var gist = getParameterByName('gist');
+        if (gist)
+            return handleGist(gist);
+        var emp = getParameterByName('emp');
+        if (emp)
+            return handleEMP(emp, getParameterByName('resources'), getParameterByName('css'), getParameterByName('page'));
+        return handleSTL(getParameterByName('stl'), getParameterByName('data'));
     }
-    
+
     Split(['#left', '#right'], {
         sizes: [50, 50],
         minSize: 200,
         onDragEnd: previewWidth,
     });
     
-    handleParameters(function (cfg, error) {
-	    initMarkup(cfg);
-        if (error) {
-            report_error('Loading Error', error.statusText);
-            // intentionally no preview here
-        } else {
-            previewMarkup();
-        }
+    handleParameters();
+    
+    $('#btn-toggle-mode').click(function() {
+        Xonomy.setMode(Xonomy.mode === 'laic' ? 'nerd' : 'laic');
+    });
+    $('#btn-publish').click(function(ev) {
+        var js = harvestRootElement();
+        jsPrettify(js, false, '  ');
+        var stl = js2xml(js, g_stl_schema);
+        publishSTL(stl, g_data);
     });
     var preview = getParameterByName('preview') || 'main';
-    $('#tab-preview-'+preview).click();
+    var editor = getParameterByName('editor') || 'layout';
+    previewType(preview);
+    editorType(editor);
+}
+
+function initTDTEditor(ctx) {
+    var editor = window.ace.edit("tdt-content");
+    var session = editor.getSession();
+    session.setMode("ace/mode/xml");
+    editor.resize();
+    editor.$blockScrolling = Infinity;
+    session.setValue(ctx.tdt);
+    
+    session.on('change', function() {
+        var content = session.getValue();
+        ctx.tdt = content;
+        g_preview({tdt: content});
+    });
+}
+
+function initDataEditor(ctx) {
+    function rebuildList() {
+        select.editableSelect('clear');
+        ctx.files.forEach(function(file, i) {
+            var attrs = {};
+            select.editableSelect('add', file.name, i, attrs);
+        });
+        var list = select.find('~ ul.es-list > li.es-visible');
+        select.editableSelect('select', list.eq(ctx.index));
+        select.editableSelect('hide');
+        onSelect(ctx.index);
+    }
+
+    function onSelect(index) {
+        var content = ctx.files[index].content; 
+        session.setValue(content);
+        editor.setReadOnly(index === 0);
+        remove.get(0).disabled = (index === 0);
+        g_preview({data: content});
+    }
+    
+    function addFile(file) {
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+            var content = g_prettify_xml(event.target.result);
+            ctx.files.push({name: file.name, content: content});
+            ctx.index = ctx.files.length-1;
+            rebuildList();
+        };
+        reader.readAsText(file);
+    }
+    
+    $('#data-select').editableSelect({
+        filter: false,
+        duration: 'fast'
+    });
+    var select = $('#data-select');
+    var editor = window.ace.edit("data-content");
+    var session = editor.getSession();
+    var remove = $('#data-remove');
+    var add = $('#data-new');
+    session.setMode("ace/mode/xml");
+    editor.resize();
+    editor.$blockScrolling = Infinity;
+    select.on('select.editable-select', function (e, li) {
+        if (li) {
+            ctx.index = $(li).index();
+            onSelect(ctx.index);
+        }
+    });
+    session.on('change', function() {
+        var content = session.getValue();
+        ctx.files[ctx.index].content = content;
+        g_preview({data: content});
+    });
+    $('#data-files').change(function(ev) {
+        var files = ev.target.files;
+        for (var i = 0; i < files.length; i++) {
+            addFile(files[i]);
+        }
+    });
+    select.change(function(ev) {
+        var name = ev.target.value;
+        ctx.files[ctx.index].name = name;
+        rebuildList();
+    });
+    remove.click(function(ev) {
+        if (ctx.index > 0) {
+            ctx.files.splice(ctx.index, 1);
+            ctx.index -= 1;
+            rebuildList();
+        }
+    });
+    add.click(function(ev) {
+        ctx.index = ctx.files.length;
+        var name = 'data'+ctx.index+'.xml';
+        var content = '<data/>';
+        ctx.files.push({name: name, content: content});
+        rebuildList();
+    });
+    rebuildList();
 }
 
 // Story overflow:

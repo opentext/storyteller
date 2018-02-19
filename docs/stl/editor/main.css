@@ -9,7 +9,7 @@ body, html {
 }
 
 /* Style the tab content */
-.tabcontent {
+.tab-preview-content, .tab-editor-content {
     display: none;
     padding: 6px 12px;
     border: 1px solid #ccc;
@@ -77,7 +77,7 @@ input:disabled.button {
 	text-align: center;
 }
 
-#preview-data {
+#preview-data, #preview-stl {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -332,11 +332,29 @@ div.menu button.active {
 }
 
 
-#xonomy span.valueContainer > span.value {
+#editor-layout span.valueContainer > span.value {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	display: inline-block;
 	max-width: 30em;
 	bottom: -0.4em;
+}
+
+.data-file-upload {
+	border: 1px solid #ccc;
+	display: inline-block;
+	padding: 6px 12px;
+	cursor: pointer;
+}
+
+#data-select {
+	border: 1px solid #ccc;
+	display: inline-block;
+	padding: 7px 12px;
+}
+
+#data-content, #tdt-content {
+    min-height: 700px;
+	height:100%;
 }

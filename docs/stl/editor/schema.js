@@ -1655,11 +1655,13 @@ g_stl_schema.elements = {
             {name: 'h', type: 'length'}, 
         ]),
 		children: stl_runtime_items.concat(['stl:story']),
+        collapsed: true,
 	},
 	'stl:row': {
 		attributes: [{name: 'h', type: 'length'}].concat(stl_style_attrs),
-		children: ['stl:cell'],
-	},
+		children: ['stl:cell'],	
+        collapsed: true,
+    },
 	'stl:cell': {
 		attributes: [
             {name: 'w', type: 'length'},
