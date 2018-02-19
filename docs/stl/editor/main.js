@@ -8,7 +8,7 @@ var g_data = {
     tdt: '',
     index: 0,
     files: [
-        {name: '[empty]', content: ''}
+        {name: '[empty]', content: '', rules: '_default'}
     ]
 };
 
@@ -270,7 +270,7 @@ function publishSTL(stl, data) {
         gist.files['tdt.xml'] = {content: data.tdt, type: "application/xml"};
     data.files.forEach(function (file, i) {
         if (i > 0) {
-            var key = '' + i + '-data-' + encodeURI(file.name); 
+            var key = '' + i + '-data-(' + file.rules + ')-' + encodeURI(file.name); 
             gist.files[key] = { content: file.content, type: "application/xml" };
         }
     });
@@ -687,7 +687,7 @@ function previewManager() {
 
             var source = data.source['_default'];
             var template = data.template;
-            var rules = data.rules ? data.rules['_default'] : null;
+            var rules = data.rules ? data.rules[state.rules] : null;
             
             if (rules && !template)
                 return Promise.reject(new Error("Missing stl:template"));
@@ -718,7 +718,7 @@ function previewManager() {
             properties: {language: 'en-US'},
             driver: {type: 'svg'},
             layout: {},
-            data: {source: '_default', rules: '_default'},
+            data: {source: '_default', rules: state.rules},
             frame: {width: state.width, padding: '20px 40px'}
         }
         callSTL(state.markup, state.data, state.tdt, options)
@@ -752,6 +752,7 @@ function previewManager() {
             tdt: null,
             markup: null,
             data: null,
+            rules: '_default'
         },
         last: {
             main: {},
@@ -806,7 +807,7 @@ function previewManager() {
     function previewData($elem, state) {
         var options = {
             properties: {language: 'en-US'},
-            data: {source: '_default', rules: '_default', persist: true},
+            data: {source: '_default', rules: state.rules, persist: true},
             frame: {width: '1000px'}
         };
         previewXML($elem, state, options, 'data.xml');
@@ -816,7 +817,7 @@ function previewManager() {
         var options = {
             validate: true,
             properties: {language: 'en-US'},
-            data: {source: '_default', rules: '_default', persist: true},
+            data: {source: '_default', rules: state.rules, persist: true},
             frame: {width: '1000px'}
         };
         previewXML($elem, state, options, 'preprocessed.xml');
@@ -828,7 +829,7 @@ function previewManager() {
             validate: true,
             properties: {language: 'en-US'},
             driver: {type: 'pdf'},
-            data: {source: '_default', rules: '_default'},
+            data: {source: '_default', rules: state.rules},
             frame: {width: state.width, padding: '20px 40px'}
         }
         previewEmbed(
@@ -842,7 +843,7 @@ function previewManager() {
             validate: true,
             properties: {language: 'en-US'},
             driver: {type: 'docx'},
-            data: {source: '_default', rules: '_default'},
+            data: {source: '_default', rules: state.rules},
             frame: {width: state.width, padding: '20px 40px'}
         }
         previewEmbed(
@@ -866,7 +867,7 @@ function previewManager() {
 			    RasterizeFragments: '0'
             },
             driver: {type: 'html'},
-            data: {source: '_default', rules: '_default'},
+            data: {source: '_default', rules: state.rules},
             frame: {width: state.width, padding: '20px 40px'}
         }
         previewEmbed(
@@ -885,6 +886,8 @@ function previewManager() {
             current.type = changes.type;
         if (changes.data !== undefined)
             current.data = changes.data;
+        if (changes.rules !== undefined)
+            current.rules = changes.rules;
         if (changes.tdt !== undefined)
             current.tdt = changes.tdt;
         if (changes.markup !== undefined)    // markup has changed
@@ -918,31 +921,31 @@ function previewManager() {
         
         switch (current.type) {
         case 'main':
-            if (checkChanges($elem, ['markup', 'data', 'tdt']))
+            if (checkChanges($elem, ['markup', 'data', 'rules', 'tdt']))
                 previewMain($elem, current);
             break;
         case 'layout':
-            if (checkChanges($elem, ['markup', 'data', 'tdt', 'width']))
+            if (checkChanges($elem, ['markup', 'data', 'rules', 'tdt', 'width']))
                 previewLayout($elem, current);
             break;
         case 'data':
-            if (checkChanges($elem, ['markup', 'data', 'tdt']))
+            if (checkChanges($elem, ['markup', 'data', 'rules', 'tdt']))
                 previewData($elem, current);
             break;
         case 'stl':
-            if (checkChanges($elem, ['markup', 'data', 'tdt']))
+            if (checkChanges($elem, ['markup', 'data', 'rules', 'tdt']))
                 previewSTL($elem, current);
             break;
         case 'pdf':
-            if (checkChanges($elem, ['markup', 'data', 'tdt', 'width']))
+            if (checkChanges($elem, ['markup', 'data', 'rules', 'tdt', 'width']))
                 previewPDF($elem, current);
             break;
         case 'docx':
-            if (checkChanges($elem, ['markup', 'data', 'tdt', 'width']))
+            if (checkChanges($elem, ['markup', 'data', 'rules', 'tdt', 'width']))
                 previewDOCX($elem, current);
             break;
         case 'html':
-            if (checkChanges($elem, ['markup', 'data', 'tdt', 'width']))
+            if (checkChanges($elem, ['markup', 'data', 'rules', 'tdt', 'width']))
                 previewHTML($elem, current);
             break;
         default:
@@ -1024,7 +1027,8 @@ function initialize() {
             initDataEditor(g_data);
             initTDTEditor(g_data); 
             stl = js2xml(js, g_stl_schema);
-            g_preview({type: 'main', markup: stl, tdt: g_data.tdt, data: g_data.files[g_data.index].content});
+            var file = g_data.files[g_data.index];
+            g_preview({type: 'main', markup: stl, tdt: g_data.tdt, data: file.content, rules: file.rules});
         }
 
         function handleError(error) {
@@ -1037,11 +1041,14 @@ function initialize() {
                     var data = [];
                     var stl = gist.files['stl.xml'].content;
                     var tdt = gist.files['tdt.xml'] ? gist.files['tdt.xml'].content : '';
+                    var pattern = /^[0-9]+-data(-\((.*)\))?-(.*)$/;
                     Object.keys(gist.files).forEach(function(key) {
-                        if (key.match(/^[0-9]+-data-*/)) {
+                        var m = key.match(pattern);
+                        if (m) {
+                            var rules = m[2] === undefined ? '_default' : m[2];
+                            var name = m[3];
                             var content = gist.files[key].content;
-                            var name = key.replace(/^[0-9]+-data-/, '');
-                            data.push({name: name, content: content});
+                            data.push({name: name, content: content, rules: rules});
                         }
                     });
                     initMarkupSTL(stl, data, tdt);
@@ -1136,11 +1143,17 @@ function initDataEditor(ctx) {
     }
 
     function onSelect(index) {
-        var content = ctx.files[index].content; 
+        var content = ctx.files[index].content;
+        var rules = ctx.files[index].rules;
+        // a hack to avoid change event cascading
+        // see: https://github.com/ajaxorg/ace/issues/503
+        editor.$silentChange = true;
         session.setValue(content);
+        editor.$silentChange = false;
+        $('#data-rules').val(rules);
         editor.setReadOnly(index === 0);
         remove.get(0).disabled = (index === 0);
-        g_preview({data: content});
+        g_preview({data: content, rules: rules});
     }
     
     function addFile(file) {
@@ -1173,6 +1186,8 @@ function initDataEditor(ctx) {
         }
     });
     session.on('change', function() {
+        if (editor.$silentChange)
+            return;
         var content = session.getValue();
         ctx.files[ctx.index].content = content;
         g_preview({data: content});
@@ -1182,6 +1197,11 @@ function initDataEditor(ctx) {
         for (var i = 0; i < files.length; i++) {
             addFile(files[i]);
         }
+    });
+    $('#data-rules').change(function(ev) {
+        var rules = ev.target.value;
+        ctx.files[ctx.index].rules = rules;
+        g_preview({rules: rules});
     });
     select.change(function(ev) {
         var name = ev.target.value;
