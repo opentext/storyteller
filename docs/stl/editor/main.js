@@ -1056,10 +1056,24 @@ function initialize() {
                 .fail(handleError);
         }
 
+        function getContent(url) {
+            return $.ajax({
+                url: url,
+                type: 'GET',
+                contentType: false,
+                processData: false,
+                cache: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true
+            });
+        }
+        
         function handleSTL(stl, data) {
             stl = stl ? $.get(stl) : [];
             data = data ? $.get(data) : [];
-            $.when(stl, data)
+            $.when(getContent(stl), getContent(data))
                 .done(function (stl, data) {
                     initMarkupSTL(stl[0], data);
                 })
@@ -1069,7 +1083,7 @@ function initialize() {
         function handleEMP(emp, res, css, page) {
             emp = $.get(emp);
             res = res ? $.get(res) : [];
-            $.when(emp, res)
+            $.when(getContent(emp), getContent(res))
                 .done(function (emp, res) {
                     var options = {
                         resources: res,
