@@ -1071,9 +1071,9 @@ function initialize() {
         }
         
         function handleSTL(stl, data) {
-            stl = stl ? $.get(stl) : [];
-            data = data ? $.get(data) : [];
-            $.when(getContent(stl), getContent(data))
+            stl = stl ? getContent(stl) : [];
+            data = data ? getContent(data) : [];
+            $.when(stl, data)
                 .done(function (stl, data) {
                     initMarkupSTL(stl[0], data);
                 })
@@ -1081,9 +1081,9 @@ function initialize() {
         }
 
         function handleEMP(emp, res, css, page) {
-            emp = $.get(emp);
-            res = res ? $.get(res) : [];
-            $.when(getContent(emp), getContent(res))
+            emp = getContent(emp);
+            res = res ? getContent(res) : [];
+            $.when(emp, res)
                 .done(function (emp, res) {
                     var options = {
                         resources: res,
