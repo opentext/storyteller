@@ -1064,7 +1064,7 @@ function initialize() {
                 processData: false,
                 cache: true,
                 xhrFields: {
-                    withCredentials: true
+                    withCredentials: false
                 },
                 crossDomain: true
             });
